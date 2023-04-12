@@ -5,14 +5,14 @@ RESET	=	\033[0m
 
 NAME	= minishell
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -lreadline -Wall -Wextra -Werror
 
 
 SRC		= src/test.c
 OBJ		= $(SRC:.c=.o)
 
 all: $(OBJ)
-		$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+		$(CC) $(CFLAGS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
