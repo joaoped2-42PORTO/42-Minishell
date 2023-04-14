@@ -1,13 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <readline/readline.h>
+#include "../includes/minishell.h"
 
 int main()
 {
     char *input;
 
     while ((input = readline("👾Phylothinkers👾> ")) != NULL) {
-        printf("You entered: %s\n", input);
+        printf("%s\n", input);
         free(input);
     }
 
