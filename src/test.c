@@ -1,6 +1,3 @@
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <readline/readline.h>
 #include "../includes/minishell.h"
 
 int main()
@@ -8,7 +5,13 @@ int main()
     char *input;
 
     while ((input = readline("👾Phylothinkers👾> ")) != NULL) {
-        printf("%s\n", input);
+		if (input && *input)
+			add_history(input);
+		if (!strcmp(input, "history")) { system("history"); }
+		else if (!strcmp(input, "ifconfig")) { system("ifconfig"); }
+		else if (!strcmp(input, "clear")) { system("clear"); }
+        else
+			printf("%s\n", input);
         free(input);
     }
 
