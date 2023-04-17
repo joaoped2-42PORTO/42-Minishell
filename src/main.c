@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/17 22:41:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/17 23:25:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	main(void)
 			chdir("home");
 			printf("OI!\n");
 		}
+		else if (!ft_strncmp(input, "exit", 4))
+			return (0);
 		else
 			printf("command not found: %s\n", input);
 		free(input);
