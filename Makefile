@@ -4,7 +4,7 @@ YELLOW	=	\033[0;33m
 RESET	=	\033[0m
 
 NAME	= minishell
-CC		= cc
+CC		= cc -lreadline
 CFLAGS	= -Wall -Wextra -Werror
 
 
@@ -12,7 +12,7 @@ SRC		= src/test.c src/utils.c
 OBJ		= $(SRC:.c=.o)
 
 all: $(OBJ)
-		$(CC) -lreadline $(CFLAGS) $(SRC) -o $(NAME)
+		$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
