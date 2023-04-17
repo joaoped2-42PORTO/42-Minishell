@@ -8,7 +8,7 @@ CC		= cc -lreadline
 CFLAGS	= -Wall -Wextra -Werror
 
 
-SRC		= src/test.c src/utils.c
+SRC		= src/main.c src/utils.c
 OBJ		= $(SRC:.c=.o)
 
 all: $(OBJ)
