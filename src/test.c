@@ -6,11 +6,20 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/17 16:36:36 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/17 23:12:35 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	main(void)
+{
+	struct stat	str;
+	int		rst;
+
+	rst = stat("/home/hugo/Desktop/42_common_core/Minishell-Phylothinkers/test.c", &str);
+	printf("%d\n%ld\n", rst, str.st_blksize);
+}
 
 /*
 		//Ver o caminho que nos encontramos e alterar o mesmo caso necessario!!
