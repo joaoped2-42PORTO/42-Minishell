@@ -6,11 +6,74 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/17 14:52:19 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:36:36 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+		//Ver o caminho que nos encontramos e alterar o mesmo caso necessario!!
+
+int	main(void)
+{
+	char	path[200];
+	int	error;
+	getcwd(path, sizeof(path));
+	printf("Onde nos encontramos: %s\n", path);
+	chdir("..");
+	getcwd(path, sizeof(path));
+	printf("Para onde fomos: %s\n", path);
+	error = chdir("Minishell-Phylothinkers");
+	getcwd(path, sizeof(path));
+	printf("Para onde fomos: %s\n %d\n", path, error);
+	error = chdir("Minishell-Phylothinkers");
+	getcwd(path, sizeof(path));
+	printf("Para onde fomos: %s\n %d\n", path, error); // testar o erro da mudanca de caminho!
+	return (0);
+}
+
+		//criar novos processos com o menor numero possiveis de processos zombies
+
+int	main(void)
+{
+	pid_t qq[5];
+	int	i, rst;
+	i = rst = 0;
+	while (i < 5)
+	{
+		if ((qq[i] = fork()) == 0)
+		{
+			printf("Fui criado com o numero %d e o pid %d\n", i, qq[i]);
+			exit(1);	// obrigatorio para nao estar a criar processos zombies, claro que poderia ser outra opcao!!
+		}
+		else
+			printf("Sou um zombie\n"); //verificar os processos zombies
+		sleep(1);
+		i++;
+	}
+	i = 0;
+	while (i < 5)
+	{
+		pid_t pid = waitpid(qq[i], &rst, 1);
+		printf("%d exit status : %d\n", pid, rst);
+		i++;
+	}
+	return 0;
+}
+
+		//verificar se o acesso aos ficheiros foi bem sucedido!
+
+int	main(void)
+{
+	//correcto
+	int rst = access("/home/hugo/Desktop/42_common_core/Minishell-Phylothinkers/test.c", F_OK);
+	//erro
+	int rst1 = access("/home/hugo/Desktop/42_common_core/Minishell-Phylothinkers/test.c", X_OK);
+	printf("%d\n%d\n", rst, rst1);
+}
+
+		//Prompt mais chique
 
 int	main(void)
 {
@@ -29,18 +92,10 @@ int	main(void)
 	}
 	return (0);
 }
-/*
-	#include <stdlib.h>
-	int system(const char *command);
 
-	The system() library function uses fork(2) to create a child
-	process that executes the shell command specified in command
-	using execl(3) as follows:
 
-		execl("/bin/sh", "sh", "-c", command, (char *) NULL);
-*/
-/*
-//Criar o prompt necessario para inicializar o Shell
+				//Criar o prompt necessario para inicializar o Shell
+
 int main()
 {
 	char *str = readline("$");
