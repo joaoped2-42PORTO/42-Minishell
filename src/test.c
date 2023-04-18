@@ -6,22 +6,34 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/18 11:42:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:52:13 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+
+
+/*
+		//dup -> Escrever  no fd do ficheiro aberto e duplicacao do fd sem alteracao do original!
+		// dup2 -> Altera o fd original para o desejado, dado como segundo argumento!
 int	main(void)
 {
-	int	fd = open("texto.txt", O_RDONLY);
+	//dup
+	int	fd = open("texto.txt", O_WRONLY | O_APPEND);
 	printf("%d\n", fd);
 
 	int	cpy = dup(fd);
 	printf("%d\n", cpy);
+	write(fd, "Xau laura\n", 10);
+	write(cpy, "xau Laura\n", 10);
+
+	//dup2
+	dup2(fd, 1);
+	printf("Agora escrevi com o printf no fd inicial\n");
 }
 
-/*
+
 		//correr executavel ou script de shell. TER ATENCAO AO ENVP! VERIFICAR A FUNDO!
 
 int	main(void)

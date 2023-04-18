@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/17 23:25:15 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:14:33 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	check_pwd(void)
 {
 	char	path[1000];
 	getcwd(path, sizeof(path));
-	if (path == NULL)
+	if (path[0] == '\0')
 		printf("Something went wrong!\n");
 	else
 		printf("%s\n", path);
