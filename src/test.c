@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/18 11:42:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:18:31 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+/*int	main(void)
 {
 	int	fd = open("texto.txt", O_RDONLY);
 	printf("%d\n", fd);
 
 	int	cpy = dup(fd);
 	printf("%d\n", cpy);
-}
+}*/
 
 /*
 		//correr executavel ou script de shell. TER ATENCAO AO ENVP! VERIFICAR A FUNDO!
