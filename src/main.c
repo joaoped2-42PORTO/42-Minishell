@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/17 23:25:15 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:18:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,30 @@ void	check_pwd(void)
 {
 	char	path[1000];
 	getcwd(path, sizeof(path));
-	if (path == NULL)
+	if (path[0] == '\0')
 		printf("Something went wrong!\n");
 	else
 		printf("%s\n", path);
 }
+
+void	check_files_in_path(void)
+{
+	DIR	*d;
+	struct dirent	*dir;
+	d = opendir(".");
+	if (d)
+	{
+		while ((dir = readdir(d)) != NULL)
+		{
+			if (strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0)
+				continue;
+			else
+				printf("%s\n", dir->d_name);
+		}
+		closedir(d);
+	}
+}
+
 
 int	main(void)
 {
@@ -65,11 +84,13 @@ int	main(void)
 			do_cd(input);
 		else if (!ft_strncmp(input, "cd", 2))
 		{
-			chdir("home");
+			chdir("/nfs/homes/");
 			printf("OI!\n");
 		}
 		else if (!ft_strncmp(input, "exit", 4))
 			return (0);
+		else if (!ft_strncmp(input, "ls", 2))
+			check_files_in_path();
 		else
 			printf("command not found: %s\n", input);
 		free(input);
