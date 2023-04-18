@@ -57,6 +57,8 @@ void	check_pwd(void)
 		printf("%s\n", path);
 }
 
+
+// Mostra todos os files no current path, falta remover ficheiros que comecem por .name
 void	check_files_in_path(void)
 {
 	DIR	*d;
