@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/17 23:12:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:42:14 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,34 @@
 
 int	main(void)
 {
-	struct stat	str;
-	int		rst;
+	int	fd = open("texto.txt", O_RDONLY);
+	printf("%d\n", fd);
 
-	rst = stat("/home/hugo/Desktop/42_common_core/Minishell-Phylothinkers/test.c", &str);
-	printf("%d\n%ld\n", rst, str.st_blksize);
+	int	cpy = dup(fd);
+	printf("%d\n", cpy);
 }
 
 /*
+		//correr executavel ou script de shell. TER ATENCAO AO ENVP! VERIFICAR A FUNDO!
+
+int	main(void)
+{
+	char *temp[] = {"../hell","world",NULL};
+	execve("hello", temp, NULL);
+}
+
+
+		//remove o ficheiro dado pelo path no caso de nao estar a ser utilizado por algum processo!
+int	main(void)
+{
+	struct stat	str;
+	int		rst;
+
+	rst = unlink("/home/hugo/Desktop/42_common_core/Minishell-Phylothinkers/a.out");
+	printf("%d\n", rst);
+}
+
+
 		//Ver o caminho que nos encontramos e alterar o mesmo caso necessario!!
 
 int	main(void)
