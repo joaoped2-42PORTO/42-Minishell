@@ -1,2 +1,6 @@
-
-ola tudo bem:
+Xau lauraxau Laura
+Xau laura
+xau Laura
+Xau laura
+xau Laura
+Agora escrevi com o printf no fd inicial
