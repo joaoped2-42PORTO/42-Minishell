@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:41:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/14 11:03:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:51:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,12 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		return (*ptr1 - *ptr2);
 	else
 		return (0);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int i = 0;
+	while (!s1[i] && !s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }
