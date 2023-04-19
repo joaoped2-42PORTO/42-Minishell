@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/18 16:18:04 by joaoped2         ###   ########.fr       */
-=======
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/18 14:14:33 by huolivei         ###   ########.fr       */
->>>>>>> 8403edb698b054f0e9fe7045302d19c9c927c6ab
+/*   Updated: 2023/04/19 11:13:38 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +50,40 @@ void	check_pwd(void)
 		printf("%s\n", path);
 }
 
-
-// Mostra todos os files no current path, falta remover ficheiros que comecem por .name
+// Mostra todos os files no current path, already fixed, ja nao mostra ficheiros que comecem por "."
 void	check_files_in_path(void)
 {
+	/*
+	Function: DIR *opendir (const char *dirname)
+	The opendir function opens and returns a directory stream for reading the directory whose file name is dirname. The stream has type DIR *.
+	*/
 	DIR	*d;
+	/*
+		DIR: A type representing a directory stream.
+
+		It also defines the structure dirent which includes the following members:
+			ino_t  d_ino       file serial number
+			char   d_name[]    name of entry
+
+		The type ino_t is defined as described in <sys/types.h>.
+		The character array d_name is of unspecified size, but the number of bytes preceding the terminating null byte will not exceed {NAME_MAX}.
+		The following are declared as functions and may also be defined as macros. Function prototypes must be provided for use with an ISO C compiler.
+
+		int            closedir(DIR *);
+		DIR           *opendir(const char *);
+		struct dirent *readdir(DIR *);
+		int            readdir_r(DIR *, struct dirent *, struct dirent **);
+		void           rewinddir(DIR *);
+		void           seekdir(DIR *, long int);
+		long int       telldir(DIR *);
+	*/
 	struct dirent	*dir;
 	d = opendir(".");
 	if (d)
 	{
 		while ((dir = readdir(d)) != NULL)
 		{
-			if (strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0)
+			if (!ft_strcmp(dir->d_name, "."))
 				continue;
 			else
 				printf("%s\n", dir->d_name);
