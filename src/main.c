@@ -36,7 +36,7 @@ int	main(void)
 		}
 		else if (!ft_strncmp(input, "exit", 4))
 			return (0);
-		else if (!ft_strncmp(input, "ls", 2))
+		else if (!ft_strncmp(input, "ls", 2) || (!ft_strncmp(input, "/bin/ls", 7))
 			check_files_in_path(input);
 		else
 			printf("command not found: %s\n", input);
