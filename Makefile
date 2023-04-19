@@ -8,7 +8,7 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
 
-SRC		= src/main.c src/utils.c
+SRC		= src/main.c src/utils/utils.c src/commands/ls.c src/commands/cd.c src/commands/pwd.c
 OBJ		= $(SRC:.c=.o)
 
 all: $(OBJ)
