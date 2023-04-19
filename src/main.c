@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/19 16:28:35 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:23:52 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(void)
 		}
 		else if (!ft_strncmp(input, "exit", 4))
 			return (0);
-		else if (!ft_strncmp(input, "ls", 2) || (!ft_strncmp(input, "/bin/ls", 7))
+		else if (!ft_strncmp(input, "ls", 2))
 			check_files_in_path(input);
 		else
 			printf("command not found: %s\n", input);
