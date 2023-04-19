@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:56:53 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/19 16:59:14 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:23:29 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ Function prototypes must be provided for use with an ISO C compiler.
 	long int       telldir(DIR *);
 */
 
-void	gotofile(char *str)
+int	gotofile(char *str)
 {
 	int		i;
 	int		j;
@@ -51,8 +51,14 @@ void	gotofile(char *str)
 	while (str[i])
 		cd[j++] = str[i++];
 	cd[j] = '\0';
-	chdir(cd);
-	free (cd);
+	if (chdir(cd) == 0)
+		return (1);
+	else
+	{
+		printf("ls: impossível aceder a %s: Ficheiro ou pasta inexistente\n", cd);
+		free (cd);
+		return (0);
+	}
 }
 
 void	normalls(void)
@@ -80,11 +86,19 @@ void	check_files_in_path(char *str)
 {
 	char	*dest;
 	char	*save;
+	int		i;
 	char	path[1000];
 
+	i = 0;
 	dest = str;
 	save = getcwd(path, sizeof(path));
-	gotofile(dest);
-	normalls();
-	chdir(save);
+	while (str[i])
+		i++;
+	if (i == 2)
+		normalls();
+	else if (gotofile(dest) == 1)
+	{
+		normalls();
+		chdir(save);
+	}
 }
