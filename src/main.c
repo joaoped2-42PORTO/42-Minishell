@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/20 15:39:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:15:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 //CTRL+I = ls -la ???
 
-int	main(int ac, char **av, char **env)
-{
 
+
+int	main(int ac. char **av, char **env)
+{
 	(void)ac;
 	(void)env;
 	(void)av;
@@ -31,6 +32,12 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline("👾Phylothinkers👾> ");
+		if (input == NULL)
+		{
+			free(input);
+			printf("\n");
+			return (0);
+		}
 		if (input == NULL)
 		{
 			free (input);

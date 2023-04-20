@@ -3,16 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 12:22:17 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:58:07 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+
 /*
+		//verificar se um field descriptor esta a ser utilizado por um terminal
+		//ou se e de um ficheiro.
+
+void check_fd(int fd) {
+  printf("fd %d is ", fd);
+  if (!isatty(fd))
+    printf("NOT ");
+  puts("a tty");
+}
+
+int	main() {
+  int p[2], fd;
+  char fn[]="temp.file";
+
+  if (pipe(p) != 0)
+    perror("pipe() error");
+  else {
+    if ((fd = creat(fn, S_IWUSR)) < 0)
+      perror("creat() error");
+    else {
+      check_fd(0);
+      check_fd(fileno(stderr));
+      check_fd(p[1]);
+      check_fd(fd);
+      close(fd);
+      unlink(fn);
+    }
+    close(p[0]);
+    close(p[1]);
+  }
+}
+
+		//Retorna o ultimo erro dado pelo codigo!
+
+int main(void)
+{
+	int fd;
+
+	fd = open("te.txt", O_RDONLY);
+	if (fd < 0)
+		perror("Error");
+	return(-1);
+}
+
+
+		//Ler o que esta em um directory e tambem conseguir saber tamanho e outras informacoes
+
+int	main(void)
+{
+	char str[] = "/home/hugo/Desktop/42_common_core/Minishell-Phylothinkers";
+	DIR	*i;
+	struct dirent *j;
+	i = opendir(str);
+	while((j = readdir(i)) != NULL)
+		printf("%s\n", j->d_name);
+	closedir(i);
+}
+
+
+		//Pipe a funcionar com os processos parent e child!
+#define MSGSIZE 16
+char* msg1 = "hello, world #1";
+char* msg2 = "hello, world #2";
+char* msg3 = "hello, world #3";
+
+int main()
+{
+    char inbuf[MSGSIZE];
+    int p[2], pid, nbytes;
+
+    if (pipe(p) < 0)
+        exit(1);
+
+    if ((pid = fork()) == 0) {
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+
+        // Adding this line will
+        // not hang the program
+		//close(p[1]);
+		close(p[0]);
+		//sleep(1);
+    }
+	waitpid(pid, NULL, 0);
+        // Adding this line will
+        // not hang the program
+        close(p[1]);
+        while ((nbytes = read(p[0], inbuf, MSGSIZE)) > 0)
+            printf("%s\n", inbuf);
+        close(p[0]);
+		if (nbytes != 0)
+            exit(2);
+        printf("Finished reading\n");
+    return 0;
+}
+
 int	main(void)
 {
 	//dup
@@ -171,3 +269,16 @@ int main(int argc,char **argv)
 	}
 	exit(EXIT_SUCCESS);
 }*/
+
+int main()
+{
+	int i = 0;
+	char *str="ola/teste";
+	while (str[i])
+		i++;
+	i--;
+	while (str[i] != '/')
+		i--;
+	while (str[i])
+		write(1, &str[i++], 1);
+}
