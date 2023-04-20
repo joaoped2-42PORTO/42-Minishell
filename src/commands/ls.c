@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:56:53 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/19 18:23:29 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/20 10:09:37 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,49 @@ void	normalls(void)
 	}
 }
 
-void	check_files_in_path(char *str)
+void	checkspaces(char *str)
 {
-	char	*dest;
-	char	*save;
-	int		i;
-	char	path[1000];
+	int	i;
+	int j;
+	int k;
+	char *dest;
 
 	i = 0;
-	dest = str;
-	save = getcwd(path, sizeof(path));
+	j = 0;
+	k = 0;
+	dest = malloc(i + 1 * sizeof(char));
 	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+			j = 1;
+		else if (j)
+		{
+			dest[k] = str[i];
+			j = 0;
+			k++;
+		}
+		else
+			dest[k] = str[i];
 		i++;
-	if (i == 2)
-		normalls();
-	else if (gotofile(dest) == 1)
+	}
+	dest[k] = '\0';
+	printf("%s\n", dest);
+	printf("%s\n", str);
+}
+
+void	check_files_in_path(char *str)
+{
+	//char	*dest;
+	char	*save;
+	//char 	dest;
+	char	path[1000];
+
+	save = getcwd(path, sizeof(path));
+	checkspaces(str);
+	//printf("%c\n", dest);
+/*	else if (gotofile(dest) == 1)
 	{
 		normalls();
 		chdir(save);
-	}
+	}*/
 }
