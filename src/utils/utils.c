@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:41:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/19 16:57:41 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:14:28 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 	while (!s1[i] && !s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
 }
