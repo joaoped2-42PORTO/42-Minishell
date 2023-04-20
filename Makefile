@@ -12,12 +12,21 @@ SRC		= src/main.c src/utils/utils.c src/commands/cd.c src/commands/pwd.c src/han
 OBJ		= $(SRC:.c=.o)
 
 all: $(OBJ)
-		$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
+		@echo "$(RED)[ .. ]Compiling Mandatory[ .. ]$(RESET)"
+		@$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
+		@echo "$(GREEN)[ OK ]$(RESET)$(YELLOW)Mandatory Ready!$(RESET)$(GREEN)[ OK ]$(RESET)"
+
+src/%.o:	src/%.c
+			@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf $(OBJ)
+	@echo "$(RED)[ .. ]Deleting objects[ .. ]$(RESET)"
+	@rm -rf $(OBJ)
+	@echo "$(GREEN)[ OK ]Objects deleted[ OK ]$(RESET)"
 
-fclean:	clean
-	rm -rf $(NAME)
+fclean: clean
+	@echo "$(RED)[ .. ]Deleting Programs[ .. ]$(RESET)"
+	@rm -rf $(NAME)
+	@echo "$(GREEN)[ OK ]Programs deleted[ OK ]$(RESET)"
 
 re: fclean all
