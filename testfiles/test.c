@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 15:52:16 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:58:07 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,3 +270,15 @@ int main(int argc,char **argv)
 	exit(EXIT_SUCCESS);
 }*/
 
+int main()
+{
+	int i = 0;
+	char *str="ola/teste";
+	while (str[i])
+		i++;
+	i--;
+	while (str[i] != '/')
+		i--;
+	while (str[i])
+		write(1, &str[i++], 1);
+}
