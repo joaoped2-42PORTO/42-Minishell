@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/19 16:12:13 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:22:17 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,16 +171,3 @@ int main(int argc,char **argv)
 	}
 	exit(EXIT_SUCCESS);
 }*/
-
-int main()
-{
-	int i = 0;
-	char *str="ola/teste";
-	while (str[i])
-		i++;
-	i--;
-	while (str[i] != '/')
-		i--;
-	while (str[i])
-		write(1, &str[i++], 1);
-}

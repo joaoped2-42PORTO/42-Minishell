@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 10:01:09 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:36:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ char	*ft_strdup(char *str);
 void	check_files_in_path(char *str);
 void	do_cd(char *str);
 void	check_pwd(void);
+
+//Handler
+int		cmdhandler(char *str);
 
 #endif
