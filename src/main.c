@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/20 14:48:20 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:39:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int ac, char **av, char **env)
 {
 
 	(void)ac;
-	(void)av;
 	(void)env;
+	(void)av;
 	//printf("%s\n", env[32]);
 	char	*input;
 
