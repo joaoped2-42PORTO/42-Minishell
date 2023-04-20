@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:56:53 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 10:09:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:09:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,56 +75,68 @@ void	normalls(void)
 			if (!ft_strcmp(dir->d_name, "."))
 				continue ;
 			else
-				printf("%s\n", dir->d_name);
+				printf("%s ", dir->d_name);
 		}
 		else
+		{
+			printf("\n");
 			return ;
+		}
 	}
 }
 
-void	checkspaces(char *str)
+char	*checkspaces(char *str)
 {
 	int	i;
 	int j;
 	int k;
+	int z;
 	char *dest;
 
 	i = 0;
 	j = 0;
 	k = 0;
+	z = 0;
 	dest = malloc(i + 1 * sizeof(char));
 	while (str[i])
 	{
 		if (str[i] == ' ' || str[i] == '\t')
 			j = 1;
-		else if (j)
+		else if (str[i] == '\\')
+			z = 1;
+		else if (str[i] != ' ' && str[i] != '\t')
 		{
-			dest[k] = str[i];
-			j = 0;
-			k++;
+			if (j)
+			{
+				dest[k] = ' ';
+				k++;
+				j = 0;
+			}
+			dest[k++] = str[i];
 		}
-		else
-			dest[k] = str[i];
 		i++;
 	}
 	dest[k] = '\0';
-	printf("%s\n", dest);
-	printf("%s\n", str);
+	return (dest);
 }
 
 void	check_files_in_path(char *str)
 {
-	//char	*dest;
 	char	*save;
-	//char 	dest;
 	char	path[1000];
+	char	*dest;
+	int	i = 0;
 
 	save = getcwd(path, sizeof(path));
-	checkspaces(str);
-	//printf("%c\n", dest);
-/*	else if (gotofile(dest) == 1)
-	{
+	dest = checkspaces(str);
+	while (dest[i])
+		i++;
+	if (i == 2)
 		normalls();
+	else
+	{
+		if (gotofile(dest) == 1)
+			normalls();
 		chdir(save);
-	}*/
+	}
 }
