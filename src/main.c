@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/20 10:09:32 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:28:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,23 @@ void	config_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	char	*input;
 
-
+	(void)ac;
+	(void)av;
+	(void)env; //CUIDADO!
 	config_signals();
 	while (1)
 	{
 		input = readline("👾Phylothinkers👾> ");
+		if (input == NULL)
+		{
+			free(input);
+			printf("\n");
+			return (0);
+		}
 		if (input && *input)
 			add_history(input);
 		if (!ft_strncmp(input, "pwd", 3))

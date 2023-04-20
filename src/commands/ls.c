@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ls.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:56:53 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 10:09:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:44:58 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,11 @@ void	checkspaces(char *str)
 void	check_files_in_path(char *str)
 {
 	//char	*dest;
-	char	*save;
+	//char	*save;
 	//char 	dest;
 	char	path[1000];
 
-	save = getcwd(path, sizeof(path));
+	getcwd(path, sizeof(path));
 	checkspaces(str);
 	//printf("%c\n", dest);
 /*	else if (gotofile(dest) == 1)
