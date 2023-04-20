@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:41:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 10:14:28 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:17:41 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,24 @@ int	ft_strcmp(const char *s1, const char *s2)
 	while (!s1[i] && !s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
+}
+
+char *ft_strdup(char *str)
+{
+	int i = 0;
+	char *dest;
+	while (str[i])
+		i++;
+	if (!(dest = malloc(sizeof(i + 1))))
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		dest[i] = str[i];
+		i++;
+	}
+	dest[i]='\0';
+	return (dest);
 }
 
 void	ft_putchar(char c)
