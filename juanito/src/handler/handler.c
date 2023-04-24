@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 15:22:18 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/24 15:47:56 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,12 @@ char *getarg(char *input)
 void	lscmd(char *input)
 {
 	int pid;
-	//char *dest = getarg(input);
-	char *av[] = {"ls", NULL};
-	char **tmp = "teste";
-	int i = 0;
+	//char	*dest = getarg(input);
+	char	*trash = " ";
+	char	**spt = ft_split(input, trash);
 
-	while (tmp[1][i])
-		write(1, &tmp[1][i++], 1);
 	if ((pid = fork()) == 0)
-		execv("/bin/ls", av);
+		execv("/bin/ls", spt);
 	waitpid(-1, NULL, 0);
 }
 
