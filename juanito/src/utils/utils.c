@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:41:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 10:17:41 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:24:31 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,30 @@ char *ft_strdup(char *str)
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
+}
+
+char	*ft_strrchr(const char *s, int c)
+{
+	char	*ptr;
+
+	ptr = NULL;
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+			ptr = (char *)s;
+		s++;
+	}
+	if (c == 0)
+		return ((char *)s);
+	return (ptr);
+}
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

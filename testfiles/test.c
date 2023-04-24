@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 15:58:07 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:32:39 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,7 @@ int main(int argc,char **argv)
 	exit(EXIT_SUCCESS);
 }*/
 
-int main()
+/*int main()
 {
 	int i = 0;
 	char *str="ola/teste";
@@ -281,4 +281,20 @@ int main()
 		i--;
 	while (str[i])
 		write(1, &str[i++], 1);
+}*/
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    char *path = "/bin/ls";
+    //char *args[] = {"ls", "-l", NULL};
+	(void)argc;
+    if (execv(path, argv) < 0) {
+        perror("execv");
+        exit(1);
+    }
+
+    return 0;
 }

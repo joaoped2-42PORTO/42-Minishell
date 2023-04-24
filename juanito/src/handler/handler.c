@@ -6,28 +6,31 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 16:12:31 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:36:56 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
+
+char	*testingfc()
+{
     char *path = getenv("PATH");
     char *dir = strtok(path, ":");
     char ls_path[256];
+	char *dest;
 
     while (dir != NULL) {
         sprintf(ls_path, "%s/ls", dir);
-        if (access(ls_path, X_OK) == 0) {
-            printf("Found ls command at %s\n", ls_path);
+        if (access(ls_path, X_OK) == 0)
             break;
-        }
         dir = strtok(NULL, ":");
     }
-*/
 
+	dest = ft_strdup(ls_path);
 
+	return (dest);
+}
 
 void	clearcmd()
 {
@@ -39,41 +42,28 @@ void	clearcmd()
 	waitpid(-1, NULL, 0);
 }
 
+char *getarg(char *input)
+{
+	char *dest;
+
+	dest = ft_strrchr(input, ' ');
+	if (dest == NULL)
+		dest = input;
+	else
+		dest++;
+	return (dest);
+}
+
 void	lscmd(char *input)
 {
-	char *path = getenv("PATH");
-	char	*barra ="/";
 	int pid;
-	int i;
-	int j;
-	int k;
-	char *args[] = {"ls", "-l", NULL};
+	char *dest = getarg(input);
+	char *av[] = {"ls", NULL};
+	char *tmp[] = NULL;
 
-	i = 0;
-	j = 0;
-	k = 0;
-	while(path[i])
-		i++;
-	while(barra[k])
-		path[i++] = barra[k++];
-	while (input[j])
-		path[i++] = input[j++];
-	path[i] = '\0';
-
-	//printf("%s\n", path);
-
-	if (i == 2)
-	{
-		if ((pid = fork()) == 0)
-    		execv(path, &args[1]);
-		waitpid(-1, NULL, 0);
-	}
-	else if (i == 5)
-	{
-		if ((pid = fork()) == 0)
-    		execv("/bin/ls", args);
-		waitpid(-1, NULL, 0);
-	}
+	if ((pid = fork()) == 0)
+		execv("/bin/ls", av);
+	waitpid(-1, NULL, 0);
 }
 
 int	cmdhandler(char *input)
@@ -91,7 +81,7 @@ int	cmdhandler(char *input)
 		return (0);
 	else if (!ft_strncmp(input, "clear", 5))
 		clearcmd();
-	else if (!ft_strncmp(input, "ls ", 2))
+	else if (!ft_strcmp(input, " ls ") || !ft_strcmp(input, "ls"))
 		lscmd(input);
 	else
 		printf("command not found: %s\n", input);

@@ -42,3 +42,5 @@ fclean: clean
 	@echo "$(GREEN)[ OK ]Programs deleted[ OK ]$(RESET)"
 
 re: fclean all
+
+rej: fclean juan
