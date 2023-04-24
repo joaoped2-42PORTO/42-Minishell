@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 16:29:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:54:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,14 @@ void	lscmd(t_shell *args)
 	//char	*path = getenv("PATH");
 
 	if ((pid = fork()) == 0)
-    		execv("/bin/ls", args->split);
+	{
+    		if(execv("/bin/ls", args->split) != 0)
+			{
+				perror("Error\n");
+				return ;
+			}
+	}
 	waitpid(-1, NULL, 0);
-
 }
 
 int	cmdhandler(t_shell *args)
