@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 16:08:06 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:13:12 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	do_cd(char *str);
 void	check_pwd(void);
 
 //Handler
-int		cmdhandler(char *str);
+int		cmdhandler(t_shell *args);
 
 //Signals
 

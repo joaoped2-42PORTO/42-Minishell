@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 16:10:11 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:29:14 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,13 @@ void	clearcmd()
 
 void	lscmd(t_shell *args)
 {
+	int	pid;
+	//char	*path = getenv("PATH");
 
-	if (i == 2)
-	{
-		if ((pid = fork()) == 0)
-    		execv(path, &args[1]);
-		waitpid(-1, NULL, 0);
-	}
-	else if (i == 5)
-	{
-		if ((pid = fork()) == 0)
-    		execv("/bin/ls", args);
-		waitpid(-1, NULL, 0);
-	}
+	if ((pid = fork()) == 0)
+    		execv("/bin/ls", args->split);
+	waitpid(-1, NULL, 0);
+
 }
 
 int	cmdhandler(t_shell *args)
