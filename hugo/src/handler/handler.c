@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 17:42:33 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:16:04 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,15 @@
     }
 */
 
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int i;
 
+	i = 0;
+	while (!s1 && !s2 && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
 
 void	clearcmd(t_shell *args)
 {
@@ -72,7 +80,7 @@ int	cmdhandler(t_shell *args)
 		return (0);
 	else if (!ft_strncmp(args->input, "clear", 5))
 		clearcmd(args);
-	else if (!ft_strncmp(args->input, "ls ", 2))
+	else if (!ft_strncmp(args->input, "ls ", 2) || !ft_strcmp(args->input, " ls "))
 		lscmd(args);
 	else
 		printf("command not found: %s\n", args->input);
