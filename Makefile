@@ -4,7 +4,7 @@ YELLOW	=	\033[0;33m
 RESET	=	\033[0m
 
 NAME	= minishell
-CC		= cc
+CC		= clang
 CFLAGS	= -Wall -Wextra -Werror
 
 HSHELL  = hugoshell
