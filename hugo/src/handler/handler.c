@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 16:54:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:01:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,7 @@ int	cmdhandler(t_shell *args)
 	else if (!ft_strncmp(args->input, "cd ", 3))
 		do_cd(args->input);
 	else if (!ft_strncmp(args->input, "cd", 2))
-	{
-		chdir("/nfs/homes/");
-		printf("OI!\n");
-	}
+		chdir(getenv("HOME"));
 	else if (!ft_strncmp(args->input, "exit", 4))
 		return (0);
 	else if (!ft_strncmp(args->input, "clear", 5))

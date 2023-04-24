@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 13:32:39 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:00:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,13 +288,15 @@ int main(int argc,char **argv)
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-    char *path = "/bin/ls";
+    char *path = getenv("HOME");
+	printf("%s\n", path);
     //char *args[] = {"ls", "-l", NULL};
 	(void)argc;
-    if (execv(path, argv) < 0) {
+	(void)argv;
+    /*if (execv(path, argv) < 0) {
         perror("execv");
         exit(1);
-    }
+    }*/
 
     return 0;
 }
