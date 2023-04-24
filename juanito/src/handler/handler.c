@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 15:11:42 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:22:18 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,13 @@ char *getarg(char *input)
 void	lscmd(char *input)
 {
 	int pid;
-	char *dest = getarg(input);
+	//char *dest = getarg(input);
 	char *av[] = {"ls", NULL};
-	char tmp[] = NULL;
+	char **tmp = "teste";
+	int i = 0;
 
+	while (tmp[1][i])
+		write(1, &tmp[1][i++], 1);
 	if ((pid = fork()) == 0)
 		execv("/bin/ls", av);
 	waitpid(-1, NULL, 0);
