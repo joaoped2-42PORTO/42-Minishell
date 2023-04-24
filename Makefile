@@ -4,7 +4,7 @@ YELLOW	=	\033[0;33m
 RESET	=	\033[0m
 
 NAME	= minishell
-CC		= cc
+CC		= clang
 CFLAGS	= -Wall -Wextra -Werror
 
 HSHELL  = hugoshell
@@ -29,6 +29,7 @@ hugo: $(OBJHUGO)
 		$(CC) $(CFLAGS) $(SRCHUGO) $(LIBFT) -lreadline -o $(HSHELL)
 
 juan: $(OBJUAN)
+		$(MAKE) -C $(LIBFT_DIR)
 		$(CC) $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -o $(JSHELL)
 
 src/%.o:	src/%.c
