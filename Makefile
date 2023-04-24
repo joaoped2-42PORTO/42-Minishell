@@ -35,11 +35,13 @@ src/%.o:	src/%.c
 			@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
+	$(MAKE) clean -C $(LIBFT_DIR)
 	@echo "$(RED)[ .. ]Deleting objects[ .. ]$(RESET)"
 	@rm -rf $(OBJ) $(OBJHUGO) $(OBJUAN)
 	@echo "$(GREEN)[ OK ]Objects deleted[ OK ]$(RESET)"
 
 fclean: clean
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	@echo "$(RED)[ .. ]Deleting Programs[ .. ]$(RESET)"
 	@rm -rf $(NAME) $(JSHELL) $(HSHELL)
 	@echo "$(GREEN)[ OK ]Programs deleted[ OK ]$(RESET)"
