@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/24 16:09:03 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:33:49 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
-	(void)env;
 	(void)av;
 	t_shell	*args;
 	int	i = 0;
@@ -31,6 +30,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		args->input = readline("👾Phylothinkers👾> ");
+		args->env = env;
 		if (args->input == NULL)
 		{
 			free(args->input);

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 17:45:58 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:33:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_shell
 {
 	char	**split;
 	char	*input;
+	char	**env;
 }		t_shell;
 
 //Utils Functions

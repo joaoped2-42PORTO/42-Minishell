@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 18:16:04 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/24 18:35:19 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,23 @@ void	lscmd(t_shell *args)
 	waitpid(-1, NULL, 0);
 }
 
+void	print_env(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while(args->env[i])
+		printf("%s\n", args->env[i++]);
+}
+
 int	cmdhandler(t_shell *args)
 {
 	if (!ft_strncmp(args->input, "pwd", 3))
 		check_pwd();
 	else if (!ft_strncmp(args->input, "cd", 2))
 		do_cd(args);
-	/*else if (!ft_strncmp(args->input, "cd", 2))
-		chdir(getenv("HOME"));*/
+	else if (!ft_strncmp(args->input, "env", 3))
+		print_env(args);
 	else if (!ft_strncmp(args->input, "exit", 4))
 		return (0);
 	else if (!ft_strncmp(args->input, "clear", 5))
