@@ -16,17 +16,20 @@ SRCJUAN = juanito/src/main.c juanito/src/utils/utils.c juanito/src/commands/cd.c
 OBJ		= $(SRC:.c=.o)
 OBJHUGO = $(SRCHUGO:.c=.o)
 OBJUAN	= $(SRCJUAN:.c=.o)
+LIBFT = libft/libft.a
+LIBFT_DIR = libft
 
 all: $(OBJ)
+		$(MAKE) -C $(LIBFT_DIR)
 		@echo "$(RED)[ .. ]Compiling Mandatory[ .. ]$(RESET)"
 		@$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
 		@echo "$(GREEN)[ OK ]$(RESET)$(YELLOW)Mandatory Ready!$(RESET)$(GREEN)[ OK ]$(RESET)"
 
 hugo: $(OBJHUGO)
-		$(CC) $(CFLAGS) $(SRCHUGO) -lreadline -o $(HSHELL)
+		$(CC) $(CFLAGS) $(SRCHUGO) $(LIBFT) -lreadline -o $(HSHELL)
 
 juan: $(OBJUAN)
-		$(CC) $(CFLAGS) $(SRCJUAN) -lreadline -o $(JSHELL)
+		$(CC) $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -o $(JSHELL)
 
 src/%.o:	src/%.c
 			@$(CC) $(CFLAGS) -o $@ -c $<
