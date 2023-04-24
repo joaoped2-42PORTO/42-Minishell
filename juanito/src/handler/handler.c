@@ -3,87 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 15:57:49 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:35:19 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-char	*testingfc()
-{
+/*
     char *path = getenv("PATH");
     char *dir = strtok(path, ":");
     char ls_path[256];
-	char *dest;
 
     while (dir != NULL) {
         sprintf(ls_path, "%s/ls", dir);
-        if (access(ls_path, X_OK) == 0)
+        if (access(ls_path, X_OK) == 0) {
+            printf("Found ls command at %s\n", ls_path);
             break;
+        }
         dir = strtok(NULL, ":");
     }
+*/
 
-	dest = ft_strdup(ls_path);
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int i;
 
-	return (dest);
+	i = 0;
+	while (!s1 && !s2 && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }
 
-void	clearcmd()
+void	clearcmd(t_shell *args)
 {
 	int pid;
-	char *args[] = {"clear", NULL};
 
 	if ((pid = fork()) == 0)
-		execv("/usr/bin/clear", args);
-	waitpid(-1, NULL, 0);
-}
-
-char *getarg(char *input)
-{
-	char *dest;
-
-	dest = ft_strrchr(input, ' ');
-	if (dest == NULL)
-		dest = input;
-	else
-		dest++;
-	return (dest);
-}
-
-void	lscmd(char *input)
-{
-	int pid;
-	//char	*dest = getarg(input);
-	char	*trash = " ";
-	char	**spt = ft_split(input, *trash);
-
-	if ((pid = fork()) == 0)
-		execv("/bin/ls", spt);
-	waitpid(-1, NULL, 0);
-}
-
-int	cmdhandler(char *input)
-{
-	if (!ft_strncmp(input, "pwd", 3))
-		check_pwd();
-	else if (!ft_strncmp(input, "cd ", 3))
-		do_cd(input);
-	else if (!ft_strncmp(input, "cd", 2))
 	{
-		chdir("/nfs/homes/");
-		printf("OI!\n");
+    		if(execv("/bin/clear", args->split) != 0)
+			{
+				perror("Error:");
+				return ;
+			}
 	}
-	else if (!ft_strncmp(input, "exit", 4))
+	waitpid(-1, NULL, 0);
+}
+
+void	lscmd(t_shell *args)
+{
+	int	pid;
+	//char	*path = getenv("PATH");
+
+	if ((pid = fork()) == 0)
+	{
+    		if(execv("/bin/ls", args->split) != 0)
+			{
+				perror("Error:");
+				return ;
+			}
+	}
+	waitpid(-1, NULL, 0);
+}
+
+void	print_env(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while(args->env[i])
+		printf("%s\n", args->env[i++]);
+}
+
+int	cmdhandler(t_shell *args)
+{
+	if (!ft_strncmp(args->input, "pwd", 3))
+		check_pwd();
+	else if (!ft_strncmp(args->input, "cd", 2))
+		do_cd(args);
+	else if (!ft_strncmp(args->input, "env", 3))
+		print_env(args);
+	else if (!ft_strncmp(args->input, "exit", 4))
 		return (0);
-	else if (!ft_strncmp(input, "clear", 5))
-		clearcmd();
-	else if (!ft_strcmp(input, " ls ") || !ft_strcmp(input, "ls"))
-		lscmd(input);
+	else if (!ft_strncmp(args->input, "clear", 5))
+		clearcmd(args);
+	else if (!ft_strncmp(args->input, "ls ", 2) || !ft_strcmp(args->input, " ls "))
+		lscmd(args);
 	else
-		printf("command not found: %s\n", input);
+		printf("command not found: %s\n", args->input);
 	return(1);
 }

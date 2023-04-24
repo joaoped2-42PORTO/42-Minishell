@@ -3,34 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/19 16:36:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:53:09 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	do_cd(char *str)
+void	do_cd(t_shell *args)
 {
-	int		i;
-	int		j;
 	int		error;
-	char	*cd;
 
-	i = 3;
-	j = 0;
 	error = 0;
-	while (str[i])
-		i++;
-	cd = malloc(i + 1 * sizeof(char));
-	i = 3;
-	while (str[i])
-		cd[j++] = str[i++];
-	cd[j] = '\0';
-	error = chdir(cd);
+	if (!args->split[1])
+	{
+		chdir(getenv("HOME"));
+		return ;
+	}
+	else if (args->split[1][0] == '-')
+	{
+		chdir(getenv("OLDPWD"));
+		return ;
+	}
+	error = chdir(args->split[1]);
 	if (error != 0)
 		printf("Wrong directory!\n");
-	free (cd);
 }

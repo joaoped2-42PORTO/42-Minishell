@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 15:58:16 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:33:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,23 @@
 # include <curses.h>
 # include <term.h>
 
+
+typedef struct s_shell
+{
+	char	**split;
+	char	*input;
+	char	**env;
+}		t_shell;
+
 //Utils Functions
-int		ft_strcmp(const char *s1, const char *s2);
 
 //Commands
 void	check_files_in_path(char *str);
-void	do_cd(char *str);
+void	do_cd(t_shell *args);
 void	check_pwd(void);
 
 //Handler
-int		cmdhandler(char *str);
+int		cmdhandler(t_shell *args);
 
 //Signals
 
