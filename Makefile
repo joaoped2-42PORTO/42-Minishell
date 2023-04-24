@@ -10,9 +10,9 @@ CFLAGS	= -Wall -Wextra -Werror
 HSHELL  = hugoshell
 JSHELL  = juanitoshell
 
-SRC		= src/main.c src/utils/utils.c src/commands/cd.c src/commands/pwd.c src/handler/handler.c src/signals/signals.c
-SRCHUGO = hugo/src/main.c hugo/src/utils/utils.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/src/handler/handler.c hugo/src/signals/signals.c
-SRCJUAN = juanito/src/main.c juanito/src/utils/utils.c juanito/src/commands/cd.c juanito/src/commands/pwd.c juanito/src/handler/handler.c juanito/src/signals/signals.c
+SRC		= src/main.c src/commands/cd.c src/commands/pwd.c src/handler/handler.c src/signals/signals.c
+SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/src/handler/handler.c hugo/src/signals/signals.c
+SRCJUAN = juanito/src/main.c juanito/src/commands/cd.c juanito/src/commands/pwd.c juanito/src/handler/handler.c juanito/src/signals/signals.c
 OBJ		= $(SRC:.c=.o)
 OBJHUGO = $(SRCHUGO:.c=.o)
 OBJUAN	= $(SRCJUAN:.c=.o)
@@ -26,6 +26,7 @@ all: $(OBJ)
 		@echo "$(GREEN)[ OK ]$(RESET)$(YELLOW)Mandatory Ready!$(RESET)$(GREEN)[ OK ]$(RESET)"
 
 hugo: $(OBJHUGO)
+		$(MAKE) -C $(LIBFT_DIR)
 		$(CC) $(CFLAGS) $(SRCHUGO) $(LIBFT) -lreadline -o $(HSHELL)
 
 juan: $(OBJUAN)

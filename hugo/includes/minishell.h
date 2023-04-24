@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 14:46:08 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:08:06 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -32,11 +33,14 @@
 # include <curses.h>
 # include <term.h>
 
-//Utils Functions
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strdup(char *str);
+typedef struct s_shell
+{
+	char	**split;
+	char	*input;
+}		t_shell;
+
+//Utils Functions
 
 //Commands
 void	check_files_in_path(char *str);
