@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/20 16:24:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:18:09 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ int	main(int ac, char **av, char **env)
 		if (input == NULL)
 		{
 			free(input);
-			printf("\n");
-			return (0);
-		}
-		if (input == NULL)
-		{
-			free (input);
 			printf("\n");
 			return (0);
 		}
