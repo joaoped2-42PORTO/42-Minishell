@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 17:00:15 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:52:26 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ int main(int argc,char **argv)
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-    char *path = getenv("HOME");
+    char *path = getenv("OLDPWD");
 	printf("%s\n", path);
     //char *args[] = {"ls", "-l", NULL};
 	(void)argc;

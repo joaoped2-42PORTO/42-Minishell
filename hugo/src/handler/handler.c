@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 17:13:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:42:33 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int	cmdhandler(t_shell *args)
 {
 	if (!ft_strncmp(args->input, "pwd", 3))
 		check_pwd();
-	else if (!ft_strncmp(args->input, "cd ", 3))
-		do_cd(args->input);
 	else if (!ft_strncmp(args->input, "cd", 2))
-		chdir(getenv("HOME"));
+		do_cd(args);
+	/*else if (!ft_strncmp(args->input, "cd", 2))
+		chdir(getenv("HOME"));*/
 	else if (!ft_strncmp(args->input, "exit", 4))
 		return (0);
 	else if (!ft_strncmp(args->input, "clear", 5))
