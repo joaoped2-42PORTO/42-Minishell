@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 17:01:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:13:48 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,18 @@
 
 
 
-void	clearcmd()
+void	clearcmd(t_shell *args)
 {
 	int pid;
-	char *args[] = {"clear", NULL};
 
 	if ((pid = fork()) == 0)
-		execv("/usr/bin/clear", args);
+	{
+    		if(execv("/bin/clear", args->split) != 0)
+			{
+				perror("Error:");
+				return ;
+			}
+	}
 	waitpid(-1, NULL, 0);
 }
 
@@ -48,7 +53,7 @@ void	lscmd(t_shell *args)
 	{
     		if(execv("/bin/ls", args->split) != 0)
 			{
-				perror("Error\n");
+				perror("Error:");
 				return ;
 			}
 	}
@@ -66,7 +71,7 @@ int	cmdhandler(t_shell *args)
 	else if (!ft_strncmp(args->input, "exit", 4))
 		return (0);
 	else if (!ft_strncmp(args->input, "clear", 5))
-		clearcmd();
+		clearcmd(args);
 	else if (!ft_strncmp(args->input, "ls ", 2))
 		lscmd(args);
 	else
