@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/24 15:18:09 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:09:03 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,28 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)env;
 	(void)av;
-	//printf("%s\n", env[32]);
-	char	*input;
+	t_shell	*args;
+	int	i = 0;
 
+	args = malloc(sizeof(t_shell));
 	config_signals();
 	while (1)
 	{
-		input = readline("👾Phylothinkers👾> ");
-		if (input == NULL)
+		args->input = readline("👾Phylothinkers👾> ");
+		if (args->input == NULL)
 		{
-			free(input);
+			free(args->input);
 			printf("\n");
 			return (0);
 		}
-		if (input && *input)
-			add_history(input);
-		if (cmdhandler(input) == 0)
+		if (args->input)
+			add_history(args->input);
+		args->split = ft_split(args->input, ' ');
+		if (cmdhandler(args) == 0)
 			return (0);
-		free(input);
+		free(args->input);
 	}
+	while (args->split[i])
+		printf("%s\n", args->split[i++]);
 	return (0);
 }

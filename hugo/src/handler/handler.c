@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 15:01:28 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:10:11 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,8 @@ void	clearcmd()
 	waitpid(-1, NULL, 0);
 }
 
-void	lscmd(char *input)
+void	lscmd(t_shell *args)
 {
-	char	*path = getenv("PATH");
-	char	*barra ="/";
-	int pid;
-	int i;
-	int j;
-	int k;
-	char *args[] = {"ls", "-l", NULL};
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while(path[i])
-		i++;
-	while(barra[k])
-		path[i++] = barra[k++];
-	while (input[j])
-		path[i++] = input[j++];
-	path[i] = '\0';
-
-	//printf("%s\n", path);
 
 	if (i == 2)
 	{
@@ -76,24 +56,24 @@ void	lscmd(char *input)
 	}
 }
 
-int	cmdhandler(char *input)
+int	cmdhandler(t_shell *args)
 {
-	if (!ft_strncmp(input, "pwd", 3))
+	if (!ft_strncmp(args->input, "pwd", 3))
 		check_pwd();
-	else if (!ft_strncmp(input, "cd ", 3))
-		do_cd(input);
-	else if (!ft_strncmp(input, "cd", 2))
+	else if (!ft_strncmp(args->input, "cd ", 3))
+		do_cd(args->input);
+	else if (!ft_strncmp(args->input, "cd", 2))
 	{
 		chdir("/nfs/homes/");
 		printf("OI!\n");
 	}
-	else if (!ft_strncmp(input, "exit", 4))
+	else if (!ft_strncmp(args->input, "exit", 4))
 		return (0);
-	else if (!ft_strncmp(input, "clear", 5))
+	else if (!ft_strncmp(args->input, "clear", 5))
 		clearcmd();
-	else if (!ft_strncmp(input, "ls ", 2))
-		lscmd(input);
+	else if (!ft_strncmp(args->input, "ls ", 2))
+		lscmd(args);
 	else
-		printf("command not found: %s\n", input);
+		printf("command not found: %s\n", args->input);
 	return(1);
 }
