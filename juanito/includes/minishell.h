@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/25 11:23:42 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/25 12:03:10 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_shell
 	char	**split;
 	char	*input;
 	char	**env;
+	char	*var;
+	int		val;
 }		t_shell;
 
 //Commands
@@ -55,5 +57,7 @@ int		cmdhandler(t_shell *args);
 
 //Signals
 void	config_signals(void);
+
+void	testing(t_shell *args);
 
 #endif

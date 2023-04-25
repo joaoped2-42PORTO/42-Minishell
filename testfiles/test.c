@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 17:52:26 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/25 12:24:30 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,21 +282,22 @@ int main(int argc,char **argv)
 	while (str[i])
 		write(1, &str[i++], 1);
 }*/
-
+/*
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     char *path = getenv("OLDPWD");
 	printf("%s\n", path);
     //char *args[] = {"ls", "-l", NULL};
 	(void)argc;
 	(void)argv;
-    /*if (execv(path, argv) < 0) {
-        perror("execv");
-        exit(1);
-    }*/
+    //if (execv(path, argv) < 0) {
+      //  perror("execv");
+       // exit(1);
+    }/
 
     return 0;
-}
+}*/
