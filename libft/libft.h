@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:30:20 by huolivei          #+#    #+#             */
-/*   Updated: 2022/11/07 15:37:31 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:18:55 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strdup(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
 typedef struct s_list
 {
 	void			*content;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 18:33:02 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:23:42 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,19 @@ typedef struct s_shell
 	char	**env;
 }		t_shell;
 
-//Utils Functions
-
 //Commands
 void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
 void	check_pwd(void);
+void	clearcmd(t_shell *args);
+void	lscmd(t_shell *args);
+void	print_env(t_shell *args);
+void	ft_export(t_shell *args);
 
 //Handler
 int		cmdhandler(t_shell *args);
 
 //Signals
-
 void	config_signals(void);
 
 #endif
