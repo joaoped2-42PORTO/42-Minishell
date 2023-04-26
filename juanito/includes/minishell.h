@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/25 12:03:10 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/26 14:23:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <curses.h>
 # include <term.h>
 
-
 typedef struct s_shell
 {
 	char	**split;
@@ -57,7 +56,5 @@ int		cmdhandler(t_shell *args);
 
 //Signals
 void	config_signals(void);
-
-void	testing(t_shell *args);
 
 #endif

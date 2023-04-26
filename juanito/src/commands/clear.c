@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:09:49 by neddy             #+#    #+#             */
-/*   Updated: 2023/04/25 11:10:09 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/26 14:28:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 void	clearcmd(t_shell *args)
 {
-	int pid;
+	int	pid;
 
-	if ((pid = fork()) == 0)
+	pid = fork();
+	if (pid == 0)
 	{
-    		if(execv("/bin/clear", args->split) != 0)
-			{
-				perror("Error:");
-				return ;
-			}
+		if (execv("/bin/clear", args->split) != 0)
+		{
+			perror("Error:");
+			return ;
+		}
 	}
 	waitpid(-1, NULL, 0);
 }

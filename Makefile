@@ -23,17 +23,18 @@ LIBFT_DIR = libft
 
 all: $(OBJ)
 		$(MAKE) -C $(LIBFT_DIR)
-		@echo "$(RED)[ .. ]Compiling Mandatory[ .. ]$(RESET)"
 		@$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
-		@echo "$(GREEN)[ OK ]$(RESET)$(YELLOW)Mandatory Ready!$(RESET)$(GREEN)[ OK ]$(RESET)"
+		@echo Compilation Complete!
 
 hugo: $(OBJHUGO)
 		$(MAKE) -C $(LIBFT_DIR)
 		$(CC) $(CFLAGS) $(SRCHUGO) $(LIBFT) -lreadline -o $(HSHELL)
+		@echo Compilation Complete!
 
 juan: $(OBJUAN)
 		@make -s -C $(LIBFT_DIR)
 		@$(CC) $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -o $(JSHELL)
+		@echo "${GREEN}Minishell Compilation Complete! ${RESET}"
 
 src/%.o:	src/%.c
 			@$(CC) $(CFLAGS) -o $@ -c $<
@@ -43,15 +44,13 @@ juanito/src/%.o:	juanito/src/%.c
 
 clean:
 	@make -s clean -C $(LIBFT_DIR)
-	@echo "$(RED)[ .. ]Deleting objects[ .. ]$(RESET)"
 	@rm -rf $(OBJ) $(OBJHUGO) $(OBJUAN)
-	@echo "$(GREEN)[ OK ]Objects deleted[ OK ]$(RESET)"
+	@echo "${RED}Objects Deleted!${RESET}"
 
 fclean: clean
 	@make -s fclean -C $(LIBFT_DIR)
-	@echo "$(RED)[ .. ]Deleting Programs[ .. ]$(RESET)"
 	@rm -rf $(NAME) $(JSHELL) $(HSHELL)
-	@echo "$(GREEN)[ OK ]Programs deleted[ OK ]$(RESET)"
+	@echo "${RED}Program deleted!${RESET}"
 
 re: fclean all
 

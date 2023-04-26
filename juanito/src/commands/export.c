@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:14:04 by neddy             #+#    #+#             */
-/*   Updated: 2023/04/25 12:28:11 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/26 14:26:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	testing(t_shell *args)
+void	ft_export(t_shell *args)
 {
+	(void)args;
 	return ;
 }

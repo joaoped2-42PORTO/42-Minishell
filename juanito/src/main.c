@@ -3,30 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/24 18:33:49 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:26:14 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// Neste momento ja se consegue alterar o directory onde nos encontramos,
-// so que ainda nao funciona o cd sem mais nenhum argumento. Pelo que li,
-// teremos que usar o env!
-
-//CTRL+I = ls -la ???
-
-int	main(int ac, char **av, char **env)
+int	minishell(char **env)
 {
-	(void)ac;
-	(void)av;
 	t_shell	*args;
-	int	i = 0;
+	int		i;
 
 	args = malloc(sizeof(t_shell));
-	config_signals();
+	i = 0;
 	while (1)
 	{
 		args->input = readline("👾Phylothinkers👾> ");
@@ -47,4 +39,12 @@ int	main(int ac, char **av, char **env)
 	while (args->split[i])
 		printf("%s\n", args->split[i++]);
 	return (0);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
+	config_signals();
+	minishell(env);
 }

@@ -19,12 +19,14 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror
 ARFLAGS = -rcs
 RM = rm -rf
+GREEN	=	\033[0;32m
+RESET	=	\033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar $(ARFLAGS) $(NAME).a $(OBJS)
-	@echo Compilation Complete!
+	@echo "${GREEN}LIBFT Compilation Complete!${RESET}"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -38,11 +40,9 @@ so:
 
 clean:
 	@$(RM) $(OBJS) $(OBJS_BONUS)
-	@echo .o files deleted!
 
 fclean: clean
 	@$(RM) $(NAME).a $(NAME).so
-	@echo .o files and libft.a deleted!
 
 re: fclean all
 
