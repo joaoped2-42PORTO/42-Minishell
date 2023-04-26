@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 16:55:27 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:03:42 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_shell
 	char	*input;
 	char	**env;
 	char	**var;
-	int		val;
+	//int		**val;
 }		t_shell;
 
 //Commands
