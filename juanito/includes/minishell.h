@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 14:23:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:55:27 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_shell
 	char	**split;
 	char	*input;
 	char	**env;
-	char	*var;
+	char	**var;
 	int		val;
 }		t_shell;
 
