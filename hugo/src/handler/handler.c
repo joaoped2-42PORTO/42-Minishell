@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/24 18:46:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:13:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,25 @@ void	print_env(t_shell *args)
 		printf("%s\n", args->env[i++]);
 }
 
+void	do_echo(t_shell *args)
+{
+	int	i;
+
+	if (!ft_strncmp(args->split[1], "-n", 2))
+	{
+		i = 7;
+		while(args->input[i])
+			write(1, &args->input[i++], 1);
+	}
+	else
+	{
+		i = 5;
+		while(args->input[i])
+			write(1, &args->input[i++], 1);
+		write(1, "\n", 1);
+	}
+}
+
 int	cmdhandler(t_shell *args)
 {
 	if (!ft_strncmp(args->split[0], "pwd", 3))
@@ -91,6 +110,8 @@ int	cmdhandler(t_shell *args)
 		clearcmd(args);
 	else if (!ft_strncmp(args->split[0], "ls ", 2))
 		lscmd(args);
+	else if(!ft_strncmp(args->split[0], "echo", 4))
+		do_echo(args);
 	else
 		printf("command not found: %s\n", args->input);
 	return(1);
