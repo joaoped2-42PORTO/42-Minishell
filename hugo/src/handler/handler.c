@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 22:13:30 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/26 23:05:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	do_echo(t_shell *args)
 
 	if (!ft_strncmp(args->split[1], "-n", 2))
 	{
-		i = 7;
+		i = 8;
 		while(args->input[i])
 			write(1, &args->input[i++], 1);
 	}
@@ -95,6 +95,26 @@ void	do_echo(t_shell *args)
 		write(1, "\n", 1);
 	}
 }
+
+void	do_export(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	x = 0;
+	j = 7;
+	i = 0;
+	while (args->env[i])
+		i++;
+	args->env[i] = malloc(sizeof(char) * ft_strlen(args->input));
+	while(args->input[j])
+		args->env[i][x++] = args->input[j++];
+	args->env[i][x] = '\0';
+	i++;
+	args->env[i] = 0;
+}
+
 
 int	cmdhandler(t_shell *args)
 {
@@ -112,6 +132,8 @@ int	cmdhandler(t_shell *args)
 		lscmd(args);
 	else if(!ft_strncmp(args->split[0], "echo", 4))
 		do_echo(args);
+	else if(!ft_strncmp(args->split[0], "export", 6))
+		do_export(args);
 	else
 		printf("command not found: %s\n", args->input);
 	return(1);

@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/25 12:24:30 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/26 22:33:27 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+
+int	main(int ac, char **av)
+{
+	char	*str;
+	(void)ac;
+
+	str = getenv(av[1]);
+	printf("%s\n", str);
+	return (0);
+}
 
 /*
 		//verificar se um field descriptor esta a ser utilizado por um terminal
