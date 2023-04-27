@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 23:01:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:08:20 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,12 @@ void	do_export(t_shell *args)
 
 int	cmdhandler(t_shell *args)
 {
-	if (!ft_strncmp(args->split[0], "pwd", 3))
+	if (args->input[0] == '\0')
+		return (1);
+	else if (!ft_strncmp(args->split[0], "pwd", 3))
 		do_builtins(args);
 	else if (!ft_strncmp(args->split[0], "cd", 2))
-		do_cd(args);
+		do_builtins(args);
 	else if (!ft_strncmp(args->split[0], "env", 3))
 		print_env(args);
 	else if (!ft_strncmp(args->split[0], "exit", 4))

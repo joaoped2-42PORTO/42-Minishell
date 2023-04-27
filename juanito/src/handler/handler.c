@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 15:42:06 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:08:01 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 int	cmdhandler(t_shell *args)
 {
-	int	i;
-
-	i = 0;
-	if (args->input[i] == '\0')
+	if (args->input[0] == '\0')
 		return (1);
 	else if (!ft_strncmp(args->split[0], "pwd", 3))
 		check_pwd();
