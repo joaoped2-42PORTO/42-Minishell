@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 13:24:40 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:36:27 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	cmdhandler(t_shell *args)
 {
-	if (!ft_strncmp(args->split[0], "pwd", 3))
-		check_pwd(args);
+	int i = 0;
+	if (args->input[i] == '\0')
+		printf("\n");
+	else if (!ft_strncmp(args->split[0], "pwd", 3))
+		check_pwd();
 	else if (!ft_strncmp(args->split[0], "cd", 2))
 		do_cd(args);
 	else if (!ft_strncmp(args->split[0], "env", 3))

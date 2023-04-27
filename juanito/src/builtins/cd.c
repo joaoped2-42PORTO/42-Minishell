@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 13:38:47 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:16:29 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	ft_homedk(t_shell *args)
 {
 	int		i;
 	char	*path = NULL;
+	char	pwd[1000];
+
+	getcwd(pwd, sizeof(pwd));
 
 	i = 0;
 	while (args->env[i])
@@ -47,6 +50,5 @@ void	ft_homedk(t_shell *args)
 			path = args->env[i] + 7;
 		i++;
 	}
-	printf("%s\n", path);
 	chdir(path);
 }

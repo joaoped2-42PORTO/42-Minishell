@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 13:35:33 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:05:38 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_shell
 //BUILT-INS
 void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
-void	check_pwd(t_shell *args);
+void	check_pwd();
 void	print_env(t_shell *args);
 void	do_export(t_shell *args);
 void	do_echo(t_shell *args);
