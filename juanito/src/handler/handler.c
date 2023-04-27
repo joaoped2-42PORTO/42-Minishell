@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 14:36:27 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/27 14:43:06 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	cmdhandler(t_shell *args)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (args->input[i] == '\0')
-		printf("\n");
+		return (1);
 	else if (!ft_strncmp(args->split[0], "pwd", 3))
 		check_pwd();
 	else if (!ft_strncmp(args->split[0], "cd", 2))
@@ -31,7 +33,7 @@ int	cmdhandler(t_shell *args)
 		lscmd(args);
 	else if (!ft_strncmp(args->split[0], "export", 6))
 		do_export(args);
-	else if(!ft_strncmp(args->split[0], "echo", 4))
+	else if (!ft_strncmp(args->split[0], "echo", 4))
 		do_echo(args);
 	else
 		printf("command not found: %s\n", args->input);

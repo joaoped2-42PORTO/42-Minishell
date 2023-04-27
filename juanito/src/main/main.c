@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/27 14:06:15 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/27 14:42:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	minishell(char **env)
 			return (0);
 		free(args->input);
 	}
-	i = 0;
 	while (args->split[i])
 		printf("%s\n", args->split[i++]);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 14:16:29 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/27 14:40:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,13 @@ void	do_cd(t_shell *args)
 		printf("Wrong directory!\n");
 }
 
-
 void	ft_homedk(t_shell *args)
 {
 	int		i;
-	char	*path = NULL;
+	char	*path;
 	char	pwd[1000];
 
 	getcwd(pwd, sizeof(pwd));
-
 	i = 0;
 	while (args->env[i])
 	{

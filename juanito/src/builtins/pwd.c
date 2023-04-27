@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 14:05:26 by neddy            ###   ########.fr       */
+/*   Updated: 2023/04/27 14:39:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_pwd()
+void	check_pwd(void)
 {
 	char	path[1000];
 
