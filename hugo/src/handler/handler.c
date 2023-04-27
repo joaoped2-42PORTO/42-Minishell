@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 23:05:02 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:01:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,24 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-void	clearcmd(t_shell *args)
-{
-	int pid;
-
-	if ((pid = fork()) == 0)
-	{
-    		if(execv("/bin/clear", args->split) != 0)
-			{
-				perror("Error:");
-				return ;
-			}
-	}
-	waitpid(-1, NULL, 0);
-}
-
-void	lscmd(t_shell *args)
+void	do_builtins(t_shell *args)
 {
 	int	pid;
-	//char	*path = getenv("PATH");
+	char	*path;
+	char	*res;
 
+	path = "/bin/";
+	res = ft_strjoin(path, args->split[0]);
 	if ((pid = fork()) == 0)
 	{
-    		if(execv("/bin/ls", args->split) != 0)
+    		if(execv(res, args->split) != 0)
 			{
-				perror("Error:");
+				perror("Error");
 				return ;
 			}
 	}
 	waitpid(-1, NULL, 0);
+	free(res);
 }
 
 void	print_env(t_shell *args)
@@ -119,7 +108,7 @@ void	do_export(t_shell *args)
 int	cmdhandler(t_shell *args)
 {
 	if (!ft_strncmp(args->split[0], "pwd", 3))
-		check_pwd();
+		do_builtins(args);
 	else if (!ft_strncmp(args->split[0], "cd", 2))
 		do_cd(args);
 	else if (!ft_strncmp(args->split[0], "env", 3))
@@ -127,9 +116,9 @@ int	cmdhandler(t_shell *args)
 	else if (!ft_strncmp(args->split[0], "exit", 4))
 		return (0);
 	else if (!ft_strncmp(args->split[0], "clear", 5))
-		clearcmd(args);
+		do_builtins(args);
 	else if (!ft_strncmp(args->split[0], "ls ", 2))
-		lscmd(args);
+		do_builtins(args);
 	else if(!ft_strncmp(args->split[0], "echo", 4))
 		do_echo(args);
 	else if(!ft_strncmp(args->split[0], "export", 6))
