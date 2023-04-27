@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 14:43:06 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:42:06 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	cmdhandler(t_shell *args)
 	else if (!ft_strncmp(args->split[0], "clear", 5))
 		clearcmd(args);
 	else if (!ft_strncmp(args->split[0], "ls ", 2))
-		lscmd(args);
+		nonb(args);
 	else if (!ft_strncmp(args->split[0], "export", 6))
 		do_export(args);
 	else if (!ft_strncmp(args->split[0], "echo", 4))

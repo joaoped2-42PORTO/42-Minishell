@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 14:40:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:16:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,17 @@ void	ft_homedk(t_shell *args)
 	while (args->env[i])
 	{
 		if (!ft_strncmp(args->env[i], "HOME=", 5))
+		{
 			path = args->env[i] + 5;
+			chdir(path);
+			return ;
+		}
 		else if (!ft_strncmp(args->env[i], "OLDPWD=", 7))
+		{
 			path = args->env[i] + 7;
+			chdir(path);
+			return ;
+		}
 		i++;
 	}
-	chdir(path);
 }

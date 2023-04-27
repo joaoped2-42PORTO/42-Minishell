@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 14:39:49 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:41:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	do_echo(t_shell *args);
 //NON-BUILT-INS
 void	clearcmd(t_shell *args);
 void	lscmd(t_shell *args);
+void	nonb(t_shell *args);
 
 //Handler
 int		cmdhandler(t_shell *args);

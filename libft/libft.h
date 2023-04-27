@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:30:20 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/26 16:41:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:55:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strdup(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcpy(char *s1, char *s2);
+char	*ft_strcat(char *dest, const char *src);
 typedef struct s_list
 {
 	void			*content;
