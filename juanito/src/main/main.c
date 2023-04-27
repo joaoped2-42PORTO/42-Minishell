@@ -6,11 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/26 14:26:14 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:44:49 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	minishell(char **env)
 {

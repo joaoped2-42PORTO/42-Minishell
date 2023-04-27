@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 17:01:46 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:24:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	cmdhandler(t_shell *args)
 {
-	int i = 0;
 	if (!ft_strncmp(args->split[0], "pwd", 3))
-		check_pwd();
+		check_pwd(args);
 	else if (!ft_strncmp(args->split[0], "cd", 2))
 		do_cd(args);
 	else if (!ft_strncmp(args->split[0], "env", 3))
@@ -28,12 +27,9 @@ int	cmdhandler(t_shell *args)
 	else if (!ft_strncmp(args->split[0], "ls ", 2))
 		lscmd(args);
 	else if (!ft_strncmp(args->split[0], "export", 6))
-		ft_export(args);
-	else if (!ft_strncmp(args->split[0], "test", 4))
-	{
-		while (args->var[++i])
-			printf("Test Command: %s\n", args->var[i]);
-	}
+		do_export(args);
+	else if(!ft_strncmp(args->split[0], "echo", 4))
+		do_echo(args);
 	else
 		printf("command not found: %s\n", args->input);
 	return (1);

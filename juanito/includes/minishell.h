@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 17:03:42 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:35:33 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,23 @@ typedef struct s_shell
 	//int		**val;
 }		t_shell;
 
-//Commands
+//BUILT-INS
 void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
-void	check_pwd(void);
+void	check_pwd(t_shell *args);
+void	print_env(t_shell *args);
+void	do_export(t_shell *args);
+void	do_echo(t_shell *args);
+
+//NON BUILT-INS
 void	clearcmd(t_shell *args);
 void	lscmd(t_shell *args);
-void	print_env(t_shell *args);
-void	ft_export(t_shell *args);
 
 //Handler
 int		cmdhandler(t_shell *args);
 
 //Signals
 void	config_signals(void);
+void	ft_homedk(t_shell *args);
 
 #endif

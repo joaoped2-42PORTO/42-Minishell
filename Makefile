@@ -14,7 +14,7 @@ JSHELL  = juanitoshell
 
 SRC		= src/main.c src/commands/cd.c src/commands/pwd.c src/handler/handler.c src/signals/signals.c
 SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/src/handler/handler.c hugo/src/signals/signals.c
-SRCJUAN = juanito/src/main.c juanito/src/commands/cd.c juanito/src/commands/pwd.c juanito/src/handler/handler.c juanito/src/signals/signals.c juanito/src/commands/clear.c juanito/src/commands/env.c juanito/src/commands/export.c juanito/src/commands/ls.c
+SRCJUAN = juanito/src//main/main.c juanito/src/builtins/cd.c juanito/src/builtins/pwd.c juanito/src/handler/handler.c juanito/src/signals/signals.c juanito/src/system/clear.c juanito/src/builtins/env.c juanito/src/builtins/export.c juanito/src/system/ls.c juanito/src/builtins/echo.c
 OBJ		= $(SRC:.c=.o)
 OBJHUGO = $(SRCHUGO:.c=.o)
 OBJUAN	= $(SRCJUAN:.c=.o)
