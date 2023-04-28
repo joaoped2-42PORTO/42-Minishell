@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/28 14:10:26 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:40:48 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,10 @@ void	do_export(t_shell *args)
 	int	i;
 	int	j;
 	int	x;
-	int	k;
 
-	k = 0;
 	x = 0;
 	j = 7;
 	i = 0;
-	while (args->split[k])
-		printf("%s\n", args->split[k++]);
 	while (args->env[i])
 		i++;
 	args->env[i] = malloc(sizeof(char) * ft_strlen(args->input));

@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/28 11:15:19 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:41:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	main(int ac, char **av, char **env)
 	int	i = 0;
 
 	args = malloc(sizeof(t_shell));
+	args->env = env;
 	config_signals();
 	while (1)
 	{
 		args->input = readline("👾Phylothinkers👾> ");
-		args->env = env;
 		if (args->input == NULL)
 		{
 			free(args->input);
