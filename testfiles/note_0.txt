@@ -19,3 +19,43 @@ However, I can give you a general overview of the steps involved in creating suc
 7	Handle environment variables: The shell program also needs to handle environment variables such as $PATH, which specifies the directories to search for executables.
 
 8	Handle signals: Finally, the shell program needs to handle signals such as Ctrl-C and Ctrl-Z, which can be used to interrupt or suspend the execution of commands.
+
+
+
+Here are the most common special characters in bash and what they do:
+
+1. `|`: Pipe operator. Redirects the output of one command to another command as input.
+
+2. `>`: Output redirection. Redirects the output of a command to a file, overwriting the file if it already exists.
+
+3. `>>`: Append output. Redirects the output of a command to a file, appending the output to the end of the file if it already exists.
+
+4. `<`: Input redirection. Redirects the input of a command from a file instead of standard input.
+
+5. `&`: Background job. Runs a command in the background, allowing you to continue using the shell while the command runs.
+
+6. `*`: Wildcard. Matches any string of characters in a filename.
+
+7. `?`: Wildcard. Matches any single character in a filename.
+
+8. `[]`: Wildcard. Matches any character specified inside the brackets in a filename.
+
+9. `~`: Tilde. Short for the home directory of the current user.
+
+10. `$`: Dollar sign. Indicates that what follows is a variable or command substitution.
+
+11. `#`: Hash symbol. Indicates a comment in a script or on the command line.
+
+12. `\`: Backslash. Escapes the next character, preventing it from being interpreted as a special character.
+
+13. `:`: Colon. Used as a separator in PATH and other environment variables.
+
+14. `;`: Semicolon. Separates multiple commands on the same line.
+
+15. `(` and `)`: Parentheses. Used for grouping commands and creating subshells.
+
+16. `!`: History expansion. Allows you to refer to previous commands in your command history.
+
+17. `"` and `'`: Double and single quotes. Used for quoting strings and preventing expansion of variables and special characters.
+
+18. `\\`: Double backslash. Escapes a backslash in a string.
