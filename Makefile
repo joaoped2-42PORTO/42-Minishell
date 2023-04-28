@@ -6,7 +6,7 @@ YELLOW	=	\033[0;33m
 RESET	=	\033[0m
 
 NAME	= minishell
-CC		= clang
+CC		= clang -g
 CFLAGS	= -Wall -Wextra -Werror
 
 HSHELL  = hugoshell
@@ -33,7 +33,7 @@ hugo: $(OBJHUGO)
 
 juan: $(OBJUAN)
 		@make -s -C $(LIBFT_DIR)
-		@$(CC) -g $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -o $(JSHELL)
+		@$(CC) $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -o $(JSHELL)
 		@echo "${GREEN}Minishell Compilation Complete! ${RESET}"
 
 src/%.o:	src/%.c

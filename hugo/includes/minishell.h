@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 22:44:15 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:54:19 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,13 @@ void	check_pwd(void);
 
 //Handler
 int		cmdhandler(t_shell *args);
+int		do_builtins(t_shell *args);
 
 //Signals
 
 void	config_signals(void);
 
+
+void	change_env_oldpwd(t_shell *args);
+void	change_env_pwd(t_shell *args);
 #endif
