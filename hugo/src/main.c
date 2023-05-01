@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/04/28 15:41:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:23:19 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,45 +18,72 @@
 
 //CTRL+I = ls -la ???
 
-/*void	check_valid_input(t_shell *args)
+int	check_max_string(t_shell *args)
 {
 	int	i;
-	int	j;
-	int	k;
-	int	x;
 
-	i = 1;
+	i = 0;
+	while(args->split[i])
+		i++;
+	return (i);
+}
+
+void	check_valid_input(t_shell *args)
+{
+	int	j;
+	int	x;
+	int	y;
+	int	flag;
+
+	y = 0;
 	x = 0;
-	args->argvs = malloc(sizeof(char *) * 256);
-	while (args->split[i])
+	j = 0;
+	args->exp = ft_calloc(ft_strlen(args->input), sizeof(char));
+	args->split = ft_split(args->input, ' ');
+	while (args->split[x])
 	{
 		j = 0;
-		k = ft_strlen(args->split[i]);
-		args->argvs[x] = malloc(sizeof(char) * k);
-		while (args->split[i][j])
+		flag = 0;
+		while (args->split[x][j])
 		{
-			if (args->split[i][0] == '"' || args->split[i][k] == '"')
-				j++;
-			else
+			if (args->split[x][j] == '"')
 			{
-				args->argvs[x][j] = args->split[i][j];
 				j++;
+				while(1)
+				{
+					if (args->split[x] == 0)
+						break ;
+					while(args->split[x][j] != '"')
+					{
+						flag = 1;
+						args->exp[y] = args->split[x][j];
+						j++;
+						y++;
+						if (args->split[x][j] == '\0')
+							break ;
+					}
+					if (flag == 1)
+						args->exp[y++] = ' ';
+					j = 0;
+					x++;
+				}
+				flag = 1;
 			}
+			if (args->split[x] == 0)
+						break ;
+			j++;
 		}
-		x++;
-		i++;
 	}
-	i = 0;
-	while (args->argvs[i])
-		printf("%s\n", args->argvs[i++]);
-}*/
+	args->exp = ft_strtrim(args->exp, " ");
+	printf("%s\n", args->exp);
+}
+
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
 	t_shell	*args;
-	int	i = 0;
 
 	args = malloc(sizeof(t_shell));
 	args->env = env;
@@ -72,13 +99,11 @@ int	main(int ac, char **av, char **env)
 		}
 		if (args->input)
 			add_history(args->input);
-		args->split = ft_split(args->input, ' ');
-		//check_valid_input(args);
-		if (cmdhandler(args) == 0)
-			return (0);
+		check_valid_input(args);
+		/*if (cmdhandler(args) == 0)
+			return (0);*/
 		free(args->input);
 	}
-	while (args->split[i])
-		printf("%s\n", args->split[i++]);
+	rl_clear_history();
 	return (0);
 }
