@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/01 15:10:53 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:32:48 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 
 typedef struct s_shell
 {
+	char	**new_splt;
+	char	**new_env;
 	char	**split; //1a experiencia
 	char	*input; //1a experiencia
 	char	**env; //1a experiencia
@@ -62,4 +64,5 @@ void	config_signals(void);
 
 void	change_env_oldpwd(t_shell *args);
 void	change_env_pwd(t_shell *args);
+void	do_mult_export(t_shell *args);
 #endif

@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/28 15:40:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:34:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,16 @@ void	print_env(t_shell *args)
 	int	i;
 
 	i = 0;
-	while(args->env[i])
-		printf("%s\n", args->env[i++]);
+	if (args->new_env[0] == 0)
+	{
+		while(args->env[i])
+			printf("%s\n", args->env[i++]);
+	}
+	else
+	{
+		while(args->new_env[i])
+			printf("%s\n", args->new_env[i++]);
+	}
 }
 
 void	do_echo(t_shell *args)
@@ -105,7 +113,6 @@ void	change_env_pwd(t_shell *args)
 		}
 	}
 	free(str);
-	//printf("SOu eu: %s\n e eu %s\n", args->env[i], path);
 }
 
 void	change_env_oldpwd(t_shell *args)
@@ -127,7 +134,26 @@ void	change_env_oldpwd(t_shell *args)
 		}
 	}
 	free(str);
-	//printf("SOu eu: %s\n e eu %s\n", args->env[i], path);
+}
+
+int	see_env_size(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+		if (args->new_env[0] == 0)
+	{
+		while (args->env[i])
+			i++;
+		args->env[i] = malloc(sizeof(char) * ft_strlen(args->input));
+	}
+	else
+	{
+		while (args->new_env[i])
+			i++;
+		args->new_env[i] = malloc(sizeof(char) * ft_strlen(args->input));
+	}
+	return (i);
 }
 
 void	do_export(t_shell *args)
@@ -138,21 +164,146 @@ void	do_export(t_shell *args)
 
 	x = 0;
 	j = 7;
-	i = 0;
-	while (args->env[i])
-		i++;
-	args->env[i] = malloc(sizeof(char) * ft_strlen(args->input));
+	if (args->split[2] != 0)
+	{
+		do_mult_export(args);
+		return ;
+	}
+	if (args->split[1] == 0)
+	{
+		print_env(args);
+		return ;
+	}
+	i = see_env_size(args);
 	while(args->input[j])
 	{
 		if (args->input[j] == '"')
 			j++;
-		args->env[i][x++] = args->input[j++];
+		if (args->new_env[0] != 0)
+			args->new_env[i][x++] = args->input[j++];
+		else
+			args->env[i][x++] = args->input[j++];
 	}
 	args->env[i][x] = '\0';
 	i++;
 	args->env[i] = 0;
 }
 
+void	do_unset(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	x = 0;
+	j = 0;
+	i = 0;
+	//args->new_env = malloc(sizeof(char *) * 256);
+	while(args->split[i++])
+	{
+		if (args->split[i] == 0)
+			break ;
+		j = 0;
+		while (args->env[j])
+		{
+			if (ft_strncmp(args->env[j], args->split[i], ft_strlen(args->split[i])))
+			{
+				args->new_env[x++] = ft_strdup(args->env[j]);
+			}
+			else if (!ft_strncmp(args->env[j], args->split[i], ft_strlen(args->split[i])))
+			{
+				args->env[j] = 0;
+			}
+			j++;
+		}
+	}
+	args->new_env[x] = 0;
+}
+
+void	mult_export_new(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	flag;
+	int	y;
+
+	y = 6;
+	flag = 0;
+	x = 0;
+	j = 0;
+	i = 0;
+	while (args->input[y++])
+	{
+		if (args->input[y] == '"')
+		{
+			flag++;
+			y++;
+		}
+		if (args->input[y] == '\0')
+			break ;
+		if (flag % 2 == 0 && flag != 0)
+		{
+			args->new_env[i][x] = '\0';
+			i++;
+			y++;
+			if (args->input[y] != '\0')
+				args->new_env[i] = malloc(sizeof(char) * (ft_strlen(args->input) - y));
+			x = 0;
+			flag = 0;
+		}
+		args->new_env[i][x] = args->input[y];
+		x++;
+	}
+	args->new_env[i] = 0;
+}
+
+
+void	do_mult_export(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	flag;
+	int	y;
+
+	y = 6;
+	flag = 0;
+	x = 0;
+	j = 0;
+	i = see_env_size(args);
+	if (args->new_env[0] != 0)
+	{
+		mult_export_new(args);
+		return ;
+	}
+	while (args->input[y++])
+	{
+		if (args->input[y] == '"')
+		{
+			flag++;
+			y++;
+		}
+		if (args->input[y] == '\0')
+			break ;
+		if (flag % 2 == 0 && flag != 0)
+		{
+			args->env[i][x] = '\0';
+			i++;
+			y++;
+			if (args->input[y] != '\0')
+				args->env[i] = malloc(sizeof(char) * (ft_strlen(args->input) - y));
+			x = 0;
+			flag = 0;
+		}
+		else
+		{
+			args->env[i][x] = args->input[y];
+			x++;
+		}
+	}
+	args->env[i] = 0;
+}
 
 int	cmdhandler(t_shell *args)
 {
@@ -170,6 +321,8 @@ int	cmdhandler(t_shell *args)
 		do_echo(args);
 	else if(!ft_strncmp(args->split[0], "export", 6))
 		do_export(args);
+	else if(!ft_strncmp(args->split[0], "unset", 5))
+		do_unset(args);
 	else if (do_builtins(args) == 1)
 		return(1);
 	return(1);
