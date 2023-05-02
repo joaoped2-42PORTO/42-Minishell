@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/02 15:34:15 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:53:39 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,47 @@ void	do_export(t_shell *args)
 	args->env[i] = 0;
 }
 
+void	matrix_cleaner(char	**str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		str[i++] = 0;
+}
+
+void	do_unset_new(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	x = 0;
+	j = 0;
+	i = 0;
+	//args->new_env = malloc(sizeof(char *) * 256);
+	while(args->split[i++])
+	{
+		if (args->split[i] == 0)
+			break ;
+		j = 0;
+		while (args->new_env[j])
+		{
+			if (ft_strncmp(args->new_env[j], args->split[i], ft_strlen(args->split[i])))
+			{
+				args->env[x++] = ft_strdup(args->new_env[j]);
+			}
+			else if (!ft_strncmp(args->new_env[j], args->split[i], ft_strlen(args->split[i])))
+			{
+				args->new_env[j] = 0;
+			}
+			j++;
+		}
+	}
+	matrix_cleaner(args->new_env);
+	args->env[x] = 0;
+}
+
 void	do_unset(t_shell *args)
 {
 	int	i;
@@ -217,6 +258,7 @@ void	do_unset(t_shell *args)
 			j++;
 		}
 	}
+	matrix_cleaner(args->env);
 	args->new_env[x] = 0;
 }
 
@@ -322,7 +364,12 @@ int	cmdhandler(t_shell *args)
 	else if(!ft_strncmp(args->split[0], "export", 6))
 		do_export(args);
 	else if(!ft_strncmp(args->split[0], "unset", 5))
-		do_unset(args);
+	{
+		if (args->new_env[0] == 0)
+			do_unset(args);
+		else
+			do_unset_new(args);
+	}
 	else if (do_builtins(args) == 1)
 		return(1);
 	return(1);
