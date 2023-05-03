@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/02 15:53:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/03 22:56:18 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,23 @@ void	print_env(t_shell *args)
 	{
 		while(args->new_env[i])
 			printf("%s\n", args->new_env[i++]);
+	}
+}
+
+void	print_export(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	if (args->new_env[0] == 0)
+	{
+		while(args->env[i])
+			printf("declare -x %s\n", args->env[i++]);
+	}
+	else
+	{
+		while(args->new_env[i])
+			printf("declare -x %s\n", args->new_env[i++]);
 	}
 }
 
@@ -164,14 +181,14 @@ void	do_export(t_shell *args)
 
 	x = 0;
 	j = 7;
-	if (args->split[2] != 0)
-	{
-		do_mult_export(args);
-		return ;
-	}
 	if (args->split[1] == 0)
 	{
-		print_env(args);
+		print_export(args);
+		return ;
+	}
+	else if (args->split[2] != 0)
+	{
+		do_mult_export(args);
 		return ;
 	}
 	i = see_env_size(args);
@@ -265,7 +282,6 @@ void	do_unset(t_shell *args)
 void	mult_export_new(t_shell *args)
 {
 	int	i;
-	int	j;
 	int	x;
 	int	flag;
 	int	y;
@@ -273,7 +289,6 @@ void	mult_export_new(t_shell *args)
 	y = 6;
 	flag = 0;
 	x = 0;
-	j = 0;
 	i = 0;
 	while (args->input[y++])
 	{
@@ -304,7 +319,6 @@ void	mult_export_new(t_shell *args)
 void	do_mult_export(t_shell *args)
 {
 	int	i;
-	int	j;
 	int	x;
 	int	flag;
 	int	y;
@@ -312,7 +326,6 @@ void	do_mult_export(t_shell *args)
 	y = 6;
 	flag = 0;
 	x = 0;
-	j = 0;
 	i = see_env_size(args);
 	if (args->new_env[0] != 0)
 	{

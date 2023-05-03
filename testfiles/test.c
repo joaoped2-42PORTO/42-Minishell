@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:46:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/26 22:33:27 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/03 22:45:28 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 
 int	main(int ac, char **av)
 {
-	char	*str;
+	char	**str;
 	(void)ac;
+	int	i = 0;
 
-	str = getenv(av[1]);
-	printf("%s\n", str);
+	str = execv("export", NULL);
+	while (str[i])
+		printf("%s\n", str[i++]);
 	return (0);
 }
 
