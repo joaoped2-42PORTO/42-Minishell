@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls.c                                               :+:      :+:    :+:   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 11:10:45 by neddy             #+#    #+#             */
-/*   Updated: 2023/04/26 14:28:23 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/05/04 14:17:36 by joaoped2          #+#    #+#             */
+/*   Updated: 2023/05/04 14:47:10 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	lscmd(t_shell *args)
+int	cleandel(t_shell *args)
 {
-	int	pid;
-
-	pid = fork();
-	if (pid == 0)
+	if (args->input == NULL)
 	{
-		if (execv("/bin/ls", args->split) != 0)
-		{
-			perror("Error:");
-			return ;
-		}
+		free(args->input);
+		printf("\n");
+		return (0);
 	}
-	waitpid(-1, NULL, 0);
+	else
+		return (1);
+}
+
+void	freesformain(t_shell *args)
+{
+	free(args->input);
+	free(args->exp);
 }

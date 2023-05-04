@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 15:41:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:47:28 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,40 @@
 
 typedef struct s_shell
 {
+	char	**new_splt;
+	char	**new_env;
 	char	**split;
 	char	*input;
 	char	**env;
-	char	**var;
+	char	**argvs;
+	char	*exp;
 }		t_shell;
 
-//BUILT-INS
+//Commands
 void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
 void	check_pwd(void);
-void	print_env(t_shell *args);
-void	do_export(t_shell *args);
-void	do_echo(t_shell *args);
-
-//NON-BUILT-INS
-void	clearcmd(t_shell *args);
-void	lscmd(t_shell *args);
-void	nonb(t_shell *args);
 
 //Handler
 int		cmdhandler(t_shell *args);
+int		do_builtins(t_shell *args);
 
 //Signals
 void	config_signals(void);
-void	ft_homedk(t_shell *args);
-
+void	change_env_oldpwd(t_shell *args);
+void	change_env_pwd(t_shell *args);
+void	do_mult_export(t_shell *args);
+int		see_env_size(t_shell *args);
+void	mult_export_new(t_shell *args);
+void	print_export(t_shell *args);
+void	matrix_cleaner(char	**str);
+void	do_export(t_shell *args);
+void	do_unset(t_shell *args);
+void	print_env(t_shell *args);
+void	do_echo(t_shell *args);
+void	do_unset_new(t_shell *args);
+void	checkermultexp2(t_shell *args, int flag, int y);
+void	newenvmalloc(t_shell *args, int y, int i);
+int		cleandel(t_shell *args);
+void	freesformain(t_shell *args);
 #endif

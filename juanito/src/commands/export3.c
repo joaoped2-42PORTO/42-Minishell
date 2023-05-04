@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear.c                                            :+:      :+:    :+:   */
+/*   export3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 11:09:49 by neddy             #+#    #+#             */
-/*   Updated: 2023/04/26 14:28:02 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/05/04 12:57:16 by joaoped2          #+#    #+#             */
+/*   Updated: 2023/05/04 12:57:29 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	clearcmd(t_shell *args)
+void	print_export(t_shell *args)
 {
-	int	pid;
+	int	i;
 
-	pid = fork();
-	if (pid == 0)
+	i = 0;
+	if (args->new_env[0] == 0)
 	{
-		if (execv("/bin/clear", args->split) != 0)
-		{
-			perror("Error:");
-			return ;
-		}
+		while (args->env[i])
+			printf("declare -x %s\n", args->env[i++]);
 	}
-	waitpid(-1, NULL, 0);
+	else
+	{
+		while (args->new_env[i])
+			printf("declare -x %s\n", args->new_env[i++]);
+	}
 }

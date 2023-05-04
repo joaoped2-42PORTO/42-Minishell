@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 11:14:04 by neddy             #+#    #+#             */
-/*   Updated: 2023/04/27 14:40:12 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
+/*   Updated: 2023/05/04 12:19:21 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	do_export(t_shell *args)
+void	do_echo(t_shell *args)
 {
 	int	i;
-	int	j;
-	int	x;
 
-	x = 0;
-	j = 7;
-	i = 0;
-	while (args->env[i])
-		i++;
-	args->env[i] = malloc(sizeof(char) * ft_strlen(args->input));
-	while (args->input[j])
-		args->env[i][x++] = args->input[j++];
-	args->env[i][x] = '\0';
-	i++;
-	args->env[i] = 0;
+	if (!ft_strncmp(args->split[1], "-n", 2))
+	{
+		i = 8;
+		while (args->input[i])
+			write(1, &args->input[i++], 1);
+	}
+	else
+	{
+		i = 5;
+		while (args->input[i])
+			write(1, &args->input[i++], 1);
+		write(1, "\n", 1);
+	}
 }
