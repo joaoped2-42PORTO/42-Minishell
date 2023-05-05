@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:34:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/04 14:22:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:30:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,20 @@ void	mult_export_new(t_shell *args)
 	exphelper(args, i, x, y);
 }
 
-void	checker(t_shell *args)
+int	checker(t_shell *args)
 {
 	if (args->split[1] == 0)
 	{
 		print_export(args);
-		return ;
+		return (1);
 	}
 	else if (args->split[2] != 0)
 	{
 		do_mult_export(args);
-		return ;
+		return (0);
 	}
+	else
+		return (0);
 }
 
 void	do_export(t_shell *args)
@@ -75,7 +77,8 @@ void	do_export(t_shell *args)
 
 	x = 0;
 	j = 7;
-	checker(args);
+	if (checker(args) == 1)
+		return ;
 	i = see_env_size(args);
 	while (args->input[j])
 	{
