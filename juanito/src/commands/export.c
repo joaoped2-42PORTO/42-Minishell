@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:55 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/08 10:29:47 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:22:07 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,23 @@ void	checkermultexp(t_shell *args)
 	}
 }
 
-int	checkermultexp2(t_shell *args, int flag, int y)
+void	checkermultexp2(t_shell *args, int *flag, int *y)
 {
-	if (args->input[y] == '"')
+	if (args->input[*y] == '"')
 	{
 		flag++;
 		y++;
 	}
-	return (flag);
 }
 
-void	tiredofpoopo(t_shell *args, int i, int x, int y)
+void	tiredofpoopo(t_shell *args, int *i, int *x, int *y)
 {
-	args->env[i][x] = '\0';
+	args->env[*i][*x] = '\0';
 	i++;
 	y++;
 }
 
-void	cleanxandflag(int x, int flag)
+void	cleanxandflag(int *x, int *flag)
 {
 	x = 0;
 	flag = 0;
@@ -56,19 +55,26 @@ void	do_mult_export(t_shell *args)
 	x = 0;
 	i = see_env_size(args);
 	checkermultexp(args);
-	while (args->input[y++])
+	while (args->input[++y])
 	{
-		checkermultexp2(args, flag, y);
+		checkermultexp2(args, &flag, &y);
 		if (args->input[y] == '\0')
 			break ;
 		if (flag % 2 == 0 && flag != 0)
 		{
-			tiredofpoopo(args, i, x, y);
-			newenvmalloc(args, y, i);
-			cleanxandflag(x, flag);
+			tiredofpoopo(args, &i, &x, &y);
+			newenvmalloc(args, &y, &i);
+			cleanxandflag(&x, &flag);
 		}
 		else
 			args->env[i][x++] = args->input[y];
+		if (flag == 0 && args->input[y] == ' ')
+		{
+			i++;
+			args->env[i] = malloc(sizeof(char) * (ft_strlen(args->input) - y));
+			x = 0;
+		}
 	}
+	i++;
 	args->env[i] = 0;
 }
