@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:34:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/08 11:29:57 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:14:44 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	newenvmalloc(t_shell *args, int *y, int *i)
 {
 	if (args->input[*y] != '\0')
-		args->new_env[*i] = malloc(sizeof(char) * (ft_strlen(args->input) - *y));
+	args->new_env[*i] = malloc(sizeof(char) * (ft_strlen(args->input) - *y));
 }
 
 void	exphelper(t_shell *args, int *i, int *x, int *y)

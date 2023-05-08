@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/08 11:21:18 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:08:52 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ typedef struct s_shell
 	char	**argvs;
 	char	*exp;
 }		t_shell;
+
+typedef struct s_tokens
+{
+	int		doublequote; //""
+	int		singlequote; //''
+	int		backslash; // /
+	int		semicolon; // ;
+	int		redinput; // <
+	int		redioutput; // >
+	int		appendop; // >>
+	int		heredoc; // <<
+	int		pipe; // |
+	int		dollar; // $
+}			t_tokens;
 
 //Commands
 void	check_files_in_path(char *str);
