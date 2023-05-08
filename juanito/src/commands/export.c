@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:55 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/04 14:52:15 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:29:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void	checkermultexp(t_shell *args)
 	}
 }
 
-void	checkermultexp2(t_shell *args, int flag, int y)
+int	checkermultexp2(t_shell *args, int flag, int y)
 {
 	if (args->input[y] == '"')
 	{
 		flag++;
 		y++;
 	}
+	return (flag);
 }
 
 void	tiredofpoopo(t_shell *args, int i, int x, int y)
