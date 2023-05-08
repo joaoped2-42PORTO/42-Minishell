@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:45:02 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/04 14:49:25 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/08 12:05:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int	smallfc(t_shell *args, int j, int i)
 {
 	int	k;
 
-	k = ft_strncmp(args->env[j], args->split[i], ft_strlen(args->split[i]));
+	if (args->env[0] != 0)
+		k = ft_strncmp(args->env[j], args->split[i], ft_strlen(args->env[i]));
+	else
+		k = ft_strncmp(args->new_env[j], args->split[i], ft_strlen(args->new_env[i]));
 	return (k);
 }
 

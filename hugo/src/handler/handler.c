@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/03 22:56:18 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:04:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,213 +153,6 @@ void	change_env_oldpwd(t_shell *args)
 	free(str);
 }
 
-int	see_env_size(t_shell *args)
-{
-	int	i;
-
-	i = 0;
-		if (args->new_env[0] == 0)
-	{
-		while (args->env[i])
-			i++;
-		args->env[i] = malloc(sizeof(char) * ft_strlen(args->input));
-	}
-	else
-	{
-		while (args->new_env[i])
-			i++;
-		args->new_env[i] = malloc(sizeof(char) * ft_strlen(args->input));
-	}
-	return (i);
-}
-
-void	do_export(t_shell *args)
-{
-	int	i;
-	int	j;
-	int	x;
-
-	x = 0;
-	j = 7;
-	if (args->split[1] == 0)
-	{
-		print_export(args);
-		return ;
-	}
-	else if (args->split[2] != 0)
-	{
-		do_mult_export(args);
-		return ;
-	}
-	i = see_env_size(args);
-	while(args->input[j])
-	{
-		if (args->input[j] == '"')
-			j++;
-		if (args->new_env[0] != 0)
-			args->new_env[i][x++] = args->input[j++];
-		else
-			args->env[i][x++] = args->input[j++];
-	}
-	args->env[i][x] = '\0';
-	i++;
-	args->env[i] = 0;
-}
-
-void	matrix_cleaner(char	**str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		str[i++] = 0;
-}
-
-void	do_unset_new(t_shell *args)
-{
-	int	i;
-	int	j;
-	int	x;
-
-	x = 0;
-	j = 0;
-	i = 0;
-	//args->new_env = malloc(sizeof(char *) * 256);
-	while(args->split[i++])
-	{
-		if (args->split[i] == 0)
-			break ;
-		j = 0;
-		while (args->new_env[j])
-		{
-			if (ft_strncmp(args->new_env[j], args->split[i], ft_strlen(args->split[i])))
-			{
-				args->env[x++] = ft_strdup(args->new_env[j]);
-			}
-			else if (!ft_strncmp(args->new_env[j], args->split[i], ft_strlen(args->split[i])))
-			{
-				args->new_env[j] = 0;
-			}
-			j++;
-		}
-	}
-	matrix_cleaner(args->new_env);
-	args->env[x] = 0;
-}
-
-void	do_unset(t_shell *args)
-{
-	int	i;
-	int	j;
-	int	x;
-
-	x = 0;
-	j = 0;
-	i = 0;
-	//args->new_env = malloc(sizeof(char *) * 256);
-	while(args->split[i++])
-	{
-		if (args->split[i] == 0)
-			break ;
-		j = 0;
-		while (args->env[j])
-		{
-			if (ft_strncmp(args->env[j], args->split[i], ft_strlen(args->split[i])))
-			{
-				args->new_env[x++] = ft_strdup(args->env[j]);
-			}
-			else if (!ft_strncmp(args->env[j], args->split[i], ft_strlen(args->split[i])))
-			{
-				args->env[j] = 0;
-			}
-			j++;
-		}
-	}
-	matrix_cleaner(args->env);
-	args->new_env[x] = 0;
-}
-
-void	mult_export_new(t_shell *args)
-{
-	int	i;
-	int	x;
-	int	flag;
-	int	y;
-
-	y = 6;
-	flag = 0;
-	x = 0;
-	i = 0;
-	while (args->input[y++])
-	{
-		if (args->input[y] == '"')
-		{
-			flag++;
-			y++;
-		}
-		if (args->input[y] == '\0')
-			break ;
-		if (flag % 2 == 0 && flag != 0)
-		{
-			args->new_env[i][x] = '\0';
-			i++;
-			y++;
-			if (args->input[y] != '\0')
-				args->new_env[i] = malloc(sizeof(char) * (ft_strlen(args->input) - y));
-			x = 0;
-			flag = 0;
-		}
-		args->new_env[i][x] = args->input[y];
-		x++;
-	}
-	args->new_env[i] = 0;
-}
-
-
-void	do_mult_export(t_shell *args)
-{
-	int	i;
-	int	x;
-	int	flag;
-	int	y;
-
-	y = 6;
-	flag = 0;
-	x = 0;
-	i = see_env_size(args);
-	if (args->new_env[0] != 0)
-	{
-		mult_export_new(args);
-		return ;
-	}
-	while (args->input[y++])
-	{
-		if (args->input[y] == '"')
-		{
-			flag++;
-			y++;
-		}
-		if (args->input[y] == '\0')
-			break ;
-		if (flag % 2 == 0 && flag != 0)
-		{
-			args->env[i][x] = '\0';
-			i++;
-			y++;
-			if (args->input[y] != '\0')
-				args->env[i] = malloc(sizeof(char) * (ft_strlen(args->input) - y));
-			x = 0;
-			flag = 0;
-		}
-		else
-		{
-			args->env[i][x] = args->input[y];
-			x++;
-		}
-	}
-	args->env[i] = 0;
-}
-
 int	cmdhandler(t_shell *args)
 {
 	if (args->input[0] == '\0')
@@ -380,7 +173,7 @@ int	cmdhandler(t_shell *args)
 	{
 		if (args->new_env[0] == 0)
 			do_unset(args);
-		else
+		else if (args->env[0] == 0)
 			do_unset_new(args);
 	}
 	else if (do_builtins(args) == 1)
