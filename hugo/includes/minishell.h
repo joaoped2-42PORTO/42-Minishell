@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/02 15:32:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:55:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 
 typedef struct s_shell
 {
+	int		flag;
 	char	**new_splt;
 	char	**new_env;
 	char	**split; //1a experiencia
@@ -65,4 +66,13 @@ void	config_signals(void);
 void	change_env_oldpwd(t_shell *args);
 void	change_env_pwd(t_shell *args);
 void	do_mult_export(t_shell *args);
+void	print_export(t_shell *args);
+void	do_export(t_shell *args);
+void	single_export(t_shell *args, int *j, int *x, int *i);
+int		see_env_size(t_shell *args);
+int		variable_size(char	*str);
+void	do_unset(t_shell *args);
+void	do_unset_new(t_shell *args);
+int		check_doubles_vars(t_shell *args);
+
 #endif

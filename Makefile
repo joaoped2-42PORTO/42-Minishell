@@ -13,7 +13,9 @@ HSHELL  = hugoshell
 JSHELL  = juanitoshell
 
 SRC		= src/main.c src/commands/cd.c src/commands/pwd.c src/handler/handler.c src/signals/signals.c
-SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/src/handler/handler.c hugo/src/signals/signals.c
+SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/src/handler/handler.c hugo/src/signals/signals.c \
+		hugo/src/commands/export.c hugo/src/commands/export_utils.c hugo/src/commands/unset.c hugo/src/commands/unset_utils.c \
+
 SRCJUAN = juanito/src/commands/cd.c \
 		  juanito/src/commands/echo.c \
 		  juanito/src/commands/env.c \
