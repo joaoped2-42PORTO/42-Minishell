@@ -6,11 +6,53 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/08 16:02:20 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:14:46 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*stringchecker(t_shell *args)
+{
+	char	*str = NULL;
+	int		doublequotes;
+	int		singlequotes;
+	int		backslash;
+	int		i;
+	int		j;
+
+	doublequotes = 0;
+	singlequotes = 0;
+	backslash = 0;
+	i = 0;
+	j = 0;
+	while (args->input[i])
+	{
+		if (args->input[i] == '"')
+		{
+			if (args->input[i + 1] == '"')
+			{
+				doublequotes++;
+				i++;
+			}
+			else if (args->input[i + 1] == '\'')
+			{
+				doublequotes++;
+				i++;
+			}
+		}
+		else if (args->input[i] == '\'')
+			i++;
+		else if (args->input[i] == ' ')
+			j = 1;
+		else
+		{
+
+		}
+	}
+}
+
+
 
 void	echonoflags(t_shell *args)
 {
@@ -20,18 +62,31 @@ void	echonoflags(t_shell *args)
 	int		z;
 	int		flag;
 	char	*src;
+	int		k;
+	int		b;
 
+	//stringreader(args);
 	i = 5;
 	flag = 0;
+	b = 0;
 	while (args->input[i])
 	{
 		if (args->input[i] == '$')
+			b = 1;
+		i++;
+	}
+	i = 5;
+	while (args->input[i])
+	{
+		if (b >= 1)
 		{
 			if (args->input[i + 1] == '\0')
 			{
 				printf("$");
 				break ;
 			}
+			if (args->input[i] == '"' || args->input[i] == '\'')
+				i++;
 			i++;
 			j = 0;
 			x = 0;
@@ -42,7 +97,7 @@ void	echonoflags(t_shell *args)
 				free(src);
 				return ;
 			}
-			while (args->input[i])
+			while (args->input[i] != '"' && args->input[i] != '\'')
 				src[j++] = args->input[i++];
 			src[j] = '\0';
 			while (args->env[x])
@@ -72,15 +127,36 @@ void	echonoflags(t_shell *args)
 				i++;
 			}
 			i = 5;
+			k = 0;
+			while (args->input[i] == ' ')
+				i++;
 			while (args->input[i])
 			{
-				if (flag == 2)
-					write(1, &args->input[i++], 1);
+				if (flag == 0)
+				{
+					if (args->input[i] == ' ')
+						k = 1;
+					else
+					{
+						if (k)
+						{
+							write(1, " ", 1);
+							k = 0;
+						}
+						write(1, &args->input[i], 1);
+					}
+				}
+				else if (flag == 2)
+				{
+					if (args->input[i] != '\"' && args->input[i] != '\'')
+						write(1, &args->input[i], 1);
+				}
 				else
 				{
 					printf("Error");
 					break ;
 				}
+				i++;
 			}
 		}
 		break ;
@@ -96,6 +172,7 @@ void	do_echo(t_shell *args)
 	int		z;
 	int		flag;
 	char	*src;
+	int		k;
 
 	flag = 0;
 	if (!args->split[1])
@@ -148,15 +225,36 @@ void	do_echo(t_shell *args)
 					i++;
 				}
 				i = 8;
+				k = 0;
+				while (args->input[i] == ' ')
+					i++;
 				while (args->input[i])
 				{
-					if (flag == 2)
-						write(1, &args->input[i++], 1);
+					if (flag == 0)
+					{
+						if (args->input[i] == ' ')
+							k = 1;
+						else
+						{
+							if (k)
+							{
+								write(1, " ", 1);
+								k = 0;
+							}
+							write(1, &args->input[i], 1);
+						}
+					}
+					else if (flag == 2)
+					{
+						if (args->input[i] != '\"' && args->input[i] != '\'')
+							write(1, &args->input[i], 1);
+					}
 					else
 					{
 						printf("Error");
 						break ;
 					}
+					i++;
 				}
 			}
 			break;
