@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 15:02:50 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:08:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,26 @@ int	do_builtins(t_shell *args)
 	int	pid;
 	char	*path;
 	char	*res;
+	char	*exec;
+	char	adress[1000];
+	char	*qq;
 
+	getcwd(adress, sizeof(adress));
 	path = "/usr/bin/";
 	res = ft_strjoin(path, args->split[0]);
 	if ((pid = fork()) == 0)
 	{
-    	if(execv(res, args->split) != 0)
+		if (args->input[0] == '.' && args->input[1] == '/')
+		{
+			exec = args->input;
+			qq = ft_strjoin(adress, exec);
+			if(execve(qq, args->split, NULL) != 0)
+			{
+				printf("command not found: %s\n", args->input);
+				exit (1);
+			}
+		}
+    	else if(execve(res, args->split, NULL) != 0)
 		{
 			printf("command not found: %s\n", args->input);
 			exit (1);
