@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/08 16:04:02 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:54:42 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,54 +111,12 @@ void	do_echo(t_shell *args)
 	}
 }
 
-void	change_env_pwd(t_shell *args)
-{
-	int	i;
-	char	path[1000];
-	char	*str;
-
-	str = "PWD=";
-	i = -1;
-	getcwd(path, sizeof(path));
-	while (args->env[++i])
-	{
-		if (!ft_strcmp(args->env[i], "PWD"))
-		{
-			str = ft_strjoin(str, path);
-			args->env[i] = ft_strdup(str);
-			break;
-		}
-	}
-	free(str);
-}
-
-void	change_env_oldpwd(t_shell *args)
-{
-	int	i;
-	char	path[1000];
-	char	*str;
-
-	str = "OLDPWD=";
-	i = -1;
-	getcwd(path, sizeof(path));
-	while (args->env[++i])
-	{
-		if (!ft_strcmp(args->env[i], "OLDPWD"))
-		{
-			str = ft_strjoin(str, path);
-			args->env[i] = ft_strdup(str);
-			break;
-		}
-	}
-	free(str);
-}
-
 int	cmdhandler(t_shell *args)
 {
 	if (args->input[0] == '\0')
 		return (1);
 	else if (!ft_strncmp(args->split[0], "pwd", 3))
-		check_pwd();
+		check_pwd(args);
 	else if (!ft_strncmp(args->split[0], "cd", 2))
 		do_cd(args);
 	else if (!ft_strncmp(args->split[0], "env", 3))

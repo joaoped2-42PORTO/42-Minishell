@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/28 13:53:09 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:54:36 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,43 @@ void	ft_olddk(t_shell *args)
 			return ;
 		}
 		i++;
+	}
+}
+
+void	change_env_pwd(t_shell *args)
+{
+	int	i;
+	char	path[1000];
+	char	*str;
+
+	str = "PWD=";
+	i = -1;
+	getcwd(path, sizeof(path));
+	if (args->new_env[0] == 0)
+	{
+		while (args->env[++i])
+		{
+			if (!ft_strcmp(args->env[i], "PWD"))
+			{
+				str = ft_strjoin(str, path);
+				args->env[i] = ft_strdup(str);
+				free(str);
+				break;
+			}
+		}
+	}
+	else
+	{
+		while (args->new_env[++i])
+		{
+			if (!ft_strcmp(args->new_env[i], "PWD"))
+			{
+				str = ft_strjoin(str, path);
+				args->new_env[i] = ft_strdup(str);
+				free(str);
+				break;
+			}
+		}
 	}
 }
 

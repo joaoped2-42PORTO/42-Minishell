@@ -6,19 +6,44 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 10:42:42 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:52:36 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_pwd(void)
+int	see_pwd(char	**str)
 {
-	char	path[1000];
+	int	i;
 
-	getcwd(path, sizeof(path));
-	if (path[0] == '\0')
-		perror("");
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_strcmp(str[i], "PATH"))
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+void	check_pwd(t_shell *args)
+{
+	int	i;
+	int	j;
+
+	j = 5;
+	if (args->new_env[0] == 0)
+	{
+		i = see_pwd(args->env);
+		while (args->env[i][j])
+			printf("%c", args->env[i][j++]);
+		printf("\n");
+	}
 	else
-		printf("%s\n", path);
+	{
+		i = see_pwd(args->new_env);
+		while (args->new_env[i][j])
+			printf("%c", args->new_env[i][j++]);
+		printf("\n");
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/08 15:55:30 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:55:10 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_shell
 //Commands
 void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
-void	check_pwd(void);
+void	check_pwd(t_shell *args);
 
 //Handler
 int		cmdhandler(t_shell *args);

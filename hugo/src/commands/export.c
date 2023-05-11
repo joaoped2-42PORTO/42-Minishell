@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/08 15:55:55 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 10:46:58 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,9 @@ void	mult_export_new(t_shell *args)
 {
 	int	i;
 	int	x;
-	int	flag;
 	int	y;
 
 	y = 6;
-	flag = 0;
 	x = 0;
 	i = 0;
 	while (args->input[y++])
