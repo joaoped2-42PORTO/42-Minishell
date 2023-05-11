@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 11:55:10 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:00:57 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ int		variable_size(char	*str);
 void	do_unset(t_shell *args);
 void	do_unset_new(t_shell *args);
 int		check_doubles_vars(t_shell *args);
+void	do_exit(t_shell *args);
+void	do_small_exit(t_shell *args);
 
 #endif

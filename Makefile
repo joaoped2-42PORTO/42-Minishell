@@ -37,12 +37,12 @@ LIBFT_DIR = libft
 
 all: $(OBJ)
 		$(MAKE) -C $(LIBFT_DIR)
-		@$(CC) $(CFLAGS) $(SRC) -lreadline -o $(NAME)
+		@$(CC) $(CFLAGS) $(SRC) -lreadline -fsanitize=address -o $(NAME)
 		@echo Compilation Complete!
 
 hugo: $(OBJHUGO)
 		$(MAKE) -C $(LIBFT_DIR)
-		$(CC) $(CFLAGS) $(SRCHUGO) $(LIBFT) -lreadline -o $(HSHELL)
+		$(CC) $(CFLAGS) $(SRCHUGO) $(LIBFT) -lreadline -fsanitize=address -o $(HSHELL)
 		@echo Compilation Complete!
 
 juan: $(OBJUAN)

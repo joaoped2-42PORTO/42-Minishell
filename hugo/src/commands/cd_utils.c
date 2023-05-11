@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/11 12:54:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:37:53 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	change_pwd(char **str1)
 		if (!ft_strcmp(str1[i], "OLDPWD"))
 		{
 			str = ft_strjoin(str, path);
+			free(str1[i]);
 			str1[i] = ft_strdup(str);
 			free(str);
 			return (1);
@@ -48,6 +49,7 @@ void	first_old_pwd(char **str1)
 		if (!ft_strcmp(str1[i], "PWD"))
 		{
 			str = ft_strjoin(str, path);
+			free(str1[i]);
 			str1[i] = ft_strdup(str);
 			free(str);
 			break;

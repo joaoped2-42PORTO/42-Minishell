@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/02 14:56:20 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:02:41 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,49 @@ void	check_valid_input(t_shell *args)
 	args->exp = ft_strtrim(args->exp, " ");
 }
 
+void	alloc_env_mem(char **str, char **str1)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		str1[i] = ft_strdup(str[i]);
+	str1[i] = 0;
+}
+
+int	get_env_size(char **str)
+{
+	int	i;
+
+	while(str[i])
+		i++;
+	return (i);
+}
+
+void	free_split(t_shell *args)
+{
+	int	i;
+
+	i = -1;
+	while (args->split[++i])
+		free(args->split[i]);
+	free(args->split);
+}
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
 	t_shell	*args;
+	int	i;
 
 
+	i = get_env_size(env);
 	args = malloc(sizeof(t_shell));
-	args->new_env = malloc(sizeof(char *) * 256);
-	args->env = ft_calloc(sizeof(char *), 256);
-	args->new_env[0] = 0;
-	args->env = env;
+	args->new_env = ft_calloc(sizeof(char *), (i + 1));
+	args->env = malloc(sizeof(char *) * (i + 1));
+	alloc_env_mem(env, args->env);
+	//args->new_env[0] = 0;
 	config_signals();
 	while (1)
 	{
@@ -101,17 +131,19 @@ int	main(int ac, char **av, char **env)
 		{
 			free(args->input);
 			printf("\n");
-			return (0);
+			do_small_exit(args);
+			break;
 		}
 		args->split = ft_split(args->input, ' ');
 		if (args->input)
 			add_history(args->input);
-		check_valid_input(args);
+		//check_valid_input(args);
 		if (cmdhandler(args) == 0)
 			return (0);
 		free(args->input);
-		free(args->exp);
+		free_split(args);
 	}
-	rl_clear_history();
+	//do_exit(args);
+
 	return (0);
 }

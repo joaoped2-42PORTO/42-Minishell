@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 12:54:42 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:02:50 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,44 @@ void	do_echo(t_shell *args)
 	}
 }
 
+void	do_exit(t_shell *args)
+{
+	int	i;
+
+	i = -1;
+	while (args->split[++i])
+		free(args->split[i]);
+	free(args->split);
+	i = -1;
+	while (args->env[++i] != 0)
+		free(args->env[i]);
+	free(args->env);
+	i = -1;
+	while (args->new_env[++i] != 0)
+		free(args->new_env[i]);
+	free(args->new_env);
+	free(args);
+	rl_clear_history();
+	exit (0);
+}
+
+void	do_small_exit(t_shell *args)
+{
+	int	i;
+
+	i = -1;
+	while (args->env[++i] != 0)
+		free(args->env[i]);
+	free(args->env);
+	i = -1;
+	while (args->new_env[++i] != 0)
+		free(args->new_env[i]);
+	free(args->new_env);
+	free(args);
+	rl_clear_history();
+	exit (0);
+}
+
 int	cmdhandler(t_shell *args)
 {
 	if (args->input[0] == '\0')
@@ -122,7 +160,7 @@ int	cmdhandler(t_shell *args)
 	else if (!ft_strncmp(args->split[0], "env", 3))
 		print_env(args);
 	else if (!ft_strncmp(args->split[0], "exit", 4))
-		return (0);
+		do_exit(args);
 	else if(!ft_strncmp(args->split[0], "echo", 4))
 		do_echo(args);
 	else if(!ft_strncmp(args->split[0], "export", 6))
