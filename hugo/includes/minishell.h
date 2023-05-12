@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/12 11:48:54 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:23:08 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void	do_unset_new(t_shell *args);
 int		check_doubles_vars(t_shell *args);
 void	do_exit(t_shell *args);
 void	do_small_exit(t_shell *args);
+void	child_signals(void);
 
 #endif

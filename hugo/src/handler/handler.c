@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/12 12:29:16 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:23:34 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	do_builtins(t_shell *args)
 	res = ft_strjoin(path, args->split[0]);
 	if ((pid = fork()) == 0)
 	{
+		child_signals();
 		if (args->input[0] == '.' && args->input[1] == '/')
 			open_exec(args);
 		else if(args->input[0] == '/')
