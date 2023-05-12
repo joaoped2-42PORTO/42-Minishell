@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 15:25:11 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/12 11:55:48 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ void	change_env_pwd(t_shell *args)
 		{
 			if (!ft_strcmp(args->env[i], "PWD"))
 			{
+				if (args->path)
+					free(args->path);
 				str = ft_strjoin(str, path);
 				free(args->env[i]);
 				args->env[i] = ft_strdup(str);
+				args->path = ft_strdup(str);
 				free(str);
 				break;
 			}
@@ -59,9 +62,12 @@ void	change_env_pwd(t_shell *args)
 		{
 			if (!ft_strcmp(args->new_env[i], "PWD"))
 			{
+				if (args->path)
+					free(args->path);
 				str = ft_strjoin(str, path);
 				free(args->new_env[i]);
 				args->new_env[i] = ft_strdup(str);
+				args->path = ft_strdup(str);
 				free(str);
 				break;
 			}

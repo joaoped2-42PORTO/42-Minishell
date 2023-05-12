@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/11 15:02:41 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:21:19 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,9 @@ void	alloc_env_mem(char **str, char **str1)
 
 	i = -1;
 	while (str[++i])
+	{
 		str1[i] = ft_strdup(str[i]);
+	}
 	str1[i] = 0;
 }
 
@@ -109,6 +111,22 @@ void	free_split(t_shell *args)
 	free(args->split);
 }
 
+void	get_path_struct(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->env[i])
+	{
+		if (!ft_strncmp(args->env[i], "PWD=", 4))
+		{
+			free(args->path);
+			args->path = ft_strdup(args->env[i]);
+		}
+		i++;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -121,8 +139,10 @@ int	main(int ac, char **av, char **env)
 	args = malloc(sizeof(t_shell));
 	args->new_env = ft_calloc(sizeof(char *), (i + 1));
 	args->env = malloc(sizeof(char *) * (i + 1));
+	args->path = ft_calloc(1, sizeof(char));
 	alloc_env_mem(env, args->env);
 	//args->new_env[0] = 0;
+	get_path_struct(args);
 	config_signals();
 	while (1)
 	{

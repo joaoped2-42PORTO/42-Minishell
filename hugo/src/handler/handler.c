@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 16:08:43 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:29:16 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,55 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
+void	open_exec(t_shell *args)
+{
+	char	*str;
+	int		i;
+	int		total;
+	int		j;
+
+	j = 0;
+	total = (ft_strlen(args->path) + ft_strlen(args->split[0]));
+	i = 4;
+	str = malloc(total * sizeof(char));
+	if (!str)
+		return ;
+	while (args->path[i])
+		str[j++] = args->path[i++];
+	i = 1;
+	while(args->split[0][i])
+		str[j++] = args->split[0][i++];
+	str[j] = '\0';
+	if (execve(str, args->split, NULL) != 0)
+	{
+		perror("Error");
+		exit (1);
+	}
+}
+
+void	open_exec_abs(t_shell *args)
+{
+	if (execve(args->split[0], args->split, NULL) != 0)
+	{
+		perror("Error");
+		exit (1);
+	}
+}
+
 int	do_builtins(t_shell *args)
 {
 	int	pid;
 	char	*path;
 	char	*res;
-	char	*exec;
-	char	adress[1000];
-	char	*qq;
 
-	getcwd(adress, sizeof(adress));
 	path = "/usr/bin/";
 	res = ft_strjoin(path, args->split[0]);
 	if ((pid = fork()) == 0)
 	{
 		if (args->input[0] == '.' && args->input[1] == '/')
-		{
-			exec = args->input;
-			qq = ft_strjoin(adress, exec);
-			if(execve(qq, args->split, NULL) != 0)
-			{
-				printf("command not found: %s\n", args->input);
-				exit (1);
-			}
-		}
+			open_exec(args);
+		else if(args->input[0] == '/')
+			open_exec_abs(args);
     	else if(execve(res, args->split, NULL) != 0)
 		{
 			printf("command not found: %s\n", args->input);
@@ -141,6 +166,7 @@ void	do_exit(t_shell *args)
 	while (args->new_env[++i] != 0)
 		free(args->new_env[i]);
 	free(args->new_env);
+	free(args->path);
 	free(args);
 	rl_clear_history();
 	exit (0);
@@ -158,6 +184,7 @@ void	do_small_exit(t_shell *args)
 	while (args->new_env[++i] != 0)
 		free(args->new_env[i]);
 	free(args->new_env);
+	free(args->path);
 	free(args);
 	rl_clear_history();
 	exit (0);
