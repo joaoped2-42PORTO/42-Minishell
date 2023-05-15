@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/15 12:11:51 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:17:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	do_loop_export(t_shell *args, int *y, int *x, int *i)
 		args->env[*i][(*x)++] = args->input[*y];
 	if (args->flag == 0 && args->input[*y] == ' ')
 	{
+		args->env[*i][*x] = '\0';
 		(*i)++;
 		args->env[*i] = malloc(sizeof(char) * (ft_strlen(args->input) - *y));
 		*x = 0;
@@ -155,6 +156,7 @@ void	do_mult_export(t_shell *args)
 		mult_export_new(args);
 		return ;
 	}
+	args->env[i] = malloc(ft_strlen(args->input) * sizeof(char));
 	while (args->input[y++])
 	{
 		if (args->input[y] == '\0')
