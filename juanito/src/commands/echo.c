@@ -6,53 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/11 16:14:46 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:39:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*stringchecker(t_shell *args)
-{
-	char	*str = NULL;
-	int		doublequotes;
-	int		singlequotes;
-	int		backslash;
-	int		i;
-	int		j;
-
-	doublequotes = 0;
-	singlequotes = 0;
-	backslash = 0;
-	i = 0;
-	j = 0;
-	while (args->input[i])
-	{
-		if (args->input[i] == '"')
-		{
-			if (args->input[i + 1] == '"')
-			{
-				doublequotes++;
-				i++;
-			}
-			else if (args->input[i + 1] == '\'')
-			{
-				doublequotes++;
-				i++;
-			}
-		}
-		else if (args->input[i] == '\'')
-			i++;
-		else if (args->input[i] == ' ')
-			j = 1;
-		else
-		{
-
-		}
-	}
-}
-
-
 
 void	echonoflags(t_shell *args)
 {
@@ -65,7 +23,6 @@ void	echonoflags(t_shell *args)
 	int		k;
 	int		b;
 
-	//stringreader(args);
 	i = 5;
 	flag = 0;
 	b = 0;
