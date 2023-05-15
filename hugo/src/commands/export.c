@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/11 10:46:58 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:11:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	check_input_exp(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->input[i])
+	{
+		if (args->input[i] == '=' && args->input[i + 1] == ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	do_export(t_shell *args)
 {
@@ -21,22 +35,27 @@ void	do_export(t_shell *args)
 	x = 0;
 	j = 7;
 	if (!check_doubles_vars(args))
+	{
+		args->exit_status = 0;
 		return ;
+	}
 	if (args->split[1] == 0)
 	{
 		print_export(args);
+		args->exit_status = 0;
 		return ;
 	}
 	else if (args->split[2] != 0)
 	{
 		do_mult_export(args);
+		args->exit_status = 0;
 		return ;
 	}
 	i = see_env_size(args);
 	single_export(args, &j, &x, &i);
-	args->env[i][x] = '\0';
 	i++;
 	args->env[i] = 0;
+	args->exit_status = 0;
 }
 
 void	do_loop_new_export(t_shell *args, int *y, int *x, int *i)
@@ -82,6 +101,12 @@ void	mult_export_new(t_shell *args)
 		if (args->input[y] == '\0')
 			break ;
 		do_loop_new_export(args, &y, &x, &i);
+		if ((args->input[y] == '=' && args->input[y + 1] == ' ') || (args->input[y] == '=' && args->input[y - 1] == ' '))
+		{
+			printf("Wrong identifier\n");
+			args->exit_status = 1;
+			break ;
+		}
 	}
 	i++;
 	args->new_env[i] = 0;
@@ -135,6 +160,12 @@ void	do_mult_export(t_shell *args)
 		if (args->input[y] == '\0')
 			break ;
 		do_loop_export(args, &y, &x, &i);
+		if ((args->input[y] == '=' && args->input[y + 1] == ' ') || (args->input[y] == '=' && args->input[y - 1] == ' '))
+		{
+			printf("Wrong identifier\n");
+			args->exit_status = 1;
+			break ;
+		}
 	}
 	i++;
 	args->env[i] = 0;

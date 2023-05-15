@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/12 12:21:19 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:04:57 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,18 @@ void	get_path_struct(t_shell *args)
 		}
 		i++;
 	}
+	args->env[i] = 0;
+}
+
+void	init_values(t_shell *args, char	**env, int i)
+{
+	args->new_env = ft_calloc(sizeof(char *), (i + 1));
+	args->env = malloc(sizeof(char *) * (256));
+	args->path = ft_calloc(1, sizeof(char));
+	alloc_env_mem(env, args->env);
+	get_path_struct(args);
+	config_signals();
+	args->exit_status = 127;
 }
 
 int	main(int ac, char **av, char **env)
@@ -134,16 +146,9 @@ int	main(int ac, char **av, char **env)
 	t_shell	*args;
 	int	i;
 
-
 	i = get_env_size(env);
 	args = malloc(sizeof(t_shell));
-	args->new_env = ft_calloc(sizeof(char *), (i + 1));
-	args->env = malloc(sizeof(char *) * (i + 1));
-	args->path = ft_calloc(1, sizeof(char));
-	alloc_env_mem(env, args->env);
-	//args->new_env[0] = 0;
-	get_path_struct(args);
-	config_signals();
+	init_values(args, env, i);
 	while (1)
 	{
 		args->input = readline("👾Phylothinkers👾> ");
@@ -157,13 +162,10 @@ int	main(int ac, char **av, char **env)
 		args->split = ft_split(args->input, ' ');
 		if (args->input)
 			add_history(args->input);
-		//check_valid_input(args);
 		if (cmdhandler(args) == 0)
 			return (0);
 		free(args->input);
 		free_split(args);
 	}
-	//do_exit(args);
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/12 15:23:34 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/15 11:17:07 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	open_exec(t_shell *args)
 	if (execve(str, args->split, NULL) != 0)
 	{
 		perror("Error");
-		exit (1);
+		args->exit_status = 126;
+		exit (126);
 	}
 }
 
@@ -68,7 +69,8 @@ void	open_exec_abs(t_shell *args)
 	if (execve(args->split[0], args->split, NULL) != 0)
 	{
 		perror("Error");
-		exit (1);
+		args->exit_status = 126;
+		exit (126);
 	}
 }
 
@@ -82,7 +84,8 @@ int	do_builtins(t_shell *args)
 	res = ft_strjoin(path, args->split[0]);
 	if ((pid = fork()) == 0)
 	{
-		child_signals();
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (args->input[0] == '.' && args->input[1] == '/')
 			open_exec(args);
 		else if(args->input[0] == '/')
@@ -90,8 +93,10 @@ int	do_builtins(t_shell *args)
     	else if(execve(res, args->split, NULL) != 0)
 		{
 			printf("command not found: %s\n", args->input);
-			exit (1);
+			args->exit_status = 2;
+			exit (2);
 		}
+		args->exit_status = 0;
 	}
 	waitpid(-1, NULL, 0);
 	free(res);
@@ -113,6 +118,7 @@ void	print_env(t_shell *args)
 		while(args->new_env[i])
 			printf("%s\n", args->new_env[i++]);
 	}
+	args->exit_status = 0;
 }
 
 void	print_export(t_shell *args)
@@ -130,6 +136,7 @@ void	print_export(t_shell *args)
 		while(args->new_env[i])
 			printf("declare -x %s\n", args->new_env[i++]);
 	}
+	args->exit_status = 0;
 }
 
 void	do_echo(t_shell *args)
@@ -214,6 +221,8 @@ int	cmdhandler(t_shell *args)
 		else if (args->env[0] == 0)
 			do_unset_new(args);
 	}
+	else if (!ft_strncmp(args->split[0], "$?", 2))
+		printf("%d\n", args->exit_status);
 	else if (do_builtins(args) == 1)
 		return(1);
 	return(1);

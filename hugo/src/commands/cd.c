@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/12 11:55:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/15 11:12:20 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ void	do_cd(t_shell *args)
 	if (error != 0)
 	{
 		perror("Error");
+		args->exit_status = 1;
 		return ;
 	}
 	change_env_pwd(args);
+	args->exit_status = 0;
 }
