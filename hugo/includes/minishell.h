@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/12 15:23:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/15 11:31:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 
 typedef struct s_shell
 {
+	int		env_size;
+	int		exit_status;
 	char	*path;
 	int		flag;
 	char	**new_splt;
