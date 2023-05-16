@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/08 14:54:55 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/16 23:49:39 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,34 @@ void	matrix_cleaner(char	**str)
 		str[i++] = 0;
 }
 
+int	string_comp(char *str, char *str1)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+		i++;
+	while (str1[j])
+	{
+		j++;
+		if (str1[j] == '=')
+			break ;
+	}
+	return (i - j);
+}
+
 void	do_loop_new_unset(t_shell *args, int *x, int j, int i)
 {
-	int	y;
-
-	y = variable_size(args->split[i]);
-	if (ft_strncmp(args->new_env[j], args->split[i], y))
-	{
+	if (string_comp(args->split[i], args->new_env[j]))
 		args->env[(*x)++] = ft_strdup(args->new_env[j]);
-	}
-	else if (!ft_strncmp(args->new_env[j], args->split[i], y))
-	{
-		args->new_env[j] = 0;
-	}
 }
 
 void	do_loop_unset(t_shell *args, int *x, int j, int i)
 {
-	int	y;
-
-	y = variable_size(args->split[i]);
-	if (ft_strncmp(args->env[j], args->split[i], y))
-	{
+	if (string_comp(args->split[i], args->env[j]))
 		args->new_env[(*x)++] = ft_strdup(args->env[j]);
-	}
-	else if (!ft_strncmp(args->env[j], args->split[i], y))
-	{
-		args->env[j] = 0;
-	}
 }
 
 void	do_unset_new(t_shell *args)
@@ -96,5 +96,6 @@ void	do_unset(t_shell *args)
 		}
 	}
 	matrix_cleaner(args->env);
+	x++;
 	args->new_env[x] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/15 12:10:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/16 23:16:42 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	do_loop_new_doubles(t_shell *args, int j)
 	i = 0;
 	while (args->new_env[i])
 	{
-		if (!ft_strncmp(args->split[j], args->new_env[i], variable_size(args->new_env[i])))
+		if (!ft_strncmp(args->split[j], args->new_env[i], variable_size(args->split[j])))
 					return (0);
 		i++;
 	}
@@ -33,7 +33,7 @@ int	do_loop_doubles(t_shell *args, int j)
 	i = 0;
 	while (args->env[i])
 	{
-		if (!ft_strncmp(args->split[j], args->env[i], variable_size(args->env[i])))
+		if (!ft_strncmp(args->split[j], args->env[i], variable_size(args->split[j])))
 					return (0);
 		i++;
 	}
