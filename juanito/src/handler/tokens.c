@@ -6,29 +6,74 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/16 15:34:28 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:56:55 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	checkisnum(t_shell *args)
+void	checkisnum(t_shell *args, int *i)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
 	while (args->input[i])
 	{
 		if (args->input[i] >= 0 && args->input[i] <= 9)
-			j++;
-		i++;
+			write(1, &args->input[i++], 1);
+		else
+			break ;
 	}
-	return (j);
 }
 
-int	checkisletter(t_shell *args)
+void	string(t_shell *args, int *i)
+{
+	int	j;
+	int	*x;
+
+	j = 1;
+	x = &i;
+	while (args->input[*i])
+	{
+		if (args->input[*i] == '"')
+			j++;
+		else
+			*i++;
+	}
+	if (j % 2 != 0)
+		printf("Error\n");
+	else
+	{
+		while (args->input[x])
+		{
+			if (args->input[x] >= 'a' && args->input[x] <= 'z')
+				write(1, &args->input[x], 1);
+			else if (args->input[x] >= 'A' && args->input[x] <= 'Z')
+				write(1, &args->input[x], 1);
+			else if (checkisnum(args, x))
+				continue ;
+			else
+				x++;
+		}
+	}
+}
+
+int	stringnoquotes(t_shell *args, int *i)
+{
+	while (args->input[*i])
+	{
+		if (args->input[*i] >= 'a' && args->input[*i] <= 'z')
+			write(1, &args->input[*i++], 1);
+		else if (args->input[*i] >= 'A' && args->input[*i] <= 'Z')
+			write(1, &args->input[*i++], 1);
+		else if (checkisnum(args, &i) == 1)
+			*i++;
+		else if (args->input[*i] == '"')
+			string(args, &i);
+		else
+			*i++;
+	}
+	return (1);
+}
+
+int	punctuation(t_shell *args)
 {
 	int	i;
 	int	j;
@@ -37,27 +82,15 @@ int	checkisletter(t_shell *args)
 	j = 0;
 	while (args->input[i])
 	{
-		if (args->input[i] >= 'a' && args->input[i] <= 'z')
+		if (args->input[i] == ';' || args->input[i] == '(')
 			j++;
-		else if (args->input[i] >= 'A' && args->input[i] <= 'Z')
+		else if (args->input[i] == ')' || args->input[i] == '{')
 			j++;
-		i++;
-	}
-	return (j);
-}
-
-int	checkissymbol(t_shell *args)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (args->input[i])
-	{
-		if (args->input[i] == '.' || args->input[i] == ',')
+		else if (args->input[i] == '}' || args->input[i] == '[')
 			j++;
-		else if (args->input[i] == ';' || args->input[i] == ':')
+		else if (args->input[i] == ']' || args->input[i] == ',')
+			j++;
+		else if (args->input[i] == '.' || args->input[i] == ':')
 			j++;
 		i++;
 	}
@@ -67,22 +100,28 @@ int	checkissymbol(t_shell *args)
 int	checkisquote(t_shell *args)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (args->input[i])
 	{
 		if (args->input[i] == '\'' || args->input[i] == '"')
-			j++;
-		else if (args->input[i] == '`')
-			j++;
+		{
+			if (args->input[i] == '"')
+			{
+				i++;
+				string(args, &i);
+			}
+		}
+		else if (args->input[i] == '`' || args->input[i] == '\\')
+			continue ;
+		else
+			stringnoquotes(args, &i);
 		i++;
 	}
-	return (j);
+	return (1);
 }
 
-int	checkissignals(t_shell *args)
+int	operators(t_shell *args)
 {
 	int	i;
 	int	j;
@@ -95,70 +134,18 @@ int	checkissignals(t_shell *args)
 			j++;
 		else if (args->input[i] == '*' || args->input[i] == '/')
 			j++;
-		else if (args->input[i] == '%' || args->input[i] == '#')
+		else if (args->input[i] == '%' || args->input[i] == '=')
+			j++;
+		else if (args->input[i] == '!' || args->input[i] == '>')
+			j++;
+		else if (args->input[i] == '<' || args->input[i] == '&')
+			j++;
+		else if (args->input[i] == '|')
 			j++;
 		i++;
 	}
 	return (j);
 }
-
-int	checkotherchars(t_shell *args)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (args->input[i])
-	{
-		if (args->input[i] == '$' || args->input[i] == '\\')
-			j++;
-		else if (args->input[i] == '{' || args->input[i] == '}')
-			j++;
-		else if (args->input[i] == '(' || args->input[i] == ')')
-			j++;
-		i++;
-	}
-	return (j);
-}
-
-void	callchecker(t_shell *args)
-{
-	checkisnum(args);
-	checkisletter(args);
-	checkissymbol(args);
-	checkisquote(args);
-	checkissignals(args);
-	checkotherchars(args);
-}
-
-/*void	checkstring(t_shell *args)
-{
-	int	i;
-	int	checkp;
-
-	i = 0;
-	while (args->input[i])
-	{
-		if (args->input[i] == "\"")
-		{
-			checkp = i;
-			while (args->input[i])
-				i++;
-			i--;
-			if (args->input[i] == "\"")
-				i = checkp;
-			else
-			{
-				printf("Error!");
-				break ;
-			}
-		}
-	}
-}*/
-
-//Preciso de fazer verificacoes dentro de verificacoes durante a leitura da string para dividir os diferentes tokens
-
 
 void	resetvalues(t_shell *args, t_tokens *tokens)
 {
@@ -188,7 +175,6 @@ void	resetvalues(t_shell *args, t_tokens *tokens)
 
 }
 
-
 void	countvalues(t_shell *args, t_tokens *tokens)
 {
 	int	i;
@@ -203,5 +189,5 @@ void	countvalues(t_shell *args, t_tokens *tokens)
 	if (args->input[i] == '-')
 		while (args->input[i] != ' ')
 			i++;
-	checkstring(args);
+	checkisquote(args);
 }
