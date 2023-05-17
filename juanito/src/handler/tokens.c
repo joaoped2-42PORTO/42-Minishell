@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/17 13:56:55 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:42:05 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,13 @@ int	checkisquote(t_shell *args)
 			}
 		}
 		else if (args->input[i] == '`' || args->input[i] == '\\')
-			continue ;
+		{
+			if (args->input[i] == '\\')
+			{
+				i++;
+				write(1, &args->input[i], 1);
+			}
+		}
 		else
 			stringnoquotes(args, &i);
 		i++;
