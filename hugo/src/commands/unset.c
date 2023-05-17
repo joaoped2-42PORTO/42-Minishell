@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/17 09:36:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/17 22:55:06 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	string_comp(char *str, char *str1)
 		if (str1[j] == '=')
 			break ;
 	}
-	return (i - j);
+	return (str[i] - str1[j]);
 }
 
 void	do_loop_new_unset(t_shell *args, int *x, int j, int i)
@@ -48,7 +48,10 @@ void	do_loop_new_unset(t_shell *args, int *x, int j, int i)
 void	do_loop_unset(t_shell *args, int *x, int j, int i)
 {
 	if (string_comp(args->split[i], args->env[j]))
+	{
+		free(args->new_env[*x]);
 		args->new_env[(*x)++] = ft_strdup(args->env[j]);
+	}
 }
 
 void	do_unset_new(t_shell *args)

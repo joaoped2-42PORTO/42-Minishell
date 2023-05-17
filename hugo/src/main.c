@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/17 15:20:49 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/17 22:22:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	check_valid_input(t_shell *args)
 	args->exp = ft_strtrim(args->exp, " ");
 }
 
-void	alloc_env_mem(char **str, char **str1)
+void	alloc_env_mem(char **str, char **str1, char **str2)
 {
 	int	i;
 
@@ -88,8 +88,10 @@ void	alloc_env_mem(char **str, char **str1)
 	while (str[++i])
 	{
 		str1[i] = ft_strdup(str[i]);
+		str2[i] = ft_strdup("1");
 	}
 	str1[i] = 0;
+	str2[i] = 0;
 }
 
 int	get_env_size(char **str)
@@ -133,7 +135,7 @@ void	init_values(t_shell *args, char	**env, int i)
 	args->new_env = ft_calloc(sizeof(char *), i + 1);
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
-	alloc_env_mem(env, args->env);
+	alloc_env_mem(env, args->env, args->new_env);
 	get_path_struct(args);
 	config_signals();
 	args->exit_status = 127;

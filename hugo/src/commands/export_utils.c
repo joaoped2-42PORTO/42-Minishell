@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/17 15:23:40 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/17 22:34:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,15 @@ int	see_env_size(t_shell *args)
 	int	i;
 
 	i = 0;
-	if (args->new_env[0] == 0)
+	if (args->new_env[0][0] == '1')
 	{
 		while (args->env[i])
 			i++;
-		//args->env[i] = malloc(sizeof(char) * (ft_strlen(args->input)));
 	}
 	else
 	{
 		while (args->new_env[i])
 			i++;
-		//args->new_env[i] = malloc(sizeof(char) * (ft_strlen(args->input)));
 	}
 	return (i);
 }
@@ -133,7 +131,7 @@ void	single_export(t_shell *args, int *j, int *x, int *i)
 	if (args->env[0][0] != '1')
 		exchange_memo(args, str, i);
 	else
-		exchange_memo(args, str, i);
+		exchange_memo_new(args, str, i);
 	while (args->input[*j])
 	{
 		if (args->input[*j] == '"')
