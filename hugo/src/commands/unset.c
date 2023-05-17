@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/16 23:49:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/17 09:36:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	matrix_cleaner(char	**str)
 
 	i = 0;
 	while (str[i])
-		str[i++] = 0;
+		str[i++] = ft_strdup("1");
 }
 
 int	string_comp(char *str, char *str1)
