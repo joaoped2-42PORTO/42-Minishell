@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/16 23:23:38 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:22:22 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	do_export(t_shell *args)
 	i = see_env_size(args);
 	single_export(args, &j, &x, &i);
 	i++;
-	args->env[i] = 0;
+	if (args->new_env[0][0] == '1')
+		args->env[i] = 0;
+	else
+		args->new_env[i] = 0;
 	args->exit_status = 0;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/16 23:31:58 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:20:49 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,10 @@ void	get_path_struct(t_shell *args)
 	args->env[i] = 0;
 }
 
-void	init_values(t_shell *args, char	**env)
+void	init_values(t_shell *args, char	**env, int i)
 {
-	args->new_env = ft_calloc(sizeof(char *), (256));
-	args->env = ft_calloc(sizeof(char *), (256));
+	args->new_env = ft_calloc(sizeof(char *), i + 1);
+	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
 	alloc_env_mem(env, args->env);
 	get_path_struct(args);
@@ -144,11 +144,11 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	t_shell	*args;
-	/*int	i;
+	int	i;
 
-	i = get_env_size(env);*/
+	i = get_env_size(env);
 	args = malloc(sizeof(t_shell));
-	init_values(args, env);
+	init_values(args, env, i);
 	while (1)
 	{
 		args->input = readline("👾Phylothinkers👾> ");
