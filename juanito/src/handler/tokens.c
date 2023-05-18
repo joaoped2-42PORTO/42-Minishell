@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/17 15:42:05 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/18 13:32:00 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	checkisnum(t_shell *args, int *i)
 {
-	while (args->input[i])
+	while (args->input[*i])
 	{
-		if (args->input[i] >= 0 && args->input[i] <= 9)
-			write(1, &args->input[i++], 1);
+		if (args->input[*i] >= 0 && args->input[*i] <= 9)
+			write(1, &args->input[*i++], 1);
 		else
 			break ;
 	}
@@ -26,7 +26,7 @@ void	checkisnum(t_shell *args, int *i)
 void	string(t_shell *args, int *i)
 {
 	int	j;
-	int	*x;
+	int	x;
 
 	j = 1;
 	x = &i;
@@ -43,12 +43,11 @@ void	string(t_shell *args, int *i)
 	{
 		while (args->input[x])
 		{
+			checkisnum(args, x);
 			if (args->input[x] >= 'a' && args->input[x] <= 'z')
 				write(1, &args->input[x], 1);
 			else if (args->input[x] >= 'A' && args->input[x] <= 'Z')
 				write(1, &args->input[x], 1);
-			else if (checkisnum(args, x))
-				continue ;
 			else
 				x++;
 		}
@@ -59,12 +58,11 @@ int	stringnoquotes(t_shell *args, int *i)
 {
 	while (args->input[*i])
 	{
+		checkisnum(args, &i);
 		if (args->input[*i] >= 'a' && args->input[*i] <= 'z')
 			write(1, &args->input[*i++], 1);
 		else if (args->input[*i] >= 'A' && args->input[*i] <= 'Z')
 			write(1, &args->input[*i++], 1);
-		else if (checkisnum(args, &i) == 1)
-			*i++;
 		else if (args->input[*i] == '"')
 			string(args, &i);
 		else
