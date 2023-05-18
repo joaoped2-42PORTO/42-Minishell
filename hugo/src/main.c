@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/17 22:22:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:46:13 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	get_path_struct(t_shell *args)
 
 void	init_values(t_shell *args, char	**env, int i)
 {
-	args->new_env = ft_calloc(sizeof(char *), i + 1);
+	args->new_env = ft_calloc(sizeof(char *), i + 2);
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
 	alloc_env_mem(env, args->env, args->new_env);

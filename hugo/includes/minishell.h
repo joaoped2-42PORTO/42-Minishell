@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/15 11:31:02 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:48:56 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int		check_doubles_vars(t_shell *args);
 void	do_exit(t_shell *args);
 void	do_small_exit(t_shell *args);
 void	child_signals(void);
+void	free_matrix(char **str);
 
 #endif
