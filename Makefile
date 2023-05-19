@@ -28,7 +28,8 @@ SRCJUAN = juanito/src/commands/cd.c \
 		  juanito/src/handler/handler.c \
 		  juanito/src/main/main.c \
 		  juanito/src/main/main_utils.c \
-		  juanito/src/signals/signals.c
+		  juanito/src/signals/signals.c \
+		  juanito/src/handler/tokens.c
 OBJ		= $(SRC:.c=.o)
 OBJHUGO = $(SRCHUGO:.c=.o)
 OBJUAN	= $(SRCJUAN:.c=.o)

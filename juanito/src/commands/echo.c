@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/15 10:39:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/19 14:49:45 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	echonoflags(t_shell *args)
 	int		z;
 	int		flag;
 	char	*src;
-	int		k;
+	//int		k;
 	int		b;
 
 	i = 5;
@@ -76,47 +76,8 @@ void	echonoflags(t_shell *args)
 			free (src);
 		}
 		else
-		{
-			while (args->input[i])
-			{
-				if (args->input[i] == '\'' || args->input[i] == '"')
-					flag++;
-				i++;
-			}
-			i = 5;
-			k = 0;
-			while (args->input[i] == ' ')
-				i++;
-			while (args->input[i])
-			{
-				if (flag == 0)
-				{
-					if (args->input[i] == ' ')
-						k = 1;
-					else
-					{
-						if (k)
-						{
-							write(1, " ", 1);
-							k = 0;
-						}
-						write(1, &args->input[i], 1);
-					}
-				}
-				else if (flag == 2)
-				{
-					if (args->input[i] != '\"' && args->input[i] != '\'')
-						write(1, &args->input[i], 1);
-				}
-				else
-				{
-					printf("Error");
-					break ;
-				}
-				i++;
-			}
-		}
-		break ;
+			if (countvalues(args) == 1)
+				break ;
 	}
 	printf("\n");
 }
@@ -124,12 +85,12 @@ void	echonoflags(t_shell *args)
 void	do_echo(t_shell *args)
 {
 	int		i;
-	int		x;
-	int		j;
-	int		z;
+	//int		x;
+	//int		j;
+	//int		z;
 	int		flag;
-	char	*src;
-	int		k;
+	//char	*src;
+	//int		k;
 
 	flag = 0;
 	if (!args->split[1])
@@ -146,8 +107,9 @@ void	do_echo(t_shell *args)
 					printf("$");
 					break ;
 				}
-				i++;
-				j = 0;
+				break ;
+				//countvalues(args);
+				/*j = 0;
 				x = 0;
 				z = 0;
 				src = (char *) malloc(sizeof(char) * (ft_strlen(args->input + i) + 1));
@@ -171,53 +133,14 @@ void	do_echo(t_shell *args)
 					}
 					x++;
 				}
-				free(src);
+				free(src);*/
 			}
 			else
-			{
-				while (args->input[i])
-				{
-					if (args->input[i] == '\'' || args->input[i] == '"')
-						flag++;
-					i++;
-				}
-				i = 8;
-				k = 0;
-				while (args->input[i] == ' ')
-					i++;
-				while (args->input[i])
-				{
-					if (flag == 0)
-					{
-						if (args->input[i] == ' ')
-							k = 1;
-						else
-						{
-							if (k)
-							{
-								write(1, " ", 1);
-								k = 0;
-							}
-							write(1, &args->input[i], 1);
-						}
-					}
-					else if (flag == 2)
-					{
-						if (args->input[i] != '\"' && args->input[i] != '\'')
-							write(1, &args->input[i], 1);
-					}
-					else
-					{
-						printf("Error");
-						break ;
-					}
-					i++;
-				}
-			}
-			break;
+				if (countvalues(args) == 1)
+					break ;
 		}
 	}
 	else
 		echonoflags(args);
-
 }
+
