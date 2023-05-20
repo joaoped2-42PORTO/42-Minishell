@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/18 14:48:56 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:12:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_shell
 	int		exit_status;
 	char	*path;
 	int		flag;
-	char	**new_splt;
+	//char	**new_splt;
 	char	**new_env;
 	char	**split; //1a experiencia
 	char	*input; //1a experiencia
@@ -74,12 +74,15 @@ void	do_export(t_shell *args);
 void	single_export(t_shell *args, int *j, int *x, int *i);
 int		see_env_size(t_shell *args);
 int		variable_size(char	*str);
-void	do_unset(t_shell *args);
-void	do_unset_new(t_shell *args);
+//void	do_unset(t_shell *args);
+//void	do_unset_new(t_shell *args);
 int		check_doubles_vars(t_shell *args);
 void	do_exit(t_shell *args);
 void	do_small_exit(t_shell *args);
 void	child_signals(void);
 void	free_matrix(char **str);
+void	exchange_memo(t_shell *args, char **str, int *i);
+void	unset(t_shell *args);
+char	**dup_env(char **str, char **str1);
 
 #endif

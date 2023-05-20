@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/11 14:37:53 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:13:06 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,8 @@ void	change_env_oldpwd(t_shell *args)
 	int flag;
 
 	flag = 0;
-	if (args->new_env[0] == 0)
-	{
-		if(change_pwd(args->env))
+	if(change_pwd(args->env))
 			flag = 1;
-	}
-	else
-	{
-		if(change_pwd(args->new_env))
-			flag = 1;
-	}
 	if (flag == 0)
 		first_old_pwd(args->env);
 	return ;

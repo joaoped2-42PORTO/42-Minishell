@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/15 11:12:20 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:13:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,18 @@ void	change_env_pwd(t_shell *args)
 	str = "PWD=";
 	i = -1;
 	getcwd(path, sizeof(path));
-	if (args->new_env[0] == 0)
+	while (args->env[++i])
 	{
-		while (args->env[++i])
+		if (!ft_strcmp(args->env[i], "PWD"))
 		{
-			if (!ft_strcmp(args->env[i], "PWD"))
-			{
-				if (args->path)
-					free(args->path);
-				str = ft_strjoin(str, path);
-				free(args->env[i]);
-				args->env[i] = ft_strdup(str);
-				args->path = ft_strdup(str);
-				free(str);
-				break;
-			}
-		}
-	}
-	else
-	{
-		while (args->new_env[++i])
-		{
-			if (!ft_strcmp(args->new_env[i], "PWD"))
-			{
-				if (args->path)
-					free(args->path);
-				str = ft_strjoin(str, path);
-				free(args->new_env[i]);
-				args->new_env[i] = ft_strdup(str);
-				args->path = ft_strdup(str);
-				free(str);
-				break;
-			}
+			if (args->path)
+				free(args->path);
+			str = ft_strjoin(str, path);
+			free(args->env[i]);
+			args->env[i] = ft_strdup(str);
+			args->path = ft_strdup(str);
+			free(str);
+			break;
 		}
 	}
 }

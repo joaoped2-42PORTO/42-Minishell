@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/17 22:38:07 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:00:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,12 +215,7 @@ int	cmdhandler(t_shell *args)
 	else if(!ft_strncmp(args->split[0], "export", 6))
 		do_export(args);
 	else if(!ft_strncmp(args->split[0], "unset", 5))
-	{
-		if (args->new_env[0][0] == '1')
-			do_unset(args);
-		else if (args->env[0][0] == '1')
-			do_unset_new(args);
-	}
+		unset(args);
 	else if (!ft_strncmp(args->split[0], "$?", 2))
 		printf("%d\n", args->exit_status);
 	else if (do_builtins(args) == 1)

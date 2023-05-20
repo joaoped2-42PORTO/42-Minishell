@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/18 14:51:38 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:19:52 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	matrix_cleaner(char	**str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		str[i++] = ft_strdup("1");
-}
 
 int	string_comp(char *str1)
 {
@@ -35,73 +26,43 @@ int	string_comp(char *str1)
 	return (j);
 }
 
-void	do_loop_new_unset(t_shell *args, int *x, int j, int i)
+void	exchange_memo_unset(t_shell *args, char **str, int *i)
 {
-	if (ft_strncmp(args->split[i], args->new_env[j], string_comp(args->new_env[j])))
-		args->env[(*x)++] = ft_strdup(args->new_env[j]);
-}
-
-void	do_loop_unset(t_shell *args, int *x, int j, int i)
-{
-	if (ft_strncmp(args->split[i], args->env[j], string_comp(args->env[j])))
-	{
-		//free(args->new_env[*x]);
-		args->new_env[(*x)++] = ft_strdup(args->env[j]);
-	}
-}
-
-void	do_unset_new(t_shell *args)
-{
-	int	i;
-	int	j;
-	int	x;
-	int size;
-
-	x = 0;
-	j = 0;
-	i = 0;
-	size = see_env_size(args);
+	str = dup_env(args->env, str);
 	free_matrix(args->env);
-	args->env = ft_calloc(size, sizeof(char *));
-	while (args->split[i++])
-	{
-		if (args->split[i] == 0)
-			break ;
-		j = 0;
-		while (args->new_env[j])
-		{
-			do_loop_new_unset(args, &x, j, i);
-			j++;
-		}
-	}
-	matrix_cleaner(args->new_env);
-	args->env[x] = 0;
+	args->env = ft_calloc(*i, sizeof(char *));
 }
 
-void	do_unset(t_shell *args)
+void	unset(t_shell *args)
 {
-	int	i;
-	int	j;
-	int	x;
-	int	size;
+	char	**str;
+	int		i;
+	int		j;
+	int		x;
+	int		size;
 
 	x = 0;
 	j = 0;
 	i = 0;
 	size = see_env_size(args);
-	free_matrix(args->new_env);
-	args->new_env = ft_calloc(size, sizeof(char *));
+	str = ft_calloc((size + 1), sizeof(char *));
+	exchange_memo_unset(args, str, &size);
 	while (args->split[i++])
 	{
 		if (args->split[i] == 0)
 			break ;
 		j = 0;
-		while (args->env[j])
+		while (str[j])
 		{
-			do_loop_unset(args, &x, j, i);
+			if (ft_strncmp(args->split[i], str[j], string_comp(str[j])))
+			{
+				args->env[x++] = ft_strdup(str[j]);
+			}
+			if (args->split[i + 1] == 0)
+				free(str[j]);
 			j++;
 		}
 	}
-	matrix_cleaner(args->env);
-	args->new_env[x] = 0;
+	free(str);
+	args->env[x] = 0;
 }
