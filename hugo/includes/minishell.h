@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/20 17:12:40 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:54:57 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	do_small_exit(t_shell *args);
 void	child_signals(void);
 void	free_matrix(char **str);
 void	exchange_memo(t_shell *args, char **str, int *i);
-void	unset(t_shell *args);
+void	do_unset(t_shell *args);
 char	**dup_env(char **str, char **str1);
 
 #endif
