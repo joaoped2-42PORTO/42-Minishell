@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/19 14:58:43 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:11:22 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,27 @@ void	string(t_shell *args, int *i)
 	int	j;
 	int	x;
 
-	j = 1;
+	j = 0;
 	x = *i;
-	while (args->input[*i])
+	while (args->input[x])
 	{
-		if (args->input[*i] == '"')
+		if (args->input[x] == '"')
 			j++;
-		else
-			i++;
+		x++;
 	}
 	if (j % 2 != 0)
-		printf("Error\n");
+		printf("Error");
 	else
 	{
+		x = *i;
 		while (args->input[x])
 		{
-			if (args->input[x] >= 32 && args->input[x] <= 126)
-				write(1, &args->input[x], 1);
-			x++;
+			if (args->input[x] == '"')
+				x++;
+			else if (args->input[x] >= 32 && args->input[x] <= 126)
+				write(1, &args->input[x++], 1);
+			else
+				x++;
 		}
 	}
 }
@@ -79,17 +82,7 @@ int	checkisquote(t_shell *args, int *i)
 	{
 		if (args->input[*i] == '"')
 			string(args, i);
-		else if (args->input[*i] == '\\')
-		{
-			i++;
-			write(1, &args->input[*i], 1);
-		}
-		else
-		{
-			if (stringnoquotes(args, i) == 1)
-				break ;
-		}
-		i++;
+		break ;
 	}
 	return (1);
 }
