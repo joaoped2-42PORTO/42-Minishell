@@ -3,14 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/22 10:37:19 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:00:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	put_var(t_shell *args, char	*str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (args->input[i] != '$')
+		i++;
+	i++;
+	while (args->input[i])
+		str[j++] = args->input[i++];
+}
+
+int	string_comp(char *str1)
+{
+	int	j;
+
+	j = 0;
+	while (str1[j])
+	{
+		j++;
+		if (str1[j] == '=')
+			break ;
+	}
+	return (j);
+}
+
+void	print_env_var(t_shell *args, char *str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while(args->env[i])
+	{
+		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
+		{
+			while (args->env[i][j] != '=')
+					j++;
+			j++;
+			while (args->env[i][j])
+				printf("%c", args->env[i][j++]);
+			break ;
+		}
+		i++;
+	}
+}
 
 void	echonoflags(t_shell *args)
 {
@@ -25,10 +75,12 @@ void	echonoflags(t_shell *args)
 	i = 5;
 	flag = 0;
 	b = 0;
+	src = ft_calloc(ft_strlen(args->input), sizeof(char));
+	put_var(args, src);
 	while (args->input[i])
 	{
 		if (args->input[i] == '$')
-			b = 1;
+			print_env_var(args, src);
 		i++;
 	}
 	i = 5;
