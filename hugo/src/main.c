@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/22 15:57:43 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:02:00 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,17 +133,10 @@ int	check_pipe_rede(char c, char s)
 {
 	if (c == '|' || c == '<' || c == '>')
 		return (0);
-	if ((c == '<' && s == '<') || (c == '>' && c == '>'))
+	if ((c == '<' && s == '<') || (c == '>' && s == '>'))
 		return (0);
 	return (1);
 }
-
-/*t_comand	*init_list(t_shell *args)
-{
-
-	args->token->next = NULL;
-	return (args->token);
-}*/
 
 t_comand	*get_bottom_stack(t_comand *stack)
 {
@@ -206,20 +199,10 @@ void	init_token(t_shell *args)
 	}
 }
 
-void	print_list(t_shell *args)
-{
-	while (args->token)
-	{
-		printf("%s\n%s\n", args->token->cmd, args->token->argm);
-		args->token = args->token->next;
-	}
-}
-
 void	init_values(t_shell *args, char	**env, int i)
 {
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
-	//args->token = init(args);
 	alloc_env_mem(env, args->env);
 	get_path_struct(args);
 	config_signals();
@@ -263,7 +246,6 @@ int	main(int ac, char **av, char **env)
 		}
 		args->token = init(args);
 		init_token(args);
-		//print_list(args);
 		args->split = ft_split(args->input, ' ');
 		if (args->input)
 			add_history(args->input);
