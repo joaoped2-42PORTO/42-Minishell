@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/18 14:46:13 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:41:29 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,29 @@ int	check_max_string(t_shell *args)
 	while(args->split[i])
 		i++;
 	return (i);
+}
+
+void	print_env_var(t_shell *args, char *str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while(args->env[i])
+	{
+		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
+		{
+			while (args->env[i][j])
+			{
+				while (args->env[i][j] != '=')
+					j++;
+				printf("%c", args->env[i][j++]);
+			}
+			break ;
+		}
+		i++;
+	}
 }
 
 void	check_valid_input(t_shell *args)
@@ -98,6 +121,7 @@ int	get_env_size(char **str)
 {
 	int	i;
 
+	i = 0;
 	while(str[i])
 		i++;
 	return (i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/21 17:33:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:33:06 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,14 @@ void	do_mult_export(t_shell *args)
 	int	i;
 	int	x;
 	int	y;
+	char	**str;
 
 	y = 6;
 	args->flag = 0;
 	x = 0;
 	i = see_env_size(args);
-	args->env[i] = ft_calloc(1, sizeof(char *));
+	str = ft_calloc(i + 1, sizeof(char *));
+	exchange_memo(args, str, &i);
 	while (args->input[y++])
 	{
 		if (args->input[y] == '\0')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/20 17:15:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:31:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,21 @@ void	free_matrix(char **str)
 	free(str);
 }
 
+int	see_split_size(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->split[i])
+		i++;
+	return (i);
+}
+
 void	exchange_memo(t_shell *args, char **str, int *i)
 {
 	str = dup_env(args->env, str);
 	free_matrix(args->env);
-	args->env = ft_calloc(*i + 2, sizeof(char *));
+	args->env = ft_calloc(*i + see_split_size(args), sizeof(char *));
 	args->env = dup_env(str, args->env);
 	args->env[*i] = ft_calloc(ft_strlen(args->input), sizeof(char));
 }
