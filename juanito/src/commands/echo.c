@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/19 14:49:45 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:37:19 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	echonoflags(t_shell *args)
 	int		z;
 	int		flag;
 	char	*src;
-	//int		k;
 	int		b;
 
 	i = 5;
