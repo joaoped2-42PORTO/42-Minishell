@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/22 10:41:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:57:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,6 @@ int	check_max_string(t_shell *args)
 	while(args->split[i])
 		i++;
 	return (i);
-}
-
-void	print_env_var(t_shell *args, char *str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while(args->env[i])
-	{
-		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
-		{
-			while (args->env[i][j])
-			{
-				while (args->env[i][j] != '=')
-					j++;
-				printf("%c", args->env[i][j++]);
-			}
-			break ;
-		}
-		i++;
-	}
 }
 
 void	check_valid_input(t_shell *args)
@@ -103,7 +80,7 @@ void	check_valid_input(t_shell *args)
 	args->exp = ft_strtrim(args->exp, " ");
 }
 
-void	alloc_env_mem(char **str, char **str1, char **str2)
+void	alloc_env_mem(char **str, char **str1)
 {
 	int	i;
 
@@ -111,10 +88,8 @@ void	alloc_env_mem(char **str, char **str1, char **str2)
 	while (str[++i])
 	{
 		str1[i] = ft_strdup(str[i]);
-		str2[i] = ft_strdup("1");
 	}
 	str1[i] = 0;
-	str2[i] = 0;
 }
 
 int	get_env_size(char **str)
@@ -154,15 +129,115 @@ void	get_path_struct(t_shell *args)
 	args->env[i] = 0;
 }
 
+int	check_pipe_rede(char c, char s)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (0);
+	if ((c == '<' && s == '<') || (c == '>' && c == '>'))
+		return (0);
+	return (1);
+}
+
+/*t_comand	*init_list(t_shell *args)
+{
+
+	args->token->next = NULL;
+	return (args->token);
+}*/
+
+t_comand	*get_bottom_stack(t_comand *stack)
+{
+	while (stack -> next)
+		stack = stack -> next;
+	return (stack);
+}
+
+t_comand	*init(t_shell *args)
+{
+	t_comand *ag;
+
+	ag = malloc(sizeof(t_comand));
+	if (!ag)
+		return (NULL);
+	ag->cmd = ft_calloc(ft_strlen(args->input), sizeof(char));
+	ag->argm = ft_calloc(ft_strlen(args->input), sizeof(char));
+	ag->next = NULL;
+	return (ag);
+}
+
+void	add_bottom(t_comand **stack, t_comand *new)
+{
+	t_comand	*bottom;
+
+	bottom = get_bottom_stack(*stack);
+	bottom -> next = new;
+}
+
+void	init_token(t_shell *args)
+{
+	int	i;
+	int	j;
+	t_comand *tmp;
+
+	tmp = args->token;
+	j = 0;
+	i = 0;
+	while (args->input[i])
+	{
+		j = 0;
+		while (!ft_isalnum(args->input[i]))
+			i++;
+		while (args->input[i] && args->input[i] != ' ')
+			tmp->cmd[j++] = args->input[i++];
+		if (args->input[i] == '\0')
+			return ;
+		i++;
+		j = 0;
+		while (!ft_isalnum(args->input[i]))
+			i++;
+		while (args->input[i] && check_pipe_rede(args->input[i], args->input[i + 1]))
+			tmp->argm[j++] = args->input[i++];
+		if (args->input[i] != '\0')
+		{
+			if (!check_pipe_rede(args->input[i], args->input[i + 1]))
+				add_bottom(&args->token, init(args));
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	print_list(t_shell *args)
+{
+	while (args->token)
+	{
+		printf("%s\n%s\n", args->token->cmd, args->token->argm);
+		args->token = args->token->next;
+	}
+}
+
 void	init_values(t_shell *args, char	**env, int i)
 {
-	args->new_env = ft_calloc(sizeof(char *), i + 2);
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
-	alloc_env_mem(env, args->env, args->new_env);
+	//args->token = init(args);
+	alloc_env_mem(env, args->env);
 	get_path_struct(args);
 	config_signals();
 	args->exit_status = 127;
+}
+
+void	free_list(t_shell *args)
+{
+	t_comand *tmp;
+
+	while (args->token)
+	{
+		tmp = args->token->next;
+		free(args->token->cmd);
+		free(args->token->argm);
+		free(args->token);
+		args->token = tmp;
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -182,9 +257,13 @@ int	main(int ac, char **av, char **env)
 		{
 			free(args->input);
 			printf("\n");
+			free_list(args);
 			do_small_exit(args);
 			break;
 		}
+		args->token = init(args);
+		init_token(args);
+		//print_list(args);
 		args->split = ft_split(args->input, ' ');
 		if (args->input)
 			add_history(args->input);
@@ -192,6 +271,7 @@ int	main(int ac, char **av, char **env)
 			return (0);
 		free(args->input);
 		free_split(args);
+		free_list(args);
 	}
 	return (0);
 }

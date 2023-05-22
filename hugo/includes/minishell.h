@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/21 17:54:57 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 12:52:19 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,12 @@
 # include <curses.h>
 # include <term.h>
 
-
+typedef struct s_tokenizer
+{
+	char	*cmd;
+	char	*argm;
+	struct s_tokenizer	*next;
+}		t_comand;
 
 typedef struct s_shell
 {
@@ -41,6 +46,7 @@ typedef struct s_shell
 	int		exit_status;
 	char	*path;
 	int		flag;
+	t_comand	*token;
 	//char	**new_splt;
 	char	**new_env;
 	char	**split; //1a experiencia
@@ -84,5 +90,6 @@ void	free_matrix(char **str);
 void	exchange_memo(t_shell *args, char **str, int *i);
 void	do_unset(t_shell *args);
 char	**dup_env(char **str, char **str1);
+void	init_token(t_shell *args);
 
 #endif

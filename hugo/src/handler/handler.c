@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/21 17:55:04 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:30:50 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	open_exec(t_shell *args)
 		args->exit_status = 126;
 		exit (126);
 	}
+	free (str);
 }
 
 void	open_exec_abs(t_shell *args)
@@ -108,16 +109,8 @@ void	print_env(t_shell *args)
 	int	i;
 
 	i = 0;
-	if (args->new_env[0][0] == '1')
-	{
-		while(args->env[i])
-			printf("%s\n", args->env[i++]);
-	}
-	else
-	{
-		while(args->new_env[i])
-			printf("%s\n", args->new_env[i++]);
-	}
+	while(args->env[i])
+		printf("%s\n", args->env[i++]);
 	args->exit_status = 0;
 }
 
@@ -126,16 +119,8 @@ void	print_export(t_shell *args)
 	int	i;
 
 	i = 0;
-	if (args->new_env[0][0] == '1')
-	{
-		while(args->env[i])
-			printf("declare -x %s\n", args->env[i++]);
-	}
-	else
-	{
-		while(args->new_env[i])
-			printf("declare -x %s\n", args->new_env[i++]);
-	}
+	while(args->env[i])
+		printf("declare -x %s\n", args->env[i++]);
 	args->exit_status = 0;
 }
 
@@ -170,10 +155,6 @@ void	do_exit(t_shell *args)
 	while (args->env[++i] != 0)
 		free(args->env[i]);
 	free(args->env);
-	i = -1;
-	while (args->new_env[++i] != 0)
-		free(args->new_env[i]);
-	free(args->new_env);
 	free(args->path);
 	free(args);
 	rl_clear_history();
@@ -188,10 +169,6 @@ void	do_small_exit(t_shell *args)
 	while (args->env[++i] != 0)
 		free(args->env[i]);
 	free(args->env);
-	i = -1;
-	while (args->new_env[++i] != 0)
-		free(args->new_env[i]);
-	free(args->new_env);
 	free(args->path);
 	free(args);
 	rl_clear_history();

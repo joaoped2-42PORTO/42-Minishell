@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/21 17:55:31 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:53:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	string_comp(char *str1)
-{
-	int	j;
-
-	j = 0;
-	while (str1[j])
-	{
-		j++;
-		if (str1[j] == '=')
-			break ;
-	}
-	return (j);
-}
 
 void	exchange_memo_unset(t_shell *args, char **str, int *i)
 {
@@ -47,7 +33,7 @@ void	unset(t_shell *args, char *str1)
 	j = 0;
 	while (str[j])
 	{
-		if (ft_strncmp(str1, str[j], string_comp(str[j])))
+		if (ft_strncmp(str1, str[j], variable_size(str[j])))
 		{
 				args->env[x++] = ft_strdup(str[j]);
 		}

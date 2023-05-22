@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/22 10:33:06 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:55:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	do_mult_export(t_shell *args)
 			break ;
 		}
 	}
+	free_matrix(str);
 	i++;
 	args->env[i] = 0;
 }
