@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/19 14:33:08 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:17:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	do_unset(t_shell *args);
 void	print_env(t_shell *args);
 void	do_echo(t_shell *args);
 void	do_unset_new(t_shell *args);
-void		checkermultexp2(t_shell *args, int *flag, int *y);
+void	checkermultexp2(t_shell *args, int *flag, int *y);
 void	newenvmalloc(t_shell *args, int *y, int *i);
 int		cleandel(t_shell *args);
 void	freesformain(t_shell *args);
