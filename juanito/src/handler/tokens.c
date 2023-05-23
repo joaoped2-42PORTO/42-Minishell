@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/22 15:32:15 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:20:32 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*checkbars(t_shell *args, int *i)
 {
 	int		x;
 	int		j;
-	char	*src = NULL;
+	char	*src;
 
 	x = *i;
 	j = 0;
@@ -27,22 +27,8 @@ char	*checkbars(t_shell *args, int *i)
 	{
 		if (args->input[x] == '\\')
 		{
-			if (args->input[x + 1] == '\\')
-			{
-				printf("Error");
-				return (0);
-			}
-			else if (args->input[x + 1] == '\'')
-			{
-				x++;
-				src[j++] = args->input[x++];
-			}
-			else if (args->input[x + 1] == '"')
-			{
-				x++;
-				src[j++] = args->input[x++];
-			}
-			x++;
+			printf("Error, string contains \\");
+			return (0);
 		}
 		else
 			src[j++] = args->input[x++];
@@ -100,7 +86,7 @@ void	print_env_var(t_shell *args, char *str)
 
 	j = 0;
 	i = 0;
-	while(args->env[i])
+	while (args->env[i])
 	{
 		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
 		{
@@ -203,6 +189,8 @@ int	countvalues(t_shell *args)
 			i++;
 		i++;
 	}
+	while (args->input[i] == ' ')
+		i++;
 	if (checkisquote(args, &i) == 1)
 		return (1);
 	return (0);

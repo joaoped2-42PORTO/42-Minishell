@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/22 14:17:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:01:19 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	newenvmalloc(t_shell *args, int *y, int *i);
 int		cleandel(t_shell *args);
 void	freesformain(t_shell *args);
 int		countvalues(t_shell *args);
+char	*checkbars(t_shell *args, int *i);
 #endif
