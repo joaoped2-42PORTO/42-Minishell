@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/22 12:52:19 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:17:33 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_tokenizer
 {
 	char	*cmd;
 	char	*argm;
+	char	*pipe_dir;
 	struct s_tokenizer	*next;
 }		t_comand;
 

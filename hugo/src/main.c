@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/22 16:02:00 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:46:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ t_comand	*init(t_shell *args)
 		return (NULL);
 	ag->cmd = ft_calloc(ft_strlen(args->input), sizeof(char));
 	ag->argm = ft_calloc(ft_strlen(args->input), sizeof(char));
+	ag->pipe_dir = ft_calloc(3, sizeof(char));
 	ag->next = NULL;
 	return (ag);
 }
@@ -190,10 +191,13 @@ void	init_token(t_shell *args)
 			i++;
 		while (args->input[i] && check_pipe_rede(args->input[i], args->input[i + 1]))
 			tmp->argm[j++] = args->input[i++];
+		j = 0;
 		if (args->input[i] != '\0')
 		{
 			if (!check_pipe_rede(args->input[i], args->input[i + 1]))
 				add_bottom(&args->token, init(args));
+			while (args->input[i] != ' ' && !ft_isalnum(args->input[i]))
+				args->token->pipe_dir[j++] = args->input[i++];
 		}
 		tmp = tmp->next;
 	}
@@ -218,6 +222,7 @@ void	free_list(t_shell *args)
 		tmp = args->token->next;
 		free(args->token->cmd);
 		free(args->token->argm);
+		free(args->token->pipe_dir);
 		free(args->token);
 		args->token = tmp;
 	}
@@ -240,7 +245,7 @@ int	main(int ac, char **av, char **env)
 		{
 			free(args->input);
 			printf("\n");
-			free_list(args);
+			//free_list(args);
 			do_small_exit(args);
 			break;
 		}
