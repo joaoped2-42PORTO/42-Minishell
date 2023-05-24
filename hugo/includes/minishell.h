@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/23 22:17:33 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/24 22:59:12 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_shell
 //Utils Functions
 
 //Commands
-void	check_files_in_path(char *str);
+//void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
 void	check_pwd(t_shell *args);
 
@@ -85,12 +85,23 @@ int		variable_size(char	*str);
 //void	do_unset_new(t_shell *args);
 int		check_doubles_vars(t_shell *args);
 void	do_exit(t_shell *args);
-void	do_small_exit(t_shell *args);
 void	child_signals(void);
 void	free_matrix(char **str);
 void	exchange_memo(t_shell *args, char **str, int *i);
 void	do_unset(t_shell *args);
 char	**dup_env(char **str, char **str1);
 void	init_token(t_shell *args);
+t_comand	*get_bottom_stack(t_comand *stack);
+void		add_bottom(t_comand **stack, t_comand *new);
+int			check_pipe_rede(char c, char s);
+void		init_values(t_shell *args, char	**env, int i);
+t_comand	*init(t_shell *args);
+void		do_small_exit(t_shell *args);
+void	alloc_env_mem(char **str, char **str1);
+void	get_path_struct(t_shell *args);
+void	free_list(t_shell *args);
+void	free_split(t_shell *args);
+int	get_env_size(char **str);
+int	valid_input(t_shell *args);
 
 #endif
