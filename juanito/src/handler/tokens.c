@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/24 16:44:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:53:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	*checkbars(t_shell *args, int *i)
 	src[j] = '\0';
 	return (src);
 }
-
-
 
 void	string(t_shell *args, int *i)
 {
