@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/23 16:01:19 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:18:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,9 @@ int		cleandel(t_shell *args);
 void	freesformain(t_shell *args);
 int		countvalues(t_shell *args);
 char	*checkbars(t_shell *args, int *i);
+void	treatingdollarsign(t_shell *args, int *i);
+void	string(t_shell *args, int *i);
+int		isdollar(t_shell *args);
+void	getindexafterdollar(t_shell *args, int *i);
+int		checkafterdollar(t_shell *args);
 #endif

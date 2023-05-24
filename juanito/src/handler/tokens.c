@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/23 16:20:32 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:44:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,30 @@ char	*checkbars(t_shell *args, int *i)
 
 	x = *i;
 	j = 0;
-	src = ft_strdup(args->input);
+	src = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
 	if (!src)
 		free(src);
 	while (args->input[x])
 	{
-		if (args->input[x] == '\\')
+		if (args->input[x] == '\\' || args->input[x] == ';')
 		{
-			printf("Error, string contains \\");
+			printf("Error, contains special characters");
 			return (0);
 		}
-		else
-			src[j++] = args->input[x++];
+		else if (args->input[x] != '"')
+		{
+			if (args->input[x] == '$')
+				while (args->input[x] != ' ' && args->input[x])
+					x++;
+			src[j++] = args->input[x];
+		}
+		x++;
 	}
 	src[j] = '\0';
 	return (src);
 }
+
+
 
 void	string(t_shell *args, int *i)
 {
@@ -46,130 +54,41 @@ void	string(t_shell *args, int *i)
 	x = *i;
 	while (args->input[x])
 	{
-		if (args->input[x] == '"' || args->input[x] == '\'')
+		if (args->input[x] == '"')
 			j++;
 		x++;
 	}
+	x = *i;
 	if (j % 2 != 0)
 		printf("Error");
 	else
-		checkbars(args, i);
+		checkbars(args, &x);
 }
 
-int	stringnoquotes(t_shell *args, int *i)
+void	checkisquote(t_shell *args, int *i)
 {
 	int	x;
 
 	x = *i;
-	checkbars(args, i);
-	return (1);
-}
-
-int	string_comp(char *str1)
-{
-	int	j;
-
-	j = 0;
-	while (str1[j])
+	while (args->input[x])
 	{
-		j++;
-		if (str1[j] == '=')
-			break ;
-	}
-	return (j);
-}
-
-void	print_env_var(t_shell *args, char *str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (args->env[i])
-	{
-		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
+		if (args->input[x] == '"')
 		{
-			while (args->env[i][j] != '=')
-					j++;
-			j++;
-			while (args->env[i][j])
-				printf("%c", args->env[i][j++]);
-			return ;
-		}
-		i++;
-	}
-}
-
-void	put_var(t_shell *args, char	*str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (args->input[i] != '$')
-		i++;
-	i++;
-	while (args->input[i])
-		str[j++] = args->input[i++];
-}
-
-void	anotherfunction(t_shell *args, int *i)
-{
-	char	*src;
-
-	src = ft_calloc(ft_strlen(args->input), sizeof(char));
-	while (args->input[*i])
-	{
-		if (args->input[*i] == '$')
-		{
-			put_var(args, src);
-			print_env_var(args, src);
-			return ;
-		}
-		i++;
-	}
-}
-
-void	treatingdollarsign(t_shell *args, int *i)
-{
-	int	x;
-
-	x = *i;
-	if (args->input[x] == '$')
-	{
-		if (args->input[x + 1] == '\'' || args->input[x + 1] == '"')
-		{
-			x++;
 			string(args, &x);
-		}
-		else
-			anotherfunction(args, i);
-	}
-}
-
-int	checkisquote(t_shell *args, int *i)
-{
-	while (args->input[*i])
-	{
-		if (args->input[*i] == '"')
-		{
-			string(args, i);
 			break ;
 		}
-		else if (args->input[*i] == '$')
+		else if (args->input[x] == '$')
 		{
-			treatingdollarsign(args, i);
+			treatingdollarsign(args, &x);
 			break ;
 		}
 		else
 		{
-			if (stringnoquotes(args, i) == 1)
-				break ;
+			checkbars(args, &x);
+			break ;
 		}
+		x++;
 	}
-	return (1);
 }
 
 int	countvalues(t_shell *args)
@@ -191,7 +110,6 @@ int	countvalues(t_shell *args)
 	}
 	while (args->input[i] == ' ')
 		i++;
-	if (checkisquote(args, &i) == 1)
-		return (1);
-	return (0);
+	checkisquote(args, &i);
+	return (i);
 }

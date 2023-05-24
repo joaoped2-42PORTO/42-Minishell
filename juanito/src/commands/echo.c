@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/23 16:19:45 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:17:07 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,36 @@
 
 void	echonoflags(t_shell *args)
 {
-	//char	*src = NULL;
-	int		i;
+	int	i;
+	int	x;
 
-	i = 0;
-	countvalues(args);
+	i = countvalues(args);
 	printf("%s", checkbars(args, &i));
-	printf("\n");
+	if (isdollar(args) == 0)
+		printf("\n");
+	else
+	{
+		treatingdollarsign(args, &i);
+		x = checkafterdollar(args);
+		getindexafterdollar(args, &x);
+		printf("\n");
+	}
 }
 
 void	do_echo(t_shell *args)
 {
+	int	i;
+
 	if (!args->split[1])
 		printf("\n");
 	else if (!ft_strncmp(args->split[1], "-n", 2))
-		countvalues(args);
+	{
+		if (!args->split[2])
+			return ;
+		i = countvalues(args);
+		if (isdollar(args) == 0)
+			printf("%s", checkbars(args, &i));
+	}
 	else
 		echonoflags(args);
 }
