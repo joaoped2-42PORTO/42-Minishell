@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 11:16:54 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 12:40:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	valid_input(t_shell *args)
 			i++;
 		if (!loop_input(args, &i))
 			return (0);
+		if (args->input[i] != '\0')
+			i++;
 	}
 	return (1);
 }

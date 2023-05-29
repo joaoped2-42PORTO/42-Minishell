@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/22 11:53:21 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:28:18 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exchange_memo_unset(t_shell *args, char **str, int *i)
 {
 	str = dup_env(args->env, str);
 	free_matrix(args->env);
-	args->env = ft_calloc(*i, sizeof(char *));
+	args->env = ft_calloc(*i + 1, sizeof(char *));
 }
 
 void	unset(t_shell *args, char *str1)

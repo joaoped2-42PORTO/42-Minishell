@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/22 10:31:30 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:47:17 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	do_loop_doubles(t_shell *args, int j)
 	i = 0;
 	while (args->env[i])
 	{
-		if (!ft_strncmp(args->split[j], args->env[i], variable_size(args->split[j])))
+		if (!ft_strncmp(args->split[j], args->env[i], variable_size(args->env[i])))
 					return (0);
 		i++;
 	}
@@ -95,7 +95,7 @@ void	single_export(t_shell *args, int *j, int *x, int *i)
 	char	**str;
 
 	str = ft_calloc(*i + 1, sizeof(char *));
-		exchange_memo(args, str, i);
+	exchange_memo(args, str, i);
 	while (args->input[*j])
 	{
 		if (args->input[*j] == '"')

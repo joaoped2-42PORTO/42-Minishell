@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/29 12:23:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:27:55 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-char	*get_path_acess(t_shell *args);
-{
-	int	i;
-	char *str;
 
-	i = 0;
-	while (!ft_strncmp(args->env[i], "PATH", variable_size(args->env[i])))
-		i++;
-	str = ft_strdup(args->env[i])
-	return(args->env[i]);
-}
 
 void	open_exec(t_shell *args)
 {
@@ -71,10 +61,13 @@ void	open_exec(t_shell *args)
 	if (execve(str, args->split, NULL) != 0)
 	{
 		perror("Error");
+		free (str);
 		args->exit_status = 126;
 		exit (126);
 	}
 	free (str);
+	args->exit_status = 0;
+	exit (0);
 }
 
 void	open_exec_abs(t_shell *args)
@@ -85,16 +78,66 @@ void	open_exec_abs(t_shell *args)
 		args->exit_status = 126;
 		exit (126);
 	}
+	args->exit_status = 0;
+	exit (0);
+}
+
+char	*get_path(t_shell *args)
+{
+	int	i;
+	char	*str;
+
+	i = 0;
+	while (args->env[i])
+	{
+		if (!ft_strncmp(args->env[i], "PATH", 4))
+		{
+			str = ft_strdup(args->env[i]);
+			return (str);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*get_acess(char	**str, t_shell *args)
+{
+	int i;
+	char	*join;
+	char	*tmp;
+
+	i = 0;
+	while (str[i])
+	{
+		tmp = ft_strjoin(str[i], "/");
+		join = ft_strjoin(tmp, args->token->cmd);
+		free (tmp);
+		if (access(join, X_OK) == 0)
+			break;
+		if (str[i + 1] == 0)
+			break;
+		i++;
+		free (join);
+	}
+	free_matrix(str);
+	return (join);
 }
 
 int	do_builtins(t_shell *args)
 {
 	int	pid;
 	char	*path;
-	char	*res;
+	char	**path_split;
 
-	path = "/usr/bin/";
-	res = ft_strjoin(path, args->split[0]);
+	path = get_path(args);
+	if (path)
+	{
+		path_split = ft_split(path, ':');
+		free (path);
+		path = get_acess(path_split, args);
+	}
+	else
+		return (0);
 	if ((pid = fork()) == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -103,7 +146,7 @@ int	do_builtins(t_shell *args)
 			open_exec(args);
 		else if(args->input[0] == '/')
 			open_exec_abs(args);
-    	else if(execve(res, args->split, NULL) != 0)
+    	if(execve(path, args->split, NULL) != 0)
 		{
 			printf("command not found: %s\n", args->input);
 			args->exit_status = 2;
@@ -112,7 +155,7 @@ int	do_builtins(t_shell *args)
 		args->exit_status = 0;
 	}
 	waitpid(-1, NULL, 0);
-	free(res);
+	free (path);
 	return(1);
 }
 

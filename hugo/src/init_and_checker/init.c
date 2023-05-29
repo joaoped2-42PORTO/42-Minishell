@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 11:32:03 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:24:54 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ void	token_helper(t_shell *args, int *i, int *j, t_comand *tmp)
 		(*i)++;
 	while (args->input[*i] && args->input[*i] != ' ')
 		tmp->cmd[(*j)++] = args->input[(*i)++];
+	while (args->input[*i] && !ft_isalnum(args->input[*i]))
+		(*i)++;
 	if (args->input[*i] == '\0')
 		return ;
-	(*i)++;
+	//(*i)++;
 	*j = 0;
-	while (!ft_isalnum(args->input[*i]))
+	while (args->input[*i] && !ft_isalnum(args->input[*i]))
 		(*i)++;
 	while (args->input[*i]
 		&& check_pipe_rede(args->input[*i], args->input[*i + 1]))
