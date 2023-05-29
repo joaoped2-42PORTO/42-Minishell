@@ -49,7 +49,7 @@ hugo: $(OBJHUGO)
 
 juan: $(OBJUAN)
 		@make -s -C $(LIBFT_DIR)
-		@$(CC) $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -fsanitize=address -o $(JSHELL)
+		@$(CC) $(CFLAGS) $(SRCJUAN) $(LIBFT) -lreadline -o $(JSHELL)
 		@echo "${GREEN}Minishell Compilation Complete! ${RESET}"
 
 src/%.o:	src/%.c
