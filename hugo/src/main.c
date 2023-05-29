@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/24 23:47:00 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:18:34 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		args->input = readline("👾Phylothinkers👾> ");
+		if (args->input)
+			add_history(args->input);
 		if (args->input == NULL)
 		{
 			free(args->input);
@@ -109,15 +111,15 @@ int	main(int ac, char **av, char **env)
 		}
 		else
 		{
-			args->token = init(args);
-			init_token(args);
-			args->split = ft_split(args->input, ' ');
-			if (args->input)
-				add_history(args->input);
-			if (cmdhandler(args) == 0)
-				return (0);
-			free_split(args);
-			free_list(args);
+		args->token = init(args);
+		init_token(args);
+		args->split = ft_split(args->input, ' ');
+		if (args->input)
+			add_history(args->input);
+		if (cmdhandler(args) == 0)
+			return (0);
+		free_split(args);
+		free_list(args);
 		}
 		free(args->input);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/24 23:46:07 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:16:54 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	see_dbquote_string(char *str, int *i)
 	{
 		(*i)++;
 		if (str[*i] == '\"')
-			return(1);
+			return (1);
 	}
 	return (0);
 }
@@ -45,6 +45,31 @@ int	see_quote_string(char *str, int *i)
 	return (0);
 }
 
+int	loop_input(t_shell *args, int *i)
+{
+	if (args->input[*i] == '\'')
+	{
+		(*i)++;
+		if (!see_quote_string(args->input, i))
+			return (0);
+		(*i)++;
+	}
+	else if (args->input[*i] == '\"')
+	{
+		(*i)++;
+		if (!see_dbquote_string(args->input, i))
+			return (0);
+		(*i)++;
+	}
+	else if (args->input[*i] == '|')
+	{
+		(*i)++;
+		if (!see_closed_pipe(args->input, i))
+			return (0);
+	}
+	return (1);
+}
+
 int	valid_input(t_shell *args)
 {
 	int	i;
@@ -58,26 +83,8 @@ int	valid_input(t_shell *args)
 			i++;
 		while (args->input[i] == ' ')
 			i++;
-		if (args->input[i] == '\'')
-		{
-			i++;
-			if(!see_quote_string(args->input, &i))
-				return (0);
-			i++;
-		}
-		else if (args->input[i] == '\"')
-		{
-			i++;
-			if(!see_dbquote_string(args->input, &i))
-				return (0);
-			i++;
-		}
-		else if (args->input[i] == '|')
-		{
-			i++;
-			if(!see_closed_pipe(args->input, &i))
-				return (0);
-		}
+		if (!loop_input(args, &i))
+			return (0);
 	}
 	return (1);
 }
