@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/24 22:37:27 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:32:03 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_comand	*init(t_shell *args)
 {
-	t_comand *ag;
+	t_comand	*ag;
 
 	ag = malloc(sizeof(t_comand));
 	if (!ag)
@@ -26,38 +26,44 @@ t_comand	*init(t_shell *args)
 	return (ag);
 }
 
+void	token_helper(t_shell *args, int *i, int *j, t_comand *tmp)
+{
+	*j = 0;
+	while (!ft_isalnum(args->input[*i]))
+		(*i)++;
+	while (args->input[*i] && args->input[*i] != ' ')
+		tmp->cmd[(*j)++] = args->input[(*i)++];
+	if (args->input[*i] == '\0')
+		return ;
+	(*i)++;
+	*j = 0;
+	while (!ft_isalnum(args->input[*i]))
+		(*i)++;
+	while (args->input[*i]
+		&& check_pipe_rede(args->input[*i], args->input[*i + 1]))
+		tmp->argm[(*j)++] = args->input[(*i)++];
+	*j = 0;
+	if (args->input[*i] != '\0')
+	{
+		if (!check_pipe_rede(args->input[*i], args->input[*i + 1]))
+			add_bottom(&args->token, init(args));
+		while (args->input[*i] != ' ' && !ft_isalnum(args->input[*i]))
+			args->token->pipe_dir[(*j)++] = args->input[(*i)++];
+	}
+}
+
 void	init_token(t_shell *args)
 {
-	int	i;
-	int	j;
-	t_comand *tmp;
+	int			i;
+	int			j;
+	t_comand	*tmp;
 
 	tmp = args->token;
 	j = 0;
 	i = 0;
 	while (args->input[i])
 	{
-		j = 0;
-		while (!ft_isalnum(args->input[i]))
-			i++;
-		while (args->input[i] && args->input[i] != ' ')
-			tmp->cmd[j++] = args->input[i++];
-		if (args->input[i] == '\0')
-			return ;
-		i++;
-		j = 0;
-		while (!ft_isalnum(args->input[i]))
-			i++;
-		while (args->input[i] && check_pipe_rede(args->input[i], args->input[i + 1]))
-			tmp->argm[j++] = args->input[i++];
-		j = 0;
-		if (args->input[i] != '\0')
-		{
-			if (!check_pipe_rede(args->input[i], args->input[i + 1]))
-				add_bottom(&args->token, init(args));
-			while (args->input[i] != ' ' && !ft_isalnum(args->input[i]))
-				args->token->pipe_dir[j++] = args->input[i++];
-		}
+		token_helper(args, &i, &j, tmp);
 		tmp = tmp->next;
 	}
 }

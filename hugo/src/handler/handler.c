@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/23 22:37:44 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/29 12:23:29 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ int	ft_strcmp(const char *s1, const char *s2)
 	while (!s1 && !s2 && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
+}
+
+char	*get_path_acess(t_shell *args);
+{
+	int	i;
+	char *str;
+
+	i = 0;
+	while (!ft_strncmp(args->env[i], "PATH", variable_size(args->env[i])))
+		i++;
+	str = ft_strdup(args->env[i])
+	return(args->env[i]);
 }
 
 void	open_exec(t_shell *args)
@@ -141,38 +153,6 @@ void	do_echo(t_shell *args)
 			write(1, &args->input[i++], 1);
 		write(1, "\n", 1);
 	}
-}
-
-void	do_exit(t_shell *args)
-{
-	int	i;
-
-	i = -1;
-	while (args->split[++i])
-		free(args->split[i]);
-	free(args->split);
-	i = -1;
-	while (args->env[++i] != 0)
-		free(args->env[i]);
-	free(args->env);
-	free(args->path);
-	free(args);
-	rl_clear_history();
-	exit (0);
-}
-
-void	do_small_exit(t_shell *args)
-{
-	int	i;
-
-	i = -1;
-	while (args->env[++i] != 0)
-		free(args->env[i]);
-	free(args->env);
-	free(args->path);
-	free(args);
-	rl_clear_history();
-	exit (0);
 }
 
 int	cmdhandler(t_shell *args)
