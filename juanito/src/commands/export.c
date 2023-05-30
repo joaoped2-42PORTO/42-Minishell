@@ -39,8 +39,8 @@ void	tiredofpoopo(t_shell *args, int *i, int *x, int *y)
 
 void	cleanxandflag(int *x, int *flag)
 {
-	x = 0;
-	flag = 0;
+	*x = 0;
+	*flag = 0;
 }
 
 void	do_mult_export(t_shell *args)

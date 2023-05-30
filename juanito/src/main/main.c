@@ -12,14 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-void	morefunctions(t_shell *args, int x, int j, int flag)
+void	morefunctions(t_shell *args, int x, int j, int *flag)
 {
 	int	y;
 
 	y = 0;
 	while (args->split[x][j] != '"')
 	{
-		flag = 1;
+		*flag = 1;
 		args->exp[y] = args->split[x][j];
 		j++;
 		y++;
@@ -40,7 +40,7 @@ void	bigiumtrue(t_shell *args, int x, int j, int flag)
 		{
 			if (args->split[x] == 0)
 				break ;
-			morefunctions(args, x, j, flag);
+			morefunctions(args, x, j, &flag);
 			if (flag == 1)
 				args->exp[y++] = ' ';
 			j = 0;

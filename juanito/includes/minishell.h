@@ -75,4 +75,5 @@ int		countvalues(t_shell *args);
 char	*checkbars(t_shell *args, int *i);
 char	*print_env_var(t_shell *args, char *str);
 void	put_var(t_shell *args, char	*str);
+int		valid_input(t_shell *args);
 #endif

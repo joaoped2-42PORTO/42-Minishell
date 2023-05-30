@@ -27,6 +27,11 @@ char	*checkbars(t_shell *args, int *i)
 		free(src);
 	while (args->input[x])
 	{
+		if (valid_input(args) == 0)
+		{
+			printf("Error");
+			break ;
+		}
 		if (args->input[x] == '"')
 		{
 			p++;
@@ -56,14 +61,6 @@ int	countvalues(t_shell *args)
 		i++;
 	while (args->input[i] != ' ' && args->input[i])
 		i++;
-	while (args->input[i] == ' ')
-		i++;
-	if (args->input[i] == '-')
-	{
-		while (args->input[i] != ' ')
-			i++;
-		i++;
-	}
 	while (args->input[i] == ' ')
 		i++;
 	return (i);

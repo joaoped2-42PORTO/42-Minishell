@@ -12,54 +12,108 @@
 
 #include "../../includes/minishell.h"
 
-int	checksplitcontent(t_shell *args)
-{
-	int	i;
-
-	i = 0;
-	while (args->split[1][i])
-		i++;
-	return (i);
-}
-
-void	cleanstring(t_shell *args)
+void	cleanstring(t_shell *args, int i)
 {
 	char	*str;
 	char	*dollar;
-	int		i;
 	int		j;
 
-	i = countvalues(args);
 	j = 0;
 	str = checkbars(args, &i);
+	if (!str)
+	{
+		free(str);
+		return ;
+	}
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != ' ')
 		{
 			dollar = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 			i++;
 			while (str[i] != ' ' && str[i] != '\0')
 				dollar[j++] = str[i++];
 			printf("%s", print_env_var(args, dollar));
+			printf("%c", str[i]);
 			free(dollar);
 			j = 0;
 		}
-		printf("%c", str[i]);
+		else	
+			printf("%c", str[i]);
 		i++;
 	}
+}
+
+int	checkforspacesinstring(t_shell *args, int i)
+{
+	int	j;
+
+	j = 0;
+	while (args->input[i])
+	{
+		while (args->input[i] != ' ')
+			i++;
+		while (args->input[i] == ' ')
+		{
+			j++;
+			i++;
+		}
+		return (j);
+		i++;
+	}
+	return (j);
+}
+
+void	checksplitcontent(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	i = 0;
+	j = 1;
+	x = countvalues(args);
+	if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+	{
+		while (args->split[j][i] == '-')
+		{
+			if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+			{
+				i++;
+				while (args->split[j][i] == 'n')
+					i++;
+				if (args->split[j][i] == '\0')
+				{
+					j++;
+					x += i;
+					x += checkforspacesinstring(args, x);
+					i = 0;
+				}
+				else
+				{
+					cleanstring(args, x);
+					return ;
+				}
+			}
+			else
+			{
+				cleanstring(args, x);
+				return ;
+			}
+		}
+	}
+	else
+	{
+		i = countvalues(args);
+		cleanstring(args, i);
+		printf("\n");
+		return ;
+	}
+	cleanstring(args, x);
 }
 
 void	do_echo(t_shell *args)
 {
 	checksplitcontent(args);
-	if (!args->split[1])
-		printf("\n");
-	else if (checksplitcontent(args) == 2)
-		cleanstring(args);
-	else
-	{
-		cleanstring(args);
-		printf("\n");
-	}
 }
