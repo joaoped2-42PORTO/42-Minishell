@@ -35,7 +35,10 @@ void	cleanstring(t_shell *args, int i)
 			while (str[i] != ' ' && str[i] != '\0' && str[i] != '$')
 				dollar[j++] = str[i++];
 			i--;
-			printf("%s", print_env_var(args, dollar));
+			if (!print_env_var(args, dollar))
+				printf("");
+			else
+				printf("%s", print_env_var(args, dollar));
 			if (str[i] == ' ')
 				printf("%c", str[i]);
 			j = 0;

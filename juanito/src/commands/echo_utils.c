@@ -31,7 +31,7 @@ char	*print_env_var(t_shell *args, char *str)
 	int	i;
 	int	j;
 	int	k;
-	char	*src;
+	char	*src = NULL;
 
 	j = 0;
 	i = 0;
@@ -48,11 +48,10 @@ char	*print_env_var(t_shell *args, char *str)
 				return (NULL);
 			while (args->env[i][j])
 				src[k++] = args->env[i][j++];
-			break ;
+			src[k] = '\0';
 		}
 		i++;
 	}
-	src[k] = '\0';
 	return (src);
 }
 
