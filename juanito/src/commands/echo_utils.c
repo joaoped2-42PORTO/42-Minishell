@@ -48,10 +48,11 @@ char	*print_env_var(t_shell *args, char *str)
 				return (NULL);
 			while (args->env[i][j])
 				src[k++] = args->env[i][j++];
-			src[k] = '\0';
+			break ;
 		}
 		i++;
 	}
+	src[k] = '\0';
 	return (src);
 }
 

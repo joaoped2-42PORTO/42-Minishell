@@ -28,16 +28,18 @@ void	cleanstring(t_shell *args, int i)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != ' ')
+		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '\0')
 		{
 			dollar = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 			i++;
-			while (str[i] != ' ' && str[i] != '\0')
+			while (str[i] != ' ' && str[i] != '\0' && str[i] != '$')
 				dollar[j++] = str[i++];
+			i--;
 			printf("%s", print_env_var(args, dollar));
-			printf("%c", str[i]);
-			free(dollar);
+			if (str[i] == ' ')
+				printf("%c", str[i]);
 			j = 0;
+			free(dollar);
 		}
 		else	
 			printf("%c", str[i]);
