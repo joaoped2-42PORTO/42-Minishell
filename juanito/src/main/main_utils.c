@@ -25,9 +25,3 @@ int	cleandel(t_shell *args)
 	else
 		return (1);
 }
-
-void	freesformain(t_shell *args)
-{
-	free(args->input);
-	free(args->exp);
-}

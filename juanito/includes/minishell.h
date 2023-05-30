@@ -70,7 +70,6 @@ void	do_unset_new(t_shell *args);
 void	checkermultexp2(t_shell *args, int *flag, int *y);
 void	newenvmalloc(t_shell *args, int *y, int *i);
 int		cleandel(t_shell *args);
-void	freesformain(t_shell *args);
 int		countvalues(t_shell *args);
 char	*checkbars(t_shell *args, int *i);
 char	*print_env_var(t_shell *args, char *str);

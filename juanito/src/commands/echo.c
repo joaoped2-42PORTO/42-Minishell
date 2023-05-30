@@ -79,7 +79,12 @@ void	checksplitcontent(t_shell *args)
 	i = 0;
 	j = 1;
 	x = countvalues(args);
-	if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+	if (x == 4)
+	{
+		printf("\n");
+		return ;
+	}
+	else if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
 	{
 		while (args->split[j][i] == '-')
 		{

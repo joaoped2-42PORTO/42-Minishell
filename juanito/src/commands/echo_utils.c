@@ -43,7 +43,8 @@ char	*print_env_var(t_shell *args, char *str)
 			while (args->env[i][j] != '=')
 					j++;
 			j++;
-			src = ft_calloc(ft_strlen(&args->env[i][j]), sizeof(char));
+			free(src);
+			src = ft_calloc(ft_strlen(&args->env[i][j]) + 1, sizeof(char));
 			if (!src)
 				return (NULL);
 			while (args->env[i][j])

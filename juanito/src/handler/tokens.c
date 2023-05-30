@@ -16,12 +16,13 @@ char	*checkbars(t_shell *args, int *i)
 {
 	int		x;
 	int		j;
-	char	*src;
+	char	*src = NULL;
 	int		p;
 
 	x = *i;
 	j = 0;
 	p = 0;
+	free(src);
 	src = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
 	if (!src)
 		free(src);

@@ -12,41 +12,41 @@
 
 #include "../../includes/minishell.h"
 
-void	morefunctions(t_shell *args, int x, int j, int *flag)
+void	morefunctions(t_shell *args, int *x, int *j, int *flag)
 {
 	int	y;
 
 	y = 0;
-	while (args->split[x][j] != '"')
+	while (args->split[*x][*j] != '"')
 	{
 		*flag = 1;
-		args->exp[y] = args->split[x][j];
+		args->exp[y] = args->split[*x][*j];
 		j++;
 		y++;
-		if (args->split[x][j] == '\0')
+		if (args->split[*x][*j] == '\0')
 			break ;
 	}
 }
 
-void	bigiumtrue(t_shell *args, int x, int j, int flag)
+void	bigiumtrue(t_shell *args, int *x, int *j, int *flag)
 {
 	int	y;
 
 	y = 0;
-	if (args->split[x][j] == '"')
+	if (args->split[*x][*j] == '"')
 	{
 		j++;
 		while (1)
 		{
-			if (args->split[x] == 0)
+			if (args->split[*x] == 0)
 				break ;
-			morefunctions(args, x, j, &flag);
-			if (flag == 1)
+			morefunctions(args, x, j, flag);
+			if (*flag == 1)
 				args->exp[y++] = ' ';
 			j = 0;
 			x++;
 		}
-		flag = 1;
+		*flag = 1;
 	}
 }
 
@@ -58,14 +58,16 @@ void	check_valid_input(t_shell *args)
 
 	x = 0;
 	j = 0;
-	args->exp = ft_calloc(ft_strlen(args->input), sizeof(char));
+	args->exp = malloc((sizeof(args->input + 1)));
+	if (!args->exp)
+		free(args->exp);
 	while (args->split[x])
 	{
 		j = 0;
 		flag = 0;
 		while (args->split[x][j])
 		{
-			bigiumtrue(args, x, j, flag);
+			bigiumtrue(args, &x, &j, &flag);
 			if (args->split[x] == 0)
 				break ;
 			j++;
@@ -75,6 +77,7 @@ void	check_valid_input(t_shell *args)
 		x++;
 	}
 	args->exp = ft_strtrim(args->exp, " ");
+	free(args->exp);
 }
 
 int	main(int ac, char **av, char **env)
@@ -85,7 +88,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	args = malloc(sizeof(t_shell));
 	args->new_env = malloc(sizeof(char *) * 256);
-	args->env = ft_calloc(sizeof(char *), 256);
+	args->env = malloc(sizeof(env));
 	args->new_env[0] = 0;
 	args->env = env;
 	config_signals();
@@ -100,7 +103,8 @@ int	main(int ac, char **av, char **env)
 		check_valid_input(args);
 		if (cmdhandler(args) == 0)
 			return (0);
-		freesformain(args);
+		free(args->input);
+		free(args->exp);
 	}
 	rl_clear_history();
 	return (0);
