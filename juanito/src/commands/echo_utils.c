@@ -54,7 +54,7 @@ char	*print_env_var(t_shell *args, char *str)
 	if (k == 0)
 	{
 		printf("");
-		return (0);
+		return (NULL);
 	}
 	return (src);
 }
