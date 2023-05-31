@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/24 22:59:12 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:47:13 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void	free_list(t_shell *args);
 void	free_split(t_shell *args);
 int	get_env_size(char **str);
 int	valid_input(t_shell *args);
+void	put_var_args(t_shell *args, int *y, int *x, int *i);
 
 #endif

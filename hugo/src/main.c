@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 18:12:26 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/31 10:47:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 //CTRL+I = ls -la ???
 
-char	**split_mult_args(t_shell *args)
+/*char	**split_mult_args(t_shell *args)
 {
 	char	**str;
 	int		quotes;
@@ -34,13 +34,12 @@ char	**split_mult_args(t_shell *args)
 	{
 		k = 0;
 		str[j] = ft_calloc(args->input, sizeof(char));
-		while (args->input[i] != ' ' && quotes % 2 == 0)
+		while (args->input[i] != ' ' && quotes == 0)
 			str[j][k++] = args->input[i++];
-		if (args->input[i] == '\"' || args->input[i] == '\'')
-			quotes++;
+
 	}
 
-}
+}*/
 
 int	check_max_string(t_shell *args)
 {

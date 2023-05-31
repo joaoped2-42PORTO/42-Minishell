@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/29 17:27:55 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:19:46 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,21 @@ void	print_env(t_shell *args)
 void	print_export(t_shell *args)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while(args->env[i])
-		printf("declare -x %s\n", args->env[i++]);
+	{
+		j = 0;
+		printf("declare -x ");
+		while (args->env[i][j] != '=')
+			printf("%c", args->env[i][j++]);
+		printf("%c\"", args->env[i][j++]);
+		while (args->env[i][j])
+			printf("%c", args->env[i][j++]);
+		printf("\"\n");
+		i++;
+	}
 	args->exit_status = 0;
 }
 

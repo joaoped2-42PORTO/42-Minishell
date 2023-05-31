@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 17:47:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:31:17 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,17 @@ void	single_export(t_shell *args, int *j, int *x, int *i)
 	{
 		if (args->input[*j] == '"')
 			(*j)++;
+		if (args->input[*j] == '\0')
+			break ;
+		if (args->input[*j] == '$')
+		{
+			(*j)++;
+			put_var_args(args, j, x, i);
+		}
 		else
 			args->env[*i][(*x)++] = args->input[(*j)++];
+		if (args->input[*j] == '\0')
+			break ;
 	}
 	args->env[*i][*x] = '\0';
 	free_matrix(str);
