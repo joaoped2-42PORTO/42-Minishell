@@ -6,49 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/29 17:46:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:53:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	cleanstring(t_shell *args, int i)
-{
-	char	*str;
-	char	*dollar;
-	int		j;
-
-	j = 0;
-	str = checkbars(args, &i);
-	if (!str)
-	{
-		free(str);
-		return ;
-	}
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '\0')
-		{
-			dollar = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
-			i++;
-			while (str[i] != ' ' && str[i] != '\0' && str[i] != '$')
-				dollar[j++] = str[i++];
-			i--;
-			if (!print_env_var(args, dollar))
-				printf("");
-			else
-				printf("%s", print_env_var(args, dollar));
-			if (str[i] == ' ')
-				printf("%c", str[i]);
-			j = 0;
-			free(dollar);
-		}
-		else	
-			printf("%c", str[i]);
-		i++;
-	}
-}
 
 int	checkforspacesinstring(t_shell *args, int i)
 {
@@ -102,13 +64,13 @@ void	checksplitcontent(t_shell *args)
 				}
 				else
 				{
-					cleanstring(args, x);
+					printf("%s", checkbars(args, &x));
 					return ;
 				}
 			}
 			else
 			{
-				cleanstring(args, x);
+				printf("%s", checkbars(args, &x));
 				return ;
 			}
 		}
@@ -116,11 +78,11 @@ void	checksplitcontent(t_shell *args)
 	else
 	{
 		i = countvalues(args);
-		cleanstring(args, i);
+		printf("%s", checkbars(args, &i));
 		printf("\n");
 		return ;
 	}
-	cleanstring(args, x);
+	printf("%s", checkbars(args, &x));
 }
 
 void	do_echo(t_shell *args)

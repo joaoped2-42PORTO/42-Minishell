@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/04 12:19:05 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:13:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,28 @@ void	ft_homedk(t_shell *args)
 	}
 }
 
-void	ft_olddk(t_shell *args)
+void	change_env_pwd(t_shell *args)
 {
-	int		i;
-	char	*path;
+	int	i;
+	char	path[1000];
+	char	*str;
 
-	i = 0;
-	while (args->env[i])
+	str = "PWD=";
+	i = -1;
+	getcwd(path, sizeof(path));
+	while (args->env[++i])
 	{
-		if (!ft_strncmp(args->env[i], "OLDPWD=", 7))
+		if (!ft_strcmp(args->env[i], "PWD"))
 		{
-			path = args->env[i] + 7;
-			change_env_oldpwd(args);
-			chdir(path);
-			return ;
+			if (args->path)
+				free(args->path);
+			str = ft_strjoin(str, path);
+			free(args->env[i]);
+			args->env[i] = ft_strdup(str);
+			args->path = ft_strdup(str);
+			free(str);
+			break;
 		}
-		i++;
 	}
 }
 
@@ -61,60 +67,14 @@ void	do_cd(t_shell *args)
 		change_env_pwd(args);
 		return ;
 	}
-	else if (args->split[1][0] == '-')
-	{
-		ft_olddk(args);
-		change_env_pwd(args);
-		return ;
-	}
 	change_env_oldpwd(args);
 	error = chdir(args->split[1]);
 	if (error != 0)
 	{
 		perror("Error");
+		args->exit_status = 1;
 		return ;
 	}
 	change_env_pwd(args);
-}
-
-void	change_env_pwd(t_shell *args)
-{
-	int		i;
-	char	path[1000];
-	char	*str;
-
-	str = "PWD=";
-	i = -1;
-	getcwd(path, sizeof(path));
-	while (args->env[++i])
-	{
-		if (!ft_strcmp(args->env[i], "PWD"))
-		{
-			str = ft_strjoin(str, path);
-			args->env[i] = ft_strdup(str);
-			break ;
-		}
-	}
-	free(str);
-}
-
-void	change_env_oldpwd(t_shell *args)
-{
-	int		i;
-	char	path[1000];
-	char	*str;
-
-	str = "OLDPWD=";
-	i = -1;
-	getcwd(path, sizeof(path));
-	while (args->env[++i])
-	{
-		if (!ft_strcmp(args->env[i], "OLDPWD"))
-		{
-			str = ft_strjoin(str, path);
-			args->env[i] = ft_strdup(str);
-			break ;
-		}
-	}
-	free(str);
+	args->exit_status = 0;
 }

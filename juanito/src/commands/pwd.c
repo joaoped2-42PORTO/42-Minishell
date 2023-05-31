@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/19 16:30:15 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:16:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_pwd(void)
+int	see_pwd(char	**str)
 {
-	char	path[1000];
+	int	i;
 
-	getcwd(path, sizeof(path));
-	if (path[0] == '\0')
-		printf("Something went wrong!\n");
-	else
-		printf("%s\n", path);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_strcmp(str[i], "PATH"))
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+void	check_pwd(t_shell *args)
+{
+	int	i;
+	int	j;
+
+	j = 5;
+	i = see_pwd(args->env);
+	while (args->env[i][j])
+		printf("%c", args->env[i][j++]);
+	printf("\n");
 }

@@ -17,21 +17,24 @@ SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/sr
 		hugo/src/commands/export.c hugo/src/commands/export_utils.c hugo/src/commands/unset.c hugo/src/commands/unset_utils.c \
 		hugo/src/commands/cd_utils.c hugo/src/init_and_checker/init.c hugo/src/init_and_checker/init_utils.c \
 		hugo/src/cleaner/cleaner.c hugo/src/init_and_checker/checker.c
-SRCJUAN = juanito/src/commands/cd.c \
+SRCJUAN = juanito/src/cleaner/cleaner.c \
+		  juanito/src/commands/cd_utils.c \
+		  juanito/src/commands/cd.c \
+		  juanito/src/commands/echo_utils.c \
 		  juanito/src/commands/echo.c \
-		  juanito/src/commands/env.c \
+		  juanito/src/commands/export_utils.c \
 		  juanito/src/commands/export.c \
-		  juanito/src/commands/export2.c \
-		  juanito/src/commands/export3.c \
 		  juanito/src/commands/pwd.c \
+		  juanito/src/commands/unset_utils.c \
 		  juanito/src/commands/unset.c \
 		  juanito/src/handler/handler.c \
-		  juanito/src/main/main.c \
-		  juanito/src/main/main_utils.c \
-		  juanito/src/signals/signals.c \
 		  juanito/src/handler/tokens.c \
-		  juanito/src/commands/echo_utils.c \
-		  juanito/src/handler/checker.c
+		  juanito/src/init_and_checker/checker.c \
+		  juanito/src/init_and_checker/init_utils.c \
+		  juanito/src/init_and_checker/init.c \
+		  juanito/src/signals/signals.c \
+		  juanito/src/main.c
+
 OBJ		= $(SRC:.c=.o)
 OBJHUGO = $(SRCHUGO:.c=.o)
 OBJUAN	= $(SRCJUAN:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/29 16:55:08 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:19:09 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,20 @@ char	*print_env_var(t_shell *args, char *str)
 		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
 		{
 			while (args->env[i][j] != '=')
-					j++;
+				j++;
 			j++;
 			free(src);
 			src = ft_calloc(ft_strlen(&args->env[i][j]) + 1, sizeof(char));
-			if (!src)
-				return (NULL);
 			while (args->env[i][j])
 				src[k++] = args->env[i][j++];
 			src[k] = '\0';
 		}
 		i++;
+	}
+	if (k == 0)
+	{
+		printf("");
+		return (0);
 	}
 	return (src);
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_utils.c                                       :+:      :+:    :+:   */
+/*   unset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 14:17:36 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/22 14:24:33 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/05/08 15:08:32 by huolivei          #+#    #+#             */
+/*   Updated: 2023/05/22 11:43:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	cleandel(t_shell *args)
+int	variable_size(char	*str)
 {
-	if (args->input == NULL)
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		free(args->input);
-		free(args->new_env);
-		free(args);
-		printf("\n");
-		return (0);
+		i++;
+		if (str[i] == '=')
+			break ;
 	}
-	else
-		return (1);
+	return (i);
 }
