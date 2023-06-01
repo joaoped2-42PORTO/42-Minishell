@@ -37,6 +37,7 @@ void checksplitcontent(t_shell *args)
     int i;
     int j;
     int x;
+	char *res = NULL;
 
     i = 0;
     j = 1;
@@ -64,17 +65,17 @@ void checksplitcontent(t_shell *args)
                 }
                 else
                 {
-                    char *result = checkbars(args, &x);
-                    printf("%s", result);
-                    free(result);
+                    res = checkbars(args, &x);
+                    printf("%s", res);
+                    free(res);
                     return;
                 }
             }
             else
             {
-                char *result = checkbars(args, &x);
-                printf("%s", result);
-                free(result);
+                res = checkbars(args, &x);
+                printf("%s", res);
+                free(res);
                 return;
             }
         }
@@ -82,15 +83,15 @@ void checksplitcontent(t_shell *args)
     else
     {
         i = countvalues(args);
-        char *result = checkbars(args, &i);
-        printf("%s", result);
-        free(result);
+        res = checkbars(args, &i);
+        printf("%s", res);
+        free(res);
         printf("\n");
         return;
     }
-    char *result = checkbars(args, &x);
-    printf("%s", result);
-    free(result);
+    res = checkbars(args, &x);
+    printf("%s", res);
+    free(res);
 }
 
 
