@@ -17,11 +17,15 @@ int	checkforspacesinstring(t_shell *args, int i)
 	int	j;
 
 	j = 0;
+    if (!args->input[i])
+    {
+        return (0);
+    }
 	while (args->input[i])
 	{
-		while (args->input[i] != ' ')
+		while (args->input[i] != ' ' && args->input[i])
 			i++;
-		while (args->input[i] == ' ')
+		while (args->input[i] == ' ' && args->input[i])
 		{
 			j++;
 			i++;
@@ -49,10 +53,11 @@ void checksplitcontent(t_shell *args)
     }
     else if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
     {
-        while (args->split[j][i] == '-')
+        while (args->split[j])
         {
             if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
             {
+				i = 0;
                 i++;
                 while (args->split[j][i] == 'n')
                     i++;
@@ -63,21 +68,25 @@ void checksplitcontent(t_shell *args)
                     x += checkforspacesinstring(args, x);
                     i = 0;
                 }
-                else
-                {
-                    res = checkbars(args, &x);
-                    printf("%s", res);
-                    free(res);
-                    return;
-                }
-            }
-            else
+        	}
+			else
             {
-                res = checkbars(args, &x);
-                printf("%s", res);
-                free(res);
-                return;
+				printf("%s", args->split[j]);
+                if (args->split[j + 1])
+                    printf(" ");
+				j++;
             }
+		}
+        if (!args->split[j])
+		    return ;
+        else
+        {
+            i = countvalues(args);
+            res = checkbars(args, &i);
+            printf("%s", res);
+            free(res);
+            printf("\n");
+            return;
         }
     }
     else
