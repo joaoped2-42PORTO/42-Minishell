@@ -41,10 +41,12 @@ void checksplitcontent(t_shell *args)
     int i;
     int j;
     int x;
+    int k;
 	char *res = NULL;
 
     i = 0;
     j = 1;
+    k = 0;
     x = countvalues(args);
     if (x == 4)
     {
@@ -83,7 +85,14 @@ void checksplitcontent(t_shell *args)
         {
             i = countvalues(args);
             res = checkbars(args, &i);
-            printf("%s", res);
+            while (res[k])
+            {
+                if (res[k] == ' ' && res[k + 1] == ' ')
+                    k++;
+                else
+                    write(1, &res[k++], 1);
+            }
+            k = 0;
             free(res);
             printf("\n");
             return;
@@ -93,13 +102,27 @@ void checksplitcontent(t_shell *args)
     {
         i = countvalues(args);
         res = checkbars(args, &i);
-        printf("%s", res);
+        while (res[k])
+        {
+            if (res[k] == ' ' && res[k + 1] == ' ')
+                k++;
+            else
+                write(1, &res[k++], 1);
+        }
+        k = 0;
         free(res);
         printf("\n");
         return;
     }
     res = checkbars(args, &x);
-    printf("%s", res);
+    while (res[k])
+    {
+        if (res[k] == ' ' && res[k + 1] == ' ')
+            k++;
+        else
+            write(1, &res[k++], 1);
+    }
+    k = 0;
     free(res);
 }
 

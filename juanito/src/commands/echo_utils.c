@@ -50,10 +50,7 @@ char *print_env_var(t_shell *args, char *str)
         i++;
     }
     if (src == NULL)
-    {
-        printf("");
         return NULL;
-    }
     return (src);
 }
 
