@@ -89,6 +89,8 @@ void checksplitcontent(t_shell *args)
             {
                 if (res[k] == ' ' && res[k + 1] == ' ')
                     k++;
+                else if (res[k] == ' ' && k == 0)
+                    k++;
                 else
                     write(1, &res[k++], 1);
             }
@@ -106,6 +108,8 @@ void checksplitcontent(t_shell *args)
         {
             if (res[k] == ' ' && res[k + 1] == ' ')
                 k++;
+            else if (res[k] == ' ' && k == 0)
+                k++;
             else
                 write(1, &res[k++], 1);
         }
@@ -118,6 +122,8 @@ void checksplitcontent(t_shell *args)
     while (res[k])
     {
         if (res[k] == ' ' && res[k + 1] == ' ')
+            k++;
+        else if (res[k] == ' ' && k == 0)
             k++;
         else
             write(1, &res[k++], 1);
