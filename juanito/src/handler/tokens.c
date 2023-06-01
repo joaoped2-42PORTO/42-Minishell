@@ -155,22 +155,6 @@ char *checkbars(t_shell *args, int *i)
                 free(ptr);
             }
         }
-        else
-        {
-            if (args->input[x] == '\'')
-                x++;
-            while (args->input[x] == ' ' && args->input[x + 1] == ' ')
-                x++;
-            ptr = (char *)malloc(2 * sizeof(char));
-            ptr[0] = args->input[x++];
-            ptr[1] = '\0';
-            tmp = malloc(ft_strlen(res) + ft_strlen(ptr) + 1);
-            strcpy(tmp, res);
-            strcat(tmp, ptr);
-            free(res);
-            res = tmp;
-            free(ptr);
-        }
     }
     return (res);
 }

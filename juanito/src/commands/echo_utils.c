@@ -26,37 +26,35 @@ int	string_comp(char *str1)
 	return (j);
 }
 
-char	*print_env_var(t_shell *args, char *str)
+char *print_env_var(t_shell *args, char *str)
 {
-	int	i;
-	int	j;
-	int	k;
-	char	*src = NULL;
+    int i;
+    int j;
+    char *src = NULL;
 
-	j = 0;
+
 	i = 0;
-	k = 0;
-	while (args->env[i])
-	{
-		if (!ft_strncmp(args->env[i], str, string_comp(args->env[i])))
-		{
-			while (args->env[i][j] != '=')
-				j++;
-			j++;
-			free(src);
-			src = ft_calloc(ft_strlen(&args->env[i][j]) + 1, sizeof(char));
-			while (args->env[i][j])
-				src[k++] = args->env[i][j++];
-			src[k] = '\0';
-		}
-		i++;
-	}
-	if (k == 0)
-	{
-		printf("");
-		return (NULL);
-	}
-	return (src);
+	j = 0;
+    while (args->env[i])
+    {
+        j = 0;
+        while (args->env[i][j] && str[j] && args->env[i][j] == str[j])
+            j++;
+        if (args->env[i][j] == '=' && str[j] == '\0')
+        {
+            j++;
+            free(src);
+            src = ft_strdup(&args->env[i][j]);
+            break;
+        }
+        i++;
+    }
+    if (src == NULL)
+    {
+        printf("");
+        return NULL;
+    }
+    return (src);
 }
 
 void	put_var(t_shell *args, char	*str)
