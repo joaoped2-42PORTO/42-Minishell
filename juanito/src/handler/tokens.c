@@ -85,26 +85,6 @@ char *checkbars(t_shell *args, int *i)
                 x++;
                 t++;
             }
-            else if (args->input[x] == '$' && args->input[x + 1] != ' ' && args->input[x + 1] != '\0')
-            {
-                x++;
-                str = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
-                while (args->input[x] != ' ' && args->input[x] != '\0' && args->input[x] != '$' && args->input[x] != '"')
-                    str[k++] = args->input[x++];
-                str[k] = '\0';
-                ptr2 = print_env_var(args, str);
-                if (ptr2)
-                {
-                    tmp = malloc(ft_strlen(res) + ft_strlen(ptr2) + 1);
-                    strcpy(tmp, res);
-                    strcat(tmp, ptr2);
-                    free(res);
-                    res = tmp;
-                    free(ptr2);
-                }
-                free(str);
-                k = 0;
-            }
             else
             {
                 ptr = (char *)malloc(2 * sizeof(char));

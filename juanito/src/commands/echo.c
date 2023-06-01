@@ -36,6 +36,20 @@ int	checkforspacesinstring(t_shell *args, int i)
 	return (j);
 }
 
+int     isdoublequote(t_shell *args)
+{
+    int i;
+
+    i = 0;
+    while (args->input[i])
+    {
+        if (args->input[i] == '"')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 void checksplitcontent(t_shell *args)
 {
     int i;
@@ -87,6 +101,13 @@ void checksplitcontent(t_shell *args)
             res = checkbars(args, &i);
             while (res[k])
             {
+                if (isdoublequote(args) == 0)
+                    continue;
+                else
+                {
+                    printf("%s", res);
+                    break ;
+                }
                 if (res[k] == ' ' && res[k + 1] == ' ')
                     k++;
                 else if (res[k] == ' ' && k == 0)
@@ -106,6 +127,13 @@ void checksplitcontent(t_shell *args)
         res = checkbars(args, &i);
         while (res[k])
         {
+            if (isdoublequote(args) == 0)
+                continue;
+            else
+            {
+                printf("%s", res);
+                break ;
+            }
             if (res[k] == ' ' && res[k + 1] == ' ')
                 k++;
             else if (res[k] == ' ' && k == 0)
@@ -121,6 +149,13 @@ void checksplitcontent(t_shell *args)
     res = checkbars(args, &x);
     while (res[k])
     {
+        if (isdoublequote(args) == 0)
+            continue;
+        else
+        {
+            printf("%s", res);
+            break ;
+        }
         if (res[k] == ' ' && res[k + 1] == ' ')
             k++;
         else if (res[k] == ' ' && k == 0)
