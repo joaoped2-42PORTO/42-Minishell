@@ -6,11 +6,25 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/31 17:06:28 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:28:26 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	checkisalpha(t_shell *args, int *i)
+{
+	int	x;
+
+	x = *i;
+	if (args->input[x] >= 48 && args->input[x] <= 57)
+		return (1);
+	else if (args->input[x] >= 65 && args->input[x] <= 90)
+		return (1);
+	else if (args->input[x] >= 97 && args->input[x] <= 122)
+		return (1);
+	return (0);
+}
 
 char *checkbars(t_shell *args, int *i)
 {
@@ -49,7 +63,7 @@ char *checkbars(t_shell *args, int *i)
             {
                 x++;
                 str = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
-                while (args->input[x] != ' ' && args->input[x] != '\0' && args->input[x] != '$' && args->input[x] != '"' && args->input[x] != '\'')
+                while (args->input[x] != ' ' && args->input[x] != '\0' && checkisalpha(args, &x))
                     str[k++] = args->input[x++];
                 str[k] = '\0';
                 ptr2 = print_env_var(args, str);
@@ -104,7 +118,7 @@ char *checkbars(t_shell *args, int *i)
             {
                 x++;
                 str = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
-                while (args->input[x] != ' ' && args->input[x] != '\0' && args->input[x] != '$' && args->input[x] != '"')
+                while (args->input[x] != ' ' && args->input[x] != '\0' && checkisalpha(args, &x))
                     str[k++] = args->input[x++];
                 str[k] = '\0';
                 ptr2 = print_env_var(args, str);
