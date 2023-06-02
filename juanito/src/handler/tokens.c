@@ -49,7 +49,7 @@ char *checkbars(t_shell *args, int *i)
             {
                 x++;
                 str = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
-                while (args->input[x] != ' ' && args->input[x] != '\0' && args->input[x] != '$' && args->input[x] != '"')
+                while (args->input[x] != ' ' && args->input[x] != '\0' && args->input[x] != '$' && args->input[x] != '"' && args->input[x] != '\'')
                     str[k++] = args->input[x++];
                 str[k] = '\0';
                 ptr2 = print_env_var(args, str);

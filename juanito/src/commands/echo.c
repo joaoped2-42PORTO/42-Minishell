@@ -101,9 +101,7 @@ void checksplitcontent(t_shell *args)
             res = checkbars(args, &i);
             while (res[k])
             {
-                if (isdoublequote(args) == 0)
-                    continue;
-                else
+                if (isdoublequote(args) != 0)
                 {
                     printf("%s", res);
                     break ;
@@ -127,9 +125,7 @@ void checksplitcontent(t_shell *args)
         res = checkbars(args, &i);
         while (res[k])
         {
-            if (isdoublequote(args) == 0)
-                continue;
-            else
+            if (isdoublequote(args) != 0)
             {
                 printf("%s", res);
                 break ;
@@ -149,9 +145,7 @@ void checksplitcontent(t_shell *args)
     res = checkbars(args, &x);
     while (res[k])
     {
-        if (isdoublequote(args) == 0)
-            continue;
-        else
+        if (isdoublequote(args) != 0)
         {
             printf("%s", res);
             break ;
