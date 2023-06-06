@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/31 14:45:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/06 23:31:28 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,34 @@ int	see_quote_string(char *str, int *i)
 	return (0);
 }
 
+int	see_quote_double_string(char *str, int *i)
+{
+	while (str[*i])
+	{
+		if (str[*i] == '\"')
+		{
+			if (!see_dbquote_string(str, i))
+				return (0);
+		}
+		else if (str[*i] == '\'')
+		{
+			if (!see_quote_string(str, i))
+				return(0);
+		}
+		(*i)++;
+	}
+	return (1);
+}
+
 int	loop_input(t_shell *args, int *i)
 {
-	if (args->input[*i] == '\'')
+	if ((args->input[*i] == '\'' && args->input[*i + 1] == '\'') || (args->input[*i] == '\"' && args->input[*i + 1] == '\"'))
+	{
+		(*i)++;
+		if (!see_quote_double_string(args->input, i))
+			return (0);
+	}
+	else if (args->input[*i] == '\'')
 	{
 		(*i)++;
 		if (!see_quote_string(args->input, i))

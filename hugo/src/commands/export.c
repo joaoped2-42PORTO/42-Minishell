@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/31 15:08:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/06 23:52:32 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_space_in_string(t_shell *args, int *y)
 	j = *y;
 	while (args->input[++j])
 	{
-		if (args->input[j] == '\"')
+		if (args->input[j] == '\"' || args->input[j] == '\'')
 			return (1);
 	}
 	return (0);
@@ -94,7 +94,7 @@ int	do_loop_export(t_shell *args, int *y, int *x, int *i)
 			return (0);
 		}
 	}
-	if (args->input[*y] == '"')
+	if (args->input[*y] == '\"' || args->input[*y] == '\'')
 	{
 		args->flag++;
 		(*y)++;
@@ -113,7 +113,7 @@ int	do_loop_export(t_shell *args, int *y, int *x, int *i)
 		*x = 0;
 		args->flag = 0;
 	}
-	else if (args->input[*y] != '\0' && args->input[*y] != '\"')
+	else if (args->input[*y] != '\0' && args->input[*y] != '\"' && args->input[*y] != '\'')
 		args->env[*i][(*x)++] = args->input[*y];
 	return (1);
 }
