@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/02 14:28:26 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:58:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int isDoubleQuote(t_shell *args, int x)
 int isSingleQuote(t_shell *args, int x)
 {
     int p;
-    int t; 
-    
+    int t;
+
     p = 0;
     t = 0;
     if (args->input[x] == '\'')
@@ -103,7 +103,7 @@ void handleSingleQuote(t_shell *args, int *x, char **res)
 void appendToString(char **res, char *str)
 {
     char *tmp;
-    
+
     tmp = malloc(ft_strlen(*res) + ft_strlen(str) + 1);
     strcpy(tmp, *res);
     strcat(tmp, str);
@@ -113,7 +113,10 @@ void appendToString(char **res, char *str)
 
 int isDollarSign(t_shell *args, int x)
 {
-    return (args->input[x] == '$' && args->input[x + 1] != ' ' && args->input[x + 1] != '\0' && args->input[x + 1] != '$');
+    if (args->input[x] == '$' && args->input[x + 1] != ' '
+	&& args->input[x + 1] != '\0' && args->input[x + 1] != '$')
+		return (1);
+	retunr (0);
 }
 
 void handleDollarSign(t_shell *args, int *x, char **res)
@@ -121,7 +124,7 @@ void handleDollarSign(t_shell *args, int *x, char **res)
     int     k;
     char    *str;
     char    *ptr2;
-    
+
     k = 0;
     str = malloc((ft_strlen(args->input) + 1) * sizeof(char));
     while (args->input[*x] != ' ' && args->input[*x] != '\0' && checkisalpha(args, x))
@@ -161,7 +164,7 @@ char *checkbars(t_shell *args, int *i)
 {
     char    *res;
     int     x;
-    
+
     res = malloc(1);
     res[0] = '\0';
     x = *i;

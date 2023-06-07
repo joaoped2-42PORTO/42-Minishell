@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 17:47:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:12:23 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	do_loop_doubles(t_shell *args, int j)
 	while (args->env[i])
 	{
 		if (!ft_strncmp(args->split[j], args->env[i], variable_size(args->env[i])))
-					return (0);
+			return (0);
 		i++;
 	}
 	return (1);
@@ -33,7 +33,7 @@ int	check_doubles_vars(t_shell *args)
 	j = 0;
 	while (args->split[j])
 	{
-		if(!do_loop_doubles(args, j))
+		if (!do_loop_doubles(args, j))
 			return (0);
 		j++;
 	}

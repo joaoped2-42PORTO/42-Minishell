@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/31 16:53:41 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:14:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int	checkforspacesinstring(t_shell *args, int i)
 	int	j;
 
 	j = 0;
-    if (!args->input[i])
-    {
-        return (0);
-    }
+	if (!args->input[i])
+		return (0);
 	while (args->input[i])
 	{
 		while (args->input[i] != ' ' && args->input[i])
@@ -36,131 +34,131 @@ int	checkforspacesinstring(t_shell *args, int i)
 	return (j);
 }
 
-int     isdoublequote(t_shell *args)
+int	isdoublequote(t_shell *args)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (args->input[i])
-    {
-        if (args->input[i] == '"')
-            return (1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (args->input[i])
+	{
+		if (args->input[i] == '"')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-void checksplitcontent(t_shell *args)
+void	checksplitcontent(t_shell *args)
 {
-    int i;
-    int j;
-    int x;
-    int k;
-	char *res = NULL;
+	int		i;
+	int		j;
+	int		x;
+	int		k;
+	char	*res;
 
-    i = 0;
-    j = 1;
-    k = 0;
-    x = countvalues(args);
-    if (x == 4)
-    {
-        printf("\n");
-        return;
-    }
-    else if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
-    {
-        while (args->split[j])
-        {
-            if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
-            {
+	res = NULL;
+	i = 0;
+	j = 1;
+	k = 0;
+	x = countvalues(args);
+	if (x == 4)
+	{
+		printf("\n");
+		return ;
+	}
+	else if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+	{
+		while (args->split[j])
+		{
+			if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+			{
 				i = 0;
-                i++;
-                while (args->split[j][i] == 'n')
-                    i++;
-                if (args->split[j][i] == '\0')
-                {
-                    j++;
-                    x += i;
-                    x += checkforspacesinstring(args, x);
-                    i = 0;
-                }
-        	}
+				i++;
+				while (args->split[j][i] == 'n')
+					i++;
+				if (args->split[j][i] == '\0')
+				{
+					j++;
+					x += i;
+					x += checkforspacesinstring(args, x);
+					i = 0;
+				}
+			}
 			else
-            {
+			{
 				printf("%s", args->split[j]);
-                if (args->split[j + 1])
-                    printf(" ");
+				if (args->split[j + 1])
+					printf(" ");
 				j++;
-            }
+			}
 		}
-        if (!args->split[j])
-		    return ;
-        else
-        {
-            i = countvalues(args);
-            res = checkbars(args, &i);
-            while (res[k])
-            {
-                if (isdoublequote(args) != 0)
-                {
-                    printf("%s", res);
-                    break ;
-                }
-                if (res[k] == ' ' && res[k + 1] == ' ')
-                    k++;
-                else if (res[k] == ' ' && k == 0)
-                    k++;
-                else
-                    write(1, &res[k++], 1);
-            }
-            k = 0;
-            free(res);
-            printf("\n");
-            return;
-        }
-    }
-    else
-    {
-        i = countvalues(args);
-        res = checkbars(args, &i);
-        while (res[k])
-        {
-            if (isdoublequote(args) != 0)
-            {
-                printf("%s", res);
-                break ;
-            }
-            if (res[k] == ' ' && res[k + 1] == ' ')
-                k++;
-            else if (res[k] == ' ' && k == 0)
-                k++;
-            else
-                write(1, &res[k++], 1);
-        }
-        k = 0;
-        free(res);
-        printf("\n");
-        return;
-    }
-    res = checkbars(args, &x);
-    while (res[k])
-    {
-        if (isdoublequote(args) != 0)
-        {
-            printf("%s", res);
-            break ;
-        }
-        if (res[k] == ' ' && res[k + 1] == ' ')
-            k++;
-        else if (res[k] == ' ' && k == 0)
-            k++;
-        else
-            write(1, &res[k++], 1);
-    }
-    k = 0;
-    free(res);
+		if (!args->split[j])
+			return ;
+		else
+		{
+			i = countvalues(args);
+			res = checkbars(args, &i);
+			while (res[k])
+			{
+				if (isdoublequote(args) != 0)
+				{
+					printf("%s", res);
+					break ;
+				}
+				if (res[k] == ' ' && res[k + 1] == ' ')
+					k++;
+				else if (res[k] == ' ' && k == 0)
+					k++;
+				else
+					write(1, &res[k++], 1);
+			}
+			k = 0;
+			free(res);
+			printf("\n");
+			return ;
+		}
+	}
+	else
+	{
+		i = countvalues(args);
+		res = checkbars(args, &i);
+		while (res[k])
+		{
+			if (isdoublequote(args) != 0)
+			{
+				printf("%s", res);
+				break ;
+			}
+			if (res[k] == ' ' && res[k + 1] == ' ')
+				k++;
+			else if (res[k] == ' ' && k == 0)
+				k++;
+			else
+				write(1, &res[k++], 1);
+		}
+		k = 0;
+		free(res);
+		printf("\n");
+		return ;
+	}
+	res = checkbars(args, &x);
+	while (res[k])
+	{
+		if (isdoublequote(args) != 0)
+		{
+			printf("%s", res);
+			break ;
+		}
+		if (res[k] == ' ' && res[k + 1] == ' ')
+			k++;
+		else if (res[k] == ' ' && k == 0)
+			k++;
+		else
+			write(1, &res[k++], 1);
+	}
+	k = 0;
+	free(res);
 }
-
 
 void	do_echo(t_shell *args)
 {

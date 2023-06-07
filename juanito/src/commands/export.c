@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 17:43:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:13:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void	do_loop_export(t_shell *args, int *y, int *x, int *i)
 
 void	do_mult_export(t_shell *args)
 {
-	int	i;
-	int	x;
-	int	y;
+	int		i;
+	int		x;
+	int		y;
 	char	**str;
 
 	y = 6;
