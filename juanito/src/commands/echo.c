@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/07 12:29:56 by neddy            ###   ########.fr       */
+/*   Updated: 2023/06/07 12:41:27 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	checksplitcontent(t_shell *args)
 	free(res);
 }*/
 
-void	printProcessedResult(t_shell *args, char *res)
+void	print_processed_result(t_shell *args, char *res)
 {
 	int	k;
 
@@ -182,7 +182,7 @@ void	printProcessedResult(t_shell *args, char *res)
 	printf("\n");
 }
 
-void	processOptionN(t_shell *args, int *j, int *x)
+void	process_option_n(t_shell *args, int *j, int *x)
 {
 	int		i;
 	char	*res;
@@ -216,16 +216,16 @@ void	processOptionN(t_shell *args, int *j, int *x)
 		return ;
 	i = countvalues(args);
 	res = checkbars(args, &i);
-	printProcessedResult(args, res);
+	print_processed_result(args, res);
 	free(res);
 }
 
-void	processDefault(t_shell *args, int *x)
+void	processdefault(t_shell *args, int *x)
 {
 	char	*res;
 
 	res = checkbars(args, x);
-	printProcessedResult(args, res);
+	print_processed_result(args, res);
 	free(res);
 }
 
@@ -242,9 +242,9 @@ void	checksplitcontent(t_shell *args)
 		return ;
 	}
 	else if (args->split[j][0] == '-' && args->split[j][1] == 'n')
-		processOptionN(args, &j, &x);
+		process_option_n(args, &j, &x);
 	else
-		processDefault(args, &x);
+		processdefault(args, &x);
 }
 
 void	do_echo(t_shell *args)
