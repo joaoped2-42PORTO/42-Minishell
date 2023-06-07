@@ -18,8 +18,8 @@ int isDoubleQuote(t_shell *args, int x)
 int isSingleQuote(t_shell *args, int x)
 {
     int p;
-    int t; 
-    
+    int t;
+
     p = 0;
     t = 0;
     if (args->input[x] == '\'')
@@ -77,7 +77,7 @@ void handleSingleQuote(t_shell *args, int *x, char **res)
 void appendToString(char **res, char *str)
 {
     char *tmp;
-    
+
     tmp = malloc(ft_strlen(*res) + ft_strlen(str) + 1);
     strcpy(tmp, *res);
     strcat(tmp, str);
@@ -95,7 +95,7 @@ void handleDollarSign(t_shell *args, int *x, char **res)
     int     k;
     char    *str;
     char    *ptr2;
-    
+
     k = 0;
     str = malloc((ft_strlen(args->input) + 1) * sizeof(char));
     while (args->input[*x] != ' ' && args->input[*x] != '\0' && checkisalpha(args, x))
@@ -135,7 +135,7 @@ char *checkbars(t_shell *args, int *i)
 {
     char    *res;
     int     x;
-    
+
     res = malloc(1);
     res[0] = '\0';
     x = *i;
@@ -283,3 +283,116 @@ char *checkbars(t_shell *args, int *i)
     }
     return (res);
 }
+
+/*
+void	checksplitcontent(t_shell *args)
+{
+	int		i;
+	int		j;
+	int		x;
+	int		k;
+	char	*res;
+
+	res = NULL;
+	i = 0;
+	j = 1;
+	k = 0;
+	x = countvalues(args);
+	if (x == 4)
+	{
+		printf("\n");
+		return ;
+	}
+	else if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+	{
+		while (args->split[j])
+		{
+			if (args->split[j][i] == '-' && args->split[j][i + 1] == 'n')
+			{
+				i = 0;
+				i++;
+				while (args->split[j][i] == 'n')
+					i++;
+				if (args->split[j][i] == '\0')
+				{
+					j++;
+					x += i;
+					x += checkforspacesinstring(args, x);
+					i = 0;
+				}
+			}
+			else
+			{
+				printf("%s", args->split[j]);
+				if (args->split[j + 1])
+					printf(" ");
+				j++;
+			}
+		}
+		if (!args->split[j])
+			return ;
+		else
+		{
+			i = countvalues(args);
+			res = checkbars(args, &i);
+			while (res[k])
+			{
+				if (isdoublequote(args) != 0)
+				{
+					printf("%s", res);
+					break ;
+				}
+				if (res[k] == ' ' && res[k + 1] == ' ')
+					k++;
+				else if (res[k] == ' ' && k == 0)
+					k++;
+				else
+					write(1, &res[k++], 1);
+			}
+			k = 0;
+			free(res);
+			printf("\n");
+			return ;
+		}
+	}
+	else
+	{
+		i = countvalues(args);
+		res = checkbars(args, &i);
+		while (res[k])
+		{
+			if (isdoublequote(args) != 0)
+			{
+				printf("%s", res);
+				break ;
+			}
+			if (res[k] == ' ' && res[k + 1] == ' ')
+				k++;
+			else if (res[k] == ' ' && k == 0)
+				k++;
+			else
+				write(1, &res[k++], 1);
+		}
+		k = 0;
+		free(res);
+		printf("\n");
+		return ;
+	}
+	res = checkbars(args, &x);
+	while (res[k])
+	{
+		if (isdoublequote(args) != 0)
+		{
+			printf("%s", res);
+			break ;
+		}
+		if (res[k] == ' ' && res[k + 1] == ' ')
+			k++;
+		else if (res[k] == ' ' && k == 0)
+			k++;
+		else
+			write(1, &res[k++], 1);
+	}
+	k = 0;
+	free(res);
+}*/

@@ -20,6 +20,7 @@ SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/sr
 SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/commands/cd_utils.c \
 		  juanito/src/commands/cd.c \
+		  juanito/src/commands/echo_checker.c \
 		  juanito/src/commands/echo_utils.c \
 		  juanito/src/commands/echo.c \
 		  juanito/src/commands/export_utils.c \

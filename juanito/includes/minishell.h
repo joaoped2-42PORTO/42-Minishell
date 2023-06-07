@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/07 11:00:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:57:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,8 @@ char		*checkbars(t_shell *args, int *i);
 char		*print_env_var(t_shell *args, char *str);
 int			countvalues(t_shell *args);
 void		do_echo(t_shell *args);
+int			checkforspacesinstring(t_shell *args, int i);
+int			isdoublequote(t_shell *args);
+void		print_processed_result(t_shell *args, char *res);
 
 #endif
