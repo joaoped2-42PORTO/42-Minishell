@@ -1,52 +1,6 @@
 #include "../../includes/minishell.h"
 
 /*
-
-//1st sheet of code
-
-    	x++;
-    	str = (char *)malloc((ft_strlen(args->input) + 1) * sizeof(char));
-        while (args->input[x] != ' ' && args->input[x] != '\0' && checkisalpha(args, &x))
-             str[k++] = args->input[x++];
-        str[k] = '\0';
-        ptr2 = print_env_var(args, str);
-        if (ptr2)
-        {
-            tmp = malloc(ft_strlen(res) + ft_strlen(ptr2) + 1);
-            strcpy(tmp, res);
-            strcat(tmp, ptr2);
-            free(res);
-            res = tmp;
-            free(ptr2);
-        }
-        free(str);
-        k = 0;
-
-
-//2nd sheet of code
-
-    	ptr = (char *)malloc(2 * sizeof(char));
-    	ptr[0] = args->input[x++];
-    	ptr[1] = '\0';
-        tmp = malloc(ft_strlen(res) + ft_strlen(ptr) + 1);
-        strcpy(tmp, res);
-        strcat(tmp, ptr);
-        free(res);
-        res = tmp;
-        free(ptr);
-
-
-//3rd sheet of code
-
-
-
-*/
-
-
-
-
-
-
 char *checkbars(t_shell *args, int *i)
 {
     int x;
@@ -173,6 +127,7 @@ char *checkbars(t_shell *args, int *i)
     }
     return (res);
 }
+*/
 
 /*
 void	checksplitcontent(t_shell *args)
