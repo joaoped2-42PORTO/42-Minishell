@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/08 11:42:21 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:43:31 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	process_option_n(t_shell *args, int *x)
 	processdefault(args, x);
 }
 
-void	checksplitcontent(t_shell *args)
+void	checkcontent(t_shell *args)
 {
 	int	x;
 
@@ -85,5 +85,5 @@ void	checksplitcontent(t_shell *args)
 
 void	do_echo(t_shell *args)
 {
-	checksplitcontent(args);
+	checkcontent(args);
 }
