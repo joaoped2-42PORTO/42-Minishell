@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/06 23:19:13 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:41:14 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,92 @@ void	check_valid_input(t_shell *args)
 	args->exp = ft_strtrim(args->exp, " ");
 }*/
 
+char	quote_value(char c, char quote)
+{
+	if (ft_strrchr("\"\'", c) && !quote)
+		return (c);
+	else if (ft_strrchr("\"\'", c) && quote == c)
+		return (0);
+	return (quote);
+}
+
+int	ft_wordcount_meta(char *str, char c)
+{
+	int		i;
+	int		wordcount;
+	char	quote;
+
+	i = 0;
+	wordcount = 0;
+	quote = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] == c)
+			i++;
+		if (str[i])
+			wordcount++;
+		while ((str[i] && str[i] != c) || (str[i] && quote))
+		{
+			quote = quote_value(str[i], quote);
+			i++;
+		}
+	}
+	return (wordcount);
+}
+
+static int	ft_wordlen(char *str, char c)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	while ((str[i] && (str[i] != c)) || (str[i] && quote))
+	{
+		quote = quote_value(str[i], quote);
+		i++;
+	}
+	return (i);
+}
+
+static char	*get_word(char *s, char c, char **words)
+{
+	char	quote;
+
+	quote = 0;
+	*words = ft_substr(s, 0, ft_wordlen(s, c));
+	while ((*s && *s != c) || (*s && quote))
+	{
+		quote = quote_value(*s, quote);
+		s++;
+	}
+	return (s);
+}
+
+char	**split_meta(char *s, char c)
+{
+	char	**words;
+	int		wdcount;
+	int		j;
+
+	j = 0;
+	if (!s)
+		return (0);
+	wdcount = ft_wordcount_meta(s, c);
+	words = (char **)malloc(sizeof(char *) * (wdcount + 1));
+	if (!words)
+		return (0);
+	while (*s)
+	{
+		while (*s && *s == c)
+			s++;
+		if (*s)
+			s = get_word(s, c, &words[j++]);
+	}
+	words[j] = 0;
+	return (words);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -111,7 +197,10 @@ int	main(int ac, char **av, char **env)
 		{
 			args->token = init(args);
 			init_token(args);
-			args->split = ft_split(args->input, ' ');
+			args->split = split_meta(args->input, ' ');
+			/*while (args->split[++j])
+				printf("%s\n", args->split[j]);
+			break;*/
 			if (args->input)
 				add_history(args->input);
 			if (cmdhandler(args) == 0)
