@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/31 12:30:20 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:07:35 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (!s1 && !s2 && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
 }
-
-
 
 void	open_exec(t_shell *args)
 {
@@ -55,7 +53,7 @@ void	open_exec(t_shell *args)
 	while (args->path[i])
 		str[j++] = args->path[i++];
 	i = 1;
-	while(args->split[0][i])
+	while (args->split[0][i])
 		str[j++] = args->split[0][i++];
 	str[j] = '\0';
 	if (execve(str, args->split, NULL) != 0)
@@ -84,7 +82,7 @@ void	open_exec_abs(t_shell *args)
 
 char	*get_path(t_shell *args)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	i = 0;
@@ -102,7 +100,7 @@ char	*get_path(t_shell *args)
 
 char	*get_acess(char	**str, t_shell *args)
 {
-	int i;
+	int		i;
 	char	*join;
 	char	*tmp;
 
@@ -113,9 +111,9 @@ char	*get_acess(char	**str, t_shell *args)
 		join = ft_strjoin(tmp, args->token->cmd);
 		free (tmp);
 		if (access(join, X_OK) == 0)
-			break;
+			break ;
 		if (str[i + 1] == 0)
-			break;
+			break ;
 		i++;
 		free (join);
 	}
@@ -125,7 +123,7 @@ char	*get_acess(char	**str, t_shell *args)
 
 int	do_builtins(t_shell *args)
 {
-	int	pid;
+	int		pid;
 	char	*path;
 	char	**path_split;
 
@@ -144,9 +142,9 @@ int	do_builtins(t_shell *args)
 		signal(SIGQUIT, SIG_DFL);
 		if (args->input[0] == '.' && args->input[1] == '/')
 			open_exec(args);
-		else if(args->input[0] == '/')
+		else if (args->input[0] == '/')
 			open_exec_abs(args);
-    	if(execve(path, args->split, NULL) != 0)
+		if (execve(path, args->split, NULL) != 0)
 		{
 			printf("command not found: %s\n", args->input);
 			args->exit_status = 2;
@@ -156,7 +154,7 @@ int	do_builtins(t_shell *args)
 	}
 	waitpid(-1, NULL, 0);
 	free (path);
-	return(1);
+	return (1);
 }
 
 void	print_env(t_shell *args)
@@ -164,7 +162,7 @@ void	print_env(t_shell *args)
 	int	i;
 
 	i = 0;
-	while(args->env[i])
+	while (args->env[i])
 		printf("%s\n", args->env[i++]);
 	args->exit_status = 0;
 }
@@ -174,7 +172,7 @@ void	print_export(t_shell *args)
 	int	i;
 
 	i = 0;
-	while(args->env[i])
+	while (args->env[i])
 		printf("declare -x %s\n", args->env[i++]);
 	args->exit_status = 0;
 }
@@ -191,15 +189,15 @@ int	cmdhandler(t_shell *args)
 		print_env(args);
 	else if (!ft_strncmp(args->split[0], "exit", 4))
 		do_exit(args);
-	else if(!ft_strncmp(args->split[0], "echo", 4))
+	else if (!ft_strncmp(args->split[0], "echo", 4))
 		do_echo(args);
-	else if(!ft_strncmp(args->split[0], "export", 6))
+	else if (!ft_strncmp(args->split[0], "export", 6))
 		do_export(args);
-	else if(!ft_strncmp(args->split[0], "unset", 5))
+	else if (!ft_strncmp(args->split[0], "unset", 5))
 		do_unset(args);
 	else if (!ft_strncmp(args->split[0], "$?", 2))
 		printf("%d\n", args->exit_status);
 	else if (do_builtins(args) == 1)
-		return(1);
-	return(1);
+		return (1);
+	return (1);
 }

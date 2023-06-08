@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/08 11:34:35 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:02:53 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,21 @@ void		do_echo(t_shell *args);
 int			checkforspacesinstring(t_shell *args, int i);
 int			isdoublequote(t_shell *args);
 void		print_processed_result(t_shell *args, char *res);
+
+//tokenizer
 int			checkisalpha(t_shell *args, int *i);
+void		append_char_to_res(char **res, char c);
+void		process_whitespace(t_shell *args, int *x, char **res);
+void		append_ptr2_to_res(char **res, char **ptr2, char **tmp);
+void		process_single_quotes(t_shell *args, int *x, int *t, char **res);
+void		process_dollar_sign(t_shell *args, int *x, int *k, char **res);
+void		process_quote(int *x, int *p);
+void		process_dollar_or_char(t_shell *args, int *x, int *k, char **res);
+void		process_input_condition(t_shell *args, int *x, int *k, char **res);
+int			validate_input(t_shell *args);
+int			handle_quotes(t_shell *args, int *x, int *p, char **res);
+int			handle_single_quotes(t_shell *args, int *x, int *t);
+void		process_input(t_shell *args, int *x, int *k, char **res);
+char		*checkbars(t_shell *args, int *i);
 
 #endif
