@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 11:40:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:00:35 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ void	do_exit(t_shell *args)
 	i = -1;
 	while (args->env[++i] != 0)
 		free(args->env[i]);
+	i = -1;
+	while (args->exp[++i] != 0)
+		free(args->exp[i]);
+	free(args->exp);
 	free(args->env);
 	free(args->path);
 	free(args);
@@ -72,6 +76,10 @@ void	do_small_exit(t_shell *args)
 	i = -1;
 	while (args->env[++i] != 0)
 		free(args->env[i]);
+	i = -1;
+	while (args->exp[++i] != 0)
+		free(args->exp[i]);
+	free(args->exp);
 	free(args->env);
 	free(args->path);
 	free(args);

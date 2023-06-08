@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/31 11:19:46 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:08:36 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,16 +175,20 @@ void	print_export(t_shell *args)
 	int	j;
 
 	i = 0;
-	while(args->env[i])
+	while(args->exp[i])
 	{
 		j = 0;
 		printf("declare -x ");
-		while (args->env[i][j] != '=')
-			printf("%c", args->env[i][j++]);
-		printf("%c\"", args->env[i][j++]);
-		while (args->env[i][j])
-			printf("%c", args->env[i][j++]);
-		printf("\"\n");
+		while (args->exp[i][j] != '=' && args->exp[i][j] != '\0')
+			printf("%c", args->exp[i][j++]);
+		if (args->exp[i][j])
+		{
+			printf("%c\"", args->exp[i][j++]);
+			while (args->exp[i][j])
+				printf("%c", args->exp[i][j++]);
+			printf("\"");
+		}
+		printf("\n");
 		i++;
 	}
 	args->exit_status = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/31 12:31:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:31:29 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,21 @@ int	see_split_size(t_shell *args)
 	return (i);
 }
 
-void	exchange_memo(t_shell *args, char **str, int *i)
+void	exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x)
 {
-	str = dup_env(args->env, str);
+	env = dup_env(args->env, env);
+	exp = dup_env(args->exp, exp);
 	free_matrix(args->env);
+	free_matrix(args->exp);
 	args->env = ft_calloc(*i + see_split_size(args), sizeof(char *));
-	args->env = dup_env(str, args->env);
-	args->env[*i] = ft_calloc(ft_strlen(args->input), sizeof(char));
+	args->env = dup_env(env, args->env);
+	//args->env[*i] = ft_calloc(ft_strlen(args->input), sizeof(char));
+	args->exp = ft_calloc(*x + see_split_size(args), sizeof(char *));
+	args->exp = dup_env(exp, args->exp);
+	//args->exp[*i] = ft_calloc(ft_strlen(args->input), sizeof(char));
 }
-
-void	single_export(t_shell *args, int *j, int *x, int *i)
+// Antigo single export
+/*void	single_export(t_shell *args, int *j, int *x, int *i)
 {
 	char	**str;
 
@@ -114,4 +119,4 @@ void	single_export(t_shell *args, int *j, int *x, int *i)
 	}
 	args->env[*i][*x] = '\0';
 	free_matrix(str);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/06 23:52:32 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:59:18 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,41 +182,59 @@ void	put_var_args(t_shell *args, int *y, int *x, int *i)
 
 }
 
+int	see_if_env(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	see_exp_size(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->exp[i])
+		i++;
+	return (i);
+}
+
 void	do_mult_export(t_shell *args)
 {
 	int	i;
 	int	x;
 	int	y;
-	char	**str;
+	char	**env;
+	char	**exp;
 
-	y = 6;
+	y = 0;
 	args->flag = 0;
-	x = 0;
+	x = see_exp_size(args);
 	i = see_env_size(args);
-	str = ft_calloc(i + 1, sizeof(char *));
-	exchange_memo(args, str, &i);
-	while (args->input[y++])
+	env = ft_calloc(i + 1, sizeof(char *));
+	exp = ft_calloc(x + 1, sizeof(char *));
+	exchange_memo(args, env, exp, &i, &x);
+	while (args->split[++y])
 	{
-		if (args->input[y] == '\0')
-			break ;
-		if (args->input[y] == '$')
+		if(!see_if_env(args->split[y]))
+			args->exp[x++] = ft_strdup(args->split[y]);
+		else
 		{
-			y++;
-			put_var_args(args, &y, &x, &i);
-		}
-		if (args->input[y] != '\0')
-		{
-			if(!do_loop_export(args, &y, &x, &i))
-				break;
-		}
-		if ((args->input[y] == '=' && args->input[y + 1] == ' ') || (args->input[y] == '=' && args->input[y - 1] == ' '))
-		{
-			printf("Wrong identifier\n");
-			args->exit_status = 1;
-			break ;
+			args->env[i++] = ft_strdup(args->split[y]);
+			args->exp[x++] = ft_strdup(args->split[y]);
 		}
 	}
-	free_matrix(str);
-	i++;
+	free_matrix(env);
+	free_matrix(exp);
+	//i++;
+	//x++;
 	args->env[i] = 0;
+	args->exp[x] = 0;
 }

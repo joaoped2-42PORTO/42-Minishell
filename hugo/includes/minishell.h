@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/31 12:47:13 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:30:41 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ typedef struct s_shell
 	char	*path;
 	int		flag;
 	t_comand	*token;
-	//char	**new_splt;
-	char	**new_env;
+	char	**exp;
 	char	**split; //1a experiencia
 	char	*input; //1a experiencia
 	char	**env; //1a experiencia
 	char	**argvs; //1a experiencia
-	char	*exp;
 }		t_shell;
 
 //Utils Functions
@@ -87,7 +85,7 @@ int		check_doubles_vars(t_shell *args);
 void	do_exit(t_shell *args);
 void	child_signals(void);
 void	free_matrix(char **str);
-void	exchange_memo(t_shell *args, char **str, int *i);
+void	exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x);
 void	do_unset(t_shell *args);
 char	**dup_env(char **str, char **str1);
 void	init_token(t_shell *args);
@@ -97,7 +95,7 @@ int			check_pipe_rede(char c, char s);
 void		init_values(t_shell *args, char	**env, int i);
 t_comand	*init(t_shell *args);
 void		do_small_exit(t_shell *args);
-void	alloc_env_mem(char **str, char **str1);
+void	alloc_env_mem(char **str, char **str1, char **str2);
 void	get_path_struct(t_shell *args);
 void	free_list(t_shell *args);
 void	free_split(t_shell *args);
