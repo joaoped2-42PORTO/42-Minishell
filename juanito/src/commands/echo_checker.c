@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:29:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/08 11:42:16 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/10 19:57:46 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,20 @@ int	isdoublequote(t_shell *args)
 	while (args->input[i])
 	{
 		if (args->input[i] == '"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	issinglequote(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->input[i])
+	{
+		if (args->input[i] == '\'')
 			return (1);
 		i++;
 	}
