@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/08 11:40:49 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:26:04 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	init_token(t_shell *args)
 	int			j;
 	t_comand	*tmp;
 
+	args->token = init(args);
 	tmp = args->token;
 	j = 0;
 	i = 0;
@@ -68,6 +69,7 @@ void	init_token(t_shell *args)
 		token_helper(args, &i, &j, tmp);
 		tmp = tmp->next;
 	}
+	args->split = split_db_quotes(args->input, ' ');
 }
 
 void	init_values(t_shell *args, char	**env, int i)

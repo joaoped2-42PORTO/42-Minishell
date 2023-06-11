@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/08 11:41:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:34:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	ft_wordcount_meta(char *str, char c)
 	return (wordcount);
 }
 
-static int	ft_wordlen(char *str, char c)
+int	ft_wordlen(char *str, char c)
 {
 	int		i;
 	char	quote;
@@ -129,7 +129,8 @@ static int	ft_wordlen(char *str, char c)
 	return (i);
 }
 
-static char	*get_word(char *s, char c, char **words)
+
+char	*get_word(char *s, char c, char **words)
 {
 	char	quote;
 
@@ -143,7 +144,7 @@ static char	*get_word(char *s, char c, char **words)
 	return (s);
 }
 
-char	**split_meta(char *s, char c)
+char	**split_db_quotes(char *s, char c)
 {
 	char	**words;
 	int		wdcount;
@@ -167,6 +168,33 @@ char	**split_meta(char *s, char c)
 	return (words);
 }
 
+int	check_valid_input(t_shell *args)
+{
+	if(!valid_input(args))
+	{
+		printf("Forgot to close quotes or pipe\n");
+		rl_replace_line("", 0);
+		rl_redisplay();
+		free(args->input);
+		return (0);
+	}
+	return (1);
+}
+
+int	check_input(t_shell *args)
+{
+	args->input = readline("👾Phylothinkers👾> ");
+	if(args->input == NULL)
+	{
+		free(args->input);
+		printf("\n");
+		do_small_exit(args);
+		return (0);
+	}
+	add_history(args->input);
+	return (1);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -179,32 +207,15 @@ int	main(int ac, char **av, char **env)
 	init_values(args, env, i);
 	while (1)
 	{
-		args->input = readline("👾Phylothinkers👾> ");
-		if (args->input == NULL)
-		{
-			free(args->input);
-			printf("\n");
-			do_small_exit(args);
+		if (!check_input(args))
 			break;
-		}
-		if(!valid_input(args))
-		{
-			printf("Forgot to close quotes or pipe\n");
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
+
+		if (!check_valid_input(args))
+			continue;
 		else
 		{
-			args->token = init(args);
 			init_token(args);
-			args->split = split_meta(args->input, ' ');
-			/*while (args->split[++j])
-				printf("%s\n", args->split[j]);
-			break;*/
-			if (args->input)
-				add_history(args->input);
-			if (cmdhandler(args) == 0)
-				return (0);
+			cmdhandler(args);
 			free_split(args);
 			free_list(args);
 		}

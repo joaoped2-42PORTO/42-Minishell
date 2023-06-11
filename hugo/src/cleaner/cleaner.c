@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/08 13:00:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:31:54 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_env_size(char **str)
 	return (i);
 }
 
-void	free_split(t_shell *args)
+int	free_split(t_shell *args)
 {
 	int	i;
 
@@ -30,9 +30,10 @@ void	free_split(t_shell *args)
 	while (args->split[++i])
 		free(args->split[i]);
 	free(args->split);
+	return (0);
 }
 
-void	free_list(t_shell *args)
+int	free_list(t_shell *args)
 {
 	t_comand *tmp;
 
@@ -45,6 +46,7 @@ void	free_list(t_shell *args)
 		free(args->token);
 		args->token = tmp;
 	}
+	return (0);
 }
 
 void	do_exit(t_shell *args)
@@ -61,9 +63,11 @@ void	do_exit(t_shell *args)
 	i = -1;
 	while (args->exp[++i] != 0)
 		free(args->exp[i]);
+	free_list(args);
 	free(args->exp);
 	free(args->env);
 	free(args->path);
+	free(args->input);
 	free(args);
 	rl_clear_history();
 	exit (0);

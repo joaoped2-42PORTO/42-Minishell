@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/08 13:08:36 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:31:54 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,33 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
+char	*print_env_var(t_shell *args, char *str)
+{
+	int		i;
+	int		j;
+	char	*src;
 
+	i = 0;
+	j = 0;
+	src = NULL;
+	while (args->env[i])
+	{
+		j = 0;
+		while (args->env[i][j] && str[j] && args->env[i][j] == str[j])
+			j++;
+		if (args->env[i][j] == '=' && str[j] == '\0')
+		{
+			j++;
+			free(src);
+			src = ft_strdup(&args->env[i][j]);
+			break ;
+		}
+		i++;
+	}
+	if (src == NULL)
+		return (NULL);
+	return (src);
+}
 
 void	open_exec(t_shell *args)
 {

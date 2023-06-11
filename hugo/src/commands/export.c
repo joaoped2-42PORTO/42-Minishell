@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/08 12:59:18 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:42:46 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,9 @@ void	do_export(t_shell *args)
 		(*i)++;
 		args->env[*i] = ft_calloc(ft_strlen(args->input), sizeof(char *));
 		*x = 0;
-	}*/
-
-int	check_space_in_string(t_shell *args, int *y)
-{
-	int	j;
-
-	j = *y;
-	while (args->input[++j])
-	{
-		if (args->input[j] == '\"' || args->input[j] == '\'')
-			return (1);
 	}
-	return (0);
-}
 
-int	do_loop_export(t_shell *args, int *y, int *x, int *i)
+	int	do_loop_export(t_shell *args, int *y, int *x, int *i)
 {
 	if (args->input[*y] == '=')
 	{
@@ -116,27 +103,6 @@ int	do_loop_export(t_shell *args, int *y, int *x, int *i)
 	else if (args->input[*y] != '\0' && args->input[*y] != '\"' && args->input[*y] != '\'')
 		args->env[*i][(*x)++] = args->input[*y];
 	return (1);
-}
-
-int	ft_isalnum_mini(int c)
-{
-	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (1);
-	return (0);
-}
-
-int	check_env_value(t_shell *args, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (args->env[i])
-	{
-		if (!ft_strncmp(args->env[i], str, variable_size(args->env[i])))
-			return (i);
-		i++;
-	}
-	return (0);
 }
 
 void	put_var_args(t_shell *args, int *y, int *x, int *i)
@@ -180,6 +146,44 @@ void	put_var_args(t_shell *args, int *y, int *x, int *i)
 	free (str);
 	free (tmp);
 
+}
+
+	*/
+
+int	check_space_in_string(t_shell *args, int *y)
+{
+	int	j;
+
+	j = *y;
+	while (args->input[++j])
+	{
+		if (args->input[j] == '\"' || args->input[j] == '\'')
+			return (1);
+	}
+	return (0);
+}
+
+
+
+int	ft_isalnum_mini(int c)
+{
+	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
+}
+
+int	check_env_value(t_shell *args, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (args->env[i])
+	{
+		if (!ft_strncmp(args->env[i], str, variable_size(args->env[i])))
+			return (i);
+		i++;
+	}
+	return (0);
 }
 
 int	see_if_env(char	*str)
@@ -233,8 +237,6 @@ void	do_mult_export(t_shell *args)
 	}
 	free_matrix(env);
 	free_matrix(exp);
-	//i++;
-	//x++;
 	args->env[i] = 0;
 	args->exp[x] = 0;
 }
