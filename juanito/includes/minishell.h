@@ -111,7 +111,7 @@ void		process_whitespace(t_shell *args, int *x, char **res);
 void		append_ptr2_to_res(char **res, char **ptr2, char **tmp);
 void		process_single_quotes(t_shell *args, int *x, int *t, char **res);
 void		process_dollar_sign(t_shell *args, int *x, int *k, char **res);
-void		process_quote(int *x, int *p);
+int			process_quote(t_shell *args, int *x, int *p);
 void		process_dollar_or_char(t_shell *args, int *x, int *k, char **res);
 void		process_input_condition(t_shell *args, int *x, int *k, char **res);
 int			validate_input(t_shell *args);

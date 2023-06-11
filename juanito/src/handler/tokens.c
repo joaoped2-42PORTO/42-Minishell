@@ -12,10 +12,16 @@
 
 #include "../../includes/minishell.h"
 
-void	process_quote(int *x, int *p)
+int	process_quote(t_shell *args, int *x, int *p)
 {
-	(*x)++;
-	(*p)++;
+	if (args->input[*x] == '"')
+	{
+		(*x)++;
+		(*p)++;
+		return (1);
+	}
+	else
+		return (0);
 }
 
 void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
@@ -34,7 +40,7 @@ void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 void	process_input_condition(t_shell *args, int *x, int *k, char **res)
 {
 	if (args->input[*x] == '"')
-		process_quote(x, NULL);
+		process_quote(args, x, NULL);
 	else if (args->input[*x] == '$')
 		process_dollar_or_char(args, x, k, res);
 	else

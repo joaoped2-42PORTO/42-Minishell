@@ -82,7 +82,10 @@ char	*checkbars(t_shell *args, int *i)
 	while (args->input[x] && validate_input(args))
 	{
 		if ((args->input[x] == '"' || p % 2 != 0) && t % 2 == 0)
-			process_quote(&x, &p);
+		{
+			if (!process_quote(args, &x, &p))
+				process_input_condition(args, &x, &k, &res);
+		}
 		else if ((args->input[x] == '\'' || t % 2 != 0) && p % 2 == 0)
 			process_single_quotes(args, &x, &t, &res);
 		else if (p % 2 == 0)
