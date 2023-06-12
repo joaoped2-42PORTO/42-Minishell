@@ -3,48 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/10 19:58:45 by neddy            ###   ########.fr       */
+/*   Updated: 2023/06/12 14:45:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	print_processed_result(t_shell *args, char *res)
-{
-	int	k;
-
-	k = 0;
-	while (res[k])
-	{
-		if (isdoublequote(args) != 0)
-		{
-			printf("%s", res);
-			break ;
-		}
-		if (issinglequote(args) != 0)
-		{
-			printf("%s", res);
-			break ;
-		}
-		if (res[k] == ' ' && res[k + 1] == ' ')
-			k++;
-		else if (res[k] == ' ' && k == 0)
-			k++;
-		else
-			write(1, &res[k++], 1);
-	}
-	printf("\n");
-}
 
 void	processdefault(t_shell *args, int *x)
 {
 	char	*res;
 
 	res = checkbars(args, x);
-	print_processed_result(args, res);
+	printf("%s\n", res);
 	free(res);
 }
 

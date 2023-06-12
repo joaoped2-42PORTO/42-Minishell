@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/10 19:58:04 by neddy            ###   ########.fr       */
+/*   Updated: 2023/06/12 14:51:51 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ char		*print_env_var(t_shell *args, char *str);
 int			countvalues(t_shell *args);
 void		do_echo(t_shell *args);
 int			checkforspacesinstring(t_shell *args, int i);
-int			isdoublequote(t_shell *args);
-int			issinglequote(t_shell *args);
-void		print_processed_result(t_shell *args, char *res);
 
 //tokenizer
 int			checkisalpha(t_shell *args, int *i);
@@ -115,8 +112,7 @@ int			process_quote(t_shell *args, int *x, int *p);
 void		process_dollar_or_char(t_shell *args, int *x, int *k, char **res);
 void		process_input_condition(t_shell *args, int *x, int *k, char **res);
 int			validate_input(t_shell *args);
-int			handle_quotes(t_shell *args, int *x, int *p, char **res);
-int			handle_single_quotes(t_shell *args, int *x, int *t);
+void		process_string(t_shell *args, int *x, char **res, int *k);
 void		process_input(t_shell *args, int *x, int *k, char **res);
 char		*checkbars(t_shell *args, int *i);
 

@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/08 15:04:27 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:30:49 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,15 @@ int	validate_input(t_shell *args)
 	return (1);
 }
 
-int	handle_quotes(t_shell *args, int *x, int *p, char **res)
+void	process_string(t_shell *args, int *x, char **res, int *k)
 {
-	if (args->input[*x] == '"')
+	while (args->input[*x] != '\'' && args->input[*x] != '"' && args->input[*x])
 	{
-		(*x)++;
-		(*p)++;
-		return (1);
-	}
-	else if (args->input[*x] == '$' && args->input[*x + 1] != ' '
-		&& args->input[*x + 1] != '\0')
-	{
-		process_dollar_or_char(args, x, p, res);
-		return (1);
-	}
-	else
-	{
-		append_char_to_res(res, args->input[*x]);
-		(*x)++;
-		return (0);
+		if (args->input[*x] == ' ' && args->input[(*x) + 1] == ' ')
+			(*x)++;
+		else if (args->input[*x] == '$')
+			process_dollar_or_char(args, x, k, res);
+		else
+			append_char_to_res(res, args->input[(*x)++]);
 	}
 }

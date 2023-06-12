@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/08 15:04:30 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:51:39 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@ void	process_dollar_sign(t_shell *args, int *x, int *k, char **res)
 	}
 	else
 		process_whitespace(args, x, res);
-}
-
-int	handle_single_quotes(t_shell *args, int *x, int *t)
-{
-	if (args->input[*x] == '\'')
-	{
-		(*x)++;
-		(*t)++;
-		return (1);
-	}
-	else
-		return (0);
 }
 
 void	process_input(t_shell *args, int *x, int *k, char **res)
@@ -88,10 +76,8 @@ char	*checkbars(t_shell *args, int *i)
 		}
 		else if ((args->input[x] == '\'' || t % 2 != 0) && p % 2 == 0)
 			process_single_quotes(args, &x, &t, &res);
-		else if (p % 2 == 0)
-			process_input_condition(args, &x, &k, &res);
 		else
-			append_char_to_res(&res, args->input[x++]);
+			process_string(args, &x, &res, &k);
 	}
 	return (res);
 }

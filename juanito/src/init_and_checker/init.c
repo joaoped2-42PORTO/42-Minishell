@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 17:24:54 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:57:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	token_helper(t_shell *args, int *i, int *j, t_comand *tmp)
 		(*i)++;
 	if (args->input[*i] == '\0')
 		return ;
-	//(*i)++;
 	*j = 0;
 	while (args->input[*i] && !ft_isalnum(args->input[*i]))
 		(*i)++;
