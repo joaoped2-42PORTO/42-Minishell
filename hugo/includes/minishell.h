@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 12:54:28 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:37:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 typedef struct s_tokenizer
 {
 	char	*cmd;
-	char	*argm;
+	char	**argm;
 	char	*pipe_dir;
 	struct s_tokenizer	*next;
 }		t_comand;
@@ -89,12 +89,12 @@ void	free_matrix(char **str);
 void	exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x);
 void	do_unset(t_shell *args);
 char	**dup_env(char **str, char **str1);
-void	init_token(t_shell *args);
+t_comand	*init_token(t_shell *args);
 t_comand	*get_bottom_stack(t_comand *stack);
 void		add_bottom(t_comand **stack, t_comand *new);
 int			check_pipe_rede(char c, char s);
 void		init_values(t_shell *args, char	**env, int i);
-t_comand	*init(t_shell *args);
+t_comand	*init(t_shell *args, int *i);
 void		do_small_exit(t_shell *args);
 void	alloc_env_mem(char **str, char **str1, char **str2);
 void	get_path_struct(t_shell *args);
@@ -105,6 +105,7 @@ int	valid_input(t_shell *args);
 void	put_var_args(t_shell *args, int *y, int *x, int *i);
 char	**split_db_quotes(char *s, char c);
 void	change_split(t_shell *args);
+int	see_split_size(t_shell *args);
 
 //Joao tokens
 int			checkisalpha(t_shell *args, int *i);

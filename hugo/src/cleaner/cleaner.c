@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/11 19:31:54 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:39:27 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,22 @@ int	free_list(t_shell *args)
 	{
 		tmp = args->token->next;
 		free(args->token->cmd);
-		free(args->token->argm);
+		free_matrix(args->token->argm);
 		free(args->token->pipe_dir);
 		free(args->token);
 		args->token = tmp;
 	}
+	free (args->token);
+	free (tmp);
 	return (0);
 }
 
 void	do_exit(t_shell *args)
 {
-	int	i;
-
-	i = -1;
-	while (args->split[++i])
-		free(args->split[i]);
-	free(args->split);
-	i = -1;
-	while (args->env[++i] != 0)
-		free(args->env[i]);
-	i = -1;
-	while (args->exp[++i] != 0)
-		free(args->exp[i]);
+	free_split(args);
+	free_matrix(args->env);
+	free_matrix(args->exp);
 	free_list(args);
-	free(args->exp);
-	free(args->env);
 	free(args->path);
 	free(args->input);
 	free(args);
@@ -75,16 +66,8 @@ void	do_exit(t_shell *args)
 
 void	do_small_exit(t_shell *args)
 {
-	int	i;
-
-	i = -1;
-	while (args->env[++i] != 0)
-		free(args->env[i]);
-	i = -1;
-	while (args->exp[++i] != 0)
-		free(args->exp[i]);
-	free(args->exp);
-	free(args->env);
+	free_matrix(args->env);
+	free_matrix(args->exp);
 	free(args->path);
 	free(args);
 	rl_clear_history();
