@@ -17,9 +17,9 @@ SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/sr
 		hugo/src/commands/export.c hugo/src/commands/export_utils.c hugo/src/commands/unset.c hugo/src/commands/unset_utils.c \
 		hugo/src/commands/cd_utils.c hugo/src/init_and_checker/init.c hugo/src/init_and_checker/init_utils.c \
 		hugo/src/cleaner/cleaner.c hugo/src/init_and_checker/checker.c \
-		juanito/src/handler/tokens.c \
-		juanito/src/handler/tokens2.c \
-		juanito/src/handler/tokens3.c
+		hugo/src/handler/tokens.c \
+		hugo/src/handler/tokens2.c \
+		hugo/src/handler/tokens3.c
 SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/commands/cd_utils.c \
 		  juanito/src/commands/cd.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/12 14:57:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:47:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	init_token(t_shell *args)
 
 void	init_values(t_shell *args, char	**env, int i)
 {
+	args->index = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
 	alloc_env_mem(env, args->env);

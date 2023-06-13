@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/11 19:28:45 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:54:28 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_shell
 	char	*input; //1a experiencia
 	char	**env; //1a experiencia
 	char	**argvs; //1a experiencia
+	int		index;
 }		t_shell;
 
 //Utils Functions
@@ -103,6 +104,7 @@ int	get_env_size(char **str);
 int	valid_input(t_shell *args);
 void	put_var_args(t_shell *args, int *y, int *x, int *i);
 char	**split_db_quotes(char *s, char c);
+void	change_split(t_shell *args);
 
 //Joao tokens
 int			checkisalpha(t_shell *args, int *i);
@@ -111,14 +113,13 @@ void		process_whitespace(t_shell *args, int *x, char **res);
 void		append_ptr2_to_res(char **res, char **ptr2, char **tmp);
 void		process_single_quotes(t_shell *args, int *x, int *t, char **res);
 void		process_dollar_sign(t_shell *args, int *x, int *k, char **res);
-void		process_quote(int *x, int *p);
+int			process_quote(t_shell *args, int *x, int *p);
 void		process_dollar_or_char(t_shell *args, int *x, int *k, char **res);
 void		process_input_condition(t_shell *args, int *x, int *k, char **res);
 int			validate_input(t_shell *args);
-int			handle_quotes(t_shell *args, int *x, int *p, char **res);
-int			handle_single_quotes(t_shell *args, int *x, int *t);
+void		process_string(t_shell *args, int *x, char **res, int *k);
 void		process_input(t_shell *args, int *x, int *k, char **res);
-char		*checkbars(t_shell *args, int *i);
+char		*checkbars(t_shell *args);
 char	*print_env_var(t_shell *args, char *str);
 
 #endif

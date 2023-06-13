@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/11 19:34:21 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:41:18 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,21 @@ int	check_input(t_shell *args)
 	return (1);
 }
 
+void	change_split(t_shell *args)
+{
+	char	*str;
+
+	args->index = 0;
+	while (args->split[args->index])
+	{
+		str = checkbars(args);
+		free(args->split[args->index]);
+		args->split[args->index] = ft_strdup(str);
+		free (str);
+		args->index++;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -209,7 +224,6 @@ int	main(int ac, char **av, char **env)
 	{
 		if (!check_input(args))
 			break;
-
 		if (!check_valid_input(args))
 			continue;
 		else

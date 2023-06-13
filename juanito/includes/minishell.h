@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/12 14:51:51 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:42:56 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_shell
 	char		**env;
 	char		**argvs;
 	char		*exp;
+	int			index;
 }		t_shell;
 
 //Commands
@@ -95,7 +96,6 @@ void		free_list(t_shell *args);
 void		free_split(t_shell *args);
 int			get_env_size(char **str);
 int			valid_input(t_shell *args);
-char		*checkbars(t_shell *args, int *i);
 char		*print_env_var(t_shell *args, char *str);
 int			countvalues(t_shell *args);
 void		do_echo(t_shell *args);
@@ -114,6 +114,6 @@ void		process_input_condition(t_shell *args, int *x, int *k, char **res);
 int			validate_input(t_shell *args);
 void		process_string(t_shell *args, int *x, char **res, int *k);
 void		process_input(t_shell *args, int *x, int *k, char **res);
-char		*checkbars(t_shell *args, int *i);
+char		*checkbars(t_shell *args);
 
 #endif
