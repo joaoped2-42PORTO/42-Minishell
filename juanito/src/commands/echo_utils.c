@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/07 11:10:54 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:22:32 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	string_comp(char *str1)
 	}
 	return (j);
 }
-
+/*
 char	*print_env_var(t_shell *args, char *str)
 {
 	int		i;
@@ -52,7 +52,7 @@ char	*print_env_var(t_shell *args, char *str)
 	if (src == NULL)
 		return (NULL);
 	return (src);
-}
+}*/
 
 void	put_var(t_shell *args, char	*str)
 {

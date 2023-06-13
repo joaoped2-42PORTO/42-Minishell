@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 14:29:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/12 14:50:05 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:11:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,18 @@ int	checkforspacesinstring(t_shell *args, int i)
 		i++;
 	}
 	return (j);
+}
+
+int	countvalues(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->input[i] == ' ')
+		i++;
+	while (args->input[i] != ' ' && args->input[i])
+		i++;
+	while (args->input[i] == ' ')
+		i++;
+	return (i);
 }

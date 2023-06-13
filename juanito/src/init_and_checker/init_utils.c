@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:26:22 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/24 22:45:32 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:40:41 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_comand	*get_bottom_stack(t_comand *stack)
 	return (stack);
 }
 
-void	alloc_env_mem(char **str, char **str1)
+void	alloc_env_mem(char **str, char **str1, char **str2)
 {
 	int	i;
 
@@ -44,8 +44,10 @@ void	alloc_env_mem(char **str, char **str1)
 	while (str[++i])
 	{
 		str1[i] = ft_strdup(str[i]);
+		str2[i] = ft_strdup(str[i]);
 	}
 	str1[i] = 0;
+	str2[i] = 0;
 }
 
 void	get_path_struct(t_shell *args)

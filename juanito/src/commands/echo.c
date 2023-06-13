@@ -6,17 +6,17 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/12 14:45:04 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:21:16 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	processdefault(t_shell *args, int *x)
+void	processdefault(t_shell *args)
 {
 	char	*res;
 
-	res = checkbars(args, x);
+	res = checkbars(args);
 	printf("%s\n", res);
 	free(res);
 }
@@ -36,13 +36,13 @@ void	process_option_n(t_shell *args, int *x)
 		{
 			i++;
 			(*x) = i;
-			res = checkbars(args, x);
+			res = checkbars(args);
 			printf("%s", res);
 			free(res);
 			return ;
 		}
 	}
-	processdefault(args, x);
+	processdefault(args);
 }
 
 void	checkcontent(t_shell *args)
@@ -58,7 +58,7 @@ void	checkcontent(t_shell *args)
 	else if (args->input[x] == '-' && args->input[x + 1] == 'n')
 		process_option_n(args, &x);
 	else
-		processdefault(args, &x);
+		processdefault(args);
 }
 
 void	do_echo(t_shell *args)
