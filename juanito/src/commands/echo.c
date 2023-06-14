@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 14:21:16 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:48:27 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,51 @@
 
 void	processdefault(t_shell *args)
 {
-	char	*res;
-
-	res = checkbars(args);
-	printf("%s\n", res);
-	free(res);
+	while (args->split[args->index])
+	{
+		printf("%s", args->split[args->index]);
+		if (args->split[args->index])
+		{
+			printf(" ");
+			args->index++;
+		}
+	}
+	printf("\n");
 }
 
-void	process_option_n(t_shell *args, int *x)
+void	process_option_n(t_shell *args)
 {
-	char	*res;
 	int		i;
 
-	i = *x;
-	if (args->input[i] == '-' && args->input[i + 1] == 'n')
+	i = 0;
+	if (args->split[args->index][i] == '-'
+		&& args->split[args->index][i + 1] == 'n')
 	{
-		i += 2;
-		while (args->input[i] == 'n')
-			i++;
-		if (args->input[i] == ' ' || args->input[i] == '\0')
+		i++;
+		while (args->split[args->index][i])
 		{
-			i++;
-			(*x) = i;
-			res = checkbars(args);
-			printf("%s", res);
-			free(res);
-			return ;
+			if (args->split[args->index][i] == '-')
+				i++;
+			while (args->split[args->index][i] == 'n')
+				i++;
+			if (args->split[args->index][i] == '\0')
+			{
+				if (!args->split[args->index + 1])
+					return ;
+				args->index++;
+				i = 0;
+			}
+			else
+			{
+				while (args->split[args->index])
+				{
+					printf("%s", args->split[args->index]);
+					args->index++;
+					if (args->split[args->index])
+						printf(" ");
+				}
+				return ;
+			}
 		}
 	}
 	processdefault(args);
@@ -49,14 +68,16 @@ void	checkcontent(t_shell *args)
 {
 	int	x;
 
-	x = countvalues(args);
-	if (x == 4)
+	x = 0;
+	if (!args->split[1])
 	{
 		printf("\n");
 		return ;
 	}
-	else if (args->input[x] == '-' && args->input[x + 1] == 'n')
-		process_option_n(args, &x);
+	args->index = 1;
+	if (args->split[args->index][x] == '-'
+		&& args->split[args->index][x + 1] == 'n')
+		process_option_n(args);
 	else
 		processdefault(args);
 }

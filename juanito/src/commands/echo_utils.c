@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 14:22:32 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:07:22 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,6 @@ int	string_comp(char *str1)
 	}
 	return (j);
 }
-/*
-char	*print_env_var(t_shell *args, char *str)
-{
-	int		i;
-	int		j;
-	char	*src;
-
-	i = 0;
-	j = 0;
-	src = NULL;
-	while (args->env[i])
-	{
-		j = 0;
-		while (args->env[i][j] && str[j] && args->env[i][j] == str[j])
-			j++;
-		if (args->env[i][j] == '=' && str[j] == '\0')
-		{
-			j++;
-			free(src);
-			src = ft_strdup(&args->env[i][j]);
-			break ;
-		}
-		i++;
-	}
-	if (src == NULL)
-		return (NULL);
-	return (src);
-}*/
 
 void	put_var(t_shell *args, char	*str)
 {
