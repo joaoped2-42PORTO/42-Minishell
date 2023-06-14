@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/13 15:59:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/14 12:40:42 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	checkPipeRed(t_shell *args, int *i)
+{
+	if (args->split[*i][0] == '|' || args->split[*i][0] == '>' || args->split[*i][0] == '<')
+		return (1);
+	return (0);
+}
 
 t_comand	*init(t_shell *args, int *i)
 {
@@ -26,9 +33,9 @@ t_comand	*init(t_shell *args, int *i)
 	ag->pipe_dir = ft_calloc(3, sizeof(char));
 	ag->next = NULL;
 	ag->cmd = ft_strdup(args->split[(*i)++]);
-	while (args->split[*i] && args->split[*i][0] != '|')
+	while (args->split[*i] && !checkPipeRed(args, i))
 		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
-	if (args->split[*i] && args->split[*i][0] == '|')
+	if (args->split[*i] && checkPipeRed(args, i))
 		ag->pipe_dir = ft_strdup(args->split[*i]);
 	ag->next = NULL;
 	return (ag);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 15:37:51 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:15:17 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int		see_env_size(t_shell *args);
 int		variable_size(char	*str);
 //void	do_unset(t_shell *args);
 //void	do_unset_new(t_shell *args);
-int		check_doubles_vars(t_shell *args);
+int		check_doubles_env(t_shell *args, int y);
+int	check_doubles_exp(t_shell *args, int y);
 void	do_exit(t_shell *args);
 void	child_signals(void);
 void	free_matrix(char **str);
@@ -106,6 +107,8 @@ void	put_var_args(t_shell *args, int *y, int *x, int *i);
 char	**split_db_quotes(char *s, char c);
 void	change_split(t_shell *args);
 int	see_split_size(t_shell *args);
+int	see_if_env(char	*str);
+int	see_exp_size(t_shell *args);
 
 //Joao tokens
 int			checkisalpha(t_shell *args, int *i);

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/11 18:42:46 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:09:04 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,9 @@ void	do_mult_export(t_shell *args)
 	exchange_memo(args, env, exp, &i, &x);
 	while (args->split[++y])
 	{
-		if(!see_if_env(args->split[y]))
+		if (!check_doubles_env(args, y) && !check_doubles_exp(args, y))
+			continue;
+		else if(!see_if_env(args->split[y]))
 			args->exp[x++] = ft_strdup(args->split[y]);
 		else
 		{
