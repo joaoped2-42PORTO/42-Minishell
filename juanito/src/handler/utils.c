@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_checker.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 14:29:07 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 17:09:55 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/06/14 16:56:27 by joaoped2          #+#    #+#             */
+/*   Updated: 2023/06/14 17:28:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	checkforspacesinstring(t_shell *args, int i)
+char	*ft_strcpy1(char *dest, const char *src)
 {
-	int	j;
+	char	*ptr;
 
-	j = 0;
-	if (!args->input[i])
-		return (0);
-	while (args->input[i])
+	ptr = dest;
+	while (*src)
 	{
-		while (args->input[i] != ' ' && args->input[i])
-			i++;
-		while (args->input[i] == ' ' && args->input[i])
-		{
-			j++;
-			i++;
-		}
-		return (j);
-		i++;
+		*dest = *src;
+		dest++;
+		src++;
 	}
-	return (j);
+	*dest = '\0';
+	return (ptr);
 }

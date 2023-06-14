@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/08 12:31:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:11:39 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,34 +89,6 @@ void	exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x)
 	free_matrix(args->exp);
 	args->env = ft_calloc(*i + see_split_size(args), sizeof(char *));
 	args->env = dup_env(env, args->env);
-	//args->env[*i] = ft_calloc(ft_strlen(args->input), sizeof(char));
 	args->exp = ft_calloc(*x + see_split_size(args), sizeof(char *));
 	args->exp = dup_env(exp, args->exp);
-	//args->exp[*i] = ft_calloc(ft_strlen(args->input), sizeof(char));
 }
-// Antigo single export
-/*void	single_export(t_shell *args, int *j, int *x, int *i)
-{
-	char	**str;
-
-	str = ft_calloc(*i + 1, sizeof(char *));
-	exchange_memo(args, str, i);
-	while (args->input[*j])
-	{
-		if (args->input[*j] == '"')
-			(*j)++;
-		if (args->input[*j] == '\0')
-			break ;
-		if (args->input[*j] == '$')
-		{
-			(*j)++;
-			put_var_args(args, j, x, i);
-		}
-		else
-			args->env[*i][(*x)++] = args->input[(*j)++];
-		if (args->input[*j] == '\0')
-			break ;
-	}
-	args->env[*i][*x] = '\0';
-	free_matrix(str);
-}*/

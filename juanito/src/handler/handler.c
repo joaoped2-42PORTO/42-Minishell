@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 16:00:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:18:57 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*
-    char *path = getenv("PATH");
-    char *dir = strtok(path, ":");
-    char ls_path[256];
-
-    while (dir != NULL) {
-        sprintf(ls_path, "%s/ls", dir);
-        if (access(ls_path, X_OK) == 0) {
-            printf("Found ls command at %s\n", ls_path);
-            break;
-        }
-        dir = strtok(NULL, ":");
-    }
-*/
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int i;
-
-	i = 0;
-	while (!s1 && !s2 && s1[i] == s2[i])
-		i++;
-	return (s1[i] - s2[i]);
-}
 
 char	*print_env_var(t_shell *args, char *str)
 {

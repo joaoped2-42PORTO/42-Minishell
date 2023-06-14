@@ -35,6 +35,7 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/handler/tokens.c \
 		  juanito/src/handler/tokens2.c \
 		  juanito/src/handler/tokens3.c \
+		  juanito/src/handler/utils.c \
 		  juanito/src/init_and_checker/checker.c \
 		  juanito/src/init_and_checker/init_utils.c \
 		  juanito/src/init_and_checker/init.c \

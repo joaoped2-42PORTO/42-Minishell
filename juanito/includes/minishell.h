@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 16:40:04 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:27:15 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,97 +35,154 @@
 
 typedef struct s_tokenizer
 {
-	char	*cmd;
-	char	**argm;
-	char	*pipe_dir;
+	char				*cmd;
+	char				**argm;
+	char				*pipe_dir;
 	struct s_tokenizer	*next;
 }		t_comand;
 
 typedef struct s_shell
 {
-	int		env_size;
-	int		exit_status;
-	char	*path;
-	int		flag;
+	int			env_size;
+	int			exit_status;
+	char		*path;
+	int			flag;
 	t_comand	*token;
-	char	**exp;
-	char	**split; //1a experiencia
-	char	*input; //1a experiencia
-	char	**env; //1a experiencia
-	char	**argvs; //1a experiencia
-	int		index;
+	char		**exp;
+	char		**split;
+	char		*input;
+	char		**env;
+	char		**argvs;
+	int			index;
 }		t_shell;
 
-//Utils Functions
-
-//Commands
-//void	check_files_in_path(char *str);
-void	do_cd(t_shell *args);
-void	check_pwd(t_shell *args);
-
-//Handler
-int		cmdhandler(t_shell *args);
-int		do_builtins(t_shell *args);
-
-//Signals
-
-void	config_signals(void);
-
-
-void	change_env_oldpwd(t_shell *args);
-void	change_env_pwd(t_shell *args);
-void	do_mult_export(t_shell *args);
-void	print_export(t_shell *args);
-void	do_export(t_shell *args);
-void	single_export(t_shell *args, int *j, int *x, int *i);
-int		see_env_size(t_shell *args);
-int		variable_size(char	*str);
-//void	do_unset(t_shell *args);
-//void	do_unset_new(t_shell *args);
-int		check_doubles_vars(t_shell *args);
-void	do_exit(t_shell *args);
-void	child_signals(void);
-void	free_matrix(char **str);
-void	exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x);
-void	do_unset(t_shell *args);
-char	**dup_env(char **str, char **str1);
-t_comand	*init_token(t_shell *args);
-t_comand	*get_bottom_stack(t_comand *stack);
-void		add_bottom(t_comand **stack, t_comand *new);
-int			check_pipe_rede(char c, char s);
-void		init_values(t_shell *args, char	**env, int i);
-t_comand	*init(t_shell *args, int *i);
+//cleaner | cleaner.c
+int			get_env_size(char **str);
+int			free_split(t_shell *args);
+int			free_list(t_shell *args);
+void		do_exit(t_shell *args);
 void		do_small_exit(t_shell *args);
-void	alloc_env_mem(char **str, char **str1, char **str2);
-void	get_path_struct(t_shell *args);
-int	free_list(t_shell *args);
-int	free_split(t_shell *args);
-int	get_env_size(char **str);
-int	valid_input(t_shell *args);
-void	put_var_args(t_shell *args, int *y, int *x, int *i);
-char	**split_db_quotes(char *s, char c);
-void	change_split(t_shell *args);
-int	see_split_size(t_shell *args);
-int	countvalues(t_shell *args);
-void	do_echo(t_shell *args);
-void	processdefault(t_shell *args);
-void	print_option_n(t_shell *args);
-void	check_index(t_shell *args, int *i);
 
-//Joao tokens
-int			checkisalpha(t_shell *args, int *i);
-void		append_char_to_res(char **res, char c);
-void		process_whitespace(t_shell *args, int *x, char **res);
-void		append_ptr2_to_res(char **res, char **ptr2, char **tmp);
-void		process_single_quotes(t_shell *args, int *x, int *t, char **res);
-void		process_dollar_sign(t_shell *args, int *x, int *k, char **res);
+//commands | cd_utils.c
+int			change_pwd(char **str1);
+void		first_old_pwd(char **str1);
+void		change_env_oldpwd(t_shell *args);
+
+//commands | cd.c
+void		ft_homedk(t_shell *args);
+void		change_env_pwd(t_shell *args);
+void		do_cd(t_shell *args);
+
+//commands | echo_checker.c
+int			checkforspacesinstring(t_shell *args, int i);
+
+//commands | echo_utils.c
+void		processdefault(t_shell *args);
+void		print_option_n(t_shell *args);
+void		check_index(t_shell *args, int *i);
+
+//commands | echo.c
+void		process_option_n(t_shell *args);
+void		checkcontent(t_shell *args);
+void		do_echo(t_shell *args);
+
+//commands | export_utils.c
+int			do_loop_doubles(t_shell *args, int j);
+int			check_doubles_vars(t_shell *args);
+int			see_env_size(t_shell *args);
+char		**dup_env(char **str, char **str1);
+void		free_matrix(char **str);
+int			see_split_size(t_shell *args);
+void		exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x);
+
+//commands | export.c
+int			check_input_exp(t_shell *args);
+void		do_export(t_shell *args);
+int			check_space_in_string(t_shell *args, int *y);
+int			ft_isalnum_mini(int c);
+int			check_env_value(t_shell *args, char *str);
+int			see_if_env(char	*str);
+int			see_exp_size(t_shell *args);
+void		do_mult_export(t_shell *args);
+
+//commands | pwd.c
+int			see_pwd(char	**str);
+void		check_pwd(t_shell *args);
+
+//commands | unset_utils.c
+int			variable_size(char	*str);
+
+//commands | unset.c
+void		exchange_memo_unset(t_shell *args, char **str, int *i);
+void		unset(t_shell *args, char *str1);
+void		do_unset(t_shell *args);
+
+//handler | handler.c
+char		*print_env_var(t_shell *args, char *str);
+void		open_exec(t_shell *args);
+void		open_exec_abs(t_shell *args);
+char		*get_path(t_shell *args);
+char		*get_acess(char	**str, t_shell *args);
+int			do_non_builtins(t_shell *args);
+void		print_env(t_shell *args);
+void		print_export(t_shell *args);
+int			cmdhandler(t_shell *args);
+
+//handler | tokens.c
 int			process_quote(t_shell *args, int *x, int *p);
 void		process_dollar_or_char(t_shell *args, int *x, int *k, char **res);
 void		process_input_condition(t_shell *args, int *x, int *k, char **res);
 int			validate_input(t_shell *args);
 void		process_string(t_shell *args, int *x, char **res, int *k);
+
+//handler | tokens2.c
+int			checkisalpha(t_shell *args, int *i);
+void		append_char_to_res(char **res, char c);
+void		process_whitespace(t_shell *args, int *x, char **res);
+void		append_ptr2_to_res(char **res, char **ptr2, char **tmp);
+void		process_single_quotes(t_shell *args, int *x, int *t, char **res);
+
+//handler | tokens3.c
+void		process_dollar_sign(t_shell *args, int *x, int *k, char **res);
 void		process_input(t_shell *args, int *x, int *k, char **res);
 char		*checkbars(t_shell *args);
-char	*print_env_var(t_shell *args, char *str);
+
+//handler | utils.c
+char		*ft_strcpy1(char *dest, const char *src);
+
+//init_and_checker | checker.c
+int			see_closed_pipe(char *str, int *i);
+int			see_dbquote_string(char *str, int *i);
+int			see_quote_string(char *str, int *i);
+int			see_quote_double_string(char *str, int *i);
+int			loop_input(t_shell *args, int *i);
+int			valid_input(t_shell *args);
+
+//init_and_checker | init_utils.c
+int			check_pipe_rede(char c, char s);
+void		add_bottom(t_comand **stack, t_comand *new);
+t_comand	*get_bottom_stack(t_comand *stack);
+void		alloc_env_mem(char **str, char **str1, char **str2);
+void		get_path_struct(t_shell *args);
+
+//init_and_checker | init.c
+t_comand	*init(t_shell *args, int *i);
+t_comand	*init_token(t_shell *args);
+void		init_values(t_shell *args, char	**env, int i);
+
+//signals | signals.c
+void		handler(int sig);
+void		config_signals(void);
+
+//main | main.c
+int			check_max_string(t_shell *args);
+char		quote_value(char c, char quote);
+int			ft_wordcount_meta(char *str, char c);
+int			ft_wordlen(char *str, char c);
+char		*get_word(char *s, char c, char **words);
+char		**split_db_quotes(char *s, char c);
+int			check_valid_input(t_shell *args);
+int			check_input(t_shell *args);
+void		change_split(t_shell *args);
 
 #endif
