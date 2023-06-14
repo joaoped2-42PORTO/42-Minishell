@@ -6,25 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 15:48:27 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:39:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	processdefault(t_shell *args)
-{
-	while (args->split[args->index])
-	{
-		printf("%s", args->split[args->index]);
-		if (args->split[args->index])
-		{
-			printf(" ");
-			args->index++;
-		}
-	}
-	printf("\n");
-}
 
 void	process_option_n(t_shell *args)
 {
@@ -42,23 +28,9 @@ void	process_option_n(t_shell *args)
 			while (args->split[args->index][i] == 'n')
 				i++;
 			if (args->split[args->index][i] == '\0')
-			{
-				if (!args->split[args->index + 1])
-					return ;
-				args->index++;
-				i = 0;
-			}
+				check_index(args, &i);
 			else
-			{
-				while (args->split[args->index])
-				{
-					printf("%s", args->split[args->index]);
-					args->index++;
-					if (args->split[args->index])
-						printf(" ");
-				}
-				return ;
-			}
+				print_option_n(args);
 		}
 	}
 	processdefault(args);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 15:37:51 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:40:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void	change_split(t_shell *args);
 int	see_split_size(t_shell *args);
 int	countvalues(t_shell *args);
 void	do_echo(t_shell *args);
+void	processdefault(t_shell *args);
+void	print_option_n(t_shell *args);
+void	check_index(t_shell *args, int *i);
 
 //Joao tokens
 int			checkisalpha(t_shell *args, int *i);

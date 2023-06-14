@@ -6,53 +6,42 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 15:07:22 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:40:17 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	string_comp(char *str1)
+void	processdefault(t_shell *args)
 {
-	int	j;
-
-	j = 0;
-	while (str1[j])
+	while (args->split[args->index])
 	{
-		j++;
-		if (str1[j] == '=')
-			break ;
-	}
-	return (j);
-}
-
-void	put_var(t_shell *args, char	*str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (args->input[i] != '$')
-		i++;
-	i++;
-	while (args->input[i])
-		str[j++] = args->input[i++];
-}
-
-void	anotherfunction(t_shell *args, int *i)
-{
-	char	*src;
-
-	src = ft_calloc(ft_strlen(args->input), sizeof(char));
-	while (args->input[*i])
-	{
-		if (args->input[*i] == '$')
+		printf("%s", args->split[args->index]);
+		if (args->split[args->index])
 		{
-			put_var(args, src);
-			print_env_var(args, src);
-			return ;
+			printf(" ");
+			args->index++;
 		}
-		i++;
 	}
+	printf("\n");
+}
+
+void	print_option_n(t_shell *args)
+{
+	while (args->split[args->index])
+	{
+		printf("%s", args->split[args->index]);
+		args->index++;
+		if (args->split[args->index])
+			printf(" ");
+		return ;
+	}
+}
+
+void	check_index(t_shell *args, int *i)
+{
+	if (!args->split[args->index + 1])
+		return ;
+	args->index++;
+	*i = 0;
 }
