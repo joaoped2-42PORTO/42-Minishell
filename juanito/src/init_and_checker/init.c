@@ -6,71 +6,54 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/13 12:49:38 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:59:08 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_comand	*init(t_shell *args)
+t_comand	*init(t_shell *args, int *i)
 {
 	t_comand	*ag;
+	int			j;
 
+	j = 0;
 	ag = malloc(sizeof(t_comand));
+
 	if (!ag)
 		return (NULL);
-	ag->cmd = ft_calloc(ft_strlen(args->input), sizeof(char));
-	ag->argm = ft_calloc(ft_strlen(args->input), sizeof(char));
+	ag->argm = ft_calloc(see_split_size(args), sizeof(char *));
 	ag->pipe_dir = ft_calloc(3, sizeof(char));
+	ag->next = NULL;
+	ag->cmd = ft_strdup(args->split[(*i)++]);
+	while (args->split[*i] && args->split[*i][0] != '|')
+		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
+	if (args->split[*i] && args->split[*i][0] == '|')
+		ag->pipe_dir = ft_strdup(args->split[*i]);
 	ag->next = NULL;
 	return (ag);
 }
 
-void	token_helper(t_shell *args, int *i, int *j, t_comand *tmp)
-{
-	*j = 0;
-	while (!ft_isalnum(args->input[*i]))
-		(*i)++;
-	while (args->input[*i] && args->input[*i] != ' ')
-		tmp->cmd[(*j)++] = args->input[(*i)++];
-	while (args->input[*i] && !ft_isalnum(args->input[*i]))
-		(*i)++;
-	if (args->input[*i] == '\0')
-		return ;
-	//(*i)++;
-	*j = 0;
-	while (args->input[*i] && !ft_isalnum(args->input[*i]))
-		(*i)++;
-	while (args->input[*i]
-		&& check_pipe_rede(args->input[*i], args->input[*i + 1]))
-		tmp->argm[(*j)++] = args->input[(*i)++];
-	*j = 0;
-	if (args->input[*i] != '\0')
-	{
-		if (!check_pipe_rede(args->input[*i], args->input[*i + 1]))
-			add_bottom(&args->token, init(args));
-		while (args->input[*i] != ' ' && !ft_isalnum(args->input[*i]))
-			args->token->pipe_dir[(*j)++] = args->input[(*i)++];
-	}
-}
 
-void	init_token(t_shell *args)
+t_comand	*init_token(t_shell *args)
 {
 	int			i;
-	int			j;
 	t_comand	*tmp;
 
-	args->token = init(args);
-	tmp = args->token;
-	j = 0;
-	i = 0;
-	while (args->input[i])
-	{
-		token_helper(args, &i, &j, tmp);
-		tmp = tmp->next;
-	}
 	args->split = split_db_quotes(args->input, ' ');
 	change_split(args);
+	tmp = NULL;
+	i = 0;
+	while (args->split[i])
+	{
+		if(i == 0)
+			tmp = init(args, &i);
+		else
+			add_bottom(&tmp, init(args, &i));
+		if (args->split[i])
+			i++;
+	}
+	return (tmp);
 }
 
 void	init_values(t_shell *args, char	**env, int i)

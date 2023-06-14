@@ -96,9 +96,7 @@ int	loop_input(t_shell *args, int *i)
 int	valid_input(t_shell *args)
 {
 	int	i;
-	int	x;
 
-	x = 0;
 	i = 0;
 	while (args->input[i] == ' ')
 			i++;

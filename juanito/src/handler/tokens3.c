@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 14:23:09 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:53:49 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*checkbars(t_shell *args)
 	p = 0;
 	k = 0;
 	t = 0;
-	res = ft_calloc(ft_strlen(args->split[args->index]), sizeof(char));
+	res = calloc(ft_strlen(args->split[args->index]) , sizeof(char));
 	x = 0;
 	while (args->split[args->index][x])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/13 14:22:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:00:08 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char	*get_acess(char	**str, t_shell *args)
 	return (join);
 }
 
-int	do_builtins(t_shell *args)
+int	do_non_builtins(t_shell *args)
 {
 	int	pid;
 	char	*path;
@@ -172,13 +172,13 @@ int	do_builtins(t_shell *args)
 			open_exec(args);
 		else if(args->input[0] == '/')
 			open_exec_abs(args);
-    	if(execve(path, args->split, NULL) != 0)
+    	if(execve(path, args->split, args->env) != 0)
 		{
-			printf("command not found: %s\n", args->input);
+			printf("command not found: %s\n", args->token->cmd);
 			args->exit_status = 2;
 			exit (2);
 		}
-		args->exit_status = 0;
+		args->exit_status = 125;
 	}
 	waitpid(-1, NULL, 0);
 	free (path);
@@ -220,48 +220,27 @@ void	print_export(t_shell *args)
 	args->exit_status = 0;
 }
 
-/*
-void	do_echo(t_shell *args)
-{
-	int	i;
-
-	if (!ft_strncmp(args->split[1], "-n", 2))
-	{
-		i = 8;
-		while(args->input[i])
-			write(1, &args->input[i++], 1);
-	}
-	else
-	{
-		i = 5;
-		while(args->input[i])
-			write(1, &args->input[i++], 1);
-		write(1, "\n", 1);
-	}
-}
-*/
-
 int	cmdhandler(t_shell *args)
 {
 	if (args->input[0] == '\0')
 		return (1);
-	else if (!ft_strncmp(args->split[0], "pwd", 3))
+	else if (!ft_strncmp(args->token->cmd, "pwd", 3))
 		check_pwd(args);
-	else if (!ft_strncmp(args->split[0], "cd", 2))
+	else if (!ft_strncmp(args->token->cmd, "cd", 2))
 		do_cd(args);
-	else if (!ft_strncmp(args->split[0], "env", 3))
+	else if (!ft_strncmp(args->token->cmd, "env", 3))
 		print_env(args);
-	else if (!ft_strncmp(args->split[0], "exit", 4))
+	else if (!ft_strncmp(args->token->cmd, "exit", 4))
 		do_exit(args);
-	else if(!ft_strncmp(args->split[0], "echo", 4))
+	else if(!ft_strncmp(args->token->cmd, "echo", 4))
 		do_echo(args);
-	else if(!ft_strncmp(args->split[0], "export", 6))
+	else if(!ft_strncmp(args->token->cmd, "export", 6))
 		do_export(args);
-	else if(!ft_strncmp(args->split[0], "unset", 5))
+	else if(!ft_strncmp(args->token->cmd, "unset", 5))
 		do_unset(args);
-	else if (!ft_strncmp(args->split[0], "$?", 2))
+	else if (!ft_strncmp(args->input, "$?", 2))
 		printf("%d\n", args->exit_status);
-	else if (do_builtins(args) == 1)
+	else if (do_non_builtins(args) == 1)
 		return(1);
 	return(1);
 }
