@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/11 19:31:54 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:03:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_env_size(char **str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	return (i);
 }
@@ -35,7 +35,7 @@ int	free_split(t_shell *args)
 
 int	free_list(t_shell *args)
 {
-	t_comand *tmp;
+	t_comand	*tmp;
 
 	while (args->token)
 	{
@@ -70,7 +70,7 @@ void	do_exit(t_shell *args)
 	free(args->input);
 	free(args);
 	rl_clear_history();
-	exit (0);
+	exit(0);
 }
 
 void	do_small_exit(t_shell *args)
@@ -88,5 +88,5 @@ void	do_small_exit(t_shell *args)
 	free(args->path);
 	free(args);
 	rl_clear_history();
-	exit (0);
+	exit(0);
 }

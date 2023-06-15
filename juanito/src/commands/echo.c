@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 16:39:41 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:03:11 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	process_option_n(t_shell *args)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	if (args->split[args->index][i] == '-'
-		&& args->split[args->index][i + 1] == 'n')
+	if (args->split[args->index][i] == '-' && args->split[args->index][i
+		+ 1] == 'n')
 	{
 		i++;
 		while (args->split[args->index][i])
@@ -28,9 +28,15 @@ void	process_option_n(t_shell *args)
 			while (args->split[args->index][i] == 'n')
 				i++;
 			if (args->split[args->index][i] == '\0')
-				check_index(args, &i);
+			{
+				if (check_index(args, &i) == 0)
+					return ;
+			}
 			else
-				print_option_n(args);
+			{
+				if (print_option_n(args) == 0)
+					return ;
+			}
 		}
 	}
 	processdefault(args);
@@ -47,8 +53,8 @@ void	checkcontent(t_shell *args)
 		return ;
 	}
 	args->index = 1;
-	if (args->split[args->index][x] == '-'
-		&& args->split[args->index][x + 1] == 'n')
+	if (args->split[args->index][x] == '-' && args->split[args->index][x
+		+ 1] == 'n')
 		process_option_n(args);
 	else
 		processdefault(args);

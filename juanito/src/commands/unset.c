@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/29 15:28:18 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:02:16 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	unset(t_shell *args, char *str1)
 	{
 		if (ft_strncmp(str1, str[j], variable_size(str[j])))
 		{
-				args->env[x++] = ft_strdup(str[j]);
+			args->env[x++] = ft_strdup(str[j]);
 		}
 		free(str[j]);
 		j++;
@@ -50,7 +50,7 @@ void	do_unset(t_shell *args)
 	int		i;
 
 	i = 0;
-	while(args->split[++i])
+	while (args->split[++i])
 	{
 		if (args->split[i] == 0)
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/13 15:59:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:04:21 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_comand	*init(t_shell *args, int *i)
 
 	j = 0;
 	ag = malloc(sizeof(t_comand));
-
 	if (!ag)
 		return (NULL);
 	ag->argm = ft_calloc(see_split_size(args), sizeof(char *));
@@ -34,7 +33,6 @@ t_comand	*init(t_shell *args, int *i)
 	return (ag);
 }
 
-
 t_comand	*init_token(t_shell *args)
 {
 	int			i;
@@ -46,7 +44,7 @@ t_comand	*init_token(t_shell *args)
 	i = 0;
 	while (args->split[i])
 	{
-		if(i == 0)
+		if (i == 0)
 			tmp = init(args, &i);
 		else
 			add_bottom(&tmp, init(args, &i));
@@ -56,7 +54,7 @@ t_comand	*init_token(t_shell *args)
 	return (tmp);
 }
 
-void	init_values(t_shell *args, char	**env, int i)
+void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);

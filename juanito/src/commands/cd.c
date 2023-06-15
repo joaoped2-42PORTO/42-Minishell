@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/05/20 17:13:43 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:02:43 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_homedk(t_shell *args)
 
 void	change_env_pwd(t_shell *args)
 {
-	int	i;
+	int		i;
 	char	path[1000];
 	char	*str;
 
@@ -50,14 +50,14 @@ void	change_env_pwd(t_shell *args)
 			args->env[i] = ft_strdup(str);
 			args->path = ft_strdup(str);
 			free(str);
-			break;
+			break ;
 		}
 	}
 }
 
 void	do_cd(t_shell *args)
 {
-	int		error;
+	int	error;
 
 	error = 0;
 	if (!args->split[1])

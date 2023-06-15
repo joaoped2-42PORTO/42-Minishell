@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/14 17:11:39 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:56:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	do_loop_doubles(t_shell *args, int j)
 	i = 0;
 	while (args->env[i])
 	{
-		if (!ft_strncmp(args->split[j], args->env[i], variable_size(args->env[i])))
-					return (0);
+		if (!ft_strncmp(args->split[j], args->env[i],
+				variable_size(args->env[i])))
+			return (0);
 		i++;
 	}
 	return (1);
@@ -33,7 +34,7 @@ int	check_doubles_vars(t_shell *args)
 	j = 0;
 	while (args->split[j])
 	{
-		if(!do_loop_doubles(args, j))
+		if (!do_loop_doubles(args, j))
 			return (0);
 		j++;
 	}

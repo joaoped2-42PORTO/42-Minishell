@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/05/20 17:13:06 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:02:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	change_pwd(char **str1)
 {
-	int	i;
+	int		i;
 	char	path[1000];
 	char	*str;
 
@@ -37,7 +37,7 @@ int	change_pwd(char **str1)
 
 void	first_old_pwd(char **str1)
 {
-	int	i;
+	int		i;
 	char	path[1000];
 	char	*str;
 
@@ -52,18 +52,18 @@ void	first_old_pwd(char **str1)
 			free(str1[i]);
 			str1[i] = ft_strdup(str);
 			free(str);
-			break;
+			break ;
 		}
 	}
 }
 
 void	change_env_oldpwd(t_shell *args)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
-	if(change_pwd(args->env))
-			flag = 1;
+	if (change_pwd(args->env))
+		flag = 1;
 	if (flag == 0)
 		first_old_pwd(args->env);
 	return ;

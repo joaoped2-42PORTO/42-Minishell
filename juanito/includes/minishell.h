@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 17:27:15 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:44:26 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int			checkforspacesinstring(t_shell *args, int i);
 
 //commands | echo_utils.c
 void		processdefault(t_shell *args);
-void		print_option_n(t_shell *args);
-void		check_index(t_shell *args, int *i);
+int			print_option_n(t_shell *args);
+int			check_index(t_shell *args, int *i);
 
 //commands | echo.c
 void		process_option_n(t_shell *args);
@@ -123,10 +123,16 @@ void		open_exec(t_shell *args);
 void		open_exec_abs(t_shell *args);
 char		*get_path(t_shell *args);
 char		*get_acess(char	**str, t_shell *args);
+
+//handler | handler2.c
 int			do_non_builtins(t_shell *args);
 void		print_env(t_shell *args);
 void		print_export(t_shell *args);
 int			cmdhandler(t_shell *args);
+
+//handler | handler3.c
+void		executepid(t_shell *args);
+char		*getthepath(t_shell *args);
 
 //handler | tokens.c
 int			process_quote(t_shell *args, int *x, int *p);
@@ -174,13 +180,14 @@ void		init_values(t_shell *args, char	**env, int i);
 void		handler(int sig);
 void		config_signals(void);
 
-//main | main.c
-int			check_max_string(t_shell *args);
+//main | main_utils.c
 char		quote_value(char c, char quote);
 int			ft_wordcount_meta(char *str, char c);
 int			ft_wordlen(char *str, char c);
 char		*get_word(char *s, char c, char **words);
 char		**split_db_quotes(char *s, char c);
+
+//main | main.c
 int			check_valid_input(t_shell *args);
 int			check_input(t_shell *args);
 void		change_split(t_shell *args);

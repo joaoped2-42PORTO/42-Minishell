@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/14 17:12:57 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:01:08 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	check_input_exp(t_shell *args)
 
 void	do_export(t_shell *args)
 {
-
 	if (args->split[1] == 0)
 	{
 		print_export(args);
@@ -52,8 +51,6 @@ int	check_space_in_string(t_shell *args, int *y)
 	return (0);
 }
 
-
-
 int	ft_isalnum_mini(int c)
 {
 	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
@@ -75,7 +72,7 @@ int	check_env_value(t_shell *args, char *str)
 	return (0);
 }
 
-int	see_if_env(char	*str)
+int	see_if_env(char *str)
 {
 	int	i;
 
@@ -101,9 +98,9 @@ int	see_exp_size(t_shell *args)
 
 void	do_mult_export(t_shell *args)
 {
-	int	i;
-	int	x;
-	int	y;
+	int		i;
+	int		x;
+	int		y;
 	char	**env;
 	char	**exp;
 
@@ -116,7 +113,7 @@ void	do_mult_export(t_shell *args)
 	exchange_memo(args, env, exp, &i, &x);
 	while (args->split[++y])
 	{
-		if(!see_if_env(args->split[y]))
+		if (!see_if_env(args->split[y]))
 			args->exp[x++] = ft_strdup(args->split[y]);
 		else
 		{

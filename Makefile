@@ -32,6 +32,8 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/commands/unset_utils.c \
 		  juanito/src/commands/unset.c \
 		  juanito/src/handler/handler.c \
+		  juanito/src/handler/handler2.c \
+		  juanito/src/handler/handler3.c \
 		  juanito/src/handler/tokens.c \
 		  juanito/src/handler/tokens2.c \
 		  juanito/src/handler/tokens3.c \
@@ -40,6 +42,7 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/init_and_checker/init_utils.c \
 		  juanito/src/init_and_checker/init.c \
 		  juanito/src/signals/signals.c \
+		  juanito/src/main_utils.c \
 		  juanito/src/main.c
 
 OBJ		= $(SRC:.c=.o)

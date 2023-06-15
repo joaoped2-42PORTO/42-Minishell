@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 16:40:17 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:48:25 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	processdefault(t_shell *args)
 	printf("\n");
 }
 
-void	print_option_n(t_shell *args)
+int	print_option_n(t_shell *args)
 {
 	while (args->split[args->index])
 	{
@@ -34,14 +34,19 @@ void	print_option_n(t_shell *args)
 		args->index++;
 		if (args->split[args->index])
 			printf(" ");
-		return ;
+		else
+			return (0);
 	}
+	return (1);
 }
 
-void	check_index(t_shell *args, int *i)
+int	check_index(t_shell *args, int *i)
 {
 	if (!args->split[args->index + 1])
-		return ;
+		return (0);
 	args->index++;
+	if (!args->split[args->index])
+		return (0);
 	*i = 0;
+	return (1);
 }

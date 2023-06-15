@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/13 12:42:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:04:12 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	see_quote_double_string(char *str, int *i)
 		else if (str[*i] == '\'')
 		{
 			if (!see_quote_string(str, i))
-				return(0);
+				return (0);
 		}
 		(*i)++;
 	}
@@ -66,7 +66,8 @@ int	see_quote_double_string(char *str, int *i)
 
 int	loop_input(t_shell *args, int *i)
 {
-	if ((args->input[*i] == '\'' && args->input[*i + 1] == '\'') || (args->input[*i] == '\"' && args->input[*i + 1] == '\"'))
+	if ((args->input[*i] == '\'' && args->input[*i + 1] == '\'')
+		|| (args->input[*i] == '\"' && args->input[*i + 1] == '\"'))
 	{
 		(*i)++;
 		if (!see_quote_double_string(args->input, i))
@@ -99,7 +100,7 @@ int	valid_input(t_shell *args)
 
 	i = 0;
 	while (args->input[i] == ' ')
-			i++;
+		i++;
 	while (args->input[i])
 	{
 		while (ft_isalnum(args->input[i]))

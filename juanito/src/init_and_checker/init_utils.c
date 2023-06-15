@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:26:22 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/13 15:18:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:04:17 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	add_bottom(t_comand **stack, t_comand *new)
 		return ;
 	}
 	bottom = get_bottom_stack(*stack);
-	bottom -> next = new;
+	bottom->next = new;
 }
 
 t_comand	*get_bottom_stack(t_comand *stack)
 {
-	while (stack -> next)
-		stack = stack -> next;
+	while (stack->next)
+		stack = stack->next;
 	return (stack);
 }
 
