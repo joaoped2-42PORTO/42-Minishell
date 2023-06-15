@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 14:06:30 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 14:06:49 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:29:22 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,37 @@ int	check_doubles_vars(t_shell *args)
 		j++;
 	}
 	return (1);
+}
+
+void	exchange_memo_env(t_shell *args, char **env, int *i)
+{
+	env = dup_env(args->env, env);
+	free_matrix(args->env);
+	args->env = ft_calloc(*i + see_split_size(args), sizeof(char *));
+	args->env = dup_env(env, args->env);
+}
+
+void	exchange_memo_exp(t_shell *args, char **exp, int *x)
+{
+	exp = dup_env(args->exp, exp);
+	free_matrix(args->exp);
+	args->exp = ft_calloc(*x + see_split_size(args), sizeof(char *));
+	args->exp = dup_env(exp, args->exp);
+}
+
+void	export_counting(t_shell *args, int *x, int *i)
+{
+	int	y;
+
+	y = 0;
+	while (args->split[++y])
+	{
+		if (!see_if_env(args->split[y]))
+			args->exp[(*x)++] = ft_strdup(args->split[y]);
+		else
+		{
+			args->env[(*i)++] = ft_strdup(args->split[y]);
+			args->exp[(*x)++] = ft_strdup(args->split[y]);
+		}
+	}
 }

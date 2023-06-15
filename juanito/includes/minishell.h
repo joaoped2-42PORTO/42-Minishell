@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 14:50:24 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:29:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,13 @@ int			see_env_size(t_shell *args);
 char		**dup_env(char **str, char **str1);
 void		free_matrix(char **str);
 int			see_split_size(t_shell *args);
-void		exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x);
 
 //commands | export_utils2.c
 int			do_loop_doubles(t_shell *args, int j);
 int			check_doubles_vars(t_shell *args);
+void		exchange_memo_env(t_shell *args, char **env, int *i);
+void		exchange_memo_exp(t_shell *args, char **exp, int *x);
+void		export_counting(t_shell *args, int *x, int *i);
 
 //commands | export.c
 int			see_if_env(char	*str);
