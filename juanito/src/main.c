@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 14:35:43 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:53:37 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int ac, char **av, char **env)
 			args->token = init_token(args);
 			cmdhandler(args);
 			free_split(args);
-			free_list(args);
+			free_comand(args->token);
 		}
 		free(args->input);
 	}

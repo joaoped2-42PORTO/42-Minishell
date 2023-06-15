@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 15:29:54 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:50:03 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ void		get_path_struct(t_shell *args);
 
 //init_and_checker | init.c
 t_comand	*init(t_shell *args, int *i);
+void		free_comand(t_comand *cmd);
 t_comand	*init_token(t_shell *args);
 void		init_values(t_shell *args, char	**env, int i);
 

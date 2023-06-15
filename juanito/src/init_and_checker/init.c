@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 13:04:21 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:53:46 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,41 @@ t_comand	*init(t_shell *args, int *i)
 	if (!ag)
 		return (NULL);
 	ag->argm = ft_calloc(see_split_size(args), sizeof(char *));
-	ag->pipe_dir = ft_calloc(3, sizeof(char));
+	ag->pipe_dir = NULL;
 	ag->next = NULL;
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && args->split[*i][0] != '|')
 		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	if (args->split[*i] && args->split[*i][0] == '|')
+	{
 		ag->pipe_dir = ft_strdup(args->split[*i]);
+		if (!ag->pipe_dir)
+		{
+			free_comand(ag);
+			return (NULL);
+		}
+	}
 	ag->next = NULL;
 	return (ag);
+}
+
+void	free_comand(t_comand *cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	free(cmd->cmd);
+	i = 0;
+	while (cmd->argm[i])
+	{
+		free(cmd->argm[i]);
+		i++;
+	}
+	free(cmd->argm);
+	free(cmd->pipe_dir);
+	free_comand(cmd->next);
+	free(cmd);
 }
 
 t_comand	*init_token(t_shell *args)
