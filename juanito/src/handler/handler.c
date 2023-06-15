@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 12:55:38 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:48:11 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,7 @@ void	open_exec(t_shell *args)
 	while (args->split[0][i])
 		str[j++] = args->split[0][i++];
 	str[j] = '\0';
-	if (execve(str, args->split, NULL) != 0)
-	{
-		perror("Error");
-		free(str);
-		args->exit_status = 126;
-		exit(126);
-	}
+	open_exec_helper(args, str);
 	free(str);
 	args->exit_status = 0;
 	exit(0);

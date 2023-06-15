@@ -6,40 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 12:56:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:06:45 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	do_loop_doubles(t_shell *args, int j)
-{
-	int	i;
-
-	i = 0;
-	while (args->env[i])
-	{
-		if (!ft_strncmp(args->split[j], args->env[i],
-				variable_size(args->env[i])))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	check_doubles_vars(t_shell *args)
-{
-	int	j;
-
-	j = 0;
-	while (args->split[j])
-	{
-		if (!do_loop_doubles(args, j))
-			return (0);
-		j++;
-	}
-	return (1);
-}
 
 int	see_env_size(t_shell *args)
 {

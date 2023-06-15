@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 13:03:11 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:10:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	process_option_n(t_shell *args)
 					return ;
 			}
 			else
-			{
 				if (print_option_n(args) == 0)
 					return ;
-			}
 		}
 	}
 	processdefault(args);

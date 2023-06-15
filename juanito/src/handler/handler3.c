@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:14:26 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 12:14:46 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:48:15 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,16 @@ char	*getthepath(t_shell *args)
 	{
 		free (path);
 		return (0);
+	}
+}
+
+void	open_exec_helper(t_shell *args, char *str)
+{
+	if (execve(str, args->split, NULL) != 0)
+	{
+		perror("Error");
+		free(str);
+		args->exit_status = 126;
+		exit(126);
 	}
 }

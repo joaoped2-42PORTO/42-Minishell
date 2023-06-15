@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 13:04:12 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:42:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,36 +60,6 @@ int	see_quote_double_string(char *str, int *i)
 				return (0);
 		}
 		(*i)++;
-	}
-	return (1);
-}
-
-int	loop_input(t_shell *args, int *i)
-{
-	if ((args->input[*i] == '\'' && args->input[*i + 1] == '\'')
-		|| (args->input[*i] == '\"' && args->input[*i + 1] == '\"'))
-	{
-		(*i)++;
-		if (!see_quote_double_string(args->input, i))
-			return (0);
-	}
-	else if (args->input[*i] == '\'')
-	{
-		(*i)++;
-		if (!see_quote_string(args->input, i))
-			return (0);
-	}
-	else if (args->input[*i] == '\"')
-	{
-		(*i)++;
-		if (!see_dbquote_string(args->input, i))
-			return (0);
-	}
-	else if (args->input[*i] == '|')
-	{
-		(*i)++;
-		if (!see_closed_pipe(args->input, i))
-			return (0);
 	}
 	return (1);
 }

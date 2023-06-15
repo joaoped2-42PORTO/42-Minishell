@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 12:44:26 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:50:24 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,23 +87,27 @@ void		checkcontent(t_shell *args);
 void		do_echo(t_shell *args);
 
 //commands | export_utils.c
-int			do_loop_doubles(t_shell *args, int j);
-int			check_doubles_vars(t_shell *args);
 int			see_env_size(t_shell *args);
 char		**dup_env(char **str, char **str1);
 void		free_matrix(char **str);
 int			see_split_size(t_shell *args);
 void		exchange_memo(t_shell *args, char **env, char **exp, int *i, int *x);
 
+//commands | export_utils2.c
+int			do_loop_doubles(t_shell *args, int j);
+int			check_doubles_vars(t_shell *args);
+
 //commands | export.c
+int			see_if_env(char	*str);
+int			see_exp_size(t_shell *args);
+void		do_mult_export(t_shell *args);
+
+//commands | export2.c
 int			check_input_exp(t_shell *args);
 void		do_export(t_shell *args);
 int			check_space_in_string(t_shell *args, int *y);
 int			ft_isalnum_mini(int c);
 int			check_env_value(t_shell *args, char *str);
-int			see_if_env(char	*str);
-int			see_exp_size(t_shell *args);
-void		do_mult_export(t_shell *args);
 
 //commands | pwd.c
 int			see_pwd(char	**str);
@@ -133,6 +137,7 @@ int			cmdhandler(t_shell *args);
 //handler | handler3.c
 void		executepid(t_shell *args);
 char		*getthepath(t_shell *args);
+void		open_exec_helper(t_shell *args, char *str);
 
 //handler | tokens.c
 int			process_quote(t_shell *args, int *x, int *p);
@@ -156,12 +161,16 @@ char		*checkbars(t_shell *args);
 //handler | utils.c
 char		*ft_strcpy1(char *dest, const char *src);
 
+//init_and_checker | checker_utils.c
+int			loop_input(t_shell *args, int *i);
+int			loop_input2(t_shell *args, int *i);
 //init_and_checker | checker.c
 int			see_closed_pipe(char *str, int *i);
 int			see_dbquote_string(char *str, int *i);
 int			see_quote_string(char *str, int *i);
 int			see_quote_double_string(char *str, int *i);
 int			loop_input(t_shell *args, int *i);
+int			loop_input2(t_shell *args, int *i);
 int			valid_input(t_shell *args);
 
 //init_and_checker | init_utils.c

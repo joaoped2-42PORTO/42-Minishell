@@ -27,7 +27,9 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/commands/echo_utils.c \
 		  juanito/src/commands/echo.c \
 		  juanito/src/commands/export_utils.c \
+		  juanito/src/commands/export_utils2.c \
 		  juanito/src/commands/export.c \
+		  juanito/src/commands/export2.c \
 		  juanito/src/commands/pwd.c \
 		  juanito/src/commands/unset_utils.c \
 		  juanito/src/commands/unset.c \
@@ -38,6 +40,7 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/handler/tokens2.c \
 		  juanito/src/handler/tokens3.c \
 		  juanito/src/handler/utils.c \
+		  juanito/src/init_and_checker/checker_utils.c \
 		  juanito/src/init_and_checker/checker.c \
 		  juanito/src/init_and_checker/init_utils.c \
 		  juanito/src/init_and_checker/init.c \
