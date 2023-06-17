@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/14 14:42:52 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:12:46 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	change_env_unset(t_shell *args, char **env, char *str1, int *y)
 	}
 }
 
-void	change_exp_unset(t_shell *args, char *exp, char *str1, int *x)
+void	change_exp_unset(t_shell *args, char **exp, char *str1, int *x)
 {
 	int	j;
 

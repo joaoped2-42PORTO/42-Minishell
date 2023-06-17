@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/13 15:37:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:56:37 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,13 @@ char	**split_db_quotes(char *s, char c)
 
 int	check_valid_input(t_shell *args)
 {
+	if (args->input[0] == '\0')
+	{
+		rl_replace_line("", 0);
+		rl_redisplay();
+		free(args->input);
+		return (0);
+	}
 	if(!valid_input(args))
 	{
 		printf("Forgot to close quotes or pipe\n");
