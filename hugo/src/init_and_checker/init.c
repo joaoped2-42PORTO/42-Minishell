@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/17 17:09:49 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:22:23 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_comand	*init(t_shell *args, int *i)
 	ag->argm = ft_calloc(see_split_size(args), sizeof(char *));
 	ag->pipe_dir = NULL;
 	ag->next = NULL;
+	ag->argm[j++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
