@@ -34,7 +34,11 @@ void	process_option_n(t_shell *args)
 			}
 			else
 				if (print_option_n(args) == 0)
+				{	
+					if (args->index == 1)
+						processdefault(args);
 					return ;
+				}
 		}
 	}
 	processdefault(args);
