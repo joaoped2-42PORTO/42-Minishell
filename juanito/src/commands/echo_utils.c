@@ -30,7 +30,10 @@ int	print_option_n(t_shell *args)
 {
 	while (args->split[args->index])
 	{
-		printf("%s", args->split[args->index]);
+		if (args->index == 1)
+			printf("%s\n", args->split[args->index]);
+		else
+			printf("%s", args->split[args->index]);
 		args->index++;
 		if (args->split[args->index])
 			printf(" ");

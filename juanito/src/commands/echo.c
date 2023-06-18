@@ -18,7 +18,7 @@ void	process_option_n(t_shell *args)
 
 	i = 0;
 	if (args->split[args->index][i] == '-' && args->split[args->index][i
-		+ 1] == 'n')
+		+ 1] == 'n' && args->split[args->index][i + 2] != '-')
 	{
 		i++;
 		while (args->split[args->index][i])
