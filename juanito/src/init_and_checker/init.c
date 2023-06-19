@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 15:53:46 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:17:08 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_comand	*init(t_shell *args, int *i)
 	if (args->split[*i] && args->split[*i][0] == '|')
 	{
 		ag->pipe_dir = ft_strdup(args->split[*i]);
+		args->pipes++;
 		if (!ag->pipe_dir)
 		{
 			free_comand(ag);
@@ -83,6 +84,7 @@ t_comand	*init_token(t_shell *args)
 void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
+	args->pipes = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));

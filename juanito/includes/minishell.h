@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 15:50:03 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:57:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_shell
 	char		**env;
 	char		**argvs;
 	int			index;
+	int			pipes;
 }		t_shell;
 
 //cleaner | cleaner.c
