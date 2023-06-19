@@ -6,11 +6,22 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 14:10:01 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:32:37 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	printing(t_shell *args)
+{
+	if (print_option_n(args) == 0)
+	{
+		if (args->index == 1)
+			processdefault(args);
+		return (0);
+	}
+	return (1);
+}
 
 void	process_option_n(t_shell *args)
 {
@@ -32,13 +43,8 @@ void	process_option_n(t_shell *args)
 				if (check_index(args, &i) == 0)
 					return ;
 			}
-			else
-				if (print_option_n(args) == 0)
-				{	
-					if (args->index == 1)
-						processdefault(args);
-					return ;
-				}
+			else if (!printing(args))
+				return ;
 		}
 	}
 	processdefault(args);
