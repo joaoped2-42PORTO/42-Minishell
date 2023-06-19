@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:56:37 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:50:57 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ int	main(int ac, char **av, char **env)
 			cmdhandler(args);
 			free_split(args);
 			free_list(args);
+			free(args->new_fd);
 		}
 		free(args->input);
 	}

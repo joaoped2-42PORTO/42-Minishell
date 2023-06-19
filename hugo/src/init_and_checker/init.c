@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/17 19:22:23 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:57:46 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	checkPipeRed(t_shell *args, int *i)
 {
-	if (args->split[*i][0] == '|' || args->split[*i][0] == '>' || args->split[*i][0] == '<')
+	if (args->split[*i][0] == '|')
 		return (1);
 	return (0);
 }
@@ -29,13 +29,20 @@ t_comand	*init(t_shell *args, int *i)
 
 	if (!ag)
 		return (NULL);
-	ag->argm = ft_calloc(see_split_size(args), sizeof(char *));
+	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->pipe_dir = NULL;
 	ag->next = NULL;
 	ag->argm[j++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
+	{
+		if (args->split[*i][0] == '>')
+		{
+			args->nr_red++;
+			(*i)++;
+		}
 		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
+	}
 	ag->argm[j] = 0;
 	if (args->split[*i] && checkPipeRed(args, i))
 		ag->pipe_dir = ft_strdup(args->split[*i]);
@@ -51,6 +58,8 @@ t_comand	*init_token(t_shell *args)
 
 	args->split = split_db_quotes(args->input, ' ');
 	change_split(args);
+	args->new_fd = ft_calloc(see_split_size(args), sizeof(int *));
+	args->nr_red = 0;
 	tmp = NULL;
 	i = 0;
 	while (args->split[i])

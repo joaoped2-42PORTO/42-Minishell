@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/17 17:18:15 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:58:35 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,13 +239,75 @@ void	do_echo(t_shell *args)
 	}
 }
 
+void	change_fd(int fd, int fd1)
+{
+	dup2(fd, fd1);
+}
+
+void	change_output(t_shell *args, t_comand *tmp)
+{
+	//t_comand *test;
+	int	i;
+	int	x;
+
+	i = 0;
+	x = 0;
+	while (tmp->argm[++i])
+	{
+		if (tmp->argm[i][0] == '>')
+			i++;
+		if (!tmp->argm[i])
+			break;
+		args->new_fd[x++] = open(tmp->argm[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		dup2(args->new_fd[x], STDOUT_FILENO);
+	}
+}
+
+void	redirection(t_shell *args, t_comand *tmp)
+{
+	t_comand *test;
+	int	i;
+
+	i = 1;
+	test = tmp;
+	if (args->nr_red)
+	{
+		change_output(args, test);
+		break ;
+	}
+}
+
+t_comand	*close_redirection(t_shell *args, t_comand *tmp)
+{
+	t_comand *test;
+	int	i;
+
+	i = 1;
+	test = tmp;
+	while (test->argm[i])
+	{
+		if (test->argm[i][0] == '>')
+		{
+			close(args->new_fd[0]);
+			close(args->old_fd);
+			tmp = tmp->next;
+			break ;
+		}
+		i++;
+	}
+	dup2(args->old_fd, 1);
+	return (tmp);
+}
+
 int	cmdhandler(t_shell *args)
 {
 	t_comand *tmp;
 
 	tmp = args->token;
+	args->old_fd = dup(STDOUT_FILENO);
 	while (tmp)
 	{
+		redirection(args, tmp);
 		if (!ft_strncmp(tmp->cmd, "pwd", 3))
 			check_pwd(args);
 		else if (!ft_strncmp(tmp->cmd, "cd", 2))
@@ -262,9 +324,11 @@ int	cmdhandler(t_shell *args)
 			do_unset(args);
 		else if (!ft_strncmp(args->input, "$?", 2))
 			printf("%d\n", args->exit_status);
-		else if (do_non_builtins(args, tmp) == 1)
-			return(1);
-		tmp = tmp->next;
+		else
+			do_non_builtins(args, tmp);
+		tmp = close_redirection(args, tmp);
+		if (tmp != NULL)
+			tmp = tmp->next;
 	}
 	return(1);
 }
