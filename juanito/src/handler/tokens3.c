@@ -84,6 +84,8 @@ char	*checkbars(t_shell *args)
 		else if ((args->split[args->index][x] == '\'' || t % 2 != 0) && p
 				% 2 == 0)
 			process_single_quotes(args, &x, &t, &res);
+		else if (args->split[args->index][x] == '|')
+			break ;
 		else
 			process_string(args, &x, &res, &k);
 	}

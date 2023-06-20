@@ -142,6 +142,9 @@ void		executepid(t_shell *args);
 char		*getthepath(t_shell *args);
 void		open_exec_helper(t_shell *args, char *str);
 
+//handler | pipes.c
+void		handle_pipes(t_shell *args);
+
 //handler | tokens.c
 int			process_quote(t_shell *args, int *x, int *p);
 void		process_dollar_or_char(t_shell *args, int *x, int *k, char **res);

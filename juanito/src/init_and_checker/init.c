@@ -65,6 +65,14 @@ t_comand	*init_token(t_shell *args)
 	int			i;
 	t_comand	*tmp;
 
+	i = 0;
+	while (args->input[i])
+	{
+		if (args->input[i] == '|')
+			args->pipes++;
+		i++;
+	}
+	i = 0;
 	args->split = split_db_quotes(args->input, ' ');
 	change_split(args);
 	tmp = NULL;
