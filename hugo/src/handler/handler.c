@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/19 15:58:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:44:09 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	*get_acess(char	**str, t_comand *args)
 		tmp = ft_strjoin(str[i], "/");
 		join = ft_strjoin(tmp, args->cmd);
 		free (tmp);
-		if (access(join, X_OK) == 0)
+		if (access(join, F_OK) == 0)
 			break;
 		if (str[i + 1] == 0)
 			break;
@@ -239,64 +239,54 @@ void	do_echo(t_shell *args)
 	}
 }
 
-void	change_fd(int fd, int fd1)
-{
-	dup2(fd, fd1);
-}
-
-void	change_output(t_shell *args, t_comand *tmp)
-{
-	//t_comand *test;
-	int	i;
-	int	x;
-
-	i = 0;
-	x = 0;
-	while (tmp->argm[++i])
-	{
-		if (tmp->argm[i][0] == '>')
-			i++;
-		if (!tmp->argm[i])
-			break;
-		args->new_fd[x++] = open(tmp->argm[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
-		dup2(args->new_fd[x], STDOUT_FILENO);
-	}
-}
-
 void	redirection(t_shell *args, t_comand *tmp)
 {
-	t_comand *test;
-	int	i;
+	int	x;
 
-	i = 1;
-	test = tmp;
-	if (args->nr_red)
+	x = 0;
+	while(tmp->out_red[x])
 	{
-		change_output(args, test);
-		break ;
+		args->out_fd = open(tmp->out_red[x], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		if (args->out_fd == -1)
+			perror("open");
+		if (!tmp->out_red[x + 1])
+		{
+			dup2(args->out_fd, STDOUT_FILENO);
+			break;
+		}
+		close(args->out_fd);
+		x++;
+	}
+	x = 0;
+	while (tmp->in_red[x])
+	{
+		args->in_fd = open(tmp->in_red[x], O_RDONLY);
+		if (args->in_fd == -1)
+			perror("open");
+		if (!tmp->in_red[x + 1])
+		{
+			dup2(args->in_fd, STDIN_FILENO);
+			break;
+		}
+		close(args->in_fd);
+		x++;
 	}
 }
 
-t_comand	*close_redirection(t_shell *args, t_comand *tmp)
+void	close_redirection(t_shell *args)
 {
-	t_comand *test;
-	int	i;
-
-	i = 1;
-	test = tmp;
-	while (test->argm[i])
+	if (args->token->out_red[0])
 	{
-		if (test->argm[i][0] == '>')
-		{
-			close(args->new_fd[0]);
-			close(args->old_fd);
-			tmp = tmp->next;
-			break ;
-		}
-		i++;
+		dup2(args->old_out, STDOUT_FILENO);
+		close(args->old_out);
+		close(args->out_fd);
 	}
-	dup2(args->old_fd, 1);
-	return (tmp);
+	if (args->token->in_red[0])
+	{
+		dup2(args->old_in, STDIN_FILENO);
+		close(args->old_in);
+		close(args->in_fd);
+	}
 }
 
 int	cmdhandler(t_shell *args)
@@ -304,7 +294,8 @@ int	cmdhandler(t_shell *args)
 	t_comand *tmp;
 
 	tmp = args->token;
-	args->old_fd = dup(STDOUT_FILENO);
+	args->old_out = dup(STDOUT_FILENO);
+	args->old_in = dup(STDIN_FILENO);
 	while (tmp)
 	{
 		redirection(args, tmp);
@@ -326,7 +317,7 @@ int	cmdhandler(t_shell *args)
 			printf("%d\n", args->exit_status);
 		else
 			do_non_builtins(args, tmp);
-		tmp = close_redirection(args, tmp);
+		close_redirection(args);
 		if (tmp != NULL)
 			tmp = tmp->next;
 	}

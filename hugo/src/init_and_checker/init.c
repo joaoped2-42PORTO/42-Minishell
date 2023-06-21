@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/19 15:57:46 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:20:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,21 @@ t_comand	*init(t_shell *args, int *i)
 {
 	t_comand	*ag;
 	int			j;
+	int			x;
+	int			z;
 
+	z = 0;
 	j = 0;
+	x = 0;
 	ag = malloc(sizeof(t_comand));
-
 	if (!ag)
 		return (NULL);
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	ag->pipe_dir = NULL;
-	ag->next = NULL;
+	ag->out_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->in_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	//ag->pipe_dir = NULL;
 	ag->argm[j++] = ft_strdup(args->split[*i]);
+	//ag->flags[x++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 	{
@@ -40,12 +45,20 @@ t_comand	*init(t_shell *args, int *i)
 		{
 			args->nr_red++;
 			(*i)++;
+			ag->out_red[x++] = ft_strdup(args->split[(*i)++]);
 		}
-		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
+		else if (args->split[*i][0] == '<')
+		{
+			args->nr_red++;
+			(*i)++;
+			ag->in_red[z++] = ft_strdup(args->split[(*i)++]);
+		}
+		else if (args->split[*i])
+			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
-	ag->argm[j] = 0;
+	/* ag->argm[j] = 0;
 	if (args->split[*i] && checkPipeRed(args, i))
-		ag->pipe_dir = ft_strdup(args->split[*i]);
+		ag->pipe_dir = ft_strdup(args->split[*i]); */
 	ag->next = NULL;
 	return (ag);
 }
@@ -56,9 +69,8 @@ t_comand	*init_token(t_shell *args)
 	int			i;
 	t_comand	*tmp;
 
-	args->split = split_db_quotes(args->input, ' ');
+	args->split = split_db_quotes(args->input);
 	change_split(args);
-	args->new_fd = ft_calloc(see_split_size(args), sizeof(int *));
 	args->nr_red = 0;
 	tmp = NULL;
 	i = 0;

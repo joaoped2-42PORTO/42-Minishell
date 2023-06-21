@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/19 15:56:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:25:53 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@
 typedef struct s_tokenizer
 {
 	char	*cmd;
+//	char	**flags;
 	char	**argm;
-	char	*pipe_dir;
+	//char	*pipe_dir;
+	char	**out_red;
+	char	**in_red;
 	struct s_tokenizer	*next;
 }		t_comand;
 
@@ -54,8 +57,10 @@ typedef struct s_shell
 	char	**env; //1a experiencia
 	char	**argvs; //1a experiencia
 	int		index;
-	int		*new_fd;
-	int		old_fd;
+	int		out_fd;
+	int		in_fd;
+	int		old_out;
+	int		old_in;
 	int		nr_red;
 }		t_shell;
 
@@ -107,7 +112,7 @@ int	free_split(t_shell *args);
 int	get_env_size(char **str);
 int	valid_input(t_shell *args);
 void	put_var_args(t_shell *args, int *y, int *x, int *i);
-char	**split_db_quotes(char *s, char c);
+char	**split_db_quotes(char *s);
 void	change_split(t_shell *args);
 int	see_split_size(t_shell *args);
 int	see_if_env(char	*str);
