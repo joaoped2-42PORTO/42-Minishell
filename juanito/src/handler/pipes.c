@@ -6,142 +6,79 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:52:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/19 15:43:57 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:17:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void handle_pipes(t_shell *args)
+void	handle_pipes(t_shell *args)
 {
-    int stdin_copy = dup(STDIN_FILENO);
-    int stdout_copy = dup(STDOUT_FILENO);
-    FILE *fd_in = fdopen(stdin_copy, "r");
-    FILE *fd_out = fdopen(stdout_copy, "w");
+	char	*path;
 
-    t_comand *current = args->token;
-    while (current != NULL)
+	path = getthepath(args);
+    int fd1[2], fd2[2];
+
+    int status, pid;
+    pipe(fd1); /* ls & grep */
+    pid = fork();
+    if (pid == 0) /* child 1 */
     {
-        int pipefd[2];
-        if (pipe(pipefd) == -1)
+        close(fd1[0]); /* close unused end */
+        dup2(fd1[1], STDOUT_FILENO);
+        close(fd1[1]);
+
+        char* args[] = {"ls", "-l", NULL};
+        execve(path, args, NULL);
+        perror("execve"); /* execve failed */
+        exit(EXIT_FAILURE);
+    }
+    else /* parent */
+    {
+		free (path);
+		args->token = args->token->next;
+		path = getthepath(args);
+        close(fd1[1]); /* close unused end */
+        pipe(fd2); /* grep & wc */
+        pid = fork();
+        if (pid == 0) /* child 2 */
         {
-            perror("pipe");
+            close(fd2[0]); /* close unused end */
+            dup2(fd1[0], STDIN_FILENO);
+            close(fd1[0]);
+            dup2(fd2[1], STDOUT_FILENO);
+            close(fd2[1]);
+
+            char* args[] = {"grep", "u", NULL};
+            execve(path, args, NULL);
+            perror("execve"); /* execve failed */
             exit(EXIT_FAILURE);
         }
-
-        pid_t pid = fork();
-        if (pid == -1)
+        else /* parent */
         {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0) // Child process
-        {
-            close(pipefd[0]); // Close unused read end
-
-            // Set up input redirection
-            if (dup2(fileno(fd_in), STDIN_FILENO) == -1)
+            close(fd1[0]); /* close unused end */
+            close(fd2[1]); /* close unused end */
+            pid = fork();
+            if (pid == 0) /* child 3 */
             {
-                perror("dup2");
+                dup2(fd2[0], STDIN_FILENO);
+                close(fd2[0]);
+
+                char* args[] = {"wc", "-l", NULL};
+                execve("/usr/bin/wc", args, NULL);
+                perror("execve"); /* execve failed */
                 exit(EXIT_FAILURE);
             }
-            fclose(fd_in);
-
-            // Set up output redirection if there is a subsequent command
-            if (current->next != NULL)
-            {
-                if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-                {
-                    perror("dup2");
-                    exit(EXIT_FAILURE);
-                }
-            }
-            close(pipefd[1]);
-
-            // Execute the command
-            if (!ft_strncmp(current->cmd, "echo", 4))
-            {
-                // Execute the echo command
-                if (execlp("echo", "echo", current->argm[1], NULL) == -1)
-                {
-                    perror("execlp");
-                    exit(EXIT_FAILURE);
-                }
-            }
-            else if (args->input[0] == '.' && args->input[1] == '/')
-                open_exec(args);
-            else if (args->input[0] == '/')
-                open_exec_abs(args);
-            else
-            {
-                // Execute the command
-                if (execvp(current->cmd, current->argm) == -1)
-                {
-                    perror("execvp");
-                    exit(EXIT_FAILURE);
-                }
-            }
         }
-        else // Parent process
-        {
-            close(pipefd[1]); // Close unused write end
-
-            // Set the next command's input to be the current command's output
-            fd_in = fdopen(pipefd[0], "r");
-
-            // Wait for the child process to complete
-            if (waitpid(pid, NULL, 0) == -1)
-            {
-                perror("waitpid");
-                exit(EXIT_FAILURE);
-            }
-
-            // Read the output from the child process
-            char buffer[1024];
-            ssize_t nread;
-            while ((nread = fread(buffer, sizeof(char), sizeof(buffer), fd_in)) > 0)
-            {
-                fwrite(buffer, sizeof(char), nread, fd_out);
-            }
-        }
-
-        current = current->next;
     }
 
-    // Restore original stdin and stdout
-    dup2(stdin_copy, STDIN_FILENO);
-    dup2(stdout_copy, STDOUT_FILENO);
-    close(stdin_copy);
-    close(stdout_copy);
-    fclose(fd_in);
-    fclose(fd_out);
+    close(fd2[0]); /* close unused end */
+    /* wait for each child */
+    wait(&status);
+    wait(&status);
+    wait(&status);
+	free(path);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 int	main(void)
