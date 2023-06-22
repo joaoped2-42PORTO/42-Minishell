@@ -3,88 +3,128 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/06/21 21:42:25 by user             ###   ########.fr       */
+/*   Updated: 2023/06/22 17:22:27 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int pipes(t_comand *token, t_shell *args) {
-    int i = 0;
+char	*returncompletepath(t_comand *token, t_shell *args)
+{
+	char	*path;
+	char	**path_split;
+
+	path = get_path(args);
+	if (path)
+	{
+		path_split = ft_split(path, ':');
+		free(path);
+		path = get_acess(path_split, token);
+	}
+	else
+		return (0);
+	return (path);
+}
+
+int	checklistsizeforpipes(t_comand *token)
+{
+	t_comand	*curr;
+	int			i;
+
+	i = 0;
+	curr = token;
+	while (curr != NULL)
+	{
+		i++;
+		curr = curr->next;
+	}
+	if (i == 0)
+		return (0);
+	return (i);
+}
+
+void	stringtreattopipe(t_shell *args)
+{
+    int j = 0;
     int k = 0;
-    int pid, status;
-    int x = 0;
-    int fd[2];
-    int next_fd[2];  // Declaration added
-    t_comand *curr = token;
-
-    while (curr != NULL) {
-        i++;
-        curr = curr->next;
+    while (args->split[args->pipindex][j] != '|')
+       args->pipindex++;
+	args->string = malloc((args->pipindex + 1) * sizeof(char *));
+	if (args->string == NULL)
+		return ;
+    if (args->split[args->string_index][j] == '|')
+    {
+        args->string_index++;
     }
+	while (args->split[args->string_index] != NULL && args->split[args->string_index][j] != '|')
+	{
+		args->string[k] = args->split[args->string_index];
+		args->string_index++;
+		k++;
+	}
+    args->string[k] = NULL;
+}
 
-    if (i == 0)
-        return 0;
+int	pipes(t_comand *token, t_shell *args)
+{
+	int		k;
+	int		i;
+	int		fd[2];
+	int		pid;
+	char	*path;
+	int		in;
+	int		out;
 
-    char *path;
-    char **path_split;
-    
-    while (k < i) {
-        if (k != 0)
-            token = token->next;
-        
-        path = get_path(args);
-        
-        if (path) {
-            path_split = ft_split(path, ':');
-            free(path);
-            path = get_acess(path_split, token);
-        } else {
-            return 0;
-        }
-        
-        pipe(fd);
-        pid = fork();
-        
-        if (pid == 0 && x == 0) {
-            char *ptr[] = {"ls", "-l", NULL};
-            close(fd[0]);
-            dup2(fd[1], STDOUT_FILENO);
-            close(fd[1]);
-            execve(path, ptr, NULL);
-            perror("execve");
-            exit(EXIT_FAILURE);
-        } else if (pid == 0 && k != i - 1) {
-            char *ptr[] = {"grep", "u", NULL};
-            close(fd[1]);
-            pipe(next_fd);
-            close(next_fd[0]);
-            dup2(fd[0], STDIN_FILENO);
-            close(fd[0]);
-            dup2(next_fd[1], STDOUT_FILENO);
-            close(next_fd[1]);
-            execve(path, ptr, NULL);
-            perror("execve");
-            exit(EXIT_FAILURE);
-            x++;
-        } else {
-            char *ptr[] = {"wc", "-l", NULL};
-            close(fd[0]);
-            close(fd[1]);
-            dup2(next_fd[0], STDIN_FILENO);
-            close(next_fd[0]);
-            execve(path, ptr, NULL);
-        }
-        
-        wait(&status);
-        free(path);
-        k++;
-    }
-    
-    close(next_fd[0]);
-    printf("The size of the list is %d \n", i);
-    return 0;
+	i = 0;
+	in = dup(STDIN_FILENO);
+	out = dup(STDOUT_FILENO);
+	i = checklistsizeforpipes(token);
+	k = 0;
+	pipe(fd);
+	while (k < i)
+	{
+        stringtreattopipe(args);
+		if (k != 0)
+			token = token->next;
+		path = returncompletepath(token, args);
+		if (k == 0)
+		{
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+			pid = fork();
+			if (pid == 0)
+				execve(path, args->string, NULL);
+		}
+		else if (k != i - 1)
+		{
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
+			pipe(fd);
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+			pid = fork();
+			if (pid == 0)
+				execve(path, args->string, NULL);
+		}
+		else if (k == i - 1)
+		{
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
+			dup2(out, STDOUT_FILENO);
+			close(out);
+			pid = fork();
+			if (pid == 0)
+				execve(path, args->string, NULL);
+			dup2(in, STDIN_FILENO);
+			close(in);
+		}
+		free(path);
+        free(args->string);
+		k++;
+	}
+	exit(0);
+	return (1);
 }
