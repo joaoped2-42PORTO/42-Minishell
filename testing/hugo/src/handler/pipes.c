@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/06/22 22:51:47 by user             ###   ########.fr       */
+/*   Updated: 2023/06/22 23:26:42 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,67 @@ int	checklistsizeforpipes(t_comand *token)
 	return (i);
 }
 
+/* void	stringtreattopipe(t_shell *args)
+{
+    int j = 0;
+    int k = 0;
+	int z = 0;
+    while (args->split[args->pipindex][j] != '|' && args->split[args->pipindex])
+	{
+		if (!args->split[args->pipindex][j])
+		{
+			if (!args->split[args->pipindex + 1])
+				break ;
+			args->pipindex++;
+			z += j;
+			j = 0;
+		}
+		else if (args->split[args->pipindex][j] == '|')
+			break ;
+		else
+        	j++;
+	}
+	z += j;
+	j = 0;
+	if (args->split[args->pipindex][j] == '|')
+		args->pipindex++;
+	args->string = malloc((z + 1) * sizeof(char *));
+	if (args->string == NULL)
+		return ;
+	while (args->split[args->string_index] != NULL && args->split[args->string_index][j] != '|')
+	{
+		args->string[k] = args->split[args->string_index];
+		args->string_index++;
+		k++;
+	}
+    args->string[k] = NULL;
+} */
+
 void	stringtreattopipe(t_shell *args)
 {
     int j = 0;
     int k = 0;
-    while (args->split[args->pipindex][j] != '|')
-       args->pipindex++;
-	args->string = malloc((args->pipindex + 1) * sizeof(char *));
+	int z = 0;
+	if (args->split[args->pipindex][j] == '|')
+		args->pipindex++;
+    while (args->split[args->pipindex][j] != '|' && args->split[args->pipindex])
+	{
+		if (!args->split[args->pipindex][j])
+		{
+			if (!args->split[args->pipindex + 1])
+				break ;
+			args->pipindex++;
+			z += j;
+			j = 0;
+		}
+		else if (args->split[args->pipindex][j] == '|')
+			break ;
+		else
+        	j++;
+	}
+	z += j;
+	j = 0;
+	args->string = malloc((z + 1) * sizeof(char *));
 	if (args->string == NULL)
 		return ;
     if (args->split[args->string_index][j] == '|')
