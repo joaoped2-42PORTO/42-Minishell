@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/06/22 17:22:27 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:51:47 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	pipes(t_comand *token, t_shell *args)
 	out = dup(STDOUT_FILENO);
 	i = checklistsizeforpipes(token);
 	k = 0;
+
 	pipe(fd);
 	while (k < i)
 	{
@@ -122,9 +123,9 @@ int	pipes(t_comand *token, t_shell *args)
 			close(in);
 		}
 		free(path);
-        free(args->string);
+    	free(args->string);
 		k++;
 	}
-	exit(0);
+	waitpid(-1, NULL, 0);
 	return (1);
 }
