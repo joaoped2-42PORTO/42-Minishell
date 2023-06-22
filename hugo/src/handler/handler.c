@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/21 15:44:09 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 09:01:10 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,29 +246,29 @@ void	redirection(t_shell *args, t_comand *tmp)
 	x = 0;
 	while(tmp->out_red[x])
 	{
-		args->out_fd = open(tmp->out_red[x], O_CREAT | O_WRONLY | O_TRUNC, 0777);
-		if (args->out_fd == -1)
+		tmp->out_fd = open(tmp->out_red[x], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		if (tmp->out_fd == -1)
 			perror("open");
 		if (!tmp->out_red[x + 1])
 		{
-			dup2(args->out_fd, STDOUT_FILENO);
+			dup2(tmp->out_fd, STDOUT_FILENO);
 			break;
 		}
-		close(args->out_fd);
+		close(tmp->out_fd);
 		x++;
 	}
 	x = 0;
 	while (tmp->in_red[x])
 	{
-		args->in_fd = open(tmp->in_red[x], O_RDONLY);
-		if (args->in_fd == -1)
+		tmp->in_fd = open(tmp->in_red[x], O_RDONLY);
+		if (tmp->in_fd == -1)
 			perror("open");
 		if (!tmp->in_red[x + 1])
 		{
-			dup2(args->in_fd, STDIN_FILENO);
+			dup2(tmp->in_fd, STDIN_FILENO);
 			break;
 		}
-		close(args->in_fd);
+		close(tmp->in_fd);
 		x++;
 	}
 }
@@ -279,13 +279,13 @@ void	close_redirection(t_shell *args)
 	{
 		dup2(args->old_out, STDOUT_FILENO);
 		close(args->old_out);
-		close(args->out_fd);
+		close(args->token->out_fd);
 	}
 	if (args->token->in_red[0])
 	{
 		dup2(args->old_in, STDIN_FILENO);
 		close(args->old_in);
-		close(args->in_fd);
+		close(args->token->in_fd);
 	}
 }
 

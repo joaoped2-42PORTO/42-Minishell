@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/21 15:20:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 09:04:41 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_comand	*init(t_shell *args, int *i)
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 	{
-		if (args->split[*i][0] == '>')
+		if (args->split[*i][0])
+		else if (args->split[*i][0] == '>')
 		{
 			args->nr_red++;
 			(*i)++;

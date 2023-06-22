@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/21 15:25:53 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 09:03:31 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ typedef struct s_tokenizer
 	//char	*pipe_dir;
 	char	**out_red;
 	char	**in_red;
+	char	**app_red;
+	int		out_fd;
+	int		in_fd;
 	struct s_tokenizer	*next;
 }		t_comand;
 
@@ -57,8 +60,6 @@ typedef struct s_shell
 	char	**env; //1a experiencia
 	char	**argvs; //1a experiencia
 	int		index;
-	int		out_fd;
-	int		in_fd;
 	int		old_out;
 	int		old_in;
 	int		nr_red;
