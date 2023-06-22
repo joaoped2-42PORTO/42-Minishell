@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/22 22:36:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:16:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,7 @@ int	free_list(t_shell *args)
 
 void	do_exit(t_shell *args)
 {
-	free_split(args);
-	free_matrix(args->env);
-	free_matrix(args->exp);
-	free_list(args);
-	free(args->path);
-	free(args->input);
-	free(args);
-	rl_clear_history();
+	(void)args;
 	exit (0);
 }
 

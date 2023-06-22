@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/22 22:36:03 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:16:34 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,7 +326,7 @@ int	cmdhandler(t_shell *args)
 		else if (!ft_strncmp(tmp->cmd, "env", 3))
 			print_env(args);
 		else if (!ft_strncmp(tmp->cmd, "exit", 4))
-			do_exit(args);
+			exit(args->exit_status);
 		else if(!ft_strncmp(tmp->cmd, "echo", 4))
 			do_echo(args);
 		else if(!ft_strncmp(tmp->cmd, "export", 6))
