@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/22 09:04:41 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:25:37 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ t_comand	*init(t_shell *args, int *i)
 	int			j;
 	int			x;
 	int			z;
+	int			a;
 
+	a = 0;
 	z = 0;
 	j = 0;
 	x = 0;
@@ -35,13 +37,18 @@ t_comand	*init(t_shell *args, int *i)
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->out_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->in_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->app_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	//ag->pipe_dir = NULL;
 	ag->argm[j++] = ft_strdup(args->split[*i]);
 	//ag->flags[x++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 	{
-		if (args->split[*i][0])
+		if (args->split[*i][0] == '>' && args->split[*i][1])
+		{
+			(*i)++;
+			ag->app_red[a++] = ft_strdup(args->split[(*i)++]);
+		}
 		else if (args->split[*i][0] == '>')
 		{
 			args->nr_red++;

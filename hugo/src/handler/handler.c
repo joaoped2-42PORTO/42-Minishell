@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/22 09:01:10 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:36:03 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ void	do_echo(t_shell *args)
 	}
 }
 
-void	redirection(t_shell *args, t_comand *tmp)
+void	redirection(t_comand *tmp)
 {
 	int	x;
 
@@ -271,6 +271,20 @@ void	redirection(t_shell *args, t_comand *tmp)
 		close(tmp->in_fd);
 		x++;
 	}
+	x = 0;
+	while (tmp->app_red[x])
+	{
+		tmp->app_fd = open(tmp->app_red[x], O_APPEND | O_CREAT | O_RDWR, 0777);
+		if (tmp->app_fd == -1)
+			perror("open");
+		if (!tmp->app_red[x + 1])
+		{
+			dup2(tmp->app_fd, STDOUT_FILENO);
+			break;
+		}
+		close(tmp->app_fd);
+		x++;
+	}
 }
 
 void	close_redirection(t_shell *args)
@@ -287,6 +301,12 @@ void	close_redirection(t_shell *args)
 		close(args->old_in);
 		close(args->token->in_fd);
 	}
+	if (args->token->app_red[0])
+	{
+		dup2(args->old_in, STDOUT_FILENO);
+		close(args->old_in);
+		close(args->token->app_fd);
+	}
 }
 
 int	cmdhandler(t_shell *args)
@@ -298,7 +318,7 @@ int	cmdhandler(t_shell *args)
 	args->old_in = dup(STDIN_FILENO);
 	while (tmp)
 	{
-		redirection(args, tmp);
+		redirection(tmp);
 		if (!ft_strncmp(tmp->cmd, "pwd", 3))
 			check_pwd(args);
 		else if (!ft_strncmp(tmp->cmd, "cd", 2))
