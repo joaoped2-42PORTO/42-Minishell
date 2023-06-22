@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/21 21:20:39 by user             ###   ########.fr       */
+/*   Updated: 2023/06/22 17:20:32 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct s_shell
 	int		old_out;
 	int		old_in;
 	int		nr_red;
+	char	**string;
+	int		string_index;
+	int		pipindex;
 }		t_shell;
 
 //Utils Functions
@@ -68,9 +71,11 @@ typedef struct s_shell
 //void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
 void	check_pwd(t_shell *args);
-int    pipes(t_comand *token, t_shell *args);
+int	pipes(t_comand *token, t_shell *args);
 char	*get_path(t_shell *args);
 char	*get_acess(char	**str, t_comand *args);
+void stringtreattopipe(t_shell *args);
+int	checklistsizeforpipes(t_comand *token);
 //Handler
 int		cmdhandler(t_shell *args);
 int		do_builtins(t_shell *args);

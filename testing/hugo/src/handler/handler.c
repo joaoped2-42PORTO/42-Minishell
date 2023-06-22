@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/21 21:29:42 by user             ###   ########.fr       */
+/*   Updated: 2023/06/22 15:25:09 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,10 +296,10 @@ int	cmdhandler(t_shell *args)
 	tmp = args->token;
 	args->old_out = dup(STDOUT_FILENO);
 	args->old_in = dup(STDIN_FILENO);
-	if(!pipes(tmp, args))
-		return (0);
-	while (tmp)
+	if(checklistsizeforpipes(tmp) <= 1)
 	{
+		while (tmp)
+		{
 		redirection(args, tmp);
 		if (!ft_strncmp(tmp->cmd, "pwd", 3))
 			check_pwd(args);
@@ -322,6 +322,9 @@ int	cmdhandler(t_shell *args)
 		close_redirection(args);
 		if (tmp != NULL)
 			tmp = tmp->next;
+		}
 	}
+	else
+		pipes(tmp, args);
 	return(1);
 }
