@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/22 17:20:32 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:16:52 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	*get_path(t_shell *args);
 char	*get_acess(char	**str, t_comand *args);
 void stringtreattopipe(t_shell *args);
 int	checklistsizeforpipes(t_comand *token);
+void	print_env(t_shell *args);
+void	do_echo(t_shell *args);
 //Handler
 int		cmdhandler(t_shell *args);
 int		do_builtins(t_shell *args);

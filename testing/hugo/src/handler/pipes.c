@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/06/22 23:26:42 by user             ###   ########.fr       */
+/*   Updated: 2023/06/23 13:34:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,17 @@ int	checklistsizeforpipes(t_comand *token)
 
 /* void	stringtreattopipe(t_shell *args)
 {
-    int j = 0;
-    int k = 0;
-	int z = 0;
-    while (args->split[args->pipindex][j] != '|' && args->split[args->pipindex])
+	int	j;
+	int	k;
+	int	z;
+	int	j;
+	int	k;
+	int	z;
+
+	j = 0;
+	k = 0;
+	z = 0;
+	while (args->split[args->pipindex][j] != '|' && args->split[args->pipindex])
 	{
 		if (!args->split[args->pipindex][j])
 		{
@@ -64,7 +71,7 @@ int	checklistsizeforpipes(t_comand *token)
 		else if (args->split[args->pipindex][j] == '|')
 			break ;
 		else
-        	j++;
+			j++;
 	}
 	z += j;
 	j = 0;
@@ -73,23 +80,30 @@ int	checklistsizeforpipes(t_comand *token)
 	args->string = malloc((z + 1) * sizeof(char *));
 	if (args->string == NULL)
 		return ;
-	while (args->split[args->string_index] != NULL && args->split[args->string_index][j] != '|')
+	while (args->split[args->string_index] != NULL
+		&& args->split[args->string_index][j] != '|')
 	{
 		args->string[k] = args->split[args->string_index];
 		args->string_index++;
 		k++;
 	}
-    args->string[k] = NULL;
+	args->string[k] = NULL;
 } */
-
 void	stringtreattopipe(t_shell *args)
 {
-    int j = 0;
-    int k = 0;
-	int z = 0;
-	if (args->split[args->pipindex][j] == '|')
+	int	j;
+	int	k;
+	int	z;
+
+	j = 0;
+	k = 0;
+	z = 0;
+	if (args->split[args->string_index][j] == '|')
+	{
+		args->string_index++;
 		args->pipindex++;
-    while (args->split[args->pipindex][j] != '|' && args->split[args->pipindex])
+	}
+	while (args->split[args->pipindex][j] != '|' && args->split[args->pipindex])
 	{
 		if (!args->split[args->pipindex][j])
 		{
@@ -102,24 +116,49 @@ void	stringtreattopipe(t_shell *args)
 		else if (args->split[args->pipindex][j] == '|')
 			break ;
 		else
-        	j++;
+			j++;
 	}
 	z += j;
 	j = 0;
 	args->string = malloc((z + 1) * sizeof(char *));
 	if (args->string == NULL)
 		return ;
-    if (args->split[args->string_index][j] == '|')
-    {
-        args->string_index++;
-    }
-	while (args->split[args->string_index] != NULL && args->split[args->string_index][j] != '|')
+	if (args->split[args->string_index][j] == '|')
+	{
+		args->string_index++;
+		args->pipindex++;
+	}
+	while (args->split[args->string_index] != NULL
+		&& args->split[args->string_index][j] != '|')
 	{
 		args->string[k] = args->split[args->string_index];
 		args->string_index++;
 		k++;
 	}
-    args->string[k] = NULL;
+	args->string[k] = NULL;
+}
+
+int	isbuiltin(t_comand *tmp, t_shell *args)
+{
+	if (!ft_strncmp(tmp->cmd, "pwd", 3))
+		check_pwd(args);
+	else if (!ft_strncmp(tmp->cmd, "cd", 2))
+		do_cd(args);
+	else if (!ft_strncmp(tmp->cmd, "env", 3))
+		print_env(args);
+	else if (!ft_strncmp(tmp->cmd, "exit", 4))
+		do_exit(args);
+	else if(!ft_strncmp(tmp->cmd, "echo", 4))
+		do_echo(args);
+	else if(!ft_strncmp(tmp->cmd, "export", 6))
+		do_export(args);
+	else if(!ft_strncmp(tmp->cmd, "unset", 5))
+		do_unset(args);
+	else if (!ft_strncmp(args->input, "$?", 2))
+		printf("%d\n", args->exit_status);
+	else
+		return (0);
+	return (1);
 }
 
 int	pipes(t_comand *token, t_shell *args)
@@ -137,11 +176,12 @@ int	pipes(t_comand *token, t_shell *args)
 	out = dup(STDOUT_FILENO);
 	i = checklistsizeforpipes(token);
 	k = 0;
-
+	args->string_index = 0;
+	args->pipindex = 0;
 	pipe(fd);
 	while (k < i)
 	{
-        stringtreattopipe(args);
+		stringtreattopipe(args);
 		if (k != 0)
 			token = token->next;
 		path = returncompletepath(token, args);
@@ -150,7 +190,7 @@ int	pipes(t_comand *token, t_shell *args)
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
 			pid = fork();
-			if (pid == 0)
+			if (pid == 0 && isbuiltin(token, args) == 0)
 				execve(path, args->string, NULL);
 		}
 		else if (k != i - 1)
@@ -161,7 +201,7 @@ int	pipes(t_comand *token, t_shell *args)
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
 			pid = fork();
-			if (pid == 0)
+			if (pid == 0 && isbuiltin(token, args) == 0)
 				execve(path, args->string, NULL);
 		}
 		else if (k == i - 1)
@@ -171,15 +211,16 @@ int	pipes(t_comand *token, t_shell *args)
 			dup2(out, STDOUT_FILENO);
 			close(out);
 			pid = fork();
-			if (pid == 0)
+			if (pid == 0 && isbuiltin(token, args) == 0)
 				execve(path, args->string, NULL);
 			dup2(in, STDIN_FILENO);
 			close(in);
 		}
+		free(args->string);
 		free(path);
-    	free(args->string);
 		k++;
 	}
-	waitpid(-1, NULL, 0);
+	while (waitpid(-1, NULL, 0) > 0)
+		continue;
 	return (1);
 }

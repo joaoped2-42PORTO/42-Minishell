@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/22 15:25:09 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:07:19 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,23 +220,129 @@ void	print_export(t_shell *args)
 	args->exit_status = 0;
 }
 
-void	do_echo(t_shell *args)
+int	checkforspacesinstring(t_shell *args, int i)
+{
+	int	j;
+
+	j = 0;
+	if (!args->input[i])
+		return (0);
+	while (args->input[i])
+	{
+		while (args->input[i] != ' ' && args->input[i])
+			i++;
+		while (args->input[i] == ' ' && args->input[i])
+		{
+			j++;
+			i++;
+		}
+		return (j);
+		i++;
+	}
+	return (j);
+}
+
+void	processdefault(t_shell *args)
+{
+	while (args->split[args->index])
+	{
+		printf("%s", args->split[args->index]);
+		if (args->split[args->index])
+		{
+			printf(" ");
+			args->index++;
+		}
+	}
+	printf("\n");
+}
+
+int	print_option_n(t_shell *args)
+{
+	while (args->split[args->index])
+	{
+		if (args->index == 1)
+			return (0);
+		else
+			printf("%s", args->split[args->index]);
+		args->index++;
+		if (args->split[args->index])
+			printf(" ");
+		else
+			return (0);
+	}
+	return (1);
+}
+
+int	check_index(t_shell *args, int *i)
+{
+	if (!args->split[args->index + 1])
+		return (0);
+	args->index++;
+	if (!args->split[args->index])
+		return (0);
+	*i = 0;
+	return (1);
+}
+
+int	printing(t_shell *args)
+{
+	if (print_option_n(args) == 0)
+	{
+		if (args->index == 1)
+			processdefault(args);
+		return (0);
+	}
+	return (1);
+}
+
+void	process_option_n(t_shell *args)
 {
 	int	i;
 
-	if (!ft_strncmp(args->split[1], "-n", 2))
+	i = 0;
+	if (args->split[args->index][i] == '-' && args->split[args->index][i
+		+ 1] == 'n' && args->split[args->index][i + 2] != '-')
 	{
-		i = 8;
-		while(args->input[i])
-			write(1, &args->input[i++], 1);
+		i++;
+		while (args->split[args->index][i])
+		{
+			if (args->split[args->index][i] == '-')
+				i++;
+			while (args->split[args->index][i] == 'n')
+				i++;
+			if (args->split[args->index][i] == '\0')
+			{
+				if (check_index(args, &i) == 0)
+					return ;
+			}
+			else if (!printing(args))
+				return ;
+		}
 	}
+	processdefault(args);
+}
+
+void	checkcontent(t_shell *args)
+{
+	int	x;
+
+	x = 0;
+	if (!args->split[1])
+	{
+		printf("\n");
+		return ;
+	}
+	args->index = 1;
+	if (args->split[args->index][x] == '-' && args->split[args->index][x
+		+ 1] == 'n')
+		process_option_n(args);
 	else
-	{
-		i = 5;
-		while(args->input[i])
-			write(1, &args->input[i++], 1);
-		write(1, "\n", 1);
-	}
+		processdefault(args);
+}
+
+void	do_echo(t_shell *args)
+{
+	checkcontent(args);
 }
 
 void	redirection(t_shell *args, t_comand *tmp)
