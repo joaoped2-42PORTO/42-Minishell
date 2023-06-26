@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/22 23:16:34 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:33:53 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,9 @@ char	*get_acess(char	**str, t_comand *args)
 
 int	do_non_builtins(t_shell *args, t_comand *tmp)
 {
-	int		pid;
 	char	*path;
 	char	**path_split;
+	int		pid;
 
 	path = get_path(args);
 	if (path)
@@ -164,7 +164,8 @@ int	do_non_builtins(t_shell *args, t_comand *tmp)
 	}
 	else
 		return (0);
-	if ((pid = fork()) == 0)
+	pid = fork();
+	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
@@ -172,15 +173,15 @@ int	do_non_builtins(t_shell *args, t_comand *tmp)
 			open_exec(args);
 		else if(args->input[0] == '/')
 			open_exec_abs(args);
-    	if(execve(path, tmp->argm, args->env) != 0)
+   		if(execve(path, tmp->argm, args->env) != 0)
 		{
 			printf("command not found: %s\n", tmp->cmd);
 			args->exit_status = 2;
 			exit (2);
 		}
-		args->exit_status = 125;
 	}
-	waitpid(-1, NULL, 0);
+	wait(NULL);
+	args->exit_status = 125;
 	free (path);
 	return(1);
 }
@@ -309,37 +310,74 @@ void	close_redirection(t_shell *args)
 	}
 }
 
+int	str_is_equal(char *str, char *str1)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+		i++;
+	while (str1[j])
+		j++;
+	if (!ft_strncmp(str, str1, i) && i == j)
+		return (1);
+	return (0);
+}
+
 int	cmdhandler(t_shell *args)
 {
 	t_comand *tmp;
 
+
 	tmp = args->token;
+
 	args->old_out = dup(STDOUT_FILENO);
 	args->old_in = dup(STDIN_FILENO);
-	while (tmp)
-	{
-		redirection(tmp);
-		if (!ft_strncmp(tmp->cmd, "pwd", 3))
-			check_pwd(args);
-		else if (!ft_strncmp(tmp->cmd, "cd", 2))
-			do_cd(args);
-		else if (!ft_strncmp(tmp->cmd, "env", 3))
-			print_env(args);
-		else if (!ft_strncmp(tmp->cmd, "exit", 4))
-			exit(args->exit_status);
-		else if(!ft_strncmp(tmp->cmd, "echo", 4))
-			do_echo(args);
-		else if(!ft_strncmp(tmp->cmd, "export", 6))
-			do_export(args);
-		else if(!ft_strncmp(tmp->cmd, "unset", 5))
-			do_unset(args);
-		else if (!ft_strncmp(args->input, "$?", 2))
-			printf("%d\n", args->exit_status);
-		else
-			do_non_builtins(args, tmp);
-		close_redirection(args);
-		if (tmp != NULL)
-			tmp = tmp->next;
-	}
+	redirection(tmp);
+	if (str_is_equal(tmp->cmd, "pwd"))
+		check_pwd(args);
+	else if (str_is_equal(tmp->cmd, "cd"))
+		do_cd(args);
+	else if (str_is_equal(tmp->cmd, "env"))
+		print_env(args);
+	else if (str_is_equal(tmp->cmd, "exit"))
+		exit(args->exit_status);
+	else if(str_is_equal(tmp->cmd, "echo"))
+		do_echo(args);
+	else if(str_is_equal(tmp->cmd, "export"))
+		do_export(args);
+	else if(str_is_equal(tmp->cmd, "unset"))
+		do_unset(args);
+	else if (str_is_equal(tmp->cmd, "$?"))
+		printf("%d\n", args->exit_status);
+	else
+		do_non_builtins(args, tmp);
+	close_redirection(args);
 	return(1);
+}
+
+int	ft_size(t_comand *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		++i;
+	}
+	return (i);
+}
+
+void	executer(t_shell *args)
+{
+	int	size;
+
+	size = ft_size(args->token);
+	if (size == 1)
+		cmdhandler(args);
+	/* else
+		mult_handler(args); */
 }
