@@ -6,7 +6,7 @@
 /*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/21 12:29:34 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:02:12 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ int	main(int ac, char **av, char **env)
 		else
 		{
 			args->token = init_token(args);
-			cmdhandler(args);
+			executer(args);
 			free_split(args);
 			free_list(args);
 		}

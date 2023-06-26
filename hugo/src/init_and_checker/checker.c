@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/17 16:55:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:20:11 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	valid_input(t_shell *args)
 			i++;
 		while (args->input[i] == ' ')
 			i++;
+		if (args->input[i] == '*')
+			return (0);
 		if (!loop_input(args, &i))
 			return (0);
 		if (args->input[i] != '\0')

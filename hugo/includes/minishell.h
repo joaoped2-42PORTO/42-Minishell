@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/22 22:29:19 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:02:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	change_split(t_shell *args);
 int	see_split_size(t_shell *args);
 int	see_if_env(char	*str);
 int	see_exp_size(t_shell *args);
+void	executer(t_shell *args);
 
 //Joao tokens
 int			checkisalpha(t_shell *args, int *i);
