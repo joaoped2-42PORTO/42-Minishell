@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/21 12:59:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:07:45 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_shell
 	char				**argvs;
 	int					index;
 	int					pipes;
+	int		old_out;
+	int		old_in;
 }						t_shell;
 
 // cleaner | cleaner.c
@@ -129,21 +131,23 @@ char					*print_env_var(t_shell *args, char *str);
 void					open_exec(t_shell *args);
 void					open_exec_abs(t_shell *args);
 char					*get_path(t_shell *args);
-char					*get_acess(char **str, t_shell *args);
+char					*get_acess(char	**str, t_comand *args);
 
 // handler | handler2.c
-int						do_non_builtins(t_shell *args);
+int						do_non_builtins(t_shell *args, t_comand *tmp);
 void					print_env(t_shell *args);
 void					print_export(t_shell *args);
 int						cmdhandler(t_shell *args);
 
 // handler | handler3.c
 void					executepid(t_shell *args);
-char					*getthepath(t_shell *args);
+char					*getthepath(t_shell *args, t_comand *tmp);
 void					open_exec_helper(t_shell *args, char *str);
 
 // handler | pipes.c
-void					handle_pipes(t_shell *args);
+char					*returncompletepath(t_comand *token, t_shell *args);
+int						checklistsizeforpipes(t_comand *token);
+int						pipes(t_comand *token, t_shell *args);
 
 // handler | tokens.c
 int						process_quote(t_shell *args, int *x, int *p);

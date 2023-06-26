@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:14:26 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 14:48:15 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:06:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	executepid(t_shell *args)
 		open_exec_abs(args);
 }
 
-char	*getthepath(t_shell *args)
+char	*getthepath(t_shell *args, t_comand *tmp)
 {
 	char	*path;
 	char	**path_split;
@@ -32,7 +32,7 @@ char	*getthepath(t_shell *args)
 	{
 		path_split = ft_split(path, ':');
 		free (path);
-		path = get_acess(path_split, args);
+		path = get_acess(path_split, tmp);
 		return (path);
 	}
 	else

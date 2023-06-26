@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 14:48:11 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:01:26 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ char	*get_path(t_shell *args)
 	return (NULL);
 }
 
-char	*get_acess(char **str, t_shell *args)
+char	*get_acess(char	**str, t_comand *args)
 {
-	int		i;
+	int i;
 	char	*join;
 	char	*tmp;
 
@@ -105,14 +105,14 @@ char	*get_acess(char **str, t_shell *args)
 	while (str[i])
 	{
 		tmp = ft_strjoin(str[i], "/");
-		join = ft_strjoin(tmp, args->token->cmd);
-		free(tmp);
-		if (access(join, X_OK) == 0)
-			break ;
+		join = ft_strjoin(tmp, args->cmd);
+		free (tmp);
+		if (access(join, F_OK) == 0)
+			break;
 		if (str[i + 1] == 0)
-			break ;
+			break;
 		i++;
-		free(join);
+		free (join);
 	}
 	free_matrix(str);
 	return (join);

@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/22 17:20:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:13:57 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ t_comand	*init(t_shell *args, int *i)
 	int			j;
 	int			x;
 	int			z;
+	int			a;
 
+	a = 0;
 	z = 0;
 	j = 0;
 	x = 0;
@@ -35,13 +37,19 @@ t_comand	*init(t_shell *args, int *i)
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->out_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->in_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->app_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	//ag->pipe_dir = NULL;
 	ag->argm[j++] = ft_strdup(args->split[*i]);
 	//ag->flags[x++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 	{
-		if (args->split[*i][0] == '>')
+		if (args->split[*i][0] == '>' && args->split[*i][1])
+		{
+			(*i)++;
+			ag->app_red[a++] = ft_strdup(args->split[(*i)++]);
+		}
+		else if (args->split[*i][0] == '>')
 		{
 			args->nr_red++;
 			(*i)++;
@@ -89,8 +97,6 @@ t_comand	*init_token(t_shell *args)
 void	init_values(t_shell *args, char	**env, int i)
 {
 	args->index = 0;
-	args->string_index = 0;
-	args->pipindex = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));

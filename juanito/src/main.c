@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/21 13:01:19 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:02:30 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	change_split(t_shell *args)
 void	elsemainfunction(t_shell *args)
 {
 	args->token = init_token(args);
-	if (args->pipes == 0)
-		cmdhandler(args);
-	else
-		handle_pipes(args);
+	cmdhandler(args);
 	free_split(args);
 	free_comand(args->token);
 }

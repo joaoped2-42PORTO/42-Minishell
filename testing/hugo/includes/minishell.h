@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/23 12:16:52 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:15:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_tokenizer
 	char	**argm;
 	char	**out_red;
 	char	**in_red;
+	char	**app_red;
+	char	*pipe_dir;
 	struct s_tokenizer	*next;
 }		t_comand;
 
@@ -63,6 +65,7 @@ typedef struct s_shell
 	char	**string;
 	int		string_index;
 	int		pipindex;
+	int		pipes;
 }		t_shell;
 
 //Utils Functions

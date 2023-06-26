@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/23 13:07:19 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:27:12 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,14 +244,13 @@ int	checkforspacesinstring(t_shell *args, int i)
 
 void	processdefault(t_shell *args)
 {
-	while (args->split[args->index])
+	int	i;
+
+	i = 1;
+	while (args->token->argm[i])
 	{
-		printf("%s", args->split[args->index]);
-		if (args->split[args->index])
-		{
-			printf(" ");
-			args->index++;
-		}
+		printf("%s", args->token->argm[i]);
+		i++;
 	}
 	printf("\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/21 15:16:27 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:21:36 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	free_list(t_shell *args)
 		free_matrix(args->token->argm);
 		free_matrix(args->token->out_red);
 		free_matrix(args->token->in_red);
+		free_matrix(args->token->app_red);
 		//free(args->token->pipe_dir);
 		free(args->token);
 		args->token = tmp;
