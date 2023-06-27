@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/26 14:15:04 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:48:46 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_shell
 //void	check_files_in_path(char *str);
 void	do_cd(t_shell *args);
 void	check_pwd(t_shell *args);
-int	pipes(t_comand *token, t_shell *args);
+void	pipes(t_comand *token, t_shell *args);
 char	*get_path(t_shell *args);
 char	*get_acess(char	**str, t_comand *args);
 void stringtreattopipe(t_shell *args);
