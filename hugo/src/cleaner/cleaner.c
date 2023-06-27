@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/22 23:16:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/27 23:22:55 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ int	free_list(t_shell *args)
 		tmp = args->token->next;
 		free(args->token->cmd);
 		free_matrix(args->token->argm);
-		free_matrix(args->token->out_red);
-		free_matrix(args->token->in_red);
-		free_matrix(args->token->app_red);
-		//free(args->token->pipe_dir);
+		free_matrix(args->token->redir);
 		free(args->token);
 		args->token = tmp;
 	}

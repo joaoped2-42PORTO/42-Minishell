@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/26 15:02:51 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/27 23:25:10 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,9 @@ typedef struct s_tokenizer
 	char	*cmd;
 //	char	**flags;
 	char	**argm;
-	//char	*pipe_dir;
-	char	**out_red;
-	char	**in_red;
-	char	**app_red;
+	char	**redir;
 	int		out_fd;
 	int		in_fd;
-	int		app_fd;
 	struct s_tokenizer	*next;
 }		t_comand;
 
@@ -74,7 +70,7 @@ void	do_cd(t_shell *args);
 void	check_pwd(t_shell *args);
 
 //Handler
-int		cmdhandler(t_shell *args);
+void		cmdhandler(t_shell *args);
 int		do_builtins(t_shell *args);
 
 //Signals

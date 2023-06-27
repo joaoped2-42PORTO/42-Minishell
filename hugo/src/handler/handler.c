@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/26 15:33:53 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/27 23:26:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ void	do_echo(t_shell *args)
 	}
 }
 
-void	redirection(t_comand *tmp)
+/* void	redirection(t_comand *tmp)
 {
 	int	x;
 
@@ -286,27 +286,21 @@ void	redirection(t_comand *tmp)
 		close(tmp->app_fd);
 		x++;
 	}
-}
+} */
 
 void	close_redirection(t_shell *args)
 {
-	if (args->token->out_red[0])
+	if (args->token->out_fd != -1)
 	{
 		dup2(args->old_out, STDOUT_FILENO);
 		close(args->old_out);
 		close(args->token->out_fd);
 	}
-	if (args->token->in_red[0])
+	if (args->token->in_fd != -1)
 	{
 		dup2(args->old_in, STDIN_FILENO);
 		close(args->old_in);
 		close(args->token->in_fd);
-	}
-	if (args->token->app_red[0])
-	{
-		dup2(args->old_in, STDOUT_FILENO);
-		close(args->old_in);
-		close(args->token->app_fd);
 	}
 }
 
@@ -326,16 +320,66 @@ int	str_is_equal(char *str, char *str1)
 	return (0);
 }
 
-int	cmdhandler(t_shell *args)
+void	handle_input(t_shell *args, int *i)
+{
+	(*i)++;
+	if (args->token->in_fd != -1)
+		close (args->token->out_fd);
+	args->token->in_fd = open(args->token->redir[*i], O_RDONLY, 0777);
+	if (args->token->in_fd == -1)
+		perror("open");
+	dup2(args->token->in_fd, STDIN_FILENO);
+}
+
+void	handle_output(t_shell *args, int *i)
+{
+	(*i)++;
+	if (args->token->out_fd != -1)
+		close (args->token->out_fd);
+	args->token->out_fd = open(args->token->redir[*i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (args->token->out_fd == -1)
+		perror("open");
+	dup2(args->token->out_fd, STDOUT_FILENO);
+}
+
+void	handle_append(t_shell *args, int *i)
+{
+	(*i)++;
+	if (args->token->out_fd != -1)
+		close (args->token->out_fd);
+	args->token->out_fd = open(args->token->redir[*i], O_APPEND | O_CREAT | O_RDWR, 0777);
+	if (args->token->out_fd == -1)
+		perror("open");
+	dup2(args->token->out_fd, STDOUT_FILENO);
+}
+
+
+void	handle_redir(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->token->redir[i])
+	{
+		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
+			handle_append(args, &i);
+		/* else if ((args->token->redir[i][0] == '<' && args->token->redir[i][1] == '<'))
+			handle_heredoc(args, &i); */
+		else if (args->token->redir[i][0] == '>')
+			handle_output(args, &i);
+		else if (args->token->redir[i][0] == '<')
+			handle_input(args, &i);
+		i++;
+	}
+}
+void	cmdhandler(t_shell *args)
 {
 	t_comand *tmp;
 
-
 	tmp = args->token;
-
 	args->old_out = dup(STDOUT_FILENO);
 	args->old_in = dup(STDIN_FILENO);
-	redirection(tmp);
+	handle_redir(args);
 	if (str_is_equal(tmp->cmd, "pwd"))
 		check_pwd(args);
 	else if (str_is_equal(tmp->cmd, "cd"))
@@ -355,7 +399,6 @@ int	cmdhandler(t_shell *args)
 	else
 		do_non_builtins(args, tmp);
 	close_redirection(args);
-	return(1);
 }
 
 int	ft_size(t_comand *lst)

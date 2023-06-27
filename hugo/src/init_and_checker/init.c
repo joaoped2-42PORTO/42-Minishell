@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/22 22:25:37 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/27 23:26:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,54 +19,68 @@ int	checkPipeRed(t_shell *args, int *i)
 	return (0);
 }
 
+void	check_redir (t_shell *args, t_comand *ag, int *i, int *x)
+{
+	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+	else if (args->split[*i][0] == '>')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+	else if (args->split[*i][0] == '<')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+}
+
+int	check_for_first_redir(char **split, int *i)
+{
+	if (split[*i][0] == '>' && split[*i][1] == '>')
+		return (0);
+	else if (split[*i][0] == '<' && split[*i][1] == '<')
+		return (0);
+	else if (split[*i][0] == '>')
+		return (0);
+	else if (split[*i][0] == '<')
+		return (0);
+	return (1);
+}
+
+
+
 t_comand	*init(t_shell *args, int *i)
 {
 	t_comand	*ag;
 	int			j;
 	int			x;
-	int			z;
-	int			a;
 
-	a = 0;
-	z = 0;
 	j = 0;
 	x = 0;
 	ag = malloc(sizeof(t_comand));
 	if (!ag)
 		return (NULL);
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	ag->out_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	ag->in_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	ag->app_red = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	//ag->pipe_dir = NULL;
+	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	if (!check_for_first_redir(args->split, i))
+		check_redir(args, ag, i, &x);
 	ag->argm[j++] = ft_strdup(args->split[*i]);
-	//ag->flags[x++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 	{
-		if (args->split[*i][0] == '>' && args->split[*i][1])
-		{
-			(*i)++;
-			ag->app_red[a++] = ft_strdup(args->split[(*i)++]);
-		}
-		else if (args->split[*i][0] == '>')
-		{
-			args->nr_red++;
-			(*i)++;
-			ag->out_red[x++] = ft_strdup(args->split[(*i)++]);
-		}
-		else if (args->split[*i][0] == '<')
-		{
-			args->nr_red++;
-			(*i)++;
-			ag->in_red[z++] = ft_strdup(args->split[(*i)++]);
-		}
-		else if (args->split[*i])
+		check_redir(args, ag, i, &x);
+		if (args->split[*i])
 			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
-	/* ag->argm[j] = 0;
-	if (args->split[*i] && checkPipeRed(args, i))
-		ag->pipe_dir = ft_strdup(args->split[*i]); */
 	ag->next = NULL;
 	return (ag);
 }
@@ -91,6 +105,8 @@ t_comand	*init_token(t_shell *args)
 		if (args->split[i])
 			i++;
 	}
+	tmp->in_fd = -1;
+	tmp->out_fd = -1;
 	return (tmp);
 }
 
