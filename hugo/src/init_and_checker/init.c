@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/29 12:08:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/06/29 12:22:34 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ t_comand	*init(t_shell *args, int *i)
 		check_redir(args, ag, i, &x);
 	if (!args->split[*i])
 	{
-		if (!ag->cmd)
-			ag->cmd = NULL;
+		ag->cmd = ft_calloc(1, 1);
 		return (ag);
 	}
 	ag->argm[j++] = ft_strdup(args->split[*i]);
