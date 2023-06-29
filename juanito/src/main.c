@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:02:30 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:16:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int	check_valid_input(t_shell *args)
 {
+	if (args->input[0] == '\0')
+	{
+		rl_replace_line("", 0);
+		rl_redisplay();
+		free(args->input);
+		return (0);
+	}
 	if (!valid_input(args))
 	{
 		printf("Forgot to close quotes or pipe\n");
@@ -54,14 +61,6 @@ void	change_split(t_shell *args)
 	}
 }
 
-void	elsemainfunction(t_shell *args)
-{
-	args->token = init_token(args);
-	cmdhandler(args);
-	free_split(args);
-	free_comand(args->token);
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_shell	*args;
@@ -79,7 +78,12 @@ int	main(int ac, char **av, char **env)
 		if (!check_valid_input(args))
 			continue ;
 		else
-			elsemainfunction(args);
+		{
+			args->token = init_token(args);
+			executer(args);
+			free_split(args);
+			free_list(args);
+		}
 		free(args->input);
 	}
 	return (0);

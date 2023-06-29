@@ -6,58 +6,125 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/26 12:12:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:23:53 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void	check_redir(t_shell *args, t_comand *ag, int *i, int *x)
+{
+	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+	else if (args->split[*i][0] == '>')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+	else if (args->split[*i][0] == '<')
+	{
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+	}
+}
+
+int	check_for_first_redir(char **split, int *i)
+{
+	if (split[*i][0] == '>' && split[*i][1] == '>')
+		return (0);
+	else if (split[*i][0] == '<' && split[*i][1] == '<')
+		return (0);
+	else if (split[*i][0] == '>')
+		return (0);
+	else if (split[*i][0] == '<')
+		return (0);
+	return (1);
+}
+
 t_comand	*init(t_shell *args, int *i)
 {
 	t_comand	*ag;
 	int			j;
+	int			x;
 
 	j = 0;
+	x = 0;
 	ag = malloc(sizeof(t_comand));
 	if (!ag)
 		return (NULL);
-	ag->argm = ft_calloc(see_split_size(args), sizeof(char *));
-	ag->pipe_dir = NULL;
-	ag->next = NULL;
+	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	if (!check_for_first_redir(args->split, i))
+		check_redir(args, ag, i, &x);
+	ag->argm[j++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
-	while (args->split[*i] && args->split[*i][0] != '|')
-		ag->argm[j++] = ft_strdup(args->split[(*i)++]);
-	if (args->split[*i] && args->split[*i][0] == '|')
+	while (args->split[*i] && !checkpipered(args, i))
 	{
-		ag->pipe_dir = ft_strdup(args->split[*i]);
-		args->pipes++;
-		if (!ag->pipe_dir)
-		{
-			free_comand(ag);
-			return (NULL);
-		}
+		check_redir(args, ag, i, &x);
+		if (args->split[*i])
+			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
 	ag->next = NULL;
 	return (ag);
 }
 
-void	free_comand(t_comand *cmd)
+static char	*ft_word(char *str, t_shell *args)
 {
-	int	i;
+	int		l;
+	int		i;
+	char	*res;
 
-	if (!cmd)
-		return ;
-	free(cmd->cmd);
-	i = 0;
-	while (cmd->argm[i])
+	l = 0;
+	if (str[l] == '\'' || str[l] == '"')
+		l += ft_skipquotes(str + l, args);
+	else if (ft_checkspecial(str + l))
+		l += ft_checkspecial(str + l);
+	else
 	{
-		free(cmd->argm[i]);
-		i++;
+		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
+			&& str[l] != '\'' && str[l] != '"')
+			l++;
 	}
-	free(cmd->argm);
-	free(cmd->pipe_dir);
-	free_comand(cmd->next);
-	free(cmd);
+	res = (char *)malloc(sizeof(char) * (l + 1));
+	if (!res)
+		return (NULL);
+	res[l] = '\0';
+	i = 0;
+	while (i < l)
+		res[i++] = *str++;
+	return (res);
+}
+
+char	**split_db_quotes(t_shell *args, char *str)
+{
+	int		wcount;
+	int		i;
+	char	**result;
+
+	wcount = ft_countargs(str, args);
+	if (!wcount)
+		return (NULL);
+	result = (char **)malloc((wcount + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < wcount)
+	{
+		while (*str != '\0' && *str == ' ')
+			str++;
+		result[i] = ft_word(str, args);
+		str += ft_strlen(result[i++]);
+	}
+	result[i] = NULL;
+	return (result);
 }
 
 t_comand	*init_token(t_shell *args)
@@ -65,16 +132,9 @@ t_comand	*init_token(t_shell *args)
 	int			i;
 	t_comand	*tmp;
 
-	i = 0;
-	while (args->input[i])
-	{
-		if (args->input[i] == '|')
-			args->pipes++;
-		i++;
-	}
-	i = 0;
-	args->split = split_db_quotes(args->input, ' ');
+	args->split = split_db_quotes(args, args->input);
 	change_split(args);
+	args->nr_red = 0;
 	tmp = NULL;
 	i = 0;
 	while (args->split[i])
@@ -86,13 +146,14 @@ t_comand	*init_token(t_shell *args)
 		if (args->split[i])
 			i++;
 	}
+	tmp->in_fd = -1;
+	tmp->out_fd = -1;
 	return (tmp);
 }
 
 void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
-	args->pipes = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));

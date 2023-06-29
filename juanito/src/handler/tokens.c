@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/14 16:58:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:42:00 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 	if (args->split[args->index][*x] == '$')
 	{
 		if (args->split[args->index][*x + 1] != ' '
-		&& args->split[args->index][*x + 1] != '\0')
+			&& args->split[args->index][*x + 1] != '\0')
 			process_dollar_sign(args, x, k, res);
 		else
 			append_char_to_res(res, args->split[args->index][(*x)++]);
@@ -61,10 +61,10 @@ int	validate_input(t_shell *args)
 void	process_string(t_shell *args, int *x, char **res, int *k)
 {
 	while (args->split[args->index][*x] != '\''
-	&& args->split[args->index][*x] != '"' && args->split[args->index][*x])
+		&& args->split[args->index][*x] != '"' && args->split[args->index][*x])
 	{
-		if (args->split[args->index][*x] == ' '
-		&& args->split[args->index][(*x) + 1] == ' ')
+		if (args->split[args->index][*x] == ' ' && args->split[args->index][(*x)
+			+ 1] == ' ')
 			(*x)++;
 		else if (args->split[args->index][*x] == '$')
 			process_dollar_or_char(args, x, k, res);

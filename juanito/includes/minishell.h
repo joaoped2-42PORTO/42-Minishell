@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/26 12:07:45 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:24:02 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ typedef struct s_tokenizer
 {
 	char				*cmd;
 	char				**argm;
-	char				*pipe_dir;
+	char				**redir;
+	int					out_fd;
+	int					in_fd;
 	struct s_tokenizer	*next;
 }						t_comand;
 
@@ -54,102 +56,141 @@ typedef struct s_shell
 	char				**env;
 	char				**argvs;
 	int					index;
-	int					pipes;
-	int		old_out;
-	int		old_in;
+	int					old_out;
+	int					old_in;
+	int					nr_red;
+	int					in;
+	int					out;
+	int					list_size;
+	int					issquote;
+	int					isdquote;
 }						t_shell;
 
-// cleaner | cleaner.c
+//---------------------------SRC-------------------------------//
+
+//----------Cleaner----------//
+
+//-----cleaner-----//
 int						get_env_size(char **str);
 int						free_split(t_shell *args);
 int						free_list(t_shell *args);
 void					do_exit(t_shell *args);
 void					do_small_exit(t_shell *args);
 
-// commands | cd_utils.c
+//----------Commands----------//
+
+//-----cd_utils-----//
 int						change_pwd(char **str1);
 void					first_old_pwd(char **str1);
 void					change_env_oldpwd(t_shell *args);
 
-// commands | cd.c
+//-----cd-----//
 void					ft_homedk(t_shell *args);
 void					change_env_pwd(t_shell *args);
+void					change_exp_pwd(t_shell *args);
 void					do_cd(t_shell *args);
 
-// commands | echo_checker.c
+//-----echo_checker-----//
 int						checkforspacesinstring(t_shell *args, int i);
 
-// commands | echo_utils.c
+//-----echo_utils-----//
 void					processdefault(t_shell *args);
 int						print_option_n(t_shell *args);
 int						check_index(t_shell *args, int *i);
 
-// commands | echo.c
+//-----echo-----//
+int						printing(t_shell *args);
 void					process_option_n(t_shell *args);
 void					checkcontent(t_shell *args);
 void					do_echo(t_shell *args);
 
-// commands | export_utils.c
-int						see_env_size(t_shell *args);
-char					**dup_env(char **str, char **str1);
+//-----export_utils-----//
 void					free_matrix(char **str);
 int						see_split_size(t_shell *args);
-
-// commands | export_utils2.c
-int						do_loop_doubles(t_shell *args, int j);
-int						check_doubles_vars(t_shell *args);
 void					exchange_memo_env(t_shell *args, char **env, int *i);
 void					exchange_memo_exp(t_shell *args, char **exp, int *x);
 void					export_counting(t_shell *args, int *x, int *i);
 
-// commands | export.c
+//-----export_utils2-----//
+int						check_doubles_exp(t_shell *args, int y);
+int						check_doubles_env(t_shell *args, int y);
+int						see_env_size(t_shell *args);
+char					**dup_env(char **str, char **str1);
+
+//-----export-----//
+void					do_export(t_shell *args);
+int						check_env_value(t_shell *args, char *str);
 int						see_if_env(char *str);
 int						see_exp_size(t_shell *args);
 void					do_mult_export(t_shell *args);
 
-// commands | export2.c
-int						check_input_exp(t_shell *args);
-void					do_export(t_shell *args);
-int						check_space_in_string(t_shell *args, int *y);
-int						ft_isalnum_mini(int c);
-int						check_env_value(t_shell *args, char *str);
-
-// commands | pwd.c
+//-----pwd-----//
 int						see_pwd(char **str);
 void					check_pwd(t_shell *args);
 
-// commands | unset_utils.c
+//-----unset_utils-----//
 int						variable_size(char *str);
-
-// commands | unset.c
+void					exchange_memo_unset_exp(t_shell *args, char **str,
+							int *i);
 void					exchange_memo_unset(t_shell *args, char **str, int *i);
+
+//-----unset-----//
+void					change_env_unset(t_shell *args, char **env, char *str1,
+							int *y);
+void					change_exp_unset(t_shell *args, char **exp, char *str1,
+							int *x);
+void					loop_unset(t_shell *args, char **exp, char **env,
+							char *str1);
 void					unset(t_shell *args, char *str1);
 void					do_unset(t_shell *args);
 
-// handler | handler.c
-char					*print_env_var(t_shell *args, char *str);
-void					open_exec(t_shell *args);
-void					open_exec_abs(t_shell *args);
-char					*get_path(t_shell *args);
-char					*get_acess(char	**str, t_comand *args);
+//----------handler----------//
 
-// handler | handler2.c
-int						do_non_builtins(t_shell *args, t_comand *tmp);
+//-----handler_utils-----//
+char					*print_env_var(t_shell *args, char *str);
+void					open_exec_helper(t_shell *args, char *str);
+void					open_exec(t_shell *args);
+char					*get_path(t_shell *args);
+char					*get_acess(char **str, t_comand *args);
+
+//-----handler_utils2-----//
 void					print_env(t_shell *args);
 void					print_export(t_shell *args);
-int						cmdhandler(t_shell *args);
+void					open_exec_abs(t_shell *args);
+void					close_redirection(t_shell *args);
+int						str_is_equal(char *str, char *str1);
 
-// handler | handler3.c
-void					executepid(t_shell *args);
-char					*getthepath(t_shell *args, t_comand *tmp);
-void					open_exec_helper(t_shell *args, char *str);
+//-----handler_utils3-----//
+void					handle_input(t_shell *args, int *i);
+void					handle_output(t_shell *args, int *i);
+void					handle_append(t_shell *args, int *i);
+void					handle_redir(t_shell *args);
 
-// handler | pipes.c
+//-----handler-----//
+char					*nonbuiltinspath(t_shell *args, t_comand *tmp,
+							char *path);
+int						do_non_builtins(t_shell *args, t_comand *tmp);
+void					cmdhandler(t_shell *args);
+int						ft_size(t_comand *lst);
+void					executer(t_shell *args);
+
+//-----pipe_utils-----//
 char					*returncompletepath(t_comand *token, t_shell *args);
 int						checklistsizeforpipes(t_comand *token);
-int						pipes(t_comand *token, t_shell *args);
+void					handleexporttopipe(t_comand *tmp, t_shell *args);
+int						isbuiltin(t_comand *tmp, t_shell *args);
 
-// handler | tokens.c
+//-----pipes-----//
+void					handlefirstpipe(t_comand *token, t_shell *args,
+							int *fd);
+void					handlemidpipes(t_comand *token, t_shell *args, int *fd);
+void					handlelastpipes(t_comand *token, t_shell *args,
+							int *fd);
+void					execpipes(t_comand *token, t_shell *args, int *fd,
+							int *k);
+void					pipes(t_comand *token, t_shell *args);
+
+//-----tokens-----//
 int						process_quote(t_shell *args, int *x, int *p);
 void					process_dollar_or_char(t_shell *args, int *x, int *k,
 							char **res);
@@ -159,7 +200,7 @@ int						validate_input(t_shell *args);
 void					process_string(t_shell *args, int *x, char **res,
 							int *k);
 
-// handler | tokens2.c
+//-----tokens2-----//
 int						checkisalpha(t_shell *args, int *i);
 void					append_char_to_res(char **res, char c);
 void					process_whitespace(t_shell *args, int *x, char **res);
@@ -167,53 +208,58 @@ void					append_ptr2_to_res(char **res, char **ptr2, char **tmp);
 void					process_single_quotes(t_shell *args, int *x, int *t,
 							char **res);
 
-// handler | tokens3.c
+//-----tokens3-----//
 void					process_dollar_sign(t_shell *args, int *x, int *k,
 							char **res);
 void					process_input(t_shell *args, int *x, int *k,
 							char **res);
 char					*checkbars(t_shell *args);
 
-// handler | utils.c
-char					*ft_strcpy1(char *dest, const char *src);
+//----------init_and_checker----------//
 
-// init_and_checker | checker_utils.c
-int						loop_input(t_shell *args, int *i);
-int						loop_input2(t_shell *args, int *i);
-// init_and_checker | checker.c
-int						see_closed_pipe(char *str, int *i);
-int						see_dbquote_string(char *str, int *i);
-int						see_quote_string(char *str, int *i);
+//-----checker-----//
 int						see_quote_double_string(char *str, int *i);
+int						loop_input_helper(t_shell *args, int *i);
 int						loop_input(t_shell *args, int *i);
-int						loop_input2(t_shell *args, int *i);
 int						valid_input(t_shell *args);
 
-// init_and_checker | init_utils.c
+//-----init_utils-----//
 int						check_pipe_rede(char c, char s);
 void					add_bottom(t_comand **stack, t_comand *new);
 t_comand				*get_bottom_stack(t_comand *stack);
 void					alloc_env_mem(char **str, char **str1, char **str2);
 void					get_path_struct(t_shell *args);
 
-// init_and_checker | init.c
+//-----init-----//
+void					check_redir(t_shell *args, t_comand *ag, int *i,
+							int *x);
+int						check_for_first_redir(char **split, int *i);
 t_comand				*init(t_shell *args, int *i);
-void					free_comand(t_comand *cmd);
 t_comand				*init_token(t_shell *args);
 void					init_values(t_shell *args, char **env, int i);
 
-// signals | signals.c
+//-----utils-----//
+int						checkpipered(t_shell *args, int *i);
+int						see_closed_pipe(char *str, int *i);
+int						see_dbquote_string(char *str, int *i);
+int						see_quote_string(char *str, int *i);
+
+//----------signals----------//
+
+//-----signals-----//
 void					handler(int sig);
 void					config_signals(void);
 
-// main | main_utils.c
-char					quote_value(char c, char quote);
-int						ft_wordcount_meta(char *str, char c);
-int						ft_wordlen(char *str, char c);
-char					*get_word(char *s, char c, char **words);
-char					**split_db_quotes(char *s, char c);
+//----------main----------//
 
-// main | main.c
+//-----main_utils-----//
+int						ft_skipquotes(char *str, t_shell *args);
+int						ft_checkspecial(char *str);
+//static char				*ft_word(char *str, t_shell *args);
+int						ft_countargs(char *str, t_shell *args);
+char					**split_db_quotes(t_shell *args, char *str);
+
+//-----main-----//
 int						check_valid_input(t_shell *args);
 int						check_input(t_shell *args);
 void					change_split(t_shell *args);

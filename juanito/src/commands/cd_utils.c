@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 13:02:47 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:42:15 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,8 @@ void	first_old_pwd(char **str1)
 
 void	change_env_oldpwd(t_shell *args)
 {
-	int	flag;
-
-	flag = 0;
-	if (change_pwd(args->env))
-		flag = 1;
-	if (flag == 0)
-		first_old_pwd(args->env);
-	return ;
+	if (change_pwd(args->env) && change_pwd(args->exp))
+		return ;
+	first_old_pwd(args->env);
+	first_old_pwd(args->exp);
 }

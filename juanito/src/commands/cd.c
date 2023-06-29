@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 13:02:43 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:42:18 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,34 @@ void	change_env_pwd(t_shell *args)
 	{
 		if (!ft_strcmp(args->env[i], "PWD"))
 		{
-			if (args->path)
+			if (args->path != NULL)
 				free(args->path);
 			str = ft_strjoin(str, path);
 			free(args->env[i]);
 			args->env[i] = ft_strdup(str);
 			args->path = ft_strdup(str);
+			free(str);
+			break ;
+		}
+	}
+}
+
+void	change_exp_pwd(t_shell *args)
+{
+	int		i;
+	char	path[1000];
+	char	*str;
+
+	str = "PWD=";
+	i = -1;
+	getcwd(path, sizeof(path));
+	while (args->exp[++i])
+	{
+		if (!ft_strcmp(args->exp[i], "PWD"))
+		{
+			str = ft_strjoin(str, path);
+			free(args->exp[i]);
+			args->exp[i] = ft_strdup(str);
 			free(str);
 			break ;
 		}
@@ -65,6 +87,7 @@ void	do_cd(t_shell *args)
 		change_env_oldpwd(args);
 		ft_homedk(args);
 		change_env_pwd(args);
+		change_exp_pwd(args);
 		return ;
 	}
 	change_env_oldpwd(args);
@@ -76,5 +99,6 @@ void	do_cd(t_shell *args)
 		return ;
 	}
 	change_env_pwd(args);
+	change_exp_pwd(args);
 	args->exit_status = 0;
 }

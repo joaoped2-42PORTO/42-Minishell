@@ -6,32 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/15 15:26:08 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:21:13 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	see_env_size(t_shell *args)
-{
-	int	i;
-
-	i = 0;
-	while (args->env[i])
-		i++;
-	return (i);
-}
-
-char	**dup_env(char **str, char **str1)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		str1[i] = ft_strdup(str[i]);
-	str1[i] = 0;
-	return (str1);
-}
 
 void	free_matrix(char **str)
 {
@@ -51,4 +30,39 @@ int	see_split_size(t_shell *args)
 	while (args->split[i])
 		i++;
 	return (i);
+}
+
+void	exchange_memo_env(t_shell *args, char **env, int *i)
+{
+	env = dup_env(args->env, env);
+	free_matrix(args->env);
+	args->env = ft_calloc(*i + see_split_size(args), sizeof(char *));
+	args->env = dup_env(env, args->env);
+}
+
+void	exchange_memo_exp(t_shell *args, char **exp, int *x)
+{
+	exp = dup_env(args->exp, exp);
+	free_matrix(args->exp);
+	args->exp = ft_calloc(*x + see_split_size(args), sizeof(char *));
+	args->exp = dup_env(exp, args->exp);
+}
+
+void	export_counting(t_shell *args, int *x, int *i)
+{
+	int	y;
+
+	y = 0;
+	while (args->split[++y])
+	{
+		if (!check_doubles_env(args, y) && !check_doubles_exp(args, y))
+			continue ;
+		else if (!see_if_env(args->split[y]))
+			args->exp[(*x)++] = ft_strdup(args->split[y]);
+		else
+		{
+			args->env[(*i)++] = ft_strdup(args->split[y]);
+			args->exp[(*x)++] = ft_strdup(args->split[y]);
+		}
+	}
 }

@@ -5,95 +5,131 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 12:19:08 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/15 12:28:51 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
+/*   Updated: 2023/06/29 16:23:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-char	quote_value(char c, char quote)
+int	ft_skipquotes(char *str, t_shell *args)
 {
-	if (ft_strrchr("\"\'", c) && !quote)
-		return (c);
-	else if (ft_strrchr("\"\'", c) && quote == c)
+	int	i;
+
+	i = 0;
+	if (str[i] != '\'' && str[i] != '"')
 		return (0);
-	return (quote);
-}
-
-int	ft_wordcount_meta(char *str, char c)
-{
-	int		i;
-	int		wordcount;
-	char	quote;
-
-	i = 0;
-	wordcount = 0;
-	quote = 0;
-	while (str[i])
+	if (str[i] == '\'')
+		args->issquote = 1;
+	if (str[i] == '"')
+		args->isdquote = 1;
+	i++;
+	if (args->issquote)
 	{
-		while (str[i] && str[i] == c)
+		while (str[i] != '\'')
 			i++;
-		if (str[i])
-			wordcount++;
-		while ((str[i] && str[i] != c) || (str[i] && quote))
-		{
-			quote = quote_value(str[i], quote);
-			i++;
-		}
 	}
-	return (wordcount);
-}
-
-int	ft_wordlen(char *str, char c)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	quote = 0;
-	while ((str[i] && (str[i] != c)) || (str[i] && quote))
+	else if (args->isdquote)
 	{
-		quote = quote_value(str[i], quote);
-		i++;
+		while (str[i] != '"')
+			i++;
 	}
+	i++;
 	return (i);
 }
 
-char	*get_word(char *s, char c, char **words)
+int	ft_checkspecial(char *str)
 {
-	char	quote;
-
-	quote = 0;
-	*words = ft_substr(s, 0, ft_wordlen(s, c));
-	while ((*s && *s != c) || (*s && quote))
-	{
-		quote = quote_value(*s, quote);
-		s++;
-	}
-	return (s);
+	if (!ft_strncmp(str, ">>", 2))
+		return (2);
+	if (!ft_strncmp(str, "<<", 2))
+		return (2);
+	if (!ft_strncmp(str, "<", 1))
+		return (1);
+	if (!ft_strncmp(str, ">", 1))
+		return (1);
+	if (!ft_strncmp(str, "|", 1))
+		return (1);
+	return (0);
 }
 
-char	**split_db_quotes(char *s, char c)
+int	ft_countargs(char *str, t_shell *args)
 {
-	char	**words;
-	int		wdcount;
-	int		j;
+	int	i;
+	int	count;
 
-	j = 0;
-	if (!s)
-		return (0);
-	wdcount = ft_wordcount_meta(s, c);
-	words = (char **)malloc(sizeof(char *) * (wdcount + 1));
-	if (!words)
-		return (0);
-	while (*s)
+	count = 0;
+	i = 0;
+	while (str[i])
 	{
-		while (*s && *s == c)
-			s++;
-		if (*s)
-			s = get_word(s, c, &words[j++]);
+		while (str[i] && str[i] == ' ')
+			i++;
+		if (!str[i])
+			break ;
+		++count;
+		if (str[i] == '\'' || str[i] == '"')
+			i += ft_skipquotes(str + i, args);
+		else if (ft_checkspecial(str + i))
+			i += ft_checkspecial(str + i);
+		else
+		{
+			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i)
+				&& str[i] != '\'' && str[i] != '"')
+				i++;
+			if (!str[i])
+				break ;
+		}
 	}
-	words[j] = 0;
-	return (words);
+	return (count);
 }
+
+/* static char	*ft_word(char *str, t_shell *args)
+{
+	int		l;
+	int		i;
+	char	*res;
+
+	l = 0;
+	if (str[l] == '\'' || str[l] == '"')
+		l += ft_skipquotes(str + l, args);
+	else if (ft_checkspecial(str + l))
+		l += ft_checkspecial(str + l);
+	else
+	{
+		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
+			&& str[l] != '\'' && str[l] != '"')
+			l++;
+	}
+	res = (char *)malloc(sizeof(char) * (l + 1));
+	if (!res)
+		return (NULL);
+	res[l] = '\0';
+	i = 0;
+	while (i < l)
+		res[i++] = *str++;
+	return (res);
+}
+
+char	**split_db_quotes(t_shell *args, char *str)
+{
+	int		wcount;
+	int		i;
+	char	**result;
+
+	wcount = ft_countargs(str, args);
+	if (!wcount)
+		return (NULL);
+	result = (char **)malloc((wcount + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < wcount)
+	{
+		while (*str != '\0' && *str == ' ')
+			str++;
+		result[i] = ft_word(str, args);
+		str += ft_strlen(result[i++]);
+	}
+	result[i] = NULL;
+	return (result);
+} */

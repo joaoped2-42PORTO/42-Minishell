@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/19 15:15:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:42:39 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	free_split(t_shell *args)
 	while (args->split[++i])
 		free(args->split[i]);
 	free(args->split);
-	args->pipes = 0;
 	return (0);
 }
 
@@ -42,50 +41,26 @@ int	free_list(t_shell *args)
 	{
 		tmp = args->token->next;
 		free(args->token->cmd);
-		free(args->token->argm);
-		free(args->token->pipe_dir);
+		free_matrix(args->token->argm);
+		free_matrix(args->token->redir);
 		free(args->token);
 		args->token = tmp;
 	}
+	free(args->token);
+	free(tmp);
 	return (0);
 }
 
 void	do_exit(t_shell *args)
 {
-	int	i;
-
-	i = -1;
-	while (args->split[++i])
-		free(args->split[i]);
-	free(args->split);
-	i = -1;
-	while (args->env[++i] != 0)
-		free(args->env[i]);
-	i = -1;
-	while (args->exp[++i] != 0)
-		free(args->exp[i]);
-	free_list(args);
-	free(args->exp);
-	free(args->env);
-	free(args->path);
-	free(args->input);
-	free(args);
-	rl_clear_history();
+	(void)args;
 	exit(0);
 }
 
 void	do_small_exit(t_shell *args)
 {
-	int	i;
-
-	i = -1;
-	while (args->env[++i] != 0)
-		free(args->env[i]);
-	i = -1;
-	while (args->exp[++i] != 0)
-		free(args->exp[i]);
-	free(args->exp);
-	free(args->env);
+	free_matrix(args->env);
+	free_matrix(args->exp);
 	free(args->path);
 	free(args);
 	rl_clear_history();

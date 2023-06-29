@@ -6,114 +6,108 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/26 12:01:26 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:12:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*print_env_var(t_shell *args, char *str)
+char	*nonbuiltinspath(t_shell *args, t_comand *tmp, char *path)
 {
-	int		i;
-	int		j;
-	char	*src;
+	char	**path_split;
 
-	i = 0;
-	j = 0;
-	src = NULL;
-	while (args->env[i])
+	path = get_path(args);
+	if (path)
 	{
-		j = 0;
-		while (args->env[i][j] && str[j] && args->env[i][j] == str[j])
-			j++;
-		if (args->env[i][j] == '=' && str[j] == '\0')
+		path_split = ft_split(path, ':');
+		free(path);
+		path = get_acess(path_split, tmp);
+	}
+	else
+		return (0);
+	return (path);
+}
+
+int	do_non_builtins(t_shell *args, t_comand *tmp)
+{
+	char	*path;
+	int		pid;
+
+	path = NULL;
+	path = nonbuiltinspath(args, tmp, path);
+	pid = fork();
+	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		if (args->input[0] == '.' && args->input[1] == '/')
+			open_exec(args);
+		else if (args->input[0] == '/')
+			open_exec_abs(args);
+		if (execve(path, tmp->argm, args->env) != 0)
 		{
-			j++;
-			free(src);
-			src = ft_strdup(&args->env[i][j]);
-			break ;
+			printf("command not found: %s\n", tmp->cmd);
+			args->exit_status = 2;
+			exit(2);
 		}
-		i++;
 	}
-	if (src == NULL)
-		return (NULL);
-	return (src);
+	wait(NULL);
+	args->exit_status = 125;
+	free(path);
+	return (1);
 }
 
-void	open_exec(t_shell *args)
+void	cmdhandler(t_shell *args)
 {
-	char	*str;
-	int		i;
-	int		total;
-	int		j;
+	t_comand	*tmp;
 
-	j = 0;
-	total = (ft_strlen(args->path) + ft_strlen(args->split[0]));
-	i = 4;
-	str = malloc(total * sizeof(char));
-	if (!str)
-		return ;
-	while (args->path[i])
-		str[j++] = args->path[i++];
-	i = 1;
-	while (args->split[0][i])
-		str[j++] = args->split[0][i++];
-	str[j] = '\0';
-	open_exec_helper(args, str);
-	free(str);
-	args->exit_status = 0;
-	exit(0);
+	tmp = args->token;
+	args->old_out = dup(STDOUT_FILENO);
+	args->old_in = dup(STDIN_FILENO);
+	handle_redir(args);
+	if (str_is_equal(tmp->cmd, "pwd"))
+		check_pwd(args);
+	else if (str_is_equal(tmp->cmd, "cd"))
+		do_cd(args);
+	else if (str_is_equal(tmp->cmd, "env"))
+		print_env(args);
+	else if (str_is_equal(tmp->cmd, "exit"))
+		exit(args->exit_status);
+	else if (str_is_equal(tmp->cmd, "echo"))
+		do_echo(args);
+	else if (str_is_equal(tmp->cmd, "export"))
+		do_export(args);
+	else if (str_is_equal(tmp->cmd, "unset"))
+		do_unset(args);
+	else if (str_is_equal(tmp->cmd, "$?"))
+		printf("%d\n", args->exit_status);
+	else
+		do_non_builtins(args, tmp);
+	close_redirection(args);
 }
 
-void	open_exec_abs(t_shell *args)
+int	ft_size(t_comand *lst)
 {
-	if (execve(args->split[0], args->split, NULL) != 0)
-	{
-		perror("Error");
-		args->exit_status = 126;
-		exit(126);
-	}
-	args->exit_status = 0;
-	exit(0);
-}
-
-char	*get_path(t_shell *args)
-{
-	int		i;
-	char	*str;
+	int	i;
 
 	i = 0;
-	while (args->env[i])
+	while (lst)
 	{
-		if (!ft_strncmp(args->env[i], "PATH", 4))
-		{
-			str = ft_strdup(args->env[i]);
-			return (str);
-		}
-		i++;
+		lst = lst->next;
+		++i;
 	}
-	return (NULL);
+	return (i);
 }
 
-char	*get_acess(char	**str, t_comand *args)
+void	executer(t_shell *args)
 {
-	int i;
-	char	*join;
-	char	*tmp;
+	t_comand	*tmp;
+	int			size;
 
-	i = 0;
-	while (str[i])
-	{
-		tmp = ft_strjoin(str[i], "/");
-		join = ft_strjoin(tmp, args->cmd);
-		free (tmp);
-		if (access(join, F_OK) == 0)
-			break;
-		if (str[i + 1] == 0)
-			break;
-		i++;
-		free (join);
-	}
-	free_matrix(str);
-	return (join);
+	tmp = args->token;
+	size = ft_size(args->token);
+	if (size == 1)
+		cmdhandler(args);
+	else
+		pipes(tmp, args);
 }
