@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 16:24:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:44:12 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,11 +253,11 @@ void					config_signals(void);
 //----------main----------//
 
 //-----main_utils-----//
-int						ft_skipquotes(char *str, t_shell *args);
+int						ft_skipquotes(char *str);
 int						ft_checkspecial(char *str);
-//static char				*ft_word(char *str, t_shell *args);
-int						ft_countargs(char *str, t_shell *args);
-char					**split_db_quotes(t_shell *args, char *str);
+int						ft_countargs(char *str);
+//static char				*ft_word(char *str);
+char					**split_db_quotes(char *str);
 
 //-----main-----//
 int						check_valid_input(t_shell *args);

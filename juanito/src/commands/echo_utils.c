@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 13:33:38 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:47:08 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	processdefault(t_shell *args)
 	while (args->token->argm[i])
 	{
 		printf("%s", args->token->argm[i]);
+		if (args->token->argm[i + 1])
+			printf(" ");
 		i++;
 	}
 	printf("\n");

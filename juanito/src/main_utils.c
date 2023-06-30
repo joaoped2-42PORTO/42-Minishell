@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 16:23:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:40:14 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_skipquotes(char *str, t_shell *args)
+/* int	ft_skipquotes(char *str, t_shell *args)
 {
 	int	i;
 
@@ -83,7 +83,7 @@ int	ft_countargs(char *str, t_shell *args)
 	return (count);
 }
 
-/* static char	*ft_word(char *str, t_shell *args)
+static char	*ft_word(char *str, t_shell *args)
 {
 	int		l;
 	int		i;

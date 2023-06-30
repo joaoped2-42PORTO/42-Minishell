@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 11:56:19 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:04:04 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	process_input(t_shell *args, int *x, int *k, char **res)
 	else
 	{
 		while (args->split[args->index][*x] == ' '
-			&& args->split[args->index][*x + 1] == ' ')
+			|| args->split[args->index][*x + 1] == ' ' ||
+			args->split[args->index][*x + 1] == '\t' ||
+			args->split[args->index][*x] == '\t')
 			(*x)++;
 		append_char_to_res(res, args->split[args->index][*x]);
 		(*x)++;

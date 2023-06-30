@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/29 12:13:30 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:16:50 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ void	do_mult_export(t_shell *args)
 {
 	int		i;
 	int		x;
-	int		y;
+//	int		y;
 	char	**env;
 	char	**exp;
 
-	y = 0;
+	//y = 0;
 	args->flag = 0;
 	x = see_exp_size(args);
 	i = see_env_size(args);
