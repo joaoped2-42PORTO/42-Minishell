@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 14:57:10 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/02 15:38:04 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,40 @@ void	handle_redir(t_shell *args)
 			handle_input(args, &i);
 		i++;
 	}
+}
+
+void	start_heredoc(t_shell *args, int *i)
+{
+	char	*buffer;
+	int		fd;
+
+	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (fd < 0)
+		perror("open");
+	while (1)
+	{
+		buffer = readline("heredoc >");
+		if (buffer == NULL)
+		{
+			perror("heredoc");
+			break;
+		}
+		if (str_is_equal(buffer, args->token->redir[*i]))
+			break;
+		ft_putendl_fd(buffer, fd);
+		free(buffer);
+	}
+	free(buffer);
+	close(fd);
+}
+
+void	handle_heredoc(t_shell *args, int *i)
+{
+	(*i)++;
+	if (args->token->in_fd != -1)
+		close (args->token->out_fd);
+	start_heredoc(args, i);
+	args->token->in_fd = open("heredoc", O_RDONLY);
+	if (args->token->in_fd == -1)
+		perror("open");
 }

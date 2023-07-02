@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/02 11:50:13 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:42:18 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,14 @@ t_comand	*init(t_shell *args, int *i)
 		return (NULL);
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->next = NULL;
 	if (!check_for_first_redir(args->split, i))
 		check_redir(args, ag, i, &x);
+	if (!args->split[*i])
+	{
+		ag->cmd = ft_calloc(1, 1);
+		return (ag);
+	}
 	ag->argm[j++] = ft_strdup(args->split[*i]);
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkpipered(args, i))
@@ -72,7 +78,6 @@ t_comand	*init(t_shell *args, int *i)
 		if (args->split[*i])
 			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
-	ag->next = NULL;
 	return (ag);
 }
 
