@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/29 12:22:34 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/02 10:39:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,40 @@ t_comand	*init(t_shell *args, int *i)
 	return (ag);
 }
 
+void	sort_exp(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+	char	*tmp;
+
+	x = 1;
+	i = -1;
+	while (args->exp[++i])
+	{
+		if (!args->exp[x])
+			break;
+		j = 0;
+		while (args->exp[i][j] == args->exp[x][j])
+			j++;
+		if (args->exp[i][j] > args->exp[x][j])
+		{
+			tmp = args->exp[i];
+			args->exp[i] = args->exp[x];
+			args->exp[x] = tmp;
+			i = -1;
+			x = 0;
+		}
+		x++;
+	}
+}
 
 t_comand	*init_token(t_shell *args)
 {
 	int			i;
 	t_comand	*tmp;
 
+	sort_exp(args);
 	args->split = split_db_quotes(args->input);
 	change_split(args);
 	args->nr_red = 0;

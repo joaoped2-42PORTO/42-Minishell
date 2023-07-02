@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/30 11:43:26 by user             ###   ########.fr       */
+/*   Updated: 2023/07/02 11:50:13 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	ft_countargs(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while ((str[i] && str[i] == ' ') || (str[i] && str[i] == '\t'))
 			i++;
 		if (!str[i])
 			break ;
@@ -142,7 +142,7 @@ int	ft_countargs(char *str)
 		else
 		{
 			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i)
-				&& str[i] != '\'' && str[i] != '"')
+				&& str[i] != '\'' && str[i] != '"' && str[i] != '\t')
 				i++;
 			if (!str[i])
 				break ;
@@ -165,7 +165,7 @@ static char	*ft_word(char *str)
 	else
 	{
 		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
-			&& str[l] != '\'' && str[l] != '"')
+			&& str[l] != '\'' && str[l] != '"' && str[l] != '\t')
 			l++;
 	}
 	res = (char *)malloc(sizeof(char) * (l + 1));
@@ -193,7 +193,7 @@ char	**split_db_quotes(char *str)
 	i = 0;
 	while (i < wcount)
 	{
-		while (*str != '\0' && *str == ' ')
+		while ((*str != '\0' && *str == ' ') || (*str != '\0' && *str == '\t'))
 			str++;
 		result[i] = ft_word(str);
 		str += ft_strlen(result[i++]);
