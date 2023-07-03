@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:26:22 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/29 11:41:44 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:28:21 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	alloc_env_mem(char **str, char **str1, char **str2)
 	str2[i] = 0;
 }
 
-void	get_path_struct(t_shell *args)
+void	get_path_struct(t_shell *args) //leaks
 {
 	int	i;
 

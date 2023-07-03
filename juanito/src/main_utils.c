@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 11:00:17 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:29:26 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	**split_db_quotes(char *str)
 	wcount = ft_countargs(str);
 	if (!wcount)
 		return (NULL);
-	result = (char **)malloc((wcount + 1) * sizeof(char *));
+	result = (char **)malloc((wcount + 1) * sizeof(char *)); //leaks
 	if (!result)
 		return (NULL);
 	i = 0;
