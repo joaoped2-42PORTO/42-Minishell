@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/02 17:36:59 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 17:23:07 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,14 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(path, token->argm, NULL);
+		{
+			if (execve(path, token->argm, NULL) != 0)
+			{
+				perror("Error");
+				args->exit_status = 126;
+				exit(126);
+			}
+		}
 		waitpid(-1, NULL, 0);
 	}
 	free(path);
@@ -45,7 +52,14 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(path, token->argm, NULL);
+		{
+			if (execve(path, token->argm, NULL) != 0)
+			{
+				perror("Error");
+				args->exit_status = 126;
+				exit(126);
+			}
+		}
 		waitpid(-1, NULL, 0);
 	}
 	free(path);
@@ -65,7 +79,14 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	{
 		pid = fork();
 		if (pid == 0)
-			execve(path, token->argm, NULL);
+		{
+			if (execve(path, token->argm, NULL) != 0)
+			{
+				perror("Error");
+				args->exit_status = 126;
+				exit(126);
+			}
+		}
 		waitpid(-1, NULL, 0);
 	}
 	free(path);
@@ -89,8 +110,9 @@ void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
 
 void	pipes(t_comand *token, t_shell *args)
 {
-	int	k;
-	int	fd[2];
+	int			k;
+	int			fd[2];
+	t_comand	*ptr;
 
 	args->list_size = checklistsizeforpipes(token);
 	k = 0;
@@ -99,7 +121,12 @@ void	pipes(t_comand *token, t_shell *args)
 	{
 		if (k != 0)
 		{
-			token = token->next;
+			ptr = token->next;
+			free(token->cmd);
+			free_matrix(token->argm);
+			free_matrix(token->redir);
+			free(token);
+			token = ptr;
 			args->token = token;
 		}
 		execpipes(token, args, fd, &k);

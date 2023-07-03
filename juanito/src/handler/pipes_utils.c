@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 14:31:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:03:46 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,18 @@ int	checklistsizeforpipes(t_comand *token)
 	return (i);
 }
 
-void	handleexporttopipe(t_comand *tmp, t_shell *args)
+int	handleexporttopipe(t_comand *tmp, t_shell *args)
 {
 	if (tmp->argm[1] == 0)
 		print_export(args);
 	else
-		return ;
+		return (0);
+	return (1);
 }
 
 int	isbuiltin(t_comand *tmp, t_shell *args)
 {
+	handle_redir(args);
 	if (!ft_strncmp(tmp->cmd, "pwd", 3))
 		check_pwd(args);
 	else if (!ft_strncmp(tmp->cmd, "cd", 2))
@@ -65,12 +67,17 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 	else if (!ft_strncmp(tmp->cmd, "echo", 4))
 		do_echo(args);
 	else if (!ft_strncmp(tmp->cmd, "export", 6))
+	{
+		if (handleexporttopipe(tmp, args) == 1)
+			return (1);
 		return (1);
+	}
 	else if (!ft_strncmp(tmp->cmd, "unset", 5))
 		return (1);
 	else if (!ft_strncmp(args->input, "$?", 2))
 		printf("%d\n", args->exit_status);
 	else
 		return (0);
+	close_redirection(args);
 	return (1);
 }

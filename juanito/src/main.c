@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/02 19:11:09 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 16:59:52 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	change_split(t_shell *args)
 	args->index = 0;
 	while (args->split[args->index])
 	{
-		/* if (args->split[args->index][0] == '\t' && args->split[args->index][1] == '\0')
-			continue; */
 		str = checkbars(args);
 		free(args->split[args->index]);
 		args->split[args->index] = ft_strdup(str);
@@ -88,5 +86,6 @@ int	main(int ac, char **av, char **env)
 		}
 		free(args->input);
 	}
+	free_list(args);
 	return (0);
 }

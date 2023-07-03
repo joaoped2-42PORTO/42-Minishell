@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/30 11:16:50 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 15:27:00 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,9 @@ void	do_mult_export(t_shell *args)
 {
 	int		i;
 	int		x;
-//	int		y;
 	char	**env;
 	char	**exp;
 
-	//y = 0;
-	args->flag = 0;
 	x = see_exp_size(args);
 	i = see_env_size(args);
 	env = ft_calloc(i + 1, sizeof(char *));

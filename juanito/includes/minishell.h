@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/30 11:44:12 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 17:11:45 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ typedef struct s_shell
 	int					env_size;
 	int					exit_status;
 	char				*path;
-	int					flag;
 	t_comand			*token;
 	char				**exp;
 	char				**split;
 	char				*input;
 	char				**env;
-	char				**argvs;
 	int					index;
 	int					old_out;
 	int					old_in;
@@ -166,6 +164,9 @@ void					handle_output(t_shell *args, int *i);
 void					handle_append(t_shell *args, int *i);
 void					handle_redir(t_shell *args);
 
+//-----handler_utils4-----//
+void					start_heredoc(t_shell *args, int *i);
+
 //-----handler-----//
 char					*nonbuiltinspath(t_shell *args, t_comand *tmp,
 							char *path);
@@ -177,7 +178,7 @@ void					executer(t_shell *args);
 //-----pipe_utils-----//
 char					*returncompletepath(t_comand *token, t_shell *args);
 int						checklistsizeforpipes(t_comand *token);
-void					handleexporttopipe(t_comand *tmp, t_shell *args);
+int						handleexporttopipe(t_comand *tmp, t_shell *args);
 int						isbuiltin(t_comand *tmp, t_shell *args);
 
 //-----pipes-----//
@@ -214,6 +215,9 @@ void					process_dollar_sign(t_shell *args, int *x, int *k,
 void					process_input(t_shell *args, int *x, int *k,
 							char **res);
 char					*checkbars(t_shell *args);
+
+//-----tokens4-----//
+int						checkfortabs(t_shell *args, int *x);
 
 //----------init_and_checker----------//
 
@@ -256,7 +260,6 @@ void					config_signals(void);
 int						ft_skipquotes(char *str);
 int						ft_checkspecial(char *str);
 int						ft_countargs(char *str);
-//static char				*ft_word(char *str);
 char					**split_db_quotes(char *str);
 
 //-----main-----//
@@ -265,3 +268,4 @@ int						check_input(t_shell *args);
 void					change_split(t_shell *args);
 
 #endif
+//-fsanitize=address

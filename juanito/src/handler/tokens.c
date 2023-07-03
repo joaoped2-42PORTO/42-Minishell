@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/30 14:40:16 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 17:11:11 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 {
 	if (args->split[args->index][*x] == '$')
 	{
-		if ((args->split[args->index][*x + 1] != ' ' || 
-			args->split[args->index][*x + 1] != '\t')
+		if ((args->split[args->index][*x + 1] != ' '
+			|| args->split[args->index][*x + 1] != '\t')
 			&& args->split[args->index][*x + 1] != '\0')
 			process_dollar_sign(args, x, k, res);
 		else
@@ -59,29 +59,13 @@ int	validate_input(t_shell *args)
 	return (1);
 }
 
-int	checkfortabs(t_shell *args, int *x)
-{
-	if (args->split[args->index][*x] == '\t' && args->split[args->index][(*x) + 1] != '\t'
-	&& args->split[args->index][(*x) + 1] != ' ' && args->split[args->index][(*x) + 1] != '\0')
-		args->split[args->index][*x] = ' ';
-	else if (args->split[args->index][*x] == '\t' && args->split[args->index][(*x) + 1] == '\t')
-		(*x)++;
-	else if (args->split[args->index][*x] == '\t' && args->split[args->index][(*x) + 1] == ' ')
-		(*x)++;
-	else if (args->split[args->index][*x] == '\t')
-		(*x)++;
-	else
-		return (0);
-	return (1);
-}
-
 void	process_string(t_shell *args, int *x, char **res, int *k)
 {
 	while (args->split[args->index][*x] != '\''
 		&& args->split[args->index][*x] != '"' && args->split[args->index][*x])
 	{
-		if ((args->split[args->index][*x] == ' ' 
-			&& args->split[args->index][(*x)+ 1] == ' '))
+		if ((args->split[args->index][*x] == ' '
+			&& args->split[args->index][(*x) + 1] == ' '))
 			(*x)++;
 		else if (checkfortabs(args, x) == 1)
 			continue ;

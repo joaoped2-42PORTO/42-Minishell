@@ -36,16 +36,19 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/handler/handler_utils.c \
 		  juanito/src/handler/handler_utils2.c \
 		  juanito/src/handler/handler_utils3.c \
+		  juanito/src/handler/handler_utils4.c \
 		  juanito/src/handler/pipes_utils.c \
 		  juanito/src/handler/pipes.c \
 		  juanito/src/handler/tokens.c \
 		  juanito/src/handler/tokens2.c \
 		  juanito/src/handler/tokens3.c \
+		  juanito/src/handler/tokens4.c \
 		  juanito/src/init_and_checker/checker.c \
 		  juanito/src/init_and_checker/init_utils.c \
 		  juanito/src/init_and_checker/init.c \
 		  juanito/src/init_and_checker/utils.c \
 		  juanito/src/signals/signals.c \
+		  juanito/src/main_utils.c \
 		  juanito/src/main.c
 
 OBJ		= $(SRC:.c=.o)

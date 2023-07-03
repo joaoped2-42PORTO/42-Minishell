@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/02 19:24:19 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 16:58:13 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	executer(t_shell *args)
 	int			size;
 
 	tmp = args->token;
-	size = ft_size(args->token);
+	size = ft_size(tmp);
 	if (size == 1)
 		cmdhandler(args);
 	else

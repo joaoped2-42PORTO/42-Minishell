@@ -3,33 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/30 11:40:14 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 11:00:17 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* int	ft_skipquotes(char *str, t_shell *args)
+int	ft_skipquotes(char *str)
 {
 	int	i;
+	int	issquote;
+	int	isdquote;
 
+	issquote = 0;
+	isdquote = 0;
 	i = 0;
 	if (str[i] != '\'' && str[i] != '"')
 		return (0);
 	if (str[i] == '\'')
-		args->issquote = 1;
+		issquote = 1;
 	if (str[i] == '"')
-		args->isdquote = 1;
+		isdquote = 1;
 	i++;
-	if (args->issquote)
+	if (issquote)
 	{
 		while (str[i] != '\'')
 			i++;
 	}
-	else if (args->isdquote)
+	else if (isdquote)
 	{
 		while (str[i] != '"')
 			i++;
@@ -53,7 +57,7 @@ int	ft_checkspecial(char *str)
 	return (0);
 }
 
-int	ft_countargs(char *str, t_shell *args)
+int	ft_countargs(char *str)
 {
 	int	i;
 	int	count;
@@ -68,7 +72,7 @@ int	ft_countargs(char *str, t_shell *args)
 			break ;
 		++count;
 		if (str[i] == '\'' || str[i] == '"')
-			i += ft_skipquotes(str + i, args);
+			i += ft_skipquotes(str + i);
 		else if (ft_checkspecial(str + i))
 			i += ft_checkspecial(str + i);
 		else
@@ -83,7 +87,7 @@ int	ft_countargs(char *str, t_shell *args)
 	return (count);
 }
 
-static char	*ft_word(char *str, t_shell *args)
+static char	*ft_word(char *str)
 {
 	int		l;
 	int		i;
@@ -91,7 +95,7 @@ static char	*ft_word(char *str, t_shell *args)
 
 	l = 0;
 	if (str[l] == '\'' || str[l] == '"')
-		l += ft_skipquotes(str + l, args);
+		l += ft_skipquotes(str + l);
 	else if (ft_checkspecial(str + l))
 		l += ft_checkspecial(str + l);
 	else
@@ -110,13 +114,13 @@ static char	*ft_word(char *str, t_shell *args)
 	return (res);
 }
 
-char	**split_db_quotes(t_shell *args, char *str)
+char	**split_db_quotes(char *str)
 {
 	int		wcount;
 	int		i;
 	char	**result;
 
-	wcount = ft_countargs(str, args);
+	wcount = ft_countargs(str);
 	if (!wcount)
 		return (NULL);
 	result = (char **)malloc((wcount + 1) * sizeof(char *));
@@ -127,9 +131,9 @@ char	**split_db_quotes(t_shell *args, char *str)
 	{
 		while (*str != '\0' && *str == ' ')
 			str++;
-		result[i] = ft_word(str, args);
+		result[i] = ft_word(str);
 		str += ft_strlen(result[i++]);
 	}
 	result[i] = NULL;
 	return (result);
-} */
+}

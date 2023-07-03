@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/02 15:38:04 by user             ###   ########.fr       */
+/*   Updated: 2023/07/03 17:01:19 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,24 +78,13 @@ void	start_heredoc(t_shell *args, int *i)
 		if (buffer == NULL)
 		{
 			perror("heredoc");
-			break;
+			break ;
 		}
 		if (str_is_equal(buffer, args->token->redir[*i]))
-			break;
+			break ;
 		ft_putendl_fd(buffer, fd);
 		free(buffer);
 	}
 	free(buffer);
 	close(fd);
-}
-
-void	handle_heredoc(t_shell *args, int *i)
-{
-	(*i)++;
-	if (args->token->in_fd != -1)
-		close (args->token->out_fd);
-	start_heredoc(args, i);
-	args->token->in_fd = open("heredoc", O_RDONLY);
-	if (args->token->in_fd == -1)
-		perror("open");
 }

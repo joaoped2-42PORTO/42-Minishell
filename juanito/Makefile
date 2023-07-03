@@ -20,13 +20,13 @@ SRCHUGO = hugo/src/main.c hugo/src/commands/cd.c hugo/src/commands/pwd.c hugo/sr
 		hugo/src/handler/tokens.c \
 		hugo/src/handler/tokens2.c \
 		hugo/src/handler/tokens3.c
-SRCJUAN = juanito/src/cleaner/cleaner.c \
-		  juanito/src/commands/cd_utils.c \
+SRCJUAN = juanito/src/cleaner/cleaner.c\
+		  juanito/src/commands/cd_utils.c\
 		  juanito/src/commands/cd.c \
-		  juanito/src/commands/echo_checker.c \
-		  juanito/src/commands/echo_utils.c \
+		  juanito/src/commands/echo_checker.c\
+		  juanito/src/commands/echo_utils.c\
 		  juanito/src/commands/echo.c \
-		  juanito/src/commands/export_utils.c \
+		  juanito/src/commands/export_utils.c\
 		  juanito/src/commands/export.c \
 		  juanito/src/commands/export2.c \
 		  juanito/src/commands/pwd.c \
@@ -35,10 +35,12 @@ SRCJUAN = juanito/src/cleaner/cleaner.c \
 		  juanito/src/handler/handler.c \
 		  juanito/src/handler/handler2.c \
 		  juanito/src/handler/handler3.c \
+		  juanito/src/handler/handler4.c \
 		  juanito/src/handler/pipes.c \
 		  juanito/src/handler/tokens.c \
 		  juanito/src/handler/tokens2.c \
 		  juanito/src/handler/tokens3.c \
+		  juanito/src/handler/tokens4.c \
 		  juanito/src/handler/utils.c \
 		  juanito/src/init_and_checker/checker_utils.c \
 		  juanito/src/init_and_checker/checker.c \
