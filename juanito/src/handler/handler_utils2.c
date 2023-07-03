@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:27:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 17:02:06 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:06:23 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	close_redirection(t_shell *args)
 		close(args->old_in);
 		close(args->token->in_fd);
 	}
+	unlink("heredoc");
 }
 
 int	str_is_equal(char *str, char *str1)

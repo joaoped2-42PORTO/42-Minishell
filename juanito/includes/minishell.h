@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 17:11:45 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:20:59 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,14 +163,14 @@ void					handle_input(t_shell *args, int *i);
 void					handle_output(t_shell *args, int *i);
 void					handle_append(t_shell *args, int *i);
 void					handle_redir(t_shell *args);
-
-//-----handler_utils4-----//
 void					start_heredoc(t_shell *args, int *i);
 
+//-----handler_utils4-----//
+void					handle_heredoc(t_shell *args, int *i);
+
 //-----handler-----//
-char					*nonbuiltinspath(t_shell *args, t_comand *tmp,
-							char *path);
-int						do_non_builtins(t_shell *args, t_comand *tmp);
+char					*nonbuiltinspath(t_shell *args,	char *path);
+int						do_non_builtins(t_shell *args);
 void					cmdhandler(t_shell *args);
 int						ft_size(t_comand *lst);
 void					executer(t_shell *args);

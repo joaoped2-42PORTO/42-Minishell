@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 16:58:13 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:22:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*nonbuiltinspath(t_shell *args, t_comand *tmp, char *path)
+char	*nonbuiltinspath(t_shell *args, char *path)
 {
 	char	**path_split;
 
@@ -21,20 +21,20 @@ char	*nonbuiltinspath(t_shell *args, t_comand *tmp, char *path)
 	{
 		path_split = ft_split(path, ':');
 		free(path);
-		path = get_acess(path_split, tmp);
+		path = get_acess(path_split, args->token);
 	}
 	else
 		return (0);
 	return (path);
 }
 
-int	do_non_builtins(t_shell *args, t_comand *tmp)
+int	do_non_builtins(t_shell *args)
 {
 	char	*path;
 	int		pid;
 
 	path = NULL;
-	path = nonbuiltinspath(args, tmp, path);
+	path = nonbuiltinspath(args, path);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -44,9 +44,9 @@ int	do_non_builtins(t_shell *args, t_comand *tmp)
 			open_exec(args);
 		else if (args->input[0] == '/')
 			open_exec_abs(args);
-		if (execve(path, tmp->argm, args->env) != 0)
+		if (execve(path, args->token->argm, args->env) != 0)
 		{
-			printf("command not found: %s\n", tmp->cmd);
+			printf("command not found: %s\n", args->token->cmd);
 			args->exit_status = 2;
 			exit(2);
 		}
@@ -59,30 +59,29 @@ int	do_non_builtins(t_shell *args, t_comand *tmp)
 
 void	cmdhandler(t_shell *args)
 {
-	t_comand	*tmp;
-
-	tmp = args->token;
 	args->old_out = dup(STDOUT_FILENO);
 	args->old_in = dup(STDIN_FILENO);
 	handle_redir(args);
-	if (str_is_equal(tmp->cmd, "pwd"))
+	if (args->token->cmd[0] == '\0')
+		return ;
+	if (str_is_equal(args->token->cmd, "pwd"))
 		check_pwd(args);
-	else if (str_is_equal(tmp->cmd, "cd"))
+	else if (str_is_equal(args->token->cmd, "cd"))
 		do_cd(args);
-	else if (str_is_equal(tmp->cmd, "env"))
+	else if (str_is_equal(args->token->cmd, "env"))
 		print_env(args);
-	else if (str_is_equal(tmp->cmd, "exit"))
+	else if (str_is_equal(args->token->cmd, "exit"))
 		exit(args->exit_status);
-	else if (str_is_equal(tmp->cmd, "echo"))
+	else if (str_is_equal(args->token->cmd, "echo"))
 		do_echo(args);
-	else if (str_is_equal(tmp->cmd, "export"))
+	else if (str_is_equal(args->token->cmd, "export"))
 		do_export(args);
-	else if (str_is_equal(tmp->cmd, "unset"))
+	else if (str_is_equal(args->token->cmd, "unset"))
 		do_unset(args);
-	else if (str_is_equal(tmp->cmd, "$?"))
+	else if (str_is_equal(args->token->cmd, "$?"))
 		printf("%d\n", args->exit_status);
 	else
-		do_non_builtins(args, tmp);
+		do_non_builtins(args);
 	close_redirection(args);
 }
 

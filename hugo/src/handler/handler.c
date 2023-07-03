@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 12:24:42 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:57:22 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ void	start_heredoc(t_shell *args, int *i)
 	char	*buffer;
 	int		fd;
 
-	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
 		perror("open");
 	while (1)
@@ -336,7 +336,7 @@ void	handle_heredoc(t_shell *args, int *i)
 	if (args->token->in_fd != -1)
 		close (args->token->out_fd);
 	start_heredoc(args, i);
-	args->token->in_fd = open("heredoc", O_RDONLY);
+	args->token->in_fd = open(".heredoc", O_RDONLY);
 	if (args->token->in_fd == -1)
 		perror("open");
 }
