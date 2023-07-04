@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/04 15:35:52 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 23:58:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	check_redir(t_shell *args, t_comand *ag, int *i, int *x)
 	else if (args->split[*i][0] == '<')
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
+		if (args->split[*i][0] == '>')
+			(*i)++;
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 	}
 }
@@ -65,7 +67,7 @@ t_comand	*init(t_shell *args, int *i)
 	ag->next = NULL;
 	if (!check_for_first_redir(args->split, i))
 		check_redir(args, ag, i, &x);
-	if (!args->split[*i])
+	if (!args->split[*i] || checkpipered(args, i))
 	{
 		ag->cmd = ft_calloc(1, 1);
 		return (ag);
@@ -81,11 +83,41 @@ t_comand	*init(t_shell *args, int *i)
 	return (ag);
 }
 
+void	sort_exp(t_shell *args)
+{
+	int	i;
+	int	j;
+	int	x;
+	char	*tmp;
+
+	x = 1;
+	i = -1;
+	while (args->exp[++i])
+	{
+		if (!args->exp[x])
+			break;
+		j = 0;
+		while (args->exp[i][j] == args->exp[x][j])
+			j++;
+		if (args->exp[i][j] > args->exp[x][j])
+		{
+			tmp = args->exp[i];
+			args->exp[i] = args->exp[x];
+			args->exp[x] = tmp;
+			i = -1;
+			x = 0;
+		}
+		x++;
+	}
+}
+
 t_comand	*init_token(t_shell *args)
 {
 	int			i;
 	t_comand	*tmp;
 
+	args->heredoc = 0;
+	sort_exp(args);
 	args->split = split_db_quotes(args->input);
 	change_split(args);
 	args->nr_red = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 16:10:12 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 23:50:03 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	handleexporttopipe(t_comand *tmp, t_shell *args)
 int	isbuiltin(t_comand *tmp, t_shell *args)
 {
 	handle_redir(args);
+	if (tmp->cmd[0] == '\0')
+		return (1);
 	if (!ft_strncmp(tmp->cmd, "pwd", 3))
 		check_pwd(args);
 	else if (!ft_strncmp(tmp->cmd, "cd", 2))

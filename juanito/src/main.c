@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/04 13:02:01 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 23:21:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ int	g_status = 0;
 
 int	check_valid_input(t_shell *args)
 {
+	size_t	i;
+
+	i = 0;
 	if (args->input[0] == '\0')
 	{
 		rl_replace_line("", 0);
@@ -29,6 +32,13 @@ int	check_valid_input(t_shell *args)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		free(args->input);
+		return (0);
+	}
+	while (args->input[i] && (args->input[i] == ' ' || args->input[i] == '\t'))
+			i++;
+	if (i == ft_strlen(args->input))
+	{
+		free (args->input);
 		return (0);
 	}
 	return (1);

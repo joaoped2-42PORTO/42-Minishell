@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/04 16:12:10 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 00:20:46 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,68 @@
 
 extern int g_status;
 
+void	start_here_doc(t_shell *args, int *i)
+{
+	char	*buffer;
+	int		fd;
+
+	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (fd < 0)
+		perror("open");
+	while (1)
+	{
+		buffer = readline("heredoc >");
+		if (buffer == NULL)
+		{
+			perror("heredoc");
+			break ;
+		}
+		if (str_is_equal(buffer, args->token->redir[*i]))
+			break ;
+		ft_putendl_fd(buffer, fd);
+		free(buffer);
+	}
+	free(buffer);
+	close(fd);
+}
+
+void	_handle_here_doc(t_comand *args, int *i, t_shell *token)
+{
+	(*i)++;
+	if (args->in_fd != -1)
+		close(args->out_fd);
+	token->heredoc = 1;
+	start_here_doc(token, i);
+	args->in_fd = open("heredoc", O_RDONLY);
+	if (args->in_fd == -1)
+		perror("open");
+	token->heredoc = 0;
+}
+
+void	handle_here_doc(t_comand *args, t_shell *token)
+{
+	int	i;
+
+	i = 0;
+	if (args->redir[0][0] == '<'
+		&& args->redir[0][1] == '<')
+			_handle_here_doc(args, &i, token);
+}
+/* TER MUIT ATENCAO QUE AS FUNCOES ACIMA ESTAO TODAS TROCADAS EM TERMOS DE O QUE E ESTRUTURA E LISTA!!!!!!!
+	CONTUDO E PRECISO CONTINUAR A TESTAR E PASSAR ESTE HEREDOC PARA OS RESTANTES PIPES!!!
+	POIS SENAO PASSA O FD DO PIPE E AI NINGUEM ESCREVE NADA NO FD DO HEREDOC!
+	QUALQUER DUVIDA CONTACTA ! */
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
 
-	path = returncompletepath(token, args);
+	handle_here_doc(token, args);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("dup2: ");
+	if (args->token->cmd[0] == '\0')
+		return ;
+	path = returncompletepath(token, args);
 	close(fd[1]);
 	if (isbuiltin(token, args) == 0)
 	{
@@ -43,6 +97,8 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	int		pid;
 	char	*path;
 
+	if (args->heredoc)
+		wait(0);
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -69,6 +125,8 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	int		pid;
 	char	*path;
 
+	if (args->heredoc)
+		wait(0);
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -113,6 +171,8 @@ void	pipes(t_comand *token, t_shell *args)
 
 	args->list_size = checklistsizeforpipes(token);
 	k = 0;
+	if (args->heredoc)
+		wait(0);
 	pipe(fd);
 	while (k < args->list_size)
 	{

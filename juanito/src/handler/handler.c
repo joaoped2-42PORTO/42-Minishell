@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 14:47:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 23:31:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	cmdhandler(t_shell *args)
 	else if (str_is_equal(args->token->cmd, "env"))
 		print_env(args);
 	else if (str_is_equal(args->token->cmd, "exit"))
-		exit(args->exit_status);
+		exit(g_status);
 	else if (str_is_equal(args->token->cmd, "echo"))
 		do_echo(args);
 	else if (str_is_equal(args->token->cmd, "export"))
