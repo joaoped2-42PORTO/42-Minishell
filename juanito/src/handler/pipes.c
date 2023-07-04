@@ -18,9 +18,7 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
-	int		status;
 
-	status = 0;
 	path = returncompletepath(token, args);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("dup2: ");
@@ -44,9 +42,7 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
-	int		status;
 
-	status = 0;
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -72,9 +68,7 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
-	int		status;
 
-	status = 0;
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);

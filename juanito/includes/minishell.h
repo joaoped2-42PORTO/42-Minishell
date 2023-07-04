@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../../libft/libft.h"
-# include "../../printf/ft_printf.h"
+# include "../../ft_printf/ft_printf.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
