@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 17:29:26 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:51:24 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_skipquotes(char *str)
 	int	i;
 	int	issquote;
 	int	isdquote;
-
 	issquote = 0;
 	isdquote = 0;
 	i = 0;
@@ -41,7 +40,6 @@ int	ft_skipquotes(char *str)
 	i++;
 	return (i);
 }
-
 int	ft_checkspecial(char *str)
 {
 	if (!ft_strncmp(str, ">>", 2))
@@ -56,17 +54,15 @@ int	ft_checkspecial(char *str)
 		return (1);
 	return (0);
 }
-
 int	ft_countargs(char *str)
 {
 	int	i;
 	int	count;
-
 	count = 0;
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while ((str[i] && str[i] == ' ') || (str[i] && str[i] == '\t'))
 			i++;
 		if (!str[i])
 			break ;
@@ -78,7 +74,7 @@ int	ft_countargs(char *str)
 		else
 		{
 			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i)
-				&& str[i] != '\'' && str[i] != '"')
+				&& str[i] != '\'' && str[i] != '"' && str[i] != '\t')
 				i++;
 			if (!str[i])
 				break ;
@@ -86,13 +82,11 @@ int	ft_countargs(char *str)
 	}
 	return (count);
 }
-
 static char	*ft_word(char *str)
 {
 	int		l;
 	int		i;
 	char	*res;
-
 	l = 0;
 	if (str[l] == '\'' || str[l] == '"')
 		l += ft_skipquotes(str + l);
@@ -101,7 +95,7 @@ static char	*ft_word(char *str)
 	else
 	{
 		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
-			&& str[l] != '\'' && str[l] != '"')
+			&& str[l] != '\'' && str[l] != '"' && str[l] != '\t')
 			l++;
 	}
 	res = (char *)malloc(sizeof(char) * (l + 1));
@@ -113,23 +107,21 @@ static char	*ft_word(char *str)
 		res[i++] = *str++;
 	return (res);
 }
-
 char	**split_db_quotes(char *str)
 {
 	int		wcount;
 	int		i;
 	char	**result;
-
 	wcount = ft_countargs(str);
 	if (!wcount)
 		return (NULL);
-	result = (char **)malloc((wcount + 1) * sizeof(char *)); //leaks
+	result = (char **)malloc((wcount + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	i = 0;
 	while (i < wcount)
 	{
-		while (*str != '\0' && *str == ' ')
+		while ((*str != '\0' && *str == ' ') || (*str != '\0' && *str == '\t'))
 			str++;
 		result[i] = ft_word(str);
 		str += ft_strlen(result[i++]);

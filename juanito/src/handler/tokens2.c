@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:46 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 11:42:03 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:44:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ int	checkisalpha(t_shell *args, int *i)
 	else if (args->split[args->index][x] >= 97
 		&& args->split[args->index][x] <= 122)
 		return (1);
+	else if (args->split[args->index][x] >= 97
+		&& args->split[args->index][x] <= 122)
+		return (0);
 	return (0);
 }
 

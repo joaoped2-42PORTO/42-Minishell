@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 23:22:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:47:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,7 @@ int	do_non_builtins(t_shell *args)
 			open_exec(args);
 		else if (args->input[0] == '/')
 			open_exec_abs(args);
-		if (execve(path, args->token->argm, args->env) != 0)
-		{
-			printf("command not found: %s\n", args->token->cmd);
-			args->exit_status = 2;
-			exit(2);
-		}
+		execthenonbuiltin(args, path);
 	}
 	wait(NULL);
 	args->exit_status = 125;
@@ -79,7 +74,7 @@ void	cmdhandler(t_shell *args)
 	else if (str_is_equal(args->token->cmd, "unset"))
 		do_unset(args);
 	else if (str_is_equal(args->token->cmd, "$?"))
-		printf("%d\n", args->exit_status);
+		printf("%d\n", g_status);
 	else
 		do_non_builtins(args);
 	close_redirection(args);
@@ -104,7 +99,7 @@ void	executer(t_shell *args)
 	int			size;
 
 	tmp = args->token;
-	size = ft_size(tmp);
+	size = ft_size(args->token);
 	if (size == 1)
 		cmdhandler(args);
 	else

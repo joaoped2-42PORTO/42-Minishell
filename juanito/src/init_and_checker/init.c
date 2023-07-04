@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/03 17:31:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:35:52 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ t_comand	*init(t_shell *args, int *i)
 
 	j = 0;
 	x = 0;
-	ag = malloc(sizeof(t_comand)); //leaks
+	ag = malloc(sizeof(t_comand));
 	if (!ag)
 		return (NULL);
-	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *)); //leaks
-	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *)); //leaks
+	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->next = NULL;
 	if (!check_for_first_redir(args->split, i))
 		check_redir(args, ag, i, &x);
@@ -70,12 +70,12 @@ t_comand	*init(t_shell *args, int *i)
 		ag->cmd = ft_calloc(1, 1);
 		return (ag);
 	}
-	ag->argm[j++] = ft_strdup(args->split[*i]); //leaks
-	ag->cmd = ft_strdup(args->split[(*i)++]); //leaks
+	ag->argm[j++] = ft_strdup(args->split[*i]);
+	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkpipered(args, i))
 	{
 		check_redir(args, ag, i, &x);
-		if (args->split[*i])
+		if (args->split[*i] && !checkpipered(args, i))
 			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
 	return (ag);
@@ -108,8 +108,8 @@ t_comand	*init_token(t_shell *args)
 void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
-	args->env = ft_calloc(sizeof(char *), i + 1); //leaks
-	args->exp = ft_calloc(sizeof(char *), i + 1); //leaks
+	args->env = ft_calloc(sizeof(char *), i + 1);
+	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
 	alloc_env_mem(env, args->env, args->exp);
 	get_path_struct(args);

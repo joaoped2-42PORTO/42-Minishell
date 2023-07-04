@@ -6,11 +6,13 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/03 17:31:02 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:02:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_status = 0;
 
 int	check_valid_input(t_shell *args)
 {
@@ -55,7 +57,7 @@ void	change_split(t_shell *args)
 	{
 		str = checkbars(args);
 		free(args->split[args->index]);
-		args->split[args->index] = ft_strdup(str); //leaks
+		args->split[args->index] = ft_strdup(str);
 		free(str);
 		args->index++;
 	}
@@ -65,11 +67,11 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell	*args;
 	int		i;
-
+	g_status = 0;
 	(void)ac;
 	(void)av;
 	i = get_env_size(env);
-	args = malloc(sizeof(t_shell)); //leaks
+	args = malloc(sizeof(t_shell));
 	init_values(args, env, i);
 	while (1)
 	{

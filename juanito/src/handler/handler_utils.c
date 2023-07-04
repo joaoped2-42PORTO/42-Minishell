@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 17:30:11 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:11:26 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*get_acess(char **str, t_comand *args)
 	while (str[i])
 	{
 		tmp = ft_strjoin(str[i], "/");
-		join = ft_strjoin(tmp, args->cmd); //leaks
+		join = ft_strjoin(tmp, args->cmd);
 		free(tmp);
 		if (access(join, F_OK) == 0)
 			break ;

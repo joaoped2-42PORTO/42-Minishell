@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:18:42 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 14:21:16 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:13:05 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	check_doubles_exp(t_shell *args, int y)
 	j = 0;
 	while (args->exp[j])
 	{
-		if (!ft_strncmp(args->split[y], args->exp[j],
+		if (!ft_strncmp(args->token->argm[y], args->exp[j],
 				variable_size(args->exp[j])))
 		{
 			free(args->exp[j]);
-			args->exp[j] = ft_strdup(args->split[y]);
+			args->exp[j] = ft_strdup(args->token->argm[y]);
 			return (0);
 		}
 		j++;
@@ -36,13 +36,13 @@ int	check_doubles_env(t_shell *args, int y)
 	int	j;
 
 	j = 0;
-	while (see_if_env(args->split[y]) && args->env[j])
+	while (see_if_env(args->token->argm[y]) && args->env[j])
 	{
-		if (!ft_strncmp(args->split[y], args->env[j],
+		if (!ft_strncmp(args->token->argm[y], args->env[j],
 				variable_size(args->env[j])))
 		{
 			free(args->env[j]);
-			args->env[j] = ft_strdup(args->split[y]);
+			args->env[j] = ft_strdup(args->token->argm[y]);
 			return (0);
 		}
 		j++;
@@ -69,4 +69,20 @@ char	**dup_env(char **str, char **str1)
 		str1[i] = ft_strdup(str[i]);
 	str1[i] = 0;
 	return (str1);
+}
+
+int	see_chars(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(str[0]))
+		return (0);
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

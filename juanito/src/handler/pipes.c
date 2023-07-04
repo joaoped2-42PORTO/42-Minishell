@@ -6,19 +6,24 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/03 17:23:07 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 16:12:10 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+extern int g_status;
+
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
+	int		status;
 
+	status = 0;
 	path = returncompletepath(token, args);
-	dup2(fd[1], STDOUT_FILENO);
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		perror("dup2: ");
 	close(fd[1]);
 	if (isbuiltin(token, args) == 0)
 	{
@@ -28,11 +33,9 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 			if (execve(path, token->argm, NULL) != 0)
 			{
 				perror("Error");
-				args->exit_status = 126;
-				exit(126);
+				exit(g_status);
 			}
 		}
-		waitpid(-1, NULL, 0);
 	}
 	free(path);
 }
@@ -41,7 +44,9 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
+	int		status;
 
+	status = 0;
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -55,12 +60,10 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 		{
 			if (execve(path, token->argm, NULL) != 0)
 			{
-				perror("Error");
-				args->exit_status = 126;
-				exit(126);
+				free(path);
+				cleaneverything(args);
 			}
 		}
-		waitpid(-1, NULL, 0);
 	}
 	free(path);
 }
@@ -69,7 +72,9 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	int		pid;
 	char	*path;
+	int		status;
 
+	status = 0;
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -83,11 +88,9 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 			if (execve(path, token->argm, NULL) != 0)
 			{
 				perror("Error");
-				args->exit_status = 126;
-				exit(126);
+				exit(g_status);
 			}
 		}
-		waitpid(-1, NULL, 0);
 	}
 	free(path);
 	dup2(args->in, STDIN_FILENO);
@@ -132,4 +135,9 @@ void	pipes(t_comand *token, t_shell *args)
 		execpipes(token, args, fd, &k);
 		k++;
 	}
+	waitpid(-1, &g_status, 0);
+	while (waitpid(-1, NULL, 0) > 0)
+		continue ;
+	if (WIFEXITED(g_status))
+		g_status = WEXITSTATUS(g_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 23:20:59 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:19:22 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../../libft/libft.h"
+# include "../../printf/ft_printf.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -64,6 +65,8 @@ typedef struct s_shell
 	int					isdquote;
 }						t_shell;
 
+extern	int	g_status;
+
 //---------------------------SRC-------------------------------//
 
 //----------Cleaner----------//
@@ -74,6 +77,7 @@ int						free_split(t_shell *args);
 int						free_list(t_shell *args);
 void					do_exit(t_shell *args);
 void					do_small_exit(t_shell *args);
+void					cleaneverything(t_shell *args);
 
 //----------Commands----------//
 
@@ -93,11 +97,10 @@ int						checkforspacesinstring(t_shell *args, int i);
 
 //-----echo_utils-----//
 void					processdefault(t_shell *args);
-int						print_option_n(t_shell *args);
+int						checkforbig(t_shell *args);
 int						check_index(t_shell *args, int *i);
 
 //-----echo-----//
-int						printing(t_shell *args);
 void					process_option_n(t_shell *args);
 void					checkcontent(t_shell *args);
 void					do_echo(t_shell *args);
@@ -114,6 +117,7 @@ int						check_doubles_exp(t_shell *args, int y);
 int						check_doubles_env(t_shell *args, int y);
 int						see_env_size(t_shell *args);
 char					**dup_env(char **str, char **str1);
+int						see_chars(char *str);
 
 //-----export-----//
 void					do_export(t_shell *args);
@@ -144,6 +148,13 @@ void					do_unset(t_shell *args);
 
 //----------handler----------//
 
+//-----gstatus_errors-----//
+void					error1();
+void					error2();
+void					error126();
+void					error127();
+void					error128();
+
 //-----handler_utils-----//
 char					*print_env_var(t_shell *args, char *str);
 void					open_exec_helper(t_shell *args, char *str);
@@ -167,6 +178,7 @@ void					start_heredoc(t_shell *args, int *i);
 
 //-----handler_utils4-----//
 void					handle_heredoc(t_shell *args, int *i);
+void					execthenonbuiltin(t_shell *args, char *path);
 
 //-----handler-----//
 char					*nonbuiltinspath(t_shell *args,	char *path);
@@ -215,9 +227,6 @@ void					process_dollar_sign(t_shell *args, int *x, int *k,
 void					process_input(t_shell *args, int *x, int *k,
 							char **res);
 char					*checkbars(t_shell *args);
-
-//-----tokens4-----//
-int						checkfortabs(t_shell *args, int *x);
 
 //----------init_and_checker----------//
 

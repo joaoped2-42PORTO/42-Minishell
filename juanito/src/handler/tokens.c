@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 17:11:11 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:03:06 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	process_string(t_shell *args, int *x, char **res, int *k)
 		if ((args->split[args->index][*x] == ' '
 			&& args->split[args->index][(*x) + 1] == ' '))
 			(*x)++;
-		else if (checkfortabs(args, x) == 1)
-			continue ;
 		else if (args->split[args->index][*x] == '$')
 			process_dollar_or_char(args, x, k, res);
 		else

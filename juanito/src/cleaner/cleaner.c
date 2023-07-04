@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/03 17:00:41 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 12:17:34 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ void	do_small_exit(t_shell *args)
 	free(args);
 	rl_clear_history();
 	exit(0);
+}
+
+void	cleaneverything(t_shell *args)
+{
+	free_split(args);
+	free_list(args);
+	//do_small_exit(args);
 }

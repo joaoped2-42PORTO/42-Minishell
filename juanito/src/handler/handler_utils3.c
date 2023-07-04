@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 23:13:16 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:12:06 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	handle_redir(t_shell *args)
 	{
 		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
 			handle_append(args, &i);
-		else if (args->token->redir[i][0] == '<' && args->token->redir[i][1] == '<')
+		else if (args->token->redir[i][0] == '<'
+			&& args->token->redir[i][1] == '<')
 			handle_heredoc(args, &i);
 		else if (args->token->redir[i][0] == '>')
 			handle_output(args, &i);

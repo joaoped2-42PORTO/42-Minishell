@@ -6,48 +6,37 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/19 12:32:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:24:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	printing(t_shell *args)
-{
-	if (print_option_n(args) == 0)
-	{
-		if (args->index == 1)
-			processdefault(args);
-		return (0);
-	}
-	return (1);
-}
-
 void	process_option_n(t_shell *args)
 {
-	int	i;
+ 	int	i;
 
-	i = 0;
-	if (args->split[args->index][i] == '-' && args->split[args->index][i
-		+ 1] == 'n' && args->split[args->index][i + 2] != '-')
+	i = 1;
+	while (1)
 	{
-		i++;
-		while (args->split[args->index][i])
+		if (args->index == 1 && checkforbig(args) == 0)
 		{
-			if (args->split[args->index][i] == '-')
-				i++;
-			while (args->split[args->index][i] == 'n')
-				i++;
-			if (args->split[args->index][i] == '\0')
-			{
-				if (check_index(args, &i) == 0)
-					return ;
-			}
-			else if (!printing(args))
-				return ;
+			processdefault(args);
+			return ;
 		}
+		else if (checkforbig(args) == 0)
+			break ;
+		else if (checkforbig(args) == 1)
+			i++;
+		args->index++;
 	}
-	processdefault(args);
+	while (args->token->argm[i])
+	{
+		ft_printf("%s", args->token->argm[i]);
+ 		if (args->token->argm[i + 1])
+			ft_printf(" ");
+		i++;
+	}
 }
 
 void	checkcontent(t_shell *args)
@@ -55,7 +44,7 @@ void	checkcontent(t_shell *args)
 	int	x;
 
 	x = 0;
-	if (!args->split[1])
+	if (!args->token->argm[1])
 	{
 		printf("\n");
 		return ;

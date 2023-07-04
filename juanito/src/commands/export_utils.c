@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/03 22:46:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:13:01 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,29 @@ void	exchange_memo_exp(t_shell *args, char **exp, int *x)
 	args->exp = dup_env(exp, args->exp);
 }
 
-int	see_chars(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isdigit(str[0]))
-		return (0);
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	export_counting(t_shell *args, int *x, int *i)
 {
 	int	y;
 
 	y = 0;
-	while (args->split[++y])
+	while (args->token->argm[++y])
 	{
-		if (!see_chars(args->split[y]))
+		if (!see_chars(args->token->argm[y]))
 		{
 			printf("Char not supported\n");
-			if (args->split[y + 1])
+			if (args->token->argm[y + 1])
 				y++;
 			else
-				break;
+				break ;
 		}
 		if (!check_doubles_env(args, y) && !check_doubles_exp(args, y))
 			continue ;
-		else if (!see_if_env(args->split[y]))
-			args->exp[(*x)++] = ft_strdup(args->split[y]);
+		else if (!see_if_env(args->token->argm[y]))
+			args->exp[(*x)++] = ft_strdup(args->token->argm[y]);
 		else
 		{
-			args->env[(*i)++] = ft_strdup(args->split[y]);
-			args->exp[(*x)++] = ft_strdup(args->split[y]);
+			args->env[(*i)++] = ft_strdup(args->token->argm[y]);
+			args->exp[(*x)++] = ft_strdup(args->token->argm[y]);
 		}
 	}
 }
