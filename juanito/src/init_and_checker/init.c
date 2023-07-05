@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 13:36:24 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:04:51 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ void	check_redir(t_shell *args, t_comand *ag, int *i, int *x)
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		args->flag = 1;
+		ag->flag = 1;
 	}
 	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<')
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		args->flag = 1;
+		ag->flag = 1;
 	}
 	else if (args->split[*i][0] == '>')
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		args->flag = 1;
+		ag->flag = 1;
 	}
 	else if (args->split[*i][0] == '<')
 	{
@@ -38,7 +38,7 @@ void	check_redir(t_shell *args, t_comand *ag, int *i, int *x)
 		if (args->split[*i][0] == '>')
 			(*i)++;
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		args->flag = 1;
+		ag->flag = 1;
 	}
 }
 
@@ -66,6 +66,7 @@ t_comand	*init(t_shell *args, int *i)
 	ag = malloc(sizeof(t_comand));
 	if (!ag)
 		return (NULL);
+	ag->flag = 0;
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->next = NULL;
@@ -144,7 +145,6 @@ t_comand	*init_token(t_shell *args)
 void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
-	args->flag = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));

@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 13:35:54 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:04:20 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_tokenizer
 	char				**redir;
 	int					out_fd;
 	int					in_fd;
+	int					flag;
 	struct s_tokenizer	*next;
 }						t_comand;
 
@@ -63,7 +64,6 @@ typedef struct s_shell
 	int					list_size;
 	int					issquote;
 	int					isdquote;
-	int					flag;
 }						t_shell;
 
 extern	int	g_status;

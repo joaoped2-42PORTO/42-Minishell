@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/05 13:37:04 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:20:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_here_doc(t_comand *args, t_shell *token)
 	int	i;
 
 	i = 0;
-	if (token->flag == 1)
+	if (args->flag == 1)
 	{
 		if (args->redir[0][0] == '<'
 			&& args->redir[0][1] == '<')
@@ -141,7 +141,6 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	close(args->out);
 	if (isbuiltin(token, args) == 0)
 	{
-		close(fd[0]);
 		pid = fork();
 		if (pid == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 17:05:26 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:10:08 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	checkforbig(t_shell *args)
 		while (args->split[args->index][i] == 'n')
 			i++;
 		if (args->split[args->index][i] == '\0')
-		{
 			return (1);
-		}
 		else
 			return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 11:46:47 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:13:51 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	process_option_n(t_shell *args)
 	i = 1;
 	while (1)
 	{
+		if (!args->split[args->index])
+			return ;
 		if (args->index == 1 && checkforbig(args) == 0)
 		{
 			processdefault(args);
@@ -30,12 +32,15 @@ void	process_option_n(t_shell *args)
 			i++;
 		args->index++;
 	}
-	while (args->token->argm[i])
+	if (args->token->argm[i])
 	{
-		ft_printf("%s", args->token->argm[i]);
- 		if (args->token->argm[i + 1])
-			ft_printf(" ");
-		i++;
+		while (args->token->argm[i])
+		{
+			ft_printf("%s", args->token->argm[i]);
+ 			if (args->token->argm[i + 1])
+				ft_printf(" ");
+			i++;
+		}
 	}
 }
 

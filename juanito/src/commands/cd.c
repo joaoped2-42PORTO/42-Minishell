@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/06/29 11:42:18 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:00:00 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	do_cd(t_shell *args)
 	if (error != 0)
 	{
 		perror("Error");
-		args->exit_status = 1;
+		g_status = 1;
 		return ;
 	}
 	change_env_pwd(args);
