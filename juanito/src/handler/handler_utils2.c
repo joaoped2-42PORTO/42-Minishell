@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:27:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/03 23:06:23 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:07:11 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_env(t_shell *args)
 	i = 0;
 	while (args->env[i])
 		printf("%s\n", args->env[i++]);
-	args->exit_status = 0;
+	g_status = 0;
 }
 
 void	print_export(t_shell *args)
@@ -44,19 +44,19 @@ void	print_export(t_shell *args)
 		printf("\n");
 		i++;
 	}
-	args->exit_status = 0;
+	g_status = 0;
 }
 
 void	open_exec_abs(t_shell *args)
 {
 	if (execve(args->split[0], args->split, NULL) != 0)
 	{
-		perror("Error");
-		args->exit_status = 126;
-		exit(126);
+		printf("%s: No such file or directory\n", args->token->cmd);
+		g_status = 126;
+		exit(g_status);
 	}
-	args->exit_status = 0;
-	exit(0);
+	g_status = 0;
+	exit(g_status);
 }
 
 void	close_redirection(t_shell *args)

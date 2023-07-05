@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 23:36:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:53:41 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execthenonbuiltin(t_shell *args, char *path)
 	if (execve(path, args->token->argm, args->env) != 0)
 	{
 		printf("command not found: %s\n", args->token->cmd);
-		args->exit_status = 2;
+		g_status = 127;
 		free(path);
 		free_split(args);
 		free_list(args);

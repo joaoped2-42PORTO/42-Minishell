@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 17:00:18 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:39:01 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ int	do_non_builtins(t_shell *args)
 			open_exec_abs(args);
 		execthenonbuiltin(args, path);
 	}
-	wait(NULL);
-	args->exit_status = 125;
+	waitpid(pid, &g_status, 0);
+	if (WIFEXITED(g_status))
+            g_status = WEXITSTATUS(g_status);
 	free(path);
 	return (1);
 }
@@ -68,7 +69,10 @@ void	cmdhandler(t_shell *args)
 	else if (str_is_equal(args->token->cmd, "exit"))
 		exit(g_status);
 	else if (str_is_equal(args->token->cmd, "echo"))
+	{
 		do_echo(args);
+		g_status = 0;
+	}
 	else if (str_is_equal(args->token->cmd, "export"))
 		do_export(args);
 	else if (str_is_equal(args->token->cmd, "unset"))

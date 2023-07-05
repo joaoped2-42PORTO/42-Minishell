@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 13:34:30 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:20:00 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,24 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 	else if (!ft_strncmp(tmp->cmd, "exit", 4))
 		do_exit(args);
 	else if (!ft_strncmp(tmp->cmd, "echo", 4))
+	{
 		do_echo(args);
+		g_status = 0;
+	}
 	else if (!ft_strncmp(tmp->cmd, "export", 6))
 	{
 		if (handleexporttopipe(tmp, args) == 1)
 			return (1);
+		g_status = 0;
 		return (1);
 	}
 	else if (!ft_strncmp(tmp->cmd, "unset", 5))
+	{
+		g_status = 0;
 		return (1);
+	}
 	else if (!ft_strncmp(args->input, "$?", 2))
-		printf("%d\n", args->exit_status);
+		printf("%d\n", g_status);
 	else
 		return (0);
 	close_redirection(args);

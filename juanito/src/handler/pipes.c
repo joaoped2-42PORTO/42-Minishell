@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/05 14:20:41 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:33:05 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	handle_here_doc(t_comand *args, t_shell *token)
 	QUALQUER DUVIDA CONTACTA ! */
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
-	int		pid;
 	char	*path;
 
 	handle_here_doc(token, args);
@@ -82,25 +81,15 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 		return ;
 	path = returncompletepath(token, args);
 	close(fd[1]);
-	if (isbuiltin(token, args) == 0)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			close(fd[0]);
-			if (execve(path, token->argm, NULL) != 0)
-			{
-				perror("Error");
-				exit(g_status);
-			}
-		}
-	}
+		if (isbuiltin(token, args))
+		ft_printf("");
+	else
+		do_non_builtins(args);
 	free(path);
 }
 
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
-	int		pid;
 	char	*path;
 
 	if (args->heredoc)
@@ -111,25 +100,15 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	pipe(fd);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	if (isbuiltin(token, args) == 0)
-	{
-		close(fd[0]);
-		pid = fork();
-		if (pid == 0)
-		{
-			if (execve(path, token->argm, NULL) != 0)
-			{
-				free(path);
-				cleaneverything(args);
-			}
-		}
-	}
+	if (isbuiltin(token, args))
+		ft_printf("");
+	else
+		do_non_builtins(args);
 	free(path);
 }
 
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
-	int		pid;
 	char	*path;
 
 	if (args->heredoc)
@@ -139,18 +118,10 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	close(fd[0]);
 	dup2(args->out, STDOUT_FILENO);
 	close(args->out);
-	if (isbuiltin(token, args) == 0)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (execve(path, token->argm, NULL) != 0)
-			{
-				perror("Error");
-				exit(g_status);
-			}
-		}
-	}
+	if (isbuiltin(token, args))
+		ft_printf("");
+	else
+		do_non_builtins(args);
 	free(path);
 	dup2(args->in, STDIN_FILENO);
 	close(args->in);
@@ -196,9 +167,7 @@ void	pipes(t_comand *token, t_shell *args)
 		execpipes(token, args, fd, &k);
 		k++;
 	}
-	waitpid(-1, &g_status, 0);
+	waitpid(-1, NULL, 0);
 	while (waitpid(-1, NULL, 0) > 0)
 		continue ;
-	if (WIFEXITED(g_status))
-		g_status = WEXITSTATUS(g_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/04 23:21:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:08:48 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	check_valid_input(t_shell *args)
 	if (!valid_input(args))
 	{
 		printf("Forgot to close quotes or pipe\n");
+		g_status = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();
 		free(args->input);

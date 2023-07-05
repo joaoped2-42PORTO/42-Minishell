@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/04 23:32:44 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:03:28 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	free_list(t_shell *args)
 void	do_exit(t_shell *args)
 {
 	(void)args;
-	exit(0);
+	exit(g_status);
 }
 
 void	do_small_exit(t_shell *args)
@@ -65,7 +65,7 @@ void	do_small_exit(t_shell *args)
 	free(args->path);
 	free(args);
 	rl_clear_history();
-	exit(0);
+	exit(g_status);
 }
 
 void	cleaneverything(t_shell *args)

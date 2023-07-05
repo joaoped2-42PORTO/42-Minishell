@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 11:11:26 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:01:05 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ char	*print_env_var(t_shell *args, char *str)
 
 void	open_exec_helper(t_shell *args, char *str)
 {
-	if (execve(str, args->split, NULL) != 0)
+	if (access(str, F_OK) == 0)
 	{
-		perror("Error");
-		free(str);
-		args->exit_status = 126;
-		exit(126);
+		printf("%s: Permission denied\n", args->token->cmd);
+		g_status = 126;
 	}
+	else if (execve(str, args->split, NULL) != 0)
+	{
+		printf("%s: No such file or directory\n", args->token->cmd);
+		free(str);
+		g_status = 127;
+		exit(g_status);
+	}
+	exit(g_status);
 }
 
 void	open_exec(t_shell *args)
@@ -72,8 +78,8 @@ void	open_exec(t_shell *args)
 	str[j] = '\0';
 	open_exec_helper(args, str);
 	free(str);
-	args->exit_status = 0;
-	exit(0);
+	g_status = 0;
+	exit(g_status);
 }
 
 char	*get_path(t_shell *args)

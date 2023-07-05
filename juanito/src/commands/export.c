@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 12:38:03 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/03 15:27:00 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:13:53 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ void	do_export(t_shell *args)
 	if (args->split[1] == 0)
 	{
 		print_export(args);
-		args->exit_status = 0;
+		g_status = 0;
 		return ;
 	}
 	do_mult_export(args);
-	args->exit_status = 0;
 }
 
 int	check_env_value(t_shell *args, char *str)
