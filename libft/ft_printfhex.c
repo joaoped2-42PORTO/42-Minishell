@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printfhex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 21:15:39 by huolivei          #+#    #+#             */
-/*   Updated: 2022/12/04 15:16:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:07:41 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_printhex(unsigned int nb, const char str)
 	return (ft_nbsup16(nb));
 }
 
-int	numlen(long n)
+/* int	numlen(long n)
 {
 	int	rst;
 
@@ -86,4 +86,4 @@ char	*ft_itoa(int n)
 		nb /= 10;
 	}
 	return (str);
-}
+} */

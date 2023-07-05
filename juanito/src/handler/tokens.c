@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 10:03:06 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:02:42 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,18 @@ int	process_quote(t_shell *args, int *x, int *p)
 
 void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 {
+	char	*str;
+
 	if (args->split[args->index][*x] == '$')
 	{
-		if ((args->split[args->index][*x + 1] != ' '
+		if (args->split[args->index][*x + 1] == '?')
+		{
+			str = ft_itoa(g_status);
+			ft_strcat(*res, str);
+			free(str);
+			(*x) += 2;
+		}
+		else if ((args->split[args->index][*x + 1] != ' '
 			|| args->split[args->index][*x + 1] != '\t')
 			&& args->split[args->index][*x + 1] != '\0')
 			process_dollar_sign(args, x, k, res);

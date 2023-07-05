@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/05 00:20:46 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:37:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,14 @@ void	handle_here_doc(t_comand *args, t_shell *token)
 	int	i;
 
 	i = 0;
-	if (args->redir[0][0] == '<'
-		&& args->redir[0][1] == '<')
-			_handle_here_doc(args, &i, token);
+	if (token->flag == 1)
+	{
+		if (args->redir[0][0] == '<'
+			&& args->redir[0][1] == '<')
+				_handle_here_doc(args, &i, token);
+	}
+	else
+		return ;
 }
 /* TER MUIT ATENCAO QUE AS FUNCOES ACIMA ESTAO TODAS TROCADAS EM TERMOS DE O QUE E ESTRUTURA E LISTA!!!!!!!
 	CONTUDO E PRECISO CONTINUAR A TESTAR E PASSAR ESTE HEREDOC PARA OS RESTANTES PIPES!!!
@@ -82,6 +87,7 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 		pid = fork();
 		if (pid == 0)
 		{
+			close(fd[0]);
 			if (execve(path, token->argm, NULL) != 0)
 			{
 				perror("Error");
@@ -107,6 +113,7 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	close(fd[1]);
 	if (isbuiltin(token, args) == 0)
 	{
+		close(fd[0]);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -134,6 +141,7 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	close(args->out);
 	if (isbuiltin(token, args) == 0)
 	{
+		close(fd[0]);
 		pid = fork();
 		if (pid == 0)
 		{

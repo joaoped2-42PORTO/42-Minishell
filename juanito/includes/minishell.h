@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 23:35:09 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:35:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "../../libft/libft.h"
-# include "../../ft_printf/ft_printf.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -64,6 +63,7 @@ typedef struct s_shell
 	int					list_size;
 	int					issquote;
 	int					isdquote;
+	int					flag;
 }						t_shell;
 
 extern	int	g_status;
