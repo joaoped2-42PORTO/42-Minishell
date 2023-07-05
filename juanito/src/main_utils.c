@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 11:51:24 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:49:31 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	ft_skipquotes(char *str)
 	i++;
 	return (i);
 }
+
 int	ft_checkspecial(char *str)
 {
 	if (!ft_strncmp(str, ">>", 2))
@@ -54,6 +55,7 @@ int	ft_checkspecial(char *str)
 		return (1);
 	return (0);
 }
+
 int	ft_countargs(char *str)
 {
 	int	i;
@@ -82,6 +84,7 @@ int	ft_countargs(char *str)
 	}
 	return (count);
 }
+
 static char	*ft_word(char *str)
 {
 	int		l;
@@ -107,6 +110,7 @@ static char	*ft_word(char *str)
 		res[i++] = *str++;
 	return (res);
 }
+
 char	**split_db_quotes(char *str)
 {
 	int		wcount;

@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 20:08:48 by user             ###   ########.fr       */
+/*   Updated: 2023/07/05 22:18:03 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	i = get_env_size(env);
 	args = malloc(sizeof(t_shell));
+	rl_clear_history();
 	init_values(args, env, i);
 	while (1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 14:04:51 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:50:45 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,4 @@ void	init_values(t_shell *args, char **env, int i)
 	alloc_env_mem(env, args->env, args->exp);
 	get_path_struct(args);
 	config_signals();
-	args->exit_status = 127;
 }
