@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/05 21:33:05 by user             ###   ########.fr       */
+/*   Updated: 2023/07/05 23:02:27 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ void	_handle_here_doc(t_comand *args, int *i, t_shell *token)
 	args->in_fd = open("heredoc", O_RDONLY);
 	if (args->in_fd == -1)
 		perror("open");
+	dup2(token->token->in_fd, STDIN_FILENO);
 	token->heredoc = 0;
 }
 
-void	handle_here_doc(t_comand *args, t_shell *token)
+void	handle_here_doc(t_comand *args, t_shell *token, int *flag)
 {
 	int	i;
 
@@ -61,10 +62,11 @@ void	handle_here_doc(t_comand *args, t_shell *token)
 	{
 		if (args->redir[0][0] == '<'
 			&& args->redir[0][1] == '<')
+			{
+				*flag = 1;
 				_handle_here_doc(args, &i, token);
+			}
 	}
-	else
-		return ;
 }
 /* TER MUIT ATENCAO QUE AS FUNCOES ACIMA ESTAO TODAS TROCADAS EM TERMOS DE O QUE E ESTRUTURA E LISTA!!!!!!!
 	CONTUDO E PRECISO CONTINUAR A TESTAR E PASSAR ESTE HEREDOC PARA OS RESTANTES PIPES!!!
@@ -74,7 +76,29 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	char	*path;
 
-	handle_here_doc(token, args);
+
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		perror("dup2: ");
+	path = returncompletepath(token, args);
+	close(fd[1]);
+	handle_redir(args);
+	if (args->token->cmd[0] == '\0')
+		return ;
+	if (isbuiltin(token, args))
+		ft_printf("");
+	else
+		do_non_builtins(args);
+	free(path);
+	close_redirection(args);
+}
+
+/* void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
+{
+	char	*path;
+	int		flag;
+
+	flag = 0;
+	handle_here_doc(token, args, &flag);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("dup2: ");
 	if (args->token->cmd[0] == '\0')
@@ -86,7 +110,7 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	else
 		do_non_builtins(args);
 	free(path);
-}
+} */
 
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
@@ -100,11 +124,13 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	pipe(fd);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
+	handle_redir(args);
 	if (isbuiltin(token, args))
 		ft_printf("");
 	else
 		do_non_builtins(args);
 	free(path);
+	close_redirection(args);
 }
 
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
@@ -118,6 +144,7 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	close(fd[0]);
 	dup2(args->out, STDOUT_FILENO);
 	close(args->out);
+	handle_redir(args);
 	if (isbuiltin(token, args))
 		ft_printf("");
 	else
@@ -125,6 +152,7 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	free(path);
 	dup2(args->in, STDIN_FILENO);
 	close(args->in);
+	close_redirection(args);
 }
 
 void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 22:18:03 by user             ###   ########.fr       */
+/*   Updated: 2023/07/05 22:32:24 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_valid_input(t_shell *args)
 
 int	check_input(t_shell *args)
 {
-	args->input = readline("👾Phylothinkers👾> ");
+	args->input = readline("Phylothinkers > ");
 	if (args->input == NULL)
 	{
 		free(args->input);

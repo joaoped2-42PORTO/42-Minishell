@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 21:50:45 by user             ###   ########.fr       */
+/*   Updated: 2023/07/05 22:46:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_comand	*init(t_shell *args, int *i)
 	while (args->split[*i] && !checkpipered(args, i))
 	{
 		check_redir(args, ag, i, &x);
-		if (args->split[*i] && !checkpipered(args, i))
+		if (args->split[*i] && !checkpipered(args, i) && check_for_first_redir(args->split, i))
 			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
 	return (ag);
