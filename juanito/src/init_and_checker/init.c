@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 22:46:21 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:39:41 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_comand	*init(t_shell *args, int *i)
 	while (args->split[*i] && !checkpipered(args, i))
 	{
 		check_redir(args, ag, i, &x);
-		if (args->split[*i] && !checkpipered(args, i) && check_for_first_redir(args->split, i))
+		if (args->split[*i] && !checkpipered(args, i) && check_for_first_redir(args->split, i) && ft_strlen(args->split[*i]) > 0)
 			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
 	return (ag);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 21:49:31 by user             ###   ########.fr       */
+/*   Updated: 2023/07/05 23:48:39 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ int	ft_skipquotes(char *str)
 	}
 	else if (isdquote)
 	{
-		while (str[i] != '"')
+		while (str[i] && str[i] != '"')
+		{
 			i++;
+			if (str[i] == '"' && str[i + 1] == '"')
+				i += 2;
+		}
 	}
 	i++;
 	return (i);
