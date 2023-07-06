@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 23:39:41 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:07:18 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,32 @@ void	check_redir(t_shell *args, t_comand *ag, int *i, int *x)
 {
 	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
 	{
+		if (!args->split[(*i) + 1])
+			return ;
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
 	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<')
 	{
+		if (!args->split[(*i) + 1])
+			return ;
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
 	else if (args->split[*i][0] == '>')
 	{
+		if (!args->split[(*i) + 1])
+			return ;
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
 	else if (args->split[*i][0] == '<')
 	{
+		if (!args->split[(*i) + 1])
+			return ;
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		if (args->split[*i][0] == '>')
 			(*i)++;

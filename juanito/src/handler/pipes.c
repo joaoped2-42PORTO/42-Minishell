@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/06 12:09:27 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:18:07 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,9 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 		signal(SIGINT, new_prompt);
 	}
 	free(path);
+	close_redirection(args);
 	dup2(args->in, STDIN_FILENO);
 	close(args->in);
-	close_redirection(args);
 }
 
 void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
@@ -232,5 +232,9 @@ void	pipes(t_comand *token, t_shell *args)
 		continue ;
 	if (WIFEXITED(g_status))
 		g_status = WEXITSTATUS(g_status);
+	// dup2(args->in, STDIN_FILENO);
+	// close(args->in);
+	//dup2(args->old_in, STDIN_FILENO);
+	//close(args->old_in);
 	signal(SIGINT, new_prompt);
 }
