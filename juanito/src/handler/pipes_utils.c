@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 12:19:10 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:48:58 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,35 +55,52 @@ int	handleexporttopipe(t_comand *tmp, t_shell *args)
 
 int	isbuiltin(t_comand *tmp, t_shell *args)
 {
+	int i = 0;
 	//handle_redir(args);
 	if (tmp->cmd[0] == '\0')
 		return (1);
-	if (!ft_strncmp(tmp->cmd, "pwd", 3))
+	if (str_is_equal(args->token->cmd, "pwd"))
 		check_pwd(args);
-	else if (!ft_strncmp(tmp->cmd, "cd", 2))
+	else if (str_is_equal(args->token->cmd, "cd"))
 		do_cd(args);
-	else if (!ft_strncmp(tmp->cmd, "env", 3))
+	else if (str_is_equal(args->token->cmd, "env"))
 		print_env(args);
-	else if (!ft_strncmp(tmp->cmd, "exit", 4))
-		exit(ft_atoi(args->token->argm[1]));
-	else if (!ft_strncmp(tmp->cmd, "echo", 4))
+	else if (str_is_equal(args->token->cmd, "exit"))
+	{
+		while ((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57))
+			i++;
+		if (args->token->argm[1][i])
+		{
+			g_status = 2;
+			ft_printf("%s: %s: numeric argument required\n", args->token->cmd,  args->token->argm[1]);
+			return (1);
+		}
+		if (args->token->argm[2])
+		{
+			printf("%s: too many arguments\n", args->token->cmd);
+			g_status = 1;
+		}
+		else
+			exit(ft_atoi(args->token->argm[1]));
+	}
+	else if (str_is_equal(args->token->cmd, "echo"))
 	{
 		do_echo(args);
 		g_status = 0;
 	}
-	else if (!ft_strncmp(tmp->cmd, "export", 6))
+	else if (str_is_equal(args->token->cmd, "export"))
 	{
 		if (handleexporttopipe(tmp, args) == 1)
 			return (1);
 		g_status = 0;
 		return (1);
 	}
-	else if (!ft_strncmp(tmp->cmd, "unset", 5))
+	else if (str_is_equal(args->token->cmd, "unset"))
 	{
 		g_status = 0;
 		return (1);
 	}
-	else if (!ft_strncmp(args->input, "$?", 2))
+	else if (str_is_equal(args->token->cmd, "$?"))
 		printf("%d\n", g_status);
 	else
 		return (0);
