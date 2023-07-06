@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/06 11:51:39 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:09:27 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,8 +227,10 @@ void	pipes(t_comand *token, t_shell *args)
 		execpipes(token, args, fd, &k);
 		k++;
 	}
-	waitpid(-1, NULL, 0);
-	while (waitpid(-1, NULL, 0) > 0)
+	waitpid(-1, &g_status, 0);
+	while (waitpid(-1, &g_status, 0) > 0)
 		continue ;
+	if (WIFEXITED(g_status))
+		g_status = WEXITSTATUS(g_status);
 	signal(SIGINT, new_prompt);
 }
