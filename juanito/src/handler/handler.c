@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 11:05:33 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:18:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	cmdhandler(t_shell *args)
 	else if (str_is_equal(args->token->cmd, "env"))
 		print_env(args);
 	else if (str_is_equal(args->token->cmd, "exit"))
-		exit(g_status);
+		exit(ft_atoi(args->token->argm[1]));
 	else if (str_is_equal(args->token->cmd, "echo"))
 	{
 		do_echo(args);

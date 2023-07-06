@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 11:35:32 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:19:10 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 	else if (!ft_strncmp(tmp->cmd, "env", 3))
 		print_env(args);
 	else if (!ft_strncmp(tmp->cmd, "exit", 4))
-		do_exit(args);
+		exit(ft_atoi(args->token->argm[1]));
 	else if (!ft_strncmp(tmp->cmd, "echo", 4))
 	{
 		do_echo(args);
