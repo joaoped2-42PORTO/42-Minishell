@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/04 11:12:06 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:49:04 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	handle_append(t_shell *args, int *i)
 	if (args->token->out_fd != -1)
 		close(args->token->out_fd);
 	args->token->out_fd = open(args->token->redir[*i],
-			O_APPEND | O_CREAT | O_RDWR, 0777);
-	if (args->token->out_fd == -1)
+	 		O_APPEND | O_CREAT | O_RDWR, 0777);
+ 	if (args->token->out_fd == -1)
 		perror("open");
 	dup2(args->token->out_fd, STDOUT_FILENO);
 }

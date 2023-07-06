@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:46:36 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 23:31:33 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:56:39 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	new_prompt(int sig)
 	if (sig == SIGINT)
 	{
 		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
 		g_status = 130;
 	}
 }

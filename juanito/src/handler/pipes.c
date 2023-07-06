@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/05 23:02:27 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:51:39 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,29 @@ void	handle_here_doc(t_comand *args, t_shell *token, int *flag)
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	char	*path;
+	int		pid;
+	int		res;
 
-
+	res = 0;
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("dup2: ");
 	path = returncompletepath(token, args);
 	close(fd[1]);
 	handle_redir(args);
-	if (args->token->cmd[0] == '\0')
+ 	if (args->token->cmd[0] == '\0')
 		return ;
-	if (isbuiltin(token, args))
-		ft_printf("");
-	else
-		do_non_builtins(args);
+ 	res = isbuiltin(token, args);
+	if (res == 0)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGQUIT, SIG_DFL);
+			close(fd[0]);
+			do_non_builtinsforpipes(args, path);
+		}
+		signal(SIGINT, new_prompt);
+	}
 	free(path);
 	close_redirection(args);
 }
@@ -115,7 +125,10 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
 	char	*path;
+	int		pid;
+	int		res;
 
+	res = 0;
 	if (args->heredoc)
 		wait(0);
 	path = returncompletepath(token, args);
@@ -125,10 +138,18 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
 	handle_redir(args);
-	if (isbuiltin(token, args))
-		ft_printf("");
-	else
-		do_non_builtins(args);
+ 	res = isbuiltin(token, args);
+	if (res == 0)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGQUIT, SIG_DFL);
+			close(fd[0]);
+			do_non_builtinsforpipes(args, path);
+		}
+		signal(SIGINT, new_prompt);
+	}
 	free(path);
 	close_redirection(args);
 }
@@ -136,7 +157,10 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	char	*path;
+	int		pid;
+	int		res;
 
+	res = 0;
 	if (args->heredoc)
 		wait(0);
 	path = returncompletepath(token, args);
@@ -145,10 +169,18 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	dup2(args->out, STDOUT_FILENO);
 	close(args->out);
 	handle_redir(args);
-	if (isbuiltin(token, args))
-		ft_printf("");
-	else
-		do_non_builtins(args);
+ 	res = isbuiltin(token, args);
+	if (res == 0)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGQUIT, SIG_DFL);
+			close(fd[0]);
+			do_non_builtinsforpipes(args, path);
+		}
+		signal(SIGINT, new_prompt);
+	}
 	free(path);
 	dup2(args->in, STDIN_FILENO);
 	close(args->in);
@@ -198,4 +230,5 @@ void	pipes(t_comand *token, t_shell *args)
 	waitpid(-1, NULL, 0);
 	while (waitpid(-1, NULL, 0) > 0)
 		continue ;
+	signal(SIGINT, new_prompt);
 }

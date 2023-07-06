@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 23:31:56 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/06 11:05:33 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	do_non_builtins(t_shell *args)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, new_prompt);
 		signal(SIGQUIT, SIG_DFL);
 		if (args->input[0] == '.' && args->input[1] == '/')
 			open_exec(args);
@@ -46,6 +45,7 @@ int	do_non_builtins(t_shell *args)
 			open_exec_abs(args);
 		execthenonbuiltin(args, path);
 	}
+	signal(SIGINT, new_prompt);
 	waitpid(pid, &g_status, 0);
 	if (WIFEXITED(g_status))
             g_status = WEXITSTATUS(g_status);
