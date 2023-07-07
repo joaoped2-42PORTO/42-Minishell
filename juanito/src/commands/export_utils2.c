@@ -6,11 +6,27 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:18:42 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 14:47:43 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 18:21:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	var_is_equal(char *str, char *str1)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	while (str1[j] && str[j] != '=')
+		j++;
+	if (!ft_strncmp(str, str1, variable_size(str)) && i == j)
+		return (1);
+	return (0);
+}
 
 int	check_doubles_exp(t_shell *args, int y)
 {
@@ -19,8 +35,7 @@ int	check_doubles_exp(t_shell *args, int y)
 	j = 0;
 	while (args->exp[j])
 	{
-		if (!ft_strncmp(args->token->argm[y], args->exp[j],
-				variable_size(args->exp[j])))
+		if (var_is_equal(args->token->argm[y], args->exp[j]))
 		{
 			free(args->exp[j]);
 			args->exp[j] = ft_strdup(args->token->argm[y]);
@@ -38,8 +53,7 @@ int	check_doubles_env(t_shell *args, int y)
 	j = 0;
 	while (see_if_env(args->token->argm[y]) && args->env[j])
 	{
-		if (!ft_strncmp(args->token->argm[y], args->env[j],
-				variable_size(args->env[j])))
+		if (var_is_equal(args->token->argm[y], args->env[j]))
 		{
 			free(args->env[j]);
 			args->env[j] = ft_strdup(args->token->argm[y]);

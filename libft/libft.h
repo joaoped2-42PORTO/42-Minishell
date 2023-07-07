@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:30:20 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 12:07:12 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 18:41:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strrchr(const char *str, int c);
 void	ft_bzero(void *str, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-int		ft_atoi(const char *str);
+unsigned long	ft_atoi(const char *str);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 int		ft_isalpha(int c);
 void	*ft_memchr(const void *str, int c, size_t n);

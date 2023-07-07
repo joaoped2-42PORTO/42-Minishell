@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/07 15:31:38 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:50:00 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,34 @@ int	check_for_first_redir(char **split, int *i)
 	return (1);
 }
 
-t_comand	*init(t_shell *args, int *i)
+void	loop_helper(t_comand *ag, t_shell *args, int *i, int *j)
 {
-	t_comand	*ag;
-	int			x;
+	if (args->split[*i] && !checkpipered(args, i) && check_for_first_redir(args->split, i) && ft_strlen(args->split[*i]) > 0)
+		ag->argm[(*j)++] = ft_strdup(args->split[(*i)++]);
+	else if (args->split[*i])
+		(*i)++;
+}
 
-	x = 0;
-	ag = malloc(sizeof(t_comand));
-	if (!ag)
-		return (NULL);
+void	init_helper(t_comand *ag, t_shell *args)
+{
 	ag->flag = 0;
 	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->next = NULL;
+}
+
+t_comand	*init(t_shell *args, int *i)
+{
+	t_comand	*ag;
+	int			j;
+	int			x;
+
+	j = 0;
+	x = 0;
+	ag = malloc(sizeof(t_comand));
+	if (!ag)
+		return (NULL);
+	init_helper(ag, args);
 	if (!check_for_first_redir(args->split, i))
 		check_rd(args, ag, i, &x);
 	if (!args->split[*i] || checkpipered(args, i))
@@ -45,7 +60,13 @@ t_comand	*init(t_shell *args, int *i)
 		ag->cmd = ft_calloc(1, 1);
 		return (ag);
 	}
-	inithpl(args, ag, i, &x);
+	ag->argm[j++] = ft_strdup(args->split[*i]);
+	ag->cmd = ft_strdup(args->split[(*i)++]);
+	while (args->split[*i] && !checkpipered(args, i))
+	{
+		check_rd(args, ag, i, &x);
+		loop_helper(ag, args, i, &j);
+	}
 	return (ag);
 }
 

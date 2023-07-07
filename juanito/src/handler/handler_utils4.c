@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 17:58:54 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:13:57 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ void	execthenonbuiltin(t_shell *args, char *path)
 	}
 }
 
-void	doexit(t_shell *args)
+int	doexit(t_shell *args)
 {
-	int	i;
-	int	x;
+	long	i;
 
-	x = 19;
 	i = 0;
 	if (str_is_equal(args->token->cmd, "exit"))
 	{
-		while ((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57))
+		if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
 			i++;
-		if (args->token->argm[1][i] || i > x)
+		while (((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57)))
+			i++;
+		if (ft_atoi(args->token->argm[1]) > LONG_MAX)
 		{
 			g_status = 2;
 			printf("%s: %s: numeric argument required\n", args->token->cmd,
@@ -61,17 +61,19 @@ void	doexit(t_shell *args)
 		{
 			printf("%s: too many arguments\n", args->token->cmd);
 			g_status = 1;
+			return (1);
 		}
 		else
 			exit(ft_atoi(args->token->argm[1]));
 	}
-	return ;
+	return (0);
 }
 
 int	cmdhandler2(t_shell *args)
 {
-	doexit(args);
-	if (str_is_equal(args->token->cmd, "echo"))
+	if (doexit(args) == 1)
+		return (1);
+	else if (str_is_equal(args->token->cmd, "echo"))
 	{
 		do_echo(args);
 		g_status = 0;

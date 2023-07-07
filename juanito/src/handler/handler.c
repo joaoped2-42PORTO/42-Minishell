@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 15:32:44 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 18:25:08 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,15 @@ void	cmdhandler(t_shell *args)
 	else if (str_is_equal(args->token->cmd, "cd"))
 		do_cd(args);
 	else if (str_is_equal(args->token->cmd, "env"))
+	{
+		if (args->token->argm[1])
+		{
+			printf("No arguments allowed\n");
+			g_status = 2;
+			return;
+		}
 		print_env(args);
+	}
 	else if (cmdhandler2(args) == 0)
 		do_non_builtins(args);
 	close_redirection(args);

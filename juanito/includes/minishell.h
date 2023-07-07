@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 16:07:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:22:10 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_tokenizer
 {
@@ -122,6 +123,7 @@ int						check_doubles_env(t_shell *args, int y);
 int						see_env_size(t_shell *args);
 char					**dup_env(char **str, char **str1);
 int						see_chars(char *str);
+int						var_is_equal(char *str, char *str1);
 
 //-----export_utils3-----//
 int						suppforexportcounting(t_shell *args, int *y, int *z);
@@ -179,7 +181,7 @@ void					start_heredoc(t_shell *args, int *i);
 //-----handler_utils4-----//
 void					handle_heredoc(t_shell *args, int *i);
 void					execthenonbuiltin(t_shell *args, char *path);
-void					doexit(t_shell *args);
+int						doexit(t_shell *args);
 int						cmdhandler2(t_shell *args);
 
 //-----handler-----//
