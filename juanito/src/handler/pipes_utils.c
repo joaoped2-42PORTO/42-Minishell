@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 13:47:00 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:46:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ int	handleexporttopipe(t_comand *tmp, t_shell *args)
 
 int	isbuiltin(t_comand *tmp, t_shell *args)
 {
-	int	i;
-
-	i = 0;
+	suppisbuiltin(args);
+	suppisbuiltin2(tmp, args);
 	if (tmp->cmd[0] == '\0')
 		return (1);
 	if (str_is_equal(args->token->cmd, "pwd"))
@@ -66,41 +65,10 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 		do_cd(args);
 	else if (str_is_equal(args->token->cmd, "env"))
 		print_env(args);
-	else if (str_is_equal(args->token->cmd, "exit"))
-	{
-		while ((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57))
-			i++;
-		if (args->token->argm[1][i])
-		{
-			g_status = 2;
-			ft_printf("%s: %s: numeric argument required\n", args->token->cmd,
-				args->token->argm[1]);
-			return (1);
-		}
-		if (args->token->argm[2])
-		{
-			printf("%s: too many arguments\n", args->token->cmd);
-			g_status = 1;
-		}
-		else
-			exit(ft_atoi(args->token->argm[1]));
-	}
 	else if (str_is_equal(args->token->cmd, "echo"))
 	{
 		do_echo(args);
 		g_status = 0;
-	}
-	else if (str_is_equal(args->token->cmd, "export"))
-	{
-		if (handleexporttopipe(tmp, args) == 1)
-			return (1);
-		g_status = 0;
-		return (1);
-	}
-	else if (str_is_equal(args->token->cmd, "unset"))
-	{
-		g_status = 0;
-		return (1);
 	}
 	else if (str_is_equal(args->token->cmd, "$?"))
 		printf("%d\n", g_status);

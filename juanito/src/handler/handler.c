@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 13:49:51 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:32:44 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,8 @@ int	do_non_builtins(t_shell *args)
 
 void	cmdhandler(t_shell *args)
 {
-	int	i;
-
-	i = 0;
-	args->old_out = dup(STDOUT_FILENO);
-	args->old_in = dup(STDIN_FILENO);
+	args->out = dup(STDOUT_FILENO);
+	args->in = dup(STDIN_FILENO);
 	handle_redir(args);
 	if (args->token->cmd[0] == '\0')
 		return ;
@@ -69,37 +66,7 @@ void	cmdhandler(t_shell *args)
 		do_cd(args);
 	else if (str_is_equal(args->token->cmd, "env"))
 		print_env(args);
-	else if (str_is_equal(args->token->cmd, "exit"))
-	{
-		while ((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57))
-			i++;
-		if (args->token->argm[1][i])
-		{
-			g_status = 2;
-			printf("%s: %s: numeric argument required\n", args->token->cmd,
-				args->token->argm[1]);
-			exit(g_status);
-		}
-		if (args->token->argm[2])
-		{
-			printf("%s: too many arguments\n", args->token->cmd);
-			g_status = 1;
-		}
-		else
-			exit(ft_atoi(args->token->argm[1]));
-	}
-	else if (str_is_equal(args->token->cmd, "echo"))
-	{
-		do_echo(args);
-		g_status = 0;
-	}
-	else if (str_is_equal(args->token->cmd, "export"))
-		do_export(args);
-	else if (str_is_equal(args->token->cmd, "unset"))
-		do_unset(args);
-	else if (str_is_equal(args->token->cmd, "$?"))
-		printf("%d\n", g_status);
-	else
+	else if (cmdhandler2(args) == 0)
 		do_non_builtins(args);
 	close_redirection(args);
 }

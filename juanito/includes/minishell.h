@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 14:49:24 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:07:37 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ void					start_heredoc(t_shell *args, int *i);
 //-----handler_utils4-----//
 void					handle_heredoc(t_shell *args, int *i);
 void					execthenonbuiltin(t_shell *args, char *path);
+void					doexit(t_shell *args);
+int						cmdhandler2(t_shell *args);
 
 //-----handler-----//
 char					*nonbuiltinspath(t_shell *args,	char *path);
@@ -187,11 +189,22 @@ void					cmdhandler(t_shell *args);
 int						ft_size(t_comand *lst);
 void					executer(t_shell *args);
 
+//-----heredoc-----//
+void					start_here_doc(t_shell *args, int *i);
+void					_handle_here_doc(t_comand *args, int *i, t_shell *token);
+void					handle_here_doc(t_comand *args, t_shell *token, int *flag);
+
 //-----pipe_utils-----//
 char					*returncompletepath(t_comand *token, t_shell *args);
 int						checklistsizeforpipes(t_comand *token);
 int						handleexporttopipe(t_comand *tmp, t_shell *args);
 int						isbuiltin(t_comand *tmp, t_shell *args);
+
+//-----pipe_utils2-----//
+int						suppisbuiltin(t_shell *args);
+int						suppisbuiltin2(t_comand *tmp, t_shell *args);
+void					forknbt(t_shell *args, t_comand *token, int *fd);
+void					pipesloop(t_comand *token, t_shell *args, int *fd);
 
 //-----pipes-----//
 void					handlefirstpipe(t_comand *token, t_shell *args,
@@ -245,12 +258,17 @@ void					alloc_env_mem(char **str, char **str1, char **str2);
 void					get_path_struct(t_shell *args);
 
 //-----init-----//
-void					check_redir(t_shell *args, t_comand *ag, int *i,
+void					check_rd(t_shell *args, t_comand *ag, int *i,
 							int *x);
 int						check_for_first_redir(char **split, int *i);
 t_comand				*init(t_shell *args, int *i);
 t_comand				*init_token(t_shell *args);
 void					init_values(t_shell *args, char **env, int i);
+
+//-----redir-----//
+void					check_rd2(t_shell *args, t_comand *ag, int *i, int *x);
+void					check_rd(t_shell *args, t_comand *ag, int *i, int *x);
+void					inithpl(t_shell *args, t_comand *ag, int *i, int *x);
 
 //-----utils-----//
 int						checkpipered(t_shell *args, int *i);

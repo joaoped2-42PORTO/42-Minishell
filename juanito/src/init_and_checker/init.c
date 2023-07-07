@@ -6,55 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/07 14:59:11 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:31:38 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	check_redir2(t_shell *args, t_comand *ag, int *i, int *x)
-{
-	if (args->split[*i][0] == '>')
-	{
-		if (!args->split[(*i) + 1])
-			return ;
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->flag = 1;
-	}
-	else if (args->split[*i][0] == '<')
-	{
-		if (!args->split[(*i) + 1])
-			return ;
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		if (args->split[*i][0] == '>')
-			(*i)++;
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->flag = 1;
-	}
-}
-
-void	check_redir(t_shell *args, t_comand *ag, int *i, int *x)
-{
-	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
-	{
-		if (!args->split[(*i) + 1])
-			return ;
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->flag = 1;
-	}
-	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<')
-	{
-		if (!args->split[(*i) + 1])
-			return ;
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		ag->flag = 1;
-	}
-	else
-		check_redir2(args, ag, i, x);
-}
 
 int	check_for_first_redir(char **split, int *i)
 {
@@ -72,10 +28,8 @@ int	check_for_first_redir(char **split, int *i)
 t_comand	*init(t_shell *args, int *i)
 {
 	t_comand	*ag;
-	int			j;
 	int			x;
 
-	j = 0;
 	x = 0;
 	ag = malloc(sizeof(t_comand));
 	if (!ag)
@@ -85,22 +39,13 @@ t_comand	*init(t_shell *args, int *i)
 	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->next = NULL;
 	if (!check_for_first_redir(args->split, i))
-		check_redir(args, ag, i, &x);
+		check_rd(args, ag, i, &x);
 	if (!args->split[*i] || checkpipered(args, i))
 	{
 		ag->cmd = ft_calloc(1, 1);
 		return (ag);
 	}
-	ag->argm[j++] = ft_strdup(args->split[*i]);
-	ag->cmd = ft_strdup(args->split[(*i)++]);
-	while (args->split[*i] && !checkpipered(args, i))
-	{
-		check_redir(args, ag, i, &x);
-		if (args->split[*i] && !checkpipered(args, i)
-			&& check_for_first_redir(args->split, i)
-			&& ft_strlen(args->split[*i]) > 0)
-			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
-	}
+	inithpl(args, ag, i, &x);
 	return (ag);
 }
 

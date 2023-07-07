@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/02 10:39:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:05:51 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	checkPipeRed(t_shell *args, int *i)
 	return (0);
 }
 
-void	check_redir (t_shell *args, t_comand *ag, int *i, int *x)
+void	check_rd (t_shell *args, t_comand *ag, int *i, int *x)
 {
 	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
 	{
@@ -73,7 +73,7 @@ t_comand	*init(t_shell *args, int *i)
 	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->next = NULL;
 	if (!check_for_first_redir(args->split, i))
-		check_redir(args, ag, i, &x);
+		check_rd(args, ag, i, &x);
 	if (!args->split[*i])
 	{
 		ag->cmd = ft_calloc(1, 1);
@@ -83,7 +83,7 @@ t_comand	*init(t_shell *args, int *i)
 	ag->cmd = ft_strdup(args->split[(*i)++]);
 	while (args->split[*i] && !checkPipeRed(args, i))
 	{
-		check_redir(args, ag, i, &x);
+		check_rd(args, ag, i, &x);
 		if (args->split[*i])
 			ag->argm[j++] = ft_strdup(args->split[(*i)++]);
 	}
