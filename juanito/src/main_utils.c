@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 14:42:29 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:40:51 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_countargs(char *str)
 		else
 		{
 			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i)
-				&& str[i] != '\'' && str[i] != '"' && str[i] != '\t')
+				&& str[i] != '\t')
 				i++;
 			if (!str[i])
 				break ;
@@ -99,7 +99,7 @@ static char	*ft_word(char *str)
 	else
 	{
 		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
-			&& str[l] != '\'' && str[l] != '"' && str[l] != '\t')
+			&& str[l] != '\t')
 			l++;
 	}
 	res = (char *)malloc(sizeof(char) * (l + 1));

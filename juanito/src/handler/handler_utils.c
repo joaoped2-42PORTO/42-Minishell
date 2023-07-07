@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 20:01:05 by user             ###   ########.fr       */
+/*   Updated: 2023/07/07 22:12:44 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*print_env_var(t_shell *args, char *str)
+/* char	*print_env_var(t_shell *args, char *str)
 {
 	int		i;
 	int		j;
@@ -31,6 +31,42 @@ char	*print_env_var(t_shell *args, char *str)
 			j++;
 			free(src);
 			src = ft_strdup(&args->env[i][j]);
+			break ;
+		}
+		i++;
+	}
+	if (src == NULL)
+		return (NULL);
+	return (src);
+} */
+
+char	*print_env_var(t_shell *args, char *str)
+{
+	int		i;
+	int		j;
+	char	*src;
+	int		x;
+
+	i = 0;
+	j = 0;
+	x = -1;
+	src = ft_calloc(ft_strlen(str), 1);
+	while (str[++x] != '$')
+		src[x] = str[x];
+	src[x++] = ' ';
+	while (args->env[i])
+	{
+		j = 0;
+		while (args->env[i][j] && args->env[i][j] == str[x])
+		{
+			x++;
+			j++;
+		}
+		if (args->env[i][j] == '=' && str[x] == '\0')
+		{
+			j++;
+			//free(src);
+			src = ft_strjoin(src, &args->env[i][j]);
 			break ;
 		}
 		i++;

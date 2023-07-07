@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 13:57:20 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:36:20 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,57 @@ void	handle_redir(t_shell *args)
 	}
 }
 
-void	start_heredoc(t_shell *args, int *i)
+/* char	*expand(char *str, t_shell *args, int i)
+{
+	int		j;
+	char	*str1;
+	int		x;
+	int		y
+
+	x = 0;
+	i++;
+	j = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '"' && str[i] !='\'')
+	{
+		str1[j++] = str[i++]
+	}
+	j = -1;
+	while (args->env[++j])
+	{
+		if (var_is_equal(str1, args->env[j]))
+		{
+			while (args->env[j][x] != '=')
+				x++;
+			str1 = ft_strdup
+		}
+	}
+} */
+
+void	start_heredoc(t_shell *args, int i)
 {
 	char	*buffer;
 	int		fd;
+	char	*tmp;
 
 	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
 		perror("open");
 	while (1)
 	{
+		i = 0;
 		buffer = readline("heredoc >");
 		if (buffer == NULL)
 		{
 			perror("heredoc");
 			break ;
 		}
-		if (str_is_equal(buffer, args->token->redir[*i]))
+		if (str_is_equal(buffer, args->token->redir[i]))
 			break ;
+		if (ft_strchr(buffer, '$'))
+				tmp = print_env_var(args, buffer);
+		free (buffer);
+		buffer = ft_strdup(tmp);
+		free (tmp);
 		ft_putendl_fd(buffer, fd);
 		free(buffer);
 	}

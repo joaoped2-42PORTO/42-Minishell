@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 19:22:10 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 21:32:57 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void					handle_input(t_shell *args, int *i);
 void					handle_output(t_shell *args, int *i);
 void					handle_append(t_shell *args, int *i);
 void					handle_redir(t_shell *args);
-void					start_heredoc(t_shell *args, int *i);
+void					start_heredoc(t_shell *args, int i);
 
 //-----handler_utils4-----//
 void					handle_heredoc(t_shell *args, int *i);

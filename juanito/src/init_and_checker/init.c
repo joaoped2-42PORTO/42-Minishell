@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/07 19:50:00 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:58:33 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	loop_helper(t_comand *ag, t_shell *args, int *i, int *j)
 {
 	if (args->split[*i] && !checkpipered(args, i) && check_for_first_redir(args->split, i) && ft_strlen(args->split[*i]) > 0)
 		ag->argm[(*j)++] = ft_strdup(args->split[(*i)++]);
-	else if (args->split[*i])
+	else if (args->split[*i] && !checkpipered(args, i))
 		(*i)++;
 }
 

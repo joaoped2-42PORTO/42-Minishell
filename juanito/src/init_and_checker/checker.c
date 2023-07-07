@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/06/29 14:50:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:47:48 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,21 @@ int	loop_input(t_shell *args, int *i)
 	return (1);
 }
 
+int	see_red_closed(char *str, int i)
+{
+	if (str[i] == '<' || str[i] == '>')
+	{
+		while (str[i])
+		{
+			if (ft_isalnum(str[i]))
+				return (1);
+			i++;
+		}
+		return (0);
+	}
+	return(1);
+}
+
 int	valid_input(t_shell *args)
 {
 	int	i;
@@ -81,6 +96,8 @@ int	valid_input(t_shell *args)
 			i++;
 		while (args->input[i] == ' ')
 			i++;
+		if (!see_red_closed(args->input, i))
+			return (0);
 		if (args->input[i] == '*')
 			return (0);
 		if (!loop_input(args, &i))
