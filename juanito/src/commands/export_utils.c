@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 20:15:13 by user             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:47:31 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,8 @@ void	export_counting(t_shell *args, int *x, int *i)
 	z = 0;
 	while (args->token->argm[++y])
 	{
-		if (!see_chars(args->token->argm[y]))
-		{
-			printf("Char not supported\n");
-			g_status = 1;
-			z = 1;
-			if (args->token->argm[y + 1])
-				y++;
-			else
-				break ;
-		}
+		if (suppforexportcounting(args, &y, &z) == 0)
+			break ;
 		if (!check_doubles_env(args, y) && !check_doubles_exp(args, y))
 			continue ;
 		else if (!see_if_env(args->token->argm[y]))

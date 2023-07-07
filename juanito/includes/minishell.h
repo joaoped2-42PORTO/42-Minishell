@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 11:36:05 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:49:24 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ typedef struct s_shell
 	int					list_size;
 	int					issquote;
 	int					isdquote;
+	int					flag;
 }						t_shell;
 
-extern	int	g_status;
+extern int	g_status;
 
-void	do_non_builtinsforpipes(t_shell *args, char *path);
 //---------------------------SRC-------------------------------//
 
 //----------Cleaner----------//
@@ -79,6 +79,8 @@ int						free_split(t_shell *args);
 int						free_list(t_shell *args);
 void					do_exit(t_shell *args);
 void					do_small_exit(t_shell *args);
+
+//-----cleaner2-----//
 void					cleaneverything(t_shell *args);
 
 //----------Commands----------//
@@ -121,6 +123,9 @@ int						see_env_size(t_shell *args);
 char					**dup_env(char **str, char **str1);
 int						see_chars(char *str);
 
+//-----export_utils3-----//
+int						suppforexportcounting(t_shell *args, int *y, int *z);
+
 //-----export-----//
 void					do_export(t_shell *args);
 int						check_env_value(t_shell *args, char *str);
@@ -149,13 +154,6 @@ void					unset(t_shell *args, char *str1);
 void					do_unset(t_shell *args);
 
 //----------handler----------//
-
-//-----gstatus_errors-----//
-void					error1();
-void					error2();
-void					error126();
-void					error127();
-void					error128();
 
 //-----handler_utils-----//
 char					*print_env_var(t_shell *args, char *str);
@@ -204,6 +202,7 @@ void					handlelastpipes(t_comand *token, t_shell *args,
 void					execpipes(t_comand *token, t_shell *args, int *fd,
 							int *k);
 void					pipes(t_comand *token, t_shell *args);
+void					do_non_builtinsforpipes(t_shell *args, char *path);
 
 //-----tokens-----//
 int						process_quote(t_shell *args, int *x, int *p);
@@ -268,6 +267,11 @@ void					new_prompt(int sig);
 
 //----------main----------//
 
+//-----main_utils2-----//
+int						checkforinput(t_shell *args, size_t *i);
+void					suppcountargs(char *str, int *i);
+int						suppforquotes(char *str, int *i, int *dq, int *sq);
+
 //-----main_utils-----//
 int						ft_skipquotes(char *str);
 int						ft_checkspecial(char *str);
@@ -280,4 +284,3 @@ int						check_input(t_shell *args);
 void					change_split(t_shell *args);
 
 #endif
-//-fsanitize=address

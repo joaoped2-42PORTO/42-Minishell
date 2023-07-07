@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 17:22:27 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:57:20 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	handle_input(t_shell *args, int *i)
 	args->token->in_fd = open(args->token->redir[*i], O_RDONLY, 0777);
 	if (args->token->in_fd == -1)
 		perror("open");
+	args->flag = 1;
 	dup2(args->token->in_fd, STDIN_FILENO);
 }
 
@@ -30,24 +31,24 @@ void	handle_output(t_shell *args, int *i)
 		close(args->token->out_fd);
 	args->token->out_fd = open(args->token->redir[*i],
 			O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	//printf("Opening file fd: %d to command %s\n", args->token->out_fd, args->token->cmd	);
 	if (args->token->out_fd == -1)
 		perror("open");
+	args->flag = 1;
 	dup2(args->token->out_fd, STDOUT_FILENO);
 }
 
 void	handle_append(t_shell *args, int *i)
 {
 	(*i)++;
-
 	if (args->token->out_fd != -1)
 		close(args->token->out_fd);
 	dup2(args->token->in_fd, STDIN_FILENO);
 	close(args->token->in_fd);
 	args->token->out_fd = open(args->token->redir[*i],
-	 		O_APPEND | O_CREAT | O_RDWR, 0777);
- 	if (args->token->out_fd == -1)
+			O_APPEND | O_CREAT | O_RDWR, 0777);
+	if (args->token->out_fd == -1)
 		perror("open");
+	args->flag = 1;
 	dup2(args->token->out_fd, STDOUT_FILENO);
 }
 

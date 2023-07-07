@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 22:32:24 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:23:33 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_status = 0;
+int		g_status;
 
 int	check_valid_input(t_shell *args)
 {
@@ -35,13 +35,8 @@ int	check_valid_input(t_shell *args)
 		free(args->input);
 		return (0);
 	}
-	while (args->input[i] && (args->input[i] == ' ' || args->input[i] == '\t'))
-			i++;
-	if (i == ft_strlen(args->input))
-	{
-		free (args->input);
+	if (checkforinput(args, &i) == 0)
 		return (0);
-	}
 	return (1);
 }
 
@@ -74,17 +69,8 @@ void	change_split(t_shell *args)
 	}
 }
 
-int	main(int ac, char **av, char **env)
+void	dothingsinsidemain(t_shell *args)
 {
-	t_shell	*args;
-	int		i;
-	g_status = 0;
-	(void)ac;
-	(void)av;
-	i = get_env_size(env);
-	args = malloc(sizeof(t_shell));
-	rl_clear_history();
-	init_values(args, env, i);
 	while (1)
 	{
 		if (!check_input(args))
@@ -100,6 +86,21 @@ int	main(int ac, char **av, char **env)
 		}
 		free(args->input);
 	}
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_shell	*args;
+	int		i;
+
+	g_status = 0;
+	(void)ac;
+	(void)av;
+	i = get_env_size(env);
+	args = malloc(sizeof(t_shell));
+	rl_clear_history();
+	init_values(args, env, i);
+	dothingsinsidemain(args);
 	free_list(args);
 	return (0);
 }

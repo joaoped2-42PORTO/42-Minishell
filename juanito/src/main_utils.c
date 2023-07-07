@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 23:48:39 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:42:29 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,12 @@ int	ft_skipquotes(char *str)
 	int	i;
 	int	issquote;
 	int	isdquote;
+
 	issquote = 0;
 	isdquote = 0;
 	i = 0;
-	if (str[i] != '\'' && str[i] != '"')
+	if (suppforquotes(str, &i, &isdquote, &issquote) == 0)
 		return (0);
-	if (str[i] == '\'')
-		issquote = 1;
-	if (str[i] == '"')
-		isdquote = 1;
-	i++;
 	if (issquote)
 	{
 		while (str[i] != '\'')
@@ -64,12 +60,12 @@ int	ft_countargs(char *str)
 {
 	int	i;
 	int	count;
+
 	count = 0;
 	i = 0;
 	while (str[i])
 	{
-		while ((str[i] && str[i] == ' ') || (str[i] && str[i] == '\t'))
-			i++;
+		suppcountargs(str, &i);
 		if (!str[i])
 			break ;
 		++count;
@@ -94,6 +90,7 @@ static char	*ft_word(char *str)
 	int		l;
 	int		i;
 	char	*res;
+
 	l = 0;
 	if (str[l] == '\'' || str[l] == '"')
 		l += ft_skipquotes(str + l);
@@ -120,6 +117,7 @@ char	**split_db_quotes(char *str)
 	int		wcount;
 	int		i;
 	char	**result;
+
 	wcount = ft_countargs(str);
 	if (!wcount)
 		return (NULL);

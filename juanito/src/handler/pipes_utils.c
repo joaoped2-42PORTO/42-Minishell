@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 14:56:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:47:00 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ int	handleexporttopipe(t_comand *tmp, t_shell *args)
 
 int	isbuiltin(t_comand *tmp, t_shell *args)
 {
-	int i = 0;
-	//handle_redir(args);
+	int	i;
+
+	i = 0;
 	if (tmp->cmd[0] == '\0')
 		return (1);
 	if (str_is_equal(args->token->cmd, "pwd"))
@@ -72,7 +73,8 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 		if (args->token->argm[1][i])
 		{
 			g_status = 2;
-			ft_printf("%s: %s: numeric argument required\n", args->token->cmd,  args->token->argm[1]);
+			ft_printf("%s: %s: numeric argument required\n", args->token->cmd,
+				args->token->argm[1]);
 			return (1);
 		}
 		if (args->token->argm[2])
@@ -104,7 +106,6 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 		printf("%d\n", g_status);
 	else
 		return (0);
-	//close_redirection(args);
 	return (1);
 }
 

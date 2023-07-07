@@ -6,17 +6,14 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/05 14:13:51 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:50:36 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	process_option_n(t_shell *args)
+void	suppoptionn(t_shell *args, int *i)
 {
- 	int	i;
-
-	i = 1;
 	while (1)
 	{
 		if (!args->split[args->index])
@@ -29,15 +26,23 @@ void	process_option_n(t_shell *args)
 		else if (checkforbig(args) == 0)
 			break ;
 		else if (checkforbig(args) == 1)
-			i++;
+			(*i)++;
 		args->index++;
 	}
+}
+
+void	process_option_n(t_shell *args)
+{
+	int	i;
+
+	i = 1;
+	suppoptionn(args, &i);
 	if (args->token->argm[i])
 	{
 		while (args->token->argm[i])
 		{
 			ft_printf("%s", args->token->argm[i]);
- 			if (args->token->argm[i + 1])
+			if (args->token->argm[i + 1])
 				ft_printf(" ");
 			i++;
 		}

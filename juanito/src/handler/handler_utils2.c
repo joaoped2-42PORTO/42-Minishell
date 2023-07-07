@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:27:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 16:12:56 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:45:52 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,18 @@ void	open_exec_abs(t_shell *args)
 	exit(g_status);
 }
 
-# define HERE printf("Here\n")
-
 void	close_redirection(t_shell *args)
 {
-	// printf("args->token->out_fd %d to command %s\n", args->token->out_fd, args->token->cmd);
-	// printf("args->token->in_fd %d to command %s\n", args->token->in_fd, args->token->cmd);
 	if (args->token->out_fd != -1)
 	{
-		//HERE;
-		dup2(args->old_out, STDOUT_FILENO);
-		//HERE;
-		close(args->old_out);
-		//HERE;
+		dup2(args->out, STDOUT_FILENO);
+		close(args->out);
 		close(args->token->out_fd);
-		//HERE;
-		// printf("Closing file fd: %d\n", args->token->out_fd);
 	}
- 	if (args->token->in_fd != -1)
+	if (args->token->in_fd != -1)
 	{
-		dup2(args->old_in, STDIN_FILENO);
-		close(args->old_in);
+		dup2(args->in, STDIN_FILENO);
+		close(args->in);
 		close(args->token->in_fd);
 	}
 	unlink("heredoc");

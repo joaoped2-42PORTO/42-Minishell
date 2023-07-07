@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 15:05:23 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:47:45 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,12 @@ void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 
 	if (args->split[args->index][*x] == '$')
 	{
-		 if (args->split[args->index][*x + 1] == '?')
+		if (args->split[args->index][*x + 1] == '?')
 		{
 			str = ft_itoa(g_status);
 			ft_strcat(*res, str);
 			free(str);
 			(*x) += 2;
-		}
-		else if (args->split[args->index][*x + 1] == '>')
-		{
-
 		}
 		else if ((args->split[args->index][*x + 1] != ' '
 			|| args->split[args->index][*x + 1] != '\t')

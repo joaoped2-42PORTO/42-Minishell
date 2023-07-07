@@ -6,13 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/06 17:18:07 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:54:00 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int g_status;
 
 void	start_here_doc(t_shell *args, int *i)
 {
@@ -60,18 +58,14 @@ void	handle_here_doc(t_comand *args, t_shell *token, int *flag)
 	i = 0;
 	if (args->flag == 1)
 	{
-		if (args->redir[0][0] == '<'
-			&& args->redir[0][1] == '<')
-			{
-				*flag = 1;
-				_handle_here_doc(args, &i, token);
-			}
+		if (args->redir[0][0] == '<' && args->redir[0][1] == '<')
+		{
+			*flag = 1;
+			_handle_here_doc(args, &i, token);
+		}
 	}
 }
-/* TER MUIT ATENCAO QUE AS FUNCOES ACIMA ESTAO TODAS TROCADAS EM TERMOS DE O QUE E ESTRUTURA E LISTA!!!!!!!
-	CONTUDO E PRECISO CONTINUAR A TESTAR E PASSAR ESTE HEREDOC PARA OS RESTANTES PIPES!!!
-	POIS SENAO PASSA O FD DO PIPE E AI NINGUEM ESCREVE NADA NO FD DO HEREDOC!
-	QUALQUER DUVIDA CONTACTA ! */
+
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	char	*path;
@@ -84,9 +78,9 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	path = returncompletepath(token, args);
 	close(fd[1]);
 	handle_redir(args);
- 	if (args->token->cmd[0] == '\0')
+	if (args->token->cmd[0] == '\0')
 		return ;
- 	res = isbuiltin(token, args);
+	res = isbuiltin(token, args);
 	if (res == 0)
 	{
 		pid = fork();
@@ -99,28 +93,7 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 		signal(SIGINT, new_prompt);
 	}
 	free(path);
-	close_redirection(args);
 }
-
-/* void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
-{
-	char	*path;
-	int		flag;
-
-	flag = 0;
-	handle_here_doc(token, args, &flag);
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		perror("dup2: ");
-	if (args->token->cmd[0] == '\0')
-		return ;
-	path = returncompletepath(token, args);
-	close(fd[1]);
-		if (isbuiltin(token, args))
-		ft_printf("");
-	else
-		do_non_builtins(args);
-	free(path);
-} */
 
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
@@ -138,7 +111,7 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
 	handle_redir(args);
- 	res = isbuiltin(token, args);
+	res = isbuiltin(token, args);
 	if (res == 0)
 	{
 		pid = fork();
@@ -151,7 +124,6 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 		signal(SIGINT, new_prompt);
 	}
 	free(path);
-	close_redirection(args);
 }
 
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
@@ -166,10 +138,13 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	path = returncompletepath(token, args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-	dup2(args->out, STDOUT_FILENO);
-	close(args->out);
 	handle_redir(args);
- 	res = isbuiltin(token, args);
+	if (args->flag != 1)
+	{
+		dup2(args->out, STDOUT_FILENO);
+		close(args->out);
+	}
+	res = isbuiltin(token, args);
 	if (res == 0)
 	{
 		pid = fork();
@@ -183,14 +158,18 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	}
 	free(path);
 	close_redirection(args);
-	dup2(args->in, STDIN_FILENO);
-	close(args->in);
+	if (args->flag != 1)
+	{
+		dup2(args->in, STDIN_FILENO);
+		close(args->in);
+	}
 }
 
 void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
 {
 	if (*k == 0)
 	{
+		args->flag = 0;
 		args->in = dup(STDIN_FILENO);
 		args->out = dup(STDOUT_FILENO);
 		handlefirstpipe(token, args, fd);
@@ -216,6 +195,7 @@ void	pipes(t_comand *token, t_shell *args)
 	{
 		if (k != 0)
 		{
+			args->flag = 0;
 			ptr = token->next;
 			free(token->cmd);
 			free_matrix(token->argm);
@@ -232,9 +212,5 @@ void	pipes(t_comand *token, t_shell *args)
 		continue ;
 	if (WIFEXITED(g_status))
 		g_status = WEXITSTATUS(g_status);
-	// dup2(args->in, STDIN_FILENO);
-	// close(args->in);
-	//dup2(args->old_in, STDIN_FILENO);
-	//close(args->old_in);
 	signal(SIGINT, new_prompt);
 }

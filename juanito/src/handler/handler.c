@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/06 15:07:53 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:49:51 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ int	do_non_builtins(t_shell *args)
 	signal(SIGINT, new_prompt);
 	waitpid(pid, &g_status, 0);
 	if (WIFEXITED(g_status))
-            g_status = WEXITSTATUS(g_status);
+		g_status = WEXITSTATUS(g_status);
 	free(path);
 	return (1);
 }
 
 void	cmdhandler(t_shell *args)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	args->old_out = dup(STDOUT_FILENO);
 	args->old_in = dup(STDIN_FILENO);
 	handle_redir(args);
@@ -74,7 +76,8 @@ void	cmdhandler(t_shell *args)
 		if (args->token->argm[1][i])
 		{
 			g_status = 2;
-			printf("%s: %s: numeric argument required\n", args->token->cmd,  args->token->argm[1]);
+			printf("%s: %s: numeric argument required\n", args->token->cmd,
+				args->token->argm[1]);
 			exit(g_status);
 		}
 		if (args->token->argm[2])

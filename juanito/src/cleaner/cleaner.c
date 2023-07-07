@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/05 19:03:28 by user             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:43:36 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,4 @@ void	do_small_exit(t_shell *args)
 	free(args);
 	rl_clear_history();
 	exit(g_status);
-}
-
-void	cleaneverything(t_shell *args)
-{
-	free_split(args);
-	free_list(args);
-	//do_small_exit(args);
 }
