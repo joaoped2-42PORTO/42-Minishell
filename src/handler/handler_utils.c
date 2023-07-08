@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:17:16 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,33 @@ char	*print_env_var(t_shell *args, char *str)
 	return (src);
 }
 
-char	*suppprintvar2(t_shell *args, char *str,char *src, char *src1)
+char	*suppprintvar2(t_shell *args, char *str, char *src, char *src1)
 {
+	args->envar2x++;
 	while (args->env[args->envar2i])
 	{
 		args->envar2j = 0;
-		while (args->env[args->envar2i][args->envar2j] && args->env[args->envar2i][args->envar2j] == str[args->envar2x])
+		while (args->env[args->envar2i][args->envar2j]
+			&& args->env[args->envar2i][args->envar2j] == str[args->envar2x])
 		{
 			args->envar2x++;
 			args->envar2j++;
-			if ((str[args->envar2x] >= 32 && str[args->envar2x] <= 47) || (str[args->envar2x] >= 58 && str[args->envar2x] <= 64)
-				|| (str[args->envar2x] >= 91 && str[args->envar2x] <= 96) || ((str[args->envar2x] >= 123
-						&& str[args->envar2x] <= 126)) || !str[args->envar2x])
+			if ((str[args->envar2x] >= 32 && str[args->envar2x] <= 47)
+				|| (str[args->envar2x] >= 58 && str[args->envar2x] <= 64)
+				|| (str[args->envar2x] >= 91 && str[args->envar2x] <= 96)
+				|| ((str[args->envar2x] >= 123 && str[args->envar2x] <= 126))
+				|| !str[args->envar2x])
 			{
 				args->envar2f = 1;
 				break ;
 			}
 		}
-		if (args->env[args->envar2i][args->envar2j] == '=' && args->envar2f == 1)
+		if (args->env[args->envar2i][args->envar2j] == '='
+			&& args->envar2f == 1)
 		{
 			args->envar2j++;
 			src1 = ft_strjoin(src, &args->env[args->envar2i][args->envar2j]);
+			//free(src);
 			break ;
 		}
 		args->envar2i++;
@@ -70,7 +76,8 @@ char	*suppprintvar2(t_shell *args, char *str,char *src, char *src1)
 
 void	verifyvar2(t_shell *args, char *str)
 {
-	while (str[args->envar2x] != ' ' && args->envar2j == 0 && str[args->envar2x])
+	while (str[args->envar2x] != ' ' && args->envar2j == 0
+		&& str[args->envar2x])
 	{
 		if (args->envar2f == 1)
 		{
@@ -79,24 +86,15 @@ void	verifyvar2(t_shell *args, char *str)
 		}
 		args->envar2x++;
 	}
-
 }
 
 void	initvalsforvar2(t_shell *args)
 {
 	args->envar2i = 0;
 	args->envar2j = 0;
-	args->envar2x = -1;
+	args->envar2x = 0;
 	args->envar2f = 0;
-}
-
-void	checkbegvar2(t_shell *args, char *str, char *src)
-{
-	while (str[++args->envar2x] != '$')
-		src[args->envar2x] = str[args->envar2x];
-	args->envar2x++;
-	if (!src)
-		free(src);
+	args->envar2k = 0;
 }
 
 char	*print_env_var2(t_shell *args, char *str)
@@ -109,19 +107,34 @@ char	*print_env_var2(t_shell *args, char *str)
 	src1 = NULL;
 	src2 = NULL;
 	initvalsforvar2(args);
-	checkbegvar2(args, str, src);
-	src1 = suppprintvar2(args, str, src, src1);
-	args->envar2f = 0;
-	if (str[args->envar2x] >= 48 && str[args->envar2x] <= 57)
-		args->envar2f = 1;
-	if (src1 == NULL)
-		src2 = ft_strjoin(src, &str[args->envar2x]);
-	else
+	while (str[args->envar2x])
 	{
-		src2 = ft_strjoin(src1, &str[args->envar2x]);
-		free(src1);
+		if (str[args->envar2x] == '$')
+		{
+			src1 = suppprintvar2(args, str, src, src1);
+			args->envar2f = 0;
+			if (str[args->envar2x] >= 48 && str[args->envar2x] <= 57)
+				args->envar2f = 1;
+			verifyvar2(args, str);
+			if (src1 == NULL)
+				src2 = ft_strjoin(src, &str[args->envar2x]);
+			else
+			{
+				src2 = ft_strdup(src1);
+				free(src1);
+				while (src2[args->envar2k] && str[args->envar2k])
+					args->envar2k++;
+			}
+			free(src);
+			src = src2;
+		}
+		else
+		{
+			src[args->envar2k] = str[args->envar2x];
+			args->envar2k++;
+			args->envar2x++;
+		}
 	}
-	free(src);
 	if (src2 == NULL)
 		return (ft_strdup(""));
 	return (src2);
