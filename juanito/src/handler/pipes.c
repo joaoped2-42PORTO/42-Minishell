@@ -3,21 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/07 20:49:47 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:33:20 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void	handle_redir_pipes(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->token->redir[i])
+	{
+		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
+			handle_append(args, &i);
+		else if (args->token->redir[i][0] == '>')
+			handle_output(args, &i);
+		else if (args->token->redir[i][0] == '<' && args->token->redir[i][1] == '\0')
+			handle_input(args, &i);
+		i++;
+	}
+}
+
+void	see_heredoc(t_shell *args)
+{
+	int	i;
+
+	i = 0;
+	while (args->token->redir[i])
+	{
+		if (args->token->redir[i][0] == '<'
+			&& args->token->redir[i][1] == '<')
+				handle_heredoc(args, &i);
+		i++;
+	}
+}
+
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
+	see_heredoc(args);
+	if (args->heredoc)
+		wait(0);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("dup2: ");
 	close(fd[1]);
-	handle_redir(args);
+	handle_redir_pipes(args);
 	if (args->token->cmd[0] == '\0')
 		return ;
 	forknbt(args, token, fd);
@@ -27,12 +61,13 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
 	if (args->heredoc)
 		wait(0);
+	see_heredoc(args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	pipe(fd);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	handle_redir(args);
+	handle_redir_pipes(args);
 	forknbt(args, token, fd);
 }
 
@@ -40,9 +75,10 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	if (args->heredoc)
 		wait(0);
+	see_heredoc(args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-	handle_redir(args);
+	handle_redir_pipes(args);
 	if (args->flag != 1)
 	{
 		dup2(args->out, STDOUT_FILENO);
@@ -64,6 +100,8 @@ void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
 		args->flag = 0;
 		args->in = dup(STDIN_FILENO);
 		args->out = dup(STDOUT_FILENO);
+		args->stdin_here = dup(STDIN_FILENO);
+		args->stdout_here = dup(STDOUT_FILENO);
 		handlefirstpipe(token, args, fd);
 	}
 	else if (*k != args->list_size - 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/07 21:36:20 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 12:22:50 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ void	start_heredoc(t_shell *args, int i)
 	int		flag;
 
 	flag = 1;
-	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	dup2(args->stdout_here, STDOUT_FILENO);
+	//close(args->out);
+	dup2(args->stdin_here, STDIN_FILENO);
+	//close(args->in);
+	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (fd < 0)
 		perror("open");
 	while (1)

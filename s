@@ -1,0 +1,14 @@
+ola
+hugo
+includes
+juanito
+juanitoshell
+libft
+Makefile
+README.md
+s
+sheets
+src
+t
+test.c
+testfiles

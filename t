@@ -1,0 +1,16 @@
+command
+Forgot
+hugo
+includes
+juanito
+juanitoshell
+libft
+Makefile
+Phylothinkers
+README.md
+s
+sheets
+src
+t
+test.c
+testfiles
