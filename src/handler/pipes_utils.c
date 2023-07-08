@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:29:05 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 23:43:25 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	handleexporttopipe(t_comand *tmp, t_shell *args)
 
 int	isbuiltin(t_comand *tmp, t_shell *args)
 {
-	doexit(args);
+	if (doexit1(args) == 1)
+		return (1);
 	suppisbuiltin2(tmp, args);
 	if (tmp->cmd[0] == '\0')
 		return (1);

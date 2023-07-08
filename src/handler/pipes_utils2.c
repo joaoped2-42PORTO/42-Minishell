@@ -6,11 +6,46 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:43:14 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:29:58 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 23:39:23 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	doexit1(t_shell *args)
+{
+	long	i;
+
+	i = 0;
+	if (str_is_equal(args->token->cmd, "exit"))
+	{
+		if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
+			i++;
+		while (((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57)))
+			i++;
+		if (args->token->argm[1][i])
+		{
+			ft_putendl_fd("numeric argument required", 2);
+			return (1);
+		}
+		if (ft_atoi(args->token->argm[1]) > LONG_MAX)
+		{
+			g_status = 2;
+			printf("%s: %s: numeric argument required\n", args->token->cmd,
+				args->token->argm[1]);
+			exit(g_status);
+		}
+		if (args->token->argm[2])
+		{
+			printf("%s: too many arguments\n", args->token->cmd);
+			g_status = 1;
+			return (1);
+		}
+		else
+			exit(ft_atoi(args->token->argm[1]));
+	}
+	return (0);
+}
 
 int	suppisbuiltin2(t_comand *tmp, t_shell *args)
 {
