@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 22:24:04 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 23:33:53 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int						handleexporttopipe(t_comand *tmp, t_shell *args);
 int						isbuiltin(t_comand *tmp, t_shell *args);
 
 //-----pipe_utils2-----//
-int						suppisbuiltin(t_shell *args);
+int						doexit1(t_shell *args);
 int						suppisbuiltin2(t_comand *tmp, t_shell *args);
 void					forknbt(t_shell *args, t_comand *token, int *fd);
 void					pipesloop(t_comand *token, t_shell *args, int *fd);
