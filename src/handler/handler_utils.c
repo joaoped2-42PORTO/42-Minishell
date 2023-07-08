@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:08:38 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 23:14:55 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ char	*print_env_var2(t_shell *args, char *str)
 			if (isdigit(str[i]))
 			{
 				var_start = i;
-				while (isdigit(str[i]))
-					i++;
+				i++;
 				var_len = i - var_start;
 				var_name = malloc((var_len + 1) * sizeof(char));
 				ft_strncpy(var_name, &str[var_start], var_len);
