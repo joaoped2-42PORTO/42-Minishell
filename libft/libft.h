@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:30:20 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/07 18:41:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:09:25 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strdup(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strcpy(char *s1, char *s2);
+char *ft_strcpy(char *s1, const char *s2);
 char	*ft_strcat(char *dest, const char *src);
 typedef struct s_list
 {

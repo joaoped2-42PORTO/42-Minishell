@@ -1,45 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Created: 2023/04/20 14:46:36 by joaoped2          #+#    #+#             */
+/*   Updated: 2023/04/20 14:46:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	see_pwd(char **str)
+void	handler(int sig)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (sig == SIGINT)
 	{
-		if (var_is_equal(str[i], "PWD"))
-			return (i);
-		i++;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	i++;
-	return (i);
 }
 
-void	check_pwd(t_shell *args)
+void	config_signals(void)
 {
-	int	i;
-	int	j;
+	struct sigaction	sa;
 
-	j = 5;
-	i = see_pwd(args->env);
-	if (i > see_env_size(args))
-	{
-		printf("No PWD recognized\n");
-		return ;
-	}
-	while (args->env[i][j])
-		printf("%c", args->env[i][j++]);
-	printf("\n");
+	sa.sa_handler = &handler;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,94 +6,101 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 16:12:31 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-/*
-    char *path = getenv("PATH");
-    char *dir = strtok(path, ":");
-    char ls_path[256];
-
-    while (dir != NULL) {
-        sprintf(ls_path, "%s/ls", dir);
-        if (access(ls_path, X_OK) == 0) {
-            printf("Found ls command at %s\n", ls_path);
-            break;
-        }
-        dir = strtok(NULL, ":");
-    }
-*/
-
-
-
-void	clearcmd()
+char	*nonbuiltinspath(t_shell *args, char *path)
 {
-	int pid;
-	char *args[] = {"clear", NULL};
+	char	**path_split;
 
-	if ((pid = fork()) == 0)
-		execv("/usr/bin/clear", args);
-	waitpid(-1, NULL, 0);
+	path = get_path(args);
+	if (path)
+	{
+		path_split = ft_split(path, ':');
+		free(path);
+		path = get_acess(path_split, args->token);
+	}
+	else
+		return (0);
+	return (path);
 }
 
-void	lscmd(char *input)
+int	do_non_builtins(t_shell *args)
 {
-	char *path = getenv("PATH");
-	char	*barra ="/";
-	int pid;
-	int i;
-	int j;
-	int k;
-	char *args[] = {"ls", "-l", NULL};
+	char	*path;
+	int		pid;
+
+	path = NULL;
+	path = nonbuiltinspath(args, path);
+	pid = fork();
+	if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		if (args->input[0] == '.' && args->input[1] == '/')
+			open_exec(args);
+		else if (args->input[0] == '/')
+			open_exec_abs(args);
+		execthenonbuiltin(args, path);
+	}
+	signal(SIGINT, new_prompt);
+	waitpid(pid, &g_status, 0);
+	if (WIFEXITED(g_status))
+		g_status = WEXITSTATUS(g_status);
+	free(path);
+	return (1);
+}
+
+void	cmdhandler(t_shell *args)
+{
+	args->out = dup(STDOUT_FILENO);
+	args->in = dup(STDIN_FILENO);
+	handle_redir(args);
+	if (args->token->cmd[0] == '\0')
+		return ;
+	if (str_is_equal(args->token->cmd, "pwd"))
+		check_pwd(args);
+	else if (str_is_equal(args->token->cmd, "cd"))
+		do_cd(args);
+	else if (str_is_equal(args->token->cmd, "env"))
+	{
+		if (args->token->argm[1])
+		{
+			printf("No arguments allowed\n");
+			g_status = 2;
+			return ;
+		}
+		print_env(args);
+	}
+	else if (cmdhandler2(args) == 0)
+		do_non_builtins(args);
+	close_redirection(args);
+}
+
+int	ft_size(t_comand *lst)
+{
+	int	i;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	while(path[i])
-		i++;
-	while(barra[k])
-		path[i++] = barra[k++];
-	while (input[j])
-		path[i++] = input[j++];
-	path[i] = '\0';
-
-	//printf("%s\n", path);
-
-	if (i == 2)
+	while (lst)
 	{
-		if ((pid = fork()) == 0)
-    		execv(path, &args[1]);
-		waitpid(-1, NULL, 0);
+		lst = lst->next;
+		++i;
 	}
-	else if (i == 5)
-	{
-		if ((pid = fork()) == 0)
-    		execv("/bin/ls", args);
-		waitpid(-1, NULL, 0);
-	}
+	return (i);
 }
 
-int	cmdhandler(char *input)
+void	executer(t_shell *args)
 {
-	if (!ft_strncmp(input, "pwd", 3))
-		check_pwd();
-	else if (!ft_strncmp(input, "cd ", 3))
-		do_cd(input);
-	else if (!ft_strncmp(input, "cd", 2))
-	{
-		chdir("/nfs/homes/");
-		printf("OI!\n");
-	}
-	else if (!ft_strncmp(input, "exit", 4))
-		return (0);
-	else if (!ft_strncmp(input, "clear", 5))
-		clearcmd();
-	else if (!ft_strncmp(input, "ls ", 2))
-		lscmd(input);
+	t_comand	*tmp;
+	int			size;
+
+	tmp = args->token;
+	size = ft_size(args->token);
+	if (size == 1)
+		cmdhandler(args);
 	else
-		printf("command not found: %s\n", input);
-	return(1);
+		pipes(tmp, args);
 }

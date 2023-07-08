@@ -1,45 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
+/*   Created: 2023/06/29 14:24:54 by joaoped2          #+#    #+#             */
 /*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	see_pwd(char **str)
+int	checkpipered(t_shell *args, int *i)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (var_is_equal(str[i], "PWD"))
-			return (i);
-		i++;
-	}
-	i++;
-	return (i);
+	if (args->split[*i][0] == '|')
+		return (1);
+	return (0);
 }
 
-void	check_pwd(t_shell *args)
+int	see_closed_pipe(char *str, int *i)
 {
-	int	i;
-	int	j;
-
-	j = 5;
-	i = see_pwd(args->env);
-	if (i > see_env_size(args))
+	while (str[*i])
 	{
-		printf("No PWD recognized\n");
-		return ;
+		if (ft_isalnum(str[*i]))
+			return (1);
+		(*i)++;
 	}
-	while (args->env[i][j])
-		printf("%c", args->env[i][j++]);
-	printf("\n");
+	return (0);
+}
+
+int	see_dbquote_string(char *str, int *i)
+{
+	while (str[*i])
+	{
+		if (str[*i] == '\"')
+			return (1);
+		(*i)++;
+	}
+	return (0);
+}
+
+int	see_quote_string(char *str, int *i)
+{
+	while (str[*i])
+	{
+		if (str[*i] == '\'')
+			return (1);
+		(*i)++;
+	}
+	return (0);
 }

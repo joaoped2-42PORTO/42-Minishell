@@ -6,20 +6,32 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:46:36 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/20 14:46:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	handler(int sig)
 {
 	if (sig == SIGINT)
 	{
 		printf("\n");
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_on_new_line();
 		rl_redisplay();
+		g_status = 130;
+	}
+}
+
+void	new_prompt(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		g_status = 130;
 	}
 }
 

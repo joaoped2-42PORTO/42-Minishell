@@ -1,45 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
+/*   Created: 2023/05/24 11:17:17 by joaoped2          #+#    #+#             */
 /*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	see_pwd(char **str)
+void	processdefault(t_shell *args)
+{
+	int	i;
+
+	i = 1;
+	while (args->token->argm[i])
+	{
+		printf("%s", args->token->argm[i]);
+		if (args->token->argm[i + 1])
+			printf(" ");
+		i++;
+	}
+	printf("\n");
+}
+
+int	checkforbig(t_shell *args)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (args->split[args->index][i])
 	{
-		if (var_is_equal(str[i], "PWD"))
-			return (i);
-		i++;
+		if (args->split[args->index][i] == '-')
+			i++;
+		while (args->split[args->index][i] == 'n')
+			i++;
+		if (args->split[args->index][i] == '\0')
+			return (1);
+		else
+			return (0);
 	}
-	i++;
-	return (i);
-}
-
-void	check_pwd(t_shell *args)
-{
-	int	i;
-	int	j;
-
-	j = 5;
-	i = see_pwd(args->env);
-	if (i > see_env_size(args))
-	{
-		printf("No PWD recognized\n");
-		return ;
-	}
-	while (args->env[i][j])
-		printf("%c", args->env[i][j++]);
-	printf("\n");
+	return (0);
 }

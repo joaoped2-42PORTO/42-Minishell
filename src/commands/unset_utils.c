@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
+/*   Created: 2023/05/08 15:08:32 by huolivei          #+#    #+#             */
 /*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	see_pwd(char **str)
+int	variable_size(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (var_is_equal(str[i], "PWD"))
-			return (i);
 		i++;
+		if (str[i] == '=')
+			break ;
 	}
-	i++;
 	return (i);
 }
 
-void	check_pwd(t_shell *args)
+void	exchange_memo_unset_exp(t_shell *args, char **str, int *i)
 {
-	int	i;
-	int	j;
+	str = dup_env(args->exp, str);
+	free_matrix(args->exp);
+	args->exp = ft_calloc(*i + 1, sizeof(char *));
+}
 
-	j = 5;
-	i = see_pwd(args->env);
-	if (i > see_env_size(args))
-	{
-		printf("No PWD recognized\n");
-		return ;
-	}
-	while (args->env[i][j])
-		printf("%c", args->env[i][j++]);
-	printf("\n");
+void	exchange_memo_unset(t_shell *args, char **str, int *i)
+{
+	str = dup_env(args->env, str);
+	free_matrix(args->env);
+	args->env = ft_calloc(*i + 1, sizeof(char *));
 }
