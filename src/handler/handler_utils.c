@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 22:23:38 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 23:08:38 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,26 @@ char	*get_env_value(t_shell *args, const char *name)
 	return (value);
 }
 
+char	*ft_strncpy(char *dest, const char *src, size_t n)
+{
+	char	*ptr;
+	size_t	i;
+
+	ptr = dest;
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (ptr);
+}
+
 char	*print_env_var2(t_shell *args, char *str)
 {
 	size_t	len;
@@ -70,7 +90,7 @@ char	*print_env_var2(t_shell *args, char *str)
 	char	*var_name;
 	char	*env_value;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	result = malloc((len + 1) * sizeof(char));
 	ptr = result;
 	i = 0;
@@ -79,34 +99,50 @@ char	*print_env_var2(t_shell *args, char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			if (!isalnum(str[i]))
+			if (isdigit(str[i]))
 			{
-				*ptr++ = '$';
-				continue ;
-			}
-			var_start = i;
-			while (isalnum(str[i]))
-			{
-				i++;
-			}
-			var_len = i - var_start;
-			var_name = malloc((var_len + 1) * sizeof(char));
-			strncpy(var_name, &str[var_start], var_len);
-			var_name[var_len] = '\0';
-			env_value = get_env_value(args, var_name);
-			free(var_name);
-			if (env_value != NULL)
-			{
-				while (*env_value)
+				var_start = i;
+				while (isdigit(str[i]))
+					i++;
+				var_len = i - var_start;
+				var_name = malloc((var_len + 1) * sizeof(char));
+				ft_strncpy(var_name, &str[var_start], var_len);
+				var_name[var_len] = '\0';
+				env_value = get_env_value(args, var_name);
+				free(var_name);
+				if (env_value != NULL)
 				{
-					*ptr++ = *env_value++;
+					while (*env_value)
+						*ptr++ = *env_value++;
 				}
 			}
+			else if (isalpha(str[i]))
+			{
+				var_start = i;
+				while (isalnum(str[i]))
+					i++;
+				var_len = i - var_start;
+				var_name = malloc((var_len + 1) * sizeof(char));
+				ft_strncpy(var_name, &str[var_start], var_len);
+				var_name[var_len] = '\0';
+				env_value = get_env_value(args, var_name);
+				free(var_name);
+				if (env_value != NULL)
+				{
+					while (*env_value)
+						*ptr++ = *env_value++;
+				}
+				else if (str[i] != ' ' && str[i] != '\0')
+				{
+					*ptr++ = ' ';
+					*ptr++ = str[i];
+				}
+			}
+			else
+				*ptr++ = '$';
 		}
 		else
-		{
 			*ptr++ = str[i++];
-		}
 	}
 	*ptr = '\0';
 	return (result);
