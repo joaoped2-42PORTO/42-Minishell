@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:19:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_homedk(t_shell *args)
 	i = 0;
 	while (args->env[i])
 	{
-		if (!ft_strncmp(args->env[i], "HOME=", 5))
+		if (var_is_equal(args->env[i], "HOME"))
 		{
 			path = args->env[i] + 5;
 			chdir(path);
@@ -41,7 +41,7 @@ void	change_env_pwd(t_shell *args)
 	getcwd(path, sizeof(path));
 	while (args->env[++i])
 	{
-		if (!ft_strcmp(args->env[i], "PWD"))
+		if (var_is_equal(args->env[i], "PWD"))
 		{
 			if (args->path != NULL)
 				free(args->path);
@@ -50,9 +50,10 @@ void	change_env_pwd(t_shell *args)
 			args->env[i] = ft_strdup(str);
 			args->path = ft_strdup(str);
 			free(str);
-			break ;
+			return ;
 		}
 	}
+	args->env[i] = ft_strjoin(str, path);
 }
 
 void	change_exp_pwd(t_shell *args)
@@ -66,15 +67,30 @@ void	change_exp_pwd(t_shell *args)
 	getcwd(path, sizeof(path));
 	while (args->exp[++i])
 	{
-		if (!ft_strcmp(args->exp[i], "PWD"))
+		if (var_is_equal(args->exp[i], "PWD"))
 		{
 			str = ft_strjoin(str, path);
 			free(args->exp[i]);
 			args->exp[i] = ft_strdup(str);
 			free(str);
-			break ;
+			return ;
 		}
 	}
+	args->exp[i] = ft_strjoin(str, path);
+}
+
+int	see_PWD_status(char **str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (var_is_equal(str[i], "PWD"))
+			return(1);
+		i++;
+	}
+	return (0);
 }
 
 void	do_cd(t_shell *args)
@@ -82,7 +98,9 @@ void	do_cd(t_shell *args)
 	int	error;
 
 	error = 0;
-	if (!args->split[1])
+	if(!see_PWD_status(args->exp))
+		return ;
+	if (!args->split[1] || args->split[1][0] == '~')
 	{
 		change_env_oldpwd(args);
 		ft_homedk(args);

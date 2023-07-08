@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:24:54 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:07:45 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	checkpipered(t_shell *args, int *i)
 
 int	see_closed_pipe(char *str, int *i)
 {
+	if (str[*i] == '|')
+		return (0);
 	while (str[*i])
 	{
 		if (ft_isalnum(str[*i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:47:52 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:34:14 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ int	suppforexportcounting(t_shell *args, int *y, int *z)
 	return (1);
 }
 
+int	ft_isalnum2(int c)
+{
+	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122)
+		|| c == '_')
+		return (1);
+	return (0);
+}
+
 int	see_chars(char *str)
 {
 	int	i;
@@ -36,7 +44,7 @@ int	see_chars(char *str)
 		return (0);
 	while (str[i] && str[i] != '=')
 	{
-		if (!ft_isalnum(str[i]))
+		if (!ft_isalnum2(str[i]))
 			return (0);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:35:59 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	change_pwd(char **str1)
 	getcwd(path, sizeof(path));
 	while (str1[++i])
 	{
-		if (!ft_strcmp(str1[i], "OLDPWD"))
+		if (var_is_equal(str1[i], "OLDPWD"))
 		{
 			str = ft_strjoin(str, path);
 			free(str1[i]);
@@ -46,7 +46,7 @@ void	first_old_pwd(char **str1)
 	getcwd(path, sizeof(path));
 	while (str1[++i])
 	{
-		if (!ft_strcmp(str1[i], "PWD"))
+		if (var_is_equal(str1[i], "PWD"))
 		{
 			str = ft_strjoin(str, path);
 			free(str1[i]);
