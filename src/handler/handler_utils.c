@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 19:17:16 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/08 22:23:38 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,104 +40,76 @@ char	*print_env_var(t_shell *args, char *str)
 	return (src);
 }
 
-char	*suppprintvar2(t_shell *args, char *str, char *src, char *src1)
+char	*get_env_value(t_shell *args, const char *name)
 {
-	args->envar2x++;
-	while (args->env[args->envar2i])
+	char	*value;
+	int		i;
+
+	value = NULL;
+	i = 0;
+	while (args->env[i] != NULL)
 	{
-		args->envar2j = 0;
-		while (args->env[args->envar2i][args->envar2j]
-			&& args->env[args->envar2i][args->envar2j] == str[args->envar2x])
+		if (strncmp(args->env[i], name, strlen(name)) == 0)
 		{
-			args->envar2x++;
-			args->envar2j++;
-			if ((str[args->envar2x] >= 32 && str[args->envar2x] <= 47)
-				|| (str[args->envar2x] >= 58 && str[args->envar2x] <= 64)
-				|| (str[args->envar2x] >= 91 && str[args->envar2x] <= 96)
-				|| ((str[args->envar2x] >= 123 && str[args->envar2x] <= 126))
-				|| !str[args->envar2x])
-			{
-				args->envar2f = 1;
-				break ;
-			}
-		}
-		if (args->env[args->envar2i][args->envar2j] == '='
-			&& args->envar2f == 1)
-		{
-			args->envar2j++;
-			src1 = ft_strjoin(src, &args->env[args->envar2i][args->envar2j]);
-			//free(src);
+			value = args->env[i] + strlen(name) + 1;
 			break ;
 		}
-		args->envar2i++;
+		i++;
 	}
-	return (src1);
-}
-
-void	verifyvar2(t_shell *args, char *str)
-{
-	while (str[args->envar2x] != ' ' && args->envar2j == 0
-		&& str[args->envar2x])
-	{
-		if (args->envar2f == 1)
-		{
-			args->envar2x++;
-			break ;
-		}
-		args->envar2x++;
-	}
-}
-
-void	initvalsforvar2(t_shell *args)
-{
-	args->envar2i = 0;
-	args->envar2j = 0;
-	args->envar2x = 0;
-	args->envar2f = 0;
-	args->envar2k = 0;
+	return (value);
 }
 
 char	*print_env_var2(t_shell *args, char *str)
 {
-	char	*src;
-	char	*src1;
-	char	*src2;
+	size_t	len;
+	char	*result;
+	char	*ptr;
+	int		i;
+	size_t	var_start;
+	size_t	var_len;
+	char	*var_name;
+	char	*env_value;
 
-	src = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	src1 = NULL;
-	src2 = NULL;
-	initvalsforvar2(args);
-	while (str[args->envar2x])
+	len = strlen(str);
+	result = malloc((len + 1) * sizeof(char));
+	ptr = result;
+	i = 0;
+	while (str[i])
 	{
-		if (str[args->envar2x] == '$')
+		if (str[i] == '$')
 		{
-			src1 = suppprintvar2(args, str, src, src1);
-			args->envar2f = 0;
-			if (str[args->envar2x] >= 48 && str[args->envar2x] <= 57)
-				args->envar2f = 1;
-			verifyvar2(args, str);
-			if (src1 == NULL)
-				src2 = ft_strjoin(src, &str[args->envar2x]);
-			else
+			i++;
+			if (!isalnum(str[i]))
 			{
-				src2 = ft_strdup(src1);
-				free(src1);
-				while (src2[args->envar2k] && str[args->envar2k])
-					args->envar2k++;
+				*ptr++ = '$';
+				continue ;
 			}
-			free(src);
-			src = src2;
+			var_start = i;
+			while (isalnum(str[i]))
+			{
+				i++;
+			}
+			var_len = i - var_start;
+			var_name = malloc((var_len + 1) * sizeof(char));
+			strncpy(var_name, &str[var_start], var_len);
+			var_name[var_len] = '\0';
+			env_value = get_env_value(args, var_name);
+			free(var_name);
+			if (env_value != NULL)
+			{
+				while (*env_value)
+				{
+					*ptr++ = *env_value++;
+				}
+			}
 		}
 		else
 		{
-			src[args->envar2k] = str[args->envar2x];
-			args->envar2k++;
-			args->envar2x++;
+			*ptr++ = str[i++];
 		}
 	}
-	if (src2 == NULL)
-		return (ft_strdup(""));
-	return (src2);
+	*ptr = '\0';
+	return (result);
 }
 
 void	open_exec_helper(t_shell *args, char *str)
