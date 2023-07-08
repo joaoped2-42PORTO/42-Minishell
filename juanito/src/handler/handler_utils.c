@@ -45,15 +45,18 @@ char	*print_env_var(t_shell *args, char *str)
 	int		i;
 	int		j;
 	char	*src;
+	char	*src1;
+	//char	*rst;
 	int		x;
 
 	i = 0;
 	j = 0;
 	x = -1;
 	src = ft_calloc(ft_strlen(str), 1);
+	src1 = NULL;
 	while (str[++x] != '$')
 		src[x] = str[x];
-	src[x++] = ' ';
+	x++;
 	while (args->env[i])
 	{
 		j = 0;
@@ -66,14 +69,15 @@ char	*print_env_var(t_shell *args, char *str)
 		{
 			j++;
 			//free(src);
-			src = ft_strjoin(src, &args->env[i][j]);
+			src1 = ft_strjoin(src, &args->env[i][j]);
 			break ;
 		}
 		i++;
 	}
-	if (src == NULL)
+	//rst = ft_strjoin(src, src1);
+	if (src1[0] == '\0')
 		return (NULL);
-	return (src);
+	return (src1);
 }
 
 void	open_exec_helper(t_shell *args, char *str)

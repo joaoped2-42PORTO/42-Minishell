@@ -103,13 +103,14 @@ void	start_heredoc(t_shell *args, int i)
 	char	*buffer;
 	int		fd;
 	char	*tmp;
+	int		flag;
 
+	flag = 1;
 	fd = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
 		perror("open");
 	while (1)
 	{
-		i = 0;
 		buffer = readline("heredoc >");
 		if (buffer == NULL)
 		{
@@ -119,12 +120,23 @@ void	start_heredoc(t_shell *args, int i)
 		if (str_is_equal(buffer, args->token->redir[i]))
 			break ;
 		if (ft_strchr(buffer, '$'))
+		{
+				flag = 0;
 				tmp = print_env_var(args, buffer);
-		free (buffer);
-		buffer = ft_strdup(tmp);
-		free (tmp);
-		ft_putendl_fd(buffer, fd);
-		free(buffer);
+		}
+		if (flag == 0)
+		{
+			free (buffer);
+			buffer = ft_strdup(tmp);
+			free (tmp);
+			ft_putendl_fd(buffer, fd);
+			free (buffer);
+		}
+		else
+		{
+			ft_putendl_fd(buffer, fd);
+			free(buffer);
+		}
 	}
 	free(buffer);
 	close(fd);
