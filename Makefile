@@ -51,7 +51,9 @@ OBJ         = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 LIBFT       = libft/libft.a
 LIBFT_DIR   = libft
 
-all: $(OBJ)
+all: $(NAME)
+
+$(NAME): $(OBJ)
 	@make -s -C $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -fsanitize=address -o $(NAME)
 	@echo "${GREEN}Minishell Compilation Complete! ${RESET}"

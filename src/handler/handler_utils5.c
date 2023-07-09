@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:20:58 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 14:10:33 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:04:52 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	here_doc_utils(t_shell *args, int *fd)
 	dup2(args->stdout_here, STDOUT_FILENO);
 	dup2(args->stdin_here, STDIN_FILENO);
 	fd1 = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
+	if (*fd < 0)
 		perror("open");
 	*fd = fd1;
 }
