@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:08:32 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 01:12:37 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:14:07 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int	check_chars_unset(char *str1)
 	i = 0;
 	if (ft_isdigit(str1[0]))
 	{
-		printf("Char not supported\n");
+		ft_putendl_fd("Char not supported", 2);
 		return (0);
 	}
 	while (str1[i])
 	{
 		if (!ft_isalnum2(str1[i++]))
 		{
-			printf("Char not supported\n");
+			ft_putendl_fd("Char not supported", 2);
 			return (0);
 		}
 	}

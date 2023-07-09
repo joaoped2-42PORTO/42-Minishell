@@ -55,7 +55,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -s -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -fsanitize=address -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 	@echo "${GREEN}Minishell Compilation Complete! ${RESET}"
 
 $(OBJDIR)/%.o: %.c

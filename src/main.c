@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 16:06:40 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:12:30 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_valid_input(t_shell *args)
 	}
 	if (!valid_input(args))
 	{
-		printf("Forgot to close quotes or pipe\n");
+		ft_putendl_fd("Forgot to close quotes or pipe", 2);
 		g_status = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:47:52 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:34:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:13:37 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	suppforexportcounting(t_shell *args, int *y, int *z)
 {
 	if (!see_chars(args->token->argm[*y]))
 	{
-		printf("Char not supported\n");
+		ft_putendl_fd("Char not supported", 2);
 		g_status = 1;
 		*z = 1;
 		if (args->token->argm[(*y) + 1])
