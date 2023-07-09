@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 17:20:25 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:02:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	doexit(t_shell *args)
 	i = 0;
 	if (str_is_equal(args->token->cmd, "exit"))
 	{
+		if (!args->token->argm[1])
+			exit(g_status);
 		if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
 			i++;
 		while (((args->token->argm[1][i] >= 48
