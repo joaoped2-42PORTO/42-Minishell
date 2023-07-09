@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 01:09:22 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:09:47 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -32,7 +33,6 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-# include <limits.h>
 
 typedef struct s_tokenizer
 {
@@ -68,9 +68,13 @@ typedef struct s_shell
 	int					flag;
 	int					stdin_here;
 	int					stdout_here;
+	int					var_start;
+	int					var_len;
+	char				*var_name;
+	char				*env_value;
 }						t_shell;
 
-extern int	g_status;
+extern int				g_status;
 
 //---------------------------SRC-------------------------------//
 
@@ -161,6 +165,8 @@ void					do_unset(t_shell *args);
 
 //----------handler----------//
 
+char					*print_env_var2(t_shell *args, char *str);
+
 //-----handler_utils-----//
 char					*print_env_var(t_shell *args, char *str);
 void					open_exec_helper(t_shell *args, char *str);
@@ -189,8 +195,19 @@ void					execthenonbuiltin(t_shell *args, char *path);
 int						doexit(t_shell *args);
 int						cmdhandler2(t_shell *args);
 
+//-----handler_utils5-----//
+void					here_doc_utils(t_shell *args, int *fd);
+void					heredoc_expander_utils(char *buffer, char *tmp, int fd);
+void					heredoc_nonexpander_utils(char *buffer, int fd);
+char					*heredoc_expander_starter(int *flag, char *tmp,
+							t_shell *args, char *buffer);
+
+//-----handler_utils6-----//
+int						check_for_null(char *buffer);
+char					*get_env_value(t_shell *args, const char *name);
+
 //-----handler-----//
-char					*nonbuiltinspath(t_shell *args,	char *path);
+char					*nonbuiltinspath(t_shell *args, char *path);
 int						do_non_builtins(t_shell *args);
 void					cmdhandler(t_shell *args);
 int						ft_size(t_comand *lst);
@@ -207,6 +224,14 @@ int						doexit1(t_shell *args);
 int						suppisbuiltin2(t_comand *tmp, t_shell *args);
 void					forknbt(t_shell *args, t_comand *token, int *fd);
 void					pipesloop(t_comand *token, t_shell *args, int *fd);
+
+//-----pipe_utils3-----//
+void					nr_higher(t_shell *args);
+int						many_args(t_shell *args);
+void					see_heredoc(t_shell *args);
+void					handle_redir_pipes(t_shell *args);
+
+char					*ft_strncpy(char *dest, const char *src, size_t n);
 
 //-----pipes-----//
 void					handlefirstpipe(t_comand *token, t_shell *args,
@@ -260,8 +285,7 @@ void					alloc_env_mem(char **str, char **str1, char **str2);
 void					get_path_struct(t_shell *args);
 
 //-----init-----//
-void					check_rd(t_shell *args, t_comand *ag, int *i,
-							int *x);
+void					check_rd(t_shell *args, t_comand *ag, int *i, int *x);
 int						check_for_first_redir(char **split, int *i);
 t_comand				*init(t_shell *args, int *i);
 t_comand				*init_token(t_shell *args);
@@ -271,6 +295,9 @@ void					init_values(t_shell *args, char **env, int i);
 void					check_rd2(t_shell *args, t_comand *ag, int *i, int *x);
 void					check_rd(t_shell *args, t_comand *ag, int *i, int *x);
 void					inithpl(t_shell *args, t_comand *ag, int *i, int *x);
+void					loop_helper(t_comand *ag, t_shell *args, int *i,
+							int *j);
+void					init_helper(t_comand *ag, t_shell *args);
 
 //-----utils-----//
 int						checkpipered(t_shell *args, int *i);

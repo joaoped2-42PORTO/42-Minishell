@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:19:30 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:02:42 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ void	change_exp_pwd(t_shell *args)
 	args->exp[i] = ft_strjoin(str, path);
 }
 
-int	see_PWD_status(char **str)
+int	see_pwd_status(char **str)
 {
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (var_is_equal(str[i], "PWD"))
-			return(1);
+			return (1);
 		i++;
 	}
 	return (0);
@@ -98,7 +98,7 @@ void	do_cd(t_shell *args)
 	int	error;
 
 	error = 0;
-	if(!see_PWD_status(args->exp))
+	if (!see_pwd_status(args->exp))
 		return ;
 	if (!args->split[1] || args->split[1][0] == '~')
 	{

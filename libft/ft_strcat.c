@@ -6,14 +6,15 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:54:37 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/04/27 16:02:04 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:01:13 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 char	*ft_strcat(char *dest, const char *src)
 {
-	char	*ptr = dest;
+	char	*ptr;
 
+	ptr = dest;
 	while (*ptr)
 		ptr++;
 	while (*src)

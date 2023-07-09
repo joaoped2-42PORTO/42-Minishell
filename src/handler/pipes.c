@@ -6,42 +6,11 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/08 17:35:58 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:42:37 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	handle_redir_pipes(t_shell *args)
-{
-	int	i;
-
-	i = 0;
-	while (args->token->redir[i])
-	{
-		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
-			handle_append(args, &i);
-		else if (args->token->redir[i][0] == '>')
-			handle_output(args, &i);
-		else if (args->token->redir[i][0] == '<' && args->token->redir[i][1] == '\0')
-			handle_input(args, &i);
-		i++;
-	}
-}
-
-void	see_heredoc(t_shell *args)
-{
-	int	i;
-
-	i = 0;
-	while (args->token->redir[i])
-	{
-		if (args->token->redir[i][0] == '<'
-			&& args->token->redir[i][1] == '<')
-				handle_heredoc(args, &i);
-		i++;
-	}
-}
 
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
@@ -51,7 +20,6 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("dup2: ");
 	close(fd[1]);
-	//handle_redir(args);
 	handle_redir_pipes(args);
 	if (args->token->cmd[0] == '\0')
 		return ;
@@ -68,7 +36,6 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	pipe(fd);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	//handle_redir(args);
 	handle_redir_pipes(args);
 	forknbt(args, token, fd);
 }
@@ -78,10 +45,9 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	if (args->heredoc)
 		wait(0);
 	see_heredoc(args);
+	handle_redir_pipes(args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-	//handle_redir(args);
-	handle_redir_pipes(args);
 	if (args->flag != 1)
 	{
 		dup2(args->out, STDOUT_FILENO);
@@ -115,7 +81,7 @@ void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
 
 void	pipes(t_comand *token, t_shell *args)
 {
-	int			fd[2];
+	int	fd[2];
 
 	args->list_size = checklistsizeforpipes(token);
 	if (args->heredoc)

@@ -26,8 +26,12 @@ SRC         = src/cleaner/cleaner.c \
               src/handler/handler_utils2.c \
               src/handler/handler_utils3.c \
               src/handler/handler_utils4.c \
+              src/handler/handler_utils5.c \
+              src/handler/handler_utils6.c \
+              src/handler/expander.c \
               src/handler/pipes_utils.c \
               src/handler/pipes_utils2.c \
+			  src/handler/pipes_utils3.c \
               src/handler/pipes.c \
               src/handler/tokens.c \
               src/handler/tokens2.c \

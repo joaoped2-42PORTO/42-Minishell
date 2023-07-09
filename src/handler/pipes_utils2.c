@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:43:14 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:39:23 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/09 16:09:24 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	doexit1(t_shell *args)
 	{
 		if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
 			i++;
-		while (((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57)))
+		while (((args->token->argm[1][i] >= 48
+				&& args->token->argm[1][i] <= 57)))
 			i++;
 		if (args->token->argm[1][i])
 		{
@@ -29,18 +30,9 @@ int	doexit1(t_shell *args)
 			return (1);
 		}
 		if (ft_atoi(args->token->argm[1]) > LONG_MAX)
-		{
-			g_status = 2;
-			printf("%s: %s: numeric argument required\n", args->token->cmd,
-				args->token->argm[1]);
-			exit(g_status);
-		}
-		if (args->token->argm[2])
-		{
-			printf("%s: too many arguments\n", args->token->cmd);
-			g_status = 1;
+			nr_higher(args);
+		if (many_args(args))
 			return (1);
-		}
 		else
 			exit(ft_atoi(args->token->argm[1]));
 	}

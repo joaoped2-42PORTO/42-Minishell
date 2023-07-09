@@ -6,22 +6,22 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:44:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 13:58:09 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	suppoptionn(t_shell *args, int *i)
+int	suppoptionn(t_shell *args, int *i)
 {
 	while (1)
 	{
 		if (!args->split[args->index])
-			return ;
+			return (0);
 		if (args->index == 1 && checkforbig(args) == 0)
 		{
 			processdefault(args);
-			return ;
+			return (0);
 		}
 		else if (checkforbig(args) == 0)
 			break ;
@@ -29,6 +29,7 @@ void	suppoptionn(t_shell *args, int *i)
 			(*i)++;
 		args->index++;
 	}
+	return (1);
 }
 
 void	process_option_n(t_shell *args)
@@ -36,7 +37,8 @@ void	process_option_n(t_shell *args)
 	int	i;
 
 	i = 1;
-	suppoptionn(args, &i);
+	if (!suppoptionn(args, &i))
+		return ;
 	if (args->token->argm[i])
 	{
 		while (args->token->argm[i])

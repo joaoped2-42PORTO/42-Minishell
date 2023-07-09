@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:02:23 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 01:24:18 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:03:53 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,25 @@ void	check_rd(t_shell *args, t_comand *ag, int *i, int *x)
 	}
 	else
 		check_rd2(args, ag, i, x);
+}
+
+void	loop_helper(t_comand *ag, t_shell *args, int *i, int *j)
+{
+	if (args->split[*i] && !checkpipered(args, i)
+		&& check_for_first_redir(args->split, i)
+		&& ft_strlen(args->split[*i]) > 0)
+		ag->argm[(*j)++] = ft_strdup(args->split[(*i)++]);
+	else if (args->split[*i] && !checkpipered(args, i)
+		&& check_for_first_redir(args->split, i))
+		(*i)++;
+}
+
+void	init_helper(t_comand *ag, t_shell *args)
+{
+	ag->flag = 0;
+	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
+	ag->out_fd = -1;
+	ag->in_fd = -1;
+	ag->next = NULL;
 }

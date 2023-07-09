@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 12:35:17 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/07 18:55:55 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:01:03 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 unsigned long	ft_atoi(const char *str)
 {
-	int		i;
-	int	sign;
+	int				i;
+	int				sign;
 	unsigned long	result;
 
 	i = 0;

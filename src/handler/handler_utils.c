@@ -3,83 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 00:26:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:27:49 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*print_env_var(t_shell *args, char *str)
-{
-	int		i;
-	int		j;
-	char	*src;
-
-	i = 0;
-	j = 0;
-	src = NULL;
-	while (args->env[i])
-	{
-		j = 0;
-		while (args->env[i][j] && str[j] && args->env[i][j] == str[j])
-			j++;
-		if (args->env[i][j] == '=' && str[j] == '\0')
-		{
-			j++;
-			free(src);
-			src = ft_strdup(&args->env[i][j]);
-			break ;
-		}
-		i++;
-	}
-	if (src == NULL)
-		return (NULL);
-	return (src);
-}
-
-char	*get_env_value(t_shell *args, const char *name)
-{
-	char	*value;
-	int		i;
-
-	value = NULL;
-	i = 0;
-	while (args->env[i] != NULL)
-	{
-		if (strncmp(args->env[i], name, strlen(name)) == 0)
-		{
-			value = args->env[i] + strlen(name) + 1;
-			break ;
-		}
-		i++;
-	}
-	return (value);
-}
-
-char	*ft_strncpy(char *dest, const char *src, size_t n)
-{
-	char	*ptr;
-	size_t	i;
-
-	ptr = dest;
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (ptr);
-}
-
-char	*print_env_var2(t_shell *args, char *str)
+/*  char	*print_env_var2(t_shell *args, char *str)
 {
 	size_t	len;
 	char	*result;
@@ -145,7 +78,7 @@ char	*print_env_var2(t_shell *args, char *str)
 	}
 	*ptr = '\0';
 	return (result);
-}
+} */
 
 void	open_exec_helper(t_shell *args, char *str)
 {

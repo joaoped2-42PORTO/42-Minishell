@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:46:15 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/09 17:20:25 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,11 @@
 void	handle_heredoc(t_shell *args, int *i)
 {
 	(*i)++;
-	if (args->token->in_fd != -1)
-		//close(args->token->out_fd);
-		close(args->token->in_fd);
-	args->heredoc = 1;
 	start_heredoc(args, *i);
 	args->token->in_fd = open("heredoc", O_RDONLY);
 	if (args->token->in_fd == -1)
 		perror("open");
 	dup2(args->token->in_fd, STDIN_FILENO);
-	args->heredoc = 0;
 }
 
 void	execthenonbuiltin(t_shell *args, char *path)
@@ -49,15 +44,11 @@ int	doexit(t_shell *args)
 	{
 		if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
 			i++;
-		while (((args->token->argm[1][i] >= 48 && args->token->argm[1][i] <= 57)))
+		while (((args->token->argm[1][i] >= 48
+				&& args->token->argm[1][i] <= 57)))
 			i++;
 		if (ft_atoi(args->token->argm[1]) > LONG_MAX)
-		{
-			g_status = 2;
-			printf("%s: %s: numeric argument required\n", args->token->cmd,
-				args->token->argm[1]);
-			exit(g_status);
-		}
+			nr_higher(args);
 		if (args->token->argm[2])
 		{
 			printf("%s: too many arguments\n", args->token->cmd);

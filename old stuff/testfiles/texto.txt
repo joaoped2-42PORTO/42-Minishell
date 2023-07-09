@@ -1,7 +1,0 @@
-total 64
--rwxrwxr-x 1 hugo hugo 18448 abr 20 11:38 a.out
--rwxrwxr-x 1 hugo hugo 16000 abr 20 10:47 hell
--rwxrwxr-x 1 hugo hugo 16000 abr 20 10:47 hello
--rw-rw-r-- 1 hugo hugo   190 abr 20 10:47 test1.c
--rw-rw-r-- 1 hugo hugo  4741 abr 20 11:38 test.c
--rw-rw-r-- 1 hugo hugo     0 abr 20 11:42 texto.txt

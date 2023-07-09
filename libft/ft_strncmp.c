@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 12:39:49 by huolivei          #+#    #+#             */
-/*   Updated: 2022/11/02 18:20:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:01:21 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (n == 0)
 		return (0);
 	while (s1[i] == s2[i] && s1[i] != '\0' && i < (n - 1))
-			i++;
+		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-/*int	main()
+/*int	main(void)
 {
 	char	str[] = "Sera que sou grande?";
 	char	str1[] = "Ou sera que eu ainda sou maior?";

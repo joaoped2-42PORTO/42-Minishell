@@ -6,21 +6,22 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:41:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 15:09:01 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:00:38 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_strcpy(char *s1, const char *s2)
+char	*ft_strcpy(char *s1, const char *s2)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (s2[i])
 	{
 		s1[i] = s2[i];
 		i++;
 	}
 	s1[i] = '\0';
-	return s1;
+	return (s1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 01:21:12 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:30:18 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,6 @@ int	check_for_first_redir(char **split, int *i)
 	else if (split[*i][0] == '<')
 		return (0);
 	return (1);
-}
-
-void	loop_helper(t_comand *ag, t_shell *args, int *i, int *j)
-{
-	if (args->split[*i] && !checkpipered(args, i)
-		&& check_for_first_redir(args->split, i)
-		&& ft_strlen(args->split[*i]) > 0)
-		ag->argm[(*j)++] = ft_strdup(args->split[(*i)++]);
-	else if (args->split[*i] && !checkpipered(args, i))
-		(*i)++;
-}
-
-void	init_helper(t_comand *ag, t_shell *args)
-{
-	ag->flag = 0;
-	ag->argm = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
-	ag->next = NULL;
 }
 
 t_comand	*init(t_shell *args, int *i)
@@ -121,8 +103,6 @@ t_comand	*init_token(t_shell *args)
 		if (args->split[i])
 			i++;
 	}
-	tmp->in_fd = -1;
-	tmp->out_fd = -1;
 	return (tmp);
 }
 
@@ -130,6 +110,8 @@ void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
 	g_status = 0;
+	args->stdin_here = -1;
+	args->stdout_here = -1;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));

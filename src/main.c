@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 00:01:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 16:06:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int ac, char **av, char **env)
 	g_status = 0;
 	(void)av;
 	if (ac > 1)
-		return(printf("Too many arguments\n"));
+		return (printf("Too many arguments\n"));
 	i = get_env_size(env);
 	args = malloc(sizeof(t_shell));
 	rl_clear_history();
