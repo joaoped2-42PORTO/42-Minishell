@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/08 23:10:09 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:23:45 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	loop_input(t_shell *args, int *i)
 
 int	see_red_closed(char *str, int i)
 {
+	if (str[i] == '>' && str[i + 1] == '<')
+			return (0);
 	if (str[i] == '<' || str[i] == '>')
 	{
 		while (str[i])

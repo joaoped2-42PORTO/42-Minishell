@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:21:53 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	do_non_builtins(t_shell *args)
 	if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
-		if (args->input[0] == '.' && args->input[1] == '/')
+		if (args->token->argm[0][0] == '.')
 			open_exec(args);
-		else if (args->input[0] == '/')
+		else if (args->token->argm[0][0] == '/')
 			open_exec_abs(args);
 		execthenonbuiltin(args, path);
 	}

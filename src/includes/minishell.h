@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:33:53 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/09 01:09:22 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int						var_is_equal(char *str, char *str1);
 
 //-----export_utils3-----//
 int						suppforexportcounting(t_shell *args, int *y, int *z);
+int						ft_isalnum2(int c);
 
 //-----export-----//
 void					do_export(t_shell *args);
@@ -146,6 +147,7 @@ int						variable_size(char *str);
 void					exchange_memo_unset_exp(t_shell *args, char **str,
 							int *i);
 void					exchange_memo_unset(t_shell *args, char **str, int *i);
+int						check_chars_unset(char *str1);
 
 //-----unset-----//
 void					change_env_unset(t_shell *args, char **env, char *str1,

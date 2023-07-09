@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:14:55 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/09 00:26:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,10 @@ char	*print_env_var2(t_shell *args, char *str)
 
 void	open_exec_helper(t_shell *args, char *str)
 {
-	if (access(str, F_OK) == 0)
+	(void)str;
+	if (access(args->token->argm[0], X_OK) == 0)
+		execve(args->token->argm[0], args->token->argm, NULL);
+	else if (access(str, F_OK) == 0)
 	{
 		printf("%s: Permission denied\n", args->token->cmd);
 		g_status = 126;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:46:04 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:15:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	unset(t_shell *args, char *str1)
 	int		size;
 	int		size_exp;
 
+	if (!check_chars_unset(str1))
+		return ;
 	size = see_env_size(args);
 	size_exp = see_exp_size(args);
 	str = ft_calloc((size + 1), sizeof(char *));
@@ -81,11 +83,11 @@ void	do_unset(t_shell *args)
 	int		i;
 
 	i = 0;
-	while (args->split[++i])
+	while (args->token->argm[++i])
 	{
-		if (args->split[i] == 0)
+		if (args->token->argm[i] == 0)
 			break ;
-		str = ft_strdup(args->split[i]);
+		str = ft_strdup(args->token->argm[i]);
 		unset(args, str);
 		free(str);
 	}
