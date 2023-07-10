@@ -1,3 +1,5 @@
+a.out
+echo
 juanito
 libft
 Makefile
@@ -5,3 +7,4 @@ minishell
 obj
 src
 t
+test.c

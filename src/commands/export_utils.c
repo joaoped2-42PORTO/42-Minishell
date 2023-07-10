@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/08 23:51:37 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:53:50 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	export_counting(t_shell *args, int *x, int *i)
 {
 	int	y;
 	int	z;
+	//char	*str;
 
 	y = 0;
 	z = 0;
@@ -59,15 +60,10 @@ void	export_counting(t_shell *args, int *x, int *i)
 	{
 		if (suppforexportcounting(args, &y, &z) == 0)
 			break ;
-		if (!check_doubles_env(args, y) && !check_doubles_exp(args, y))
-			continue ;
-		else if (!see_if_env(args->token->argm[y]))
+		if (check_doubles_exp(args, y))
 			args->exp[(*x)++] = ft_strdup(args->token->argm[y]);
-		else
-		{
+		if (see_if_env(args->token->argm[y]) && check_doubles_env(args, y))
 			args->env[(*i)++] = ft_strdup(args->token->argm[y]);
-			args->exp[(*x)++] = ft_strdup(args->token->argm[y]);
-		}
 	}
 	if (z == 0)
 		g_status = 0;
