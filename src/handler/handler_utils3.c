@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 14:15:44 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:31:12 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	handle_redir(t_shell *args)
 	}
 }
 
-void	start_heredoc(t_shell *args, int i)
+/* void	start_heredoc(t_shell *args, int i)
 {
 	char	*buffer;
 	int		fd;
@@ -87,6 +87,28 @@ void	start_heredoc(t_shell *args, int i)
 			heredoc_expander_utils(buffer, tmp, fd);
 		else
 			heredoc_nonexpander_utils(buffer, fd);
+	}
+	free(buffer);
+	close(fd);
+} */
+
+void	start_heredoc(t_shell *args, int i)
+{
+	char	*buffer;
+	int		fd;
+	char	*tmp;
+
+	tmp = NULL;
+	here_doc_utils(args, &fd);
+	while (1)
+	{
+		buffer = readline("heredoc >");
+		if (!check_for_null(buffer))
+			break ;
+		if (str_is_equal(buffer, args->token->redir[i]))
+			break ;
+		tmp = heredoc_expander_starter(tmp, args, buffer);
+		heredoc_expander_utils(buffer, tmp, fd);
 	}
 	free(buffer);
 	close(fd);

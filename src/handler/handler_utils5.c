@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:20:58 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 20:04:52 by user             ###   ########.fr       */
+/*   Updated: 2023/07/10 11:29:33 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ void	heredoc_nonexpander_utils(char *buffer, int fd)
 	free(buffer);
 }
 
-char	*heredoc_expander_starter(int *flag, char *tmp,
-									t_shell *args, char *buffer)
+char	*heredoc_expander_starter(char *tmp, t_shell *args, char *buffer)
 {
-	*flag = 0;
 	tmp = print_env_var2(args, buffer);
 	return (tmp);
 }

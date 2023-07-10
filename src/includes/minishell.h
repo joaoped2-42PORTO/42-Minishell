@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 09:57:43 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 11:32:03 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,10 @@ int						cmdhandler2(t_shell *args);
 void					here_doc_utils(t_shell *args, int *fd);
 void					heredoc_expander_utils(char *buffer, char *tmp, int fd);
 void					heredoc_nonexpander_utils(char *buffer, int fd);
-char					*heredoc_expander_starter(int *flag, char *tmp,
-							t_shell *args, char *buffer);
+/* char					*heredoc_expander_starter(int *flag, char *tmp,
+							t_shell *args, char *buffer); */
+char					*heredoc_expander_starter(char *tmp, t_shell *args,
+							char *buffer);
 
 //-----handler_utils6-----//
 int						check_for_null(char *buffer);
