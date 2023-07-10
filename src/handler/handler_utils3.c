@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 22:25:18 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:03:34 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	handle_output(t_shell *args, int *i)
 void	handle_append(t_shell *args, int *i)
 {
 	(*i)++;
-	/* if (args->token->out_fd != -1)
-		close(args->token->out_fd); */
 	args->token->out_fd = open(args->token->redir[*i],
 			O_APPEND | O_CREAT | O_RDWR, 0777);
 	if (args->token->out_fd == -1)
@@ -65,34 +63,6 @@ void	handle_redir(t_shell *args)
 		i++;
 	}
 }
-
-/* void	start_heredoc(t_shell *args, int i)
-{
-	char	*buffer;
-	int		fd;
-	char	*tmp;
-	int		flag;
-
-	flag = 1;
-	tmp = NULL;
-	here_doc_utils(args, &fd);
-	while (1)
-	{
-		buffer = readline("heredoc >");
-		if (!check_for_null(buffer))
-			break ;
-		if (str_is_equal(buffer, args->token->redir[i]))
-			break ;
-		if (ft_strchr(buffer, '$'))
-			tmp = heredoc_expander_starter(&flag, tmp, args, buffer);
-		if (flag == 0)
-			heredoc_expander_utils(buffer, tmp, fd);
-		else
-			heredoc_nonexpander_utils(buffer, fd);
-	}
-	free(buffer);
-	close(fd);
-} */
 
 void	start_heredoc(t_shell *args, int i)
 {

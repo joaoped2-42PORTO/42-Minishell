@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/10 22:27:24 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:02:20 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	handle_redir132(t_shell *args)
 			args->flag = 3;
 			handle_append(args, &i);
 		}
-		else  if (args->token->redir[i][0] == '<'
+		else if (args->token->redir[i][0] == '<'
 			&& args->token->redir[i][1] == '<')
 		{
 			args->flag = 3;
@@ -47,7 +47,6 @@ int	handle_redir132(t_shell *args)
 
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
-	//see_heredoc(args);
 	handle_redir132(args);
 	if (args->flag != 1)
 	{
@@ -55,11 +54,6 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 			perror("dup2: ");
 		close(fd[1]);
 	}
-	//handle_redir_pipes(args);
-	//handle_redir(args);
-	//handle_redir(args);
-	//close_redirection(args);
-	// handle_redir132(args);
 	if (args->token->cmd[0] == '\0')
 		return ;
 	forknbt(args, token, fd);
@@ -67,7 +61,6 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
-	//see_heredoc(args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	pipe(fd);
@@ -77,33 +70,17 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-/* 	if (!handle_redir_pipes(args))
-	{
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	} */
-	//handle_redir_pipes(args);
-	//handle_redir(args);
-	//close_redirection(args);
-	// handle_redir132(args);
 	forknbt(args, token, fd);
 }
 
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	handle_redir132(args);
-/*   	if (!handle_redir_pipes(args))
-	{ */
-		//handle_redir132(args);
 	if (args->flag != 2)
 	{
 		dup2(args->out, STDOUT_FILENO);
 		close(args->out);
 	}
-	//dup2(args->out, STDOUT_FILENO);
-	//close(args->out);
-	//handle_redir132(args);
-	//handle_redir_pipes(args);
 	if (args->flag != 1)
 	{
 		dup2(fd[0], STDIN_FILENO);
@@ -117,11 +94,8 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 		close(fd[0]);
 	}
 	close_redirection(args);
-	//if (args->flag != 1)
-	//{
-		dup2(args->in, STDIN_FILENO);
-		close(args->in);
-	//}
+	dup2(args->in, STDIN_FILENO);
+	close(args->in);
 }
 
 void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
