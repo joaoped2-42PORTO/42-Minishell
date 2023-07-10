@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:44:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 15:02:50 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:30:18 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	handle_redir_pipes(t_shell *args)
 			handle_output(args, &i);
 			return (1);
 		}
-		else if (args->token->redir[i][0] == '<'
+/* 		else if (args->token->redir[i][0] == '<'
 			&& args->token->redir[i][1] == '\0')
 		{
 			handle_input(args, &i);
 			return (1);
-		}
+		} */
 		i++;
 	}
 	return (0);
