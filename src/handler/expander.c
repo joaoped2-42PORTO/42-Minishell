@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:30:01 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 11:36:52 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 12:52:52 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_isprintable(char c)
-{
-	if (c >= 33 && c <= 47)
-		return (1);
-	else if (c >= 58 && c <= 64)
-		return (1);
-	else if (c >= 91 && c <= 96)
-		return (1);
-	else if (c >= 123 && c <= 126)
-		return (1);
-	else
-		return (0);
-	return (1);
-}
-
-void	checkisnumonfirst(char *str, int *x, char **res)
-{
-	(*x)++;
-	while (str[*x] != ' ' && str[*x])
-		append_char_to_res1(res, str[(*x)++]);
-}
 
 void	process_dollar_sign1(t_shell *args, char *str, int *x, char **res)
 {
@@ -45,7 +23,7 @@ void	process_dollar_sign1(t_shell *args, char *str, int *x, char **res)
 	ptr = NULL;
 	ptr2 = NULL;
 	tmp = NULL;
-	if (str[*x] == '$' && str[*x + 1] != '$' && str[*x + 1] != ' ' && str[*x + 1] != '\0')
+	if (checkdollar(str, x))
 	{
 		(*x)++;
 		if (str[*x] >= 48 && str[*x] <= 57)
@@ -81,35 +59,6 @@ void	process_dollar_or_char1(t_shell *args, char *str, int *x, char **res)
 	}
 	else
 		append_char_to_res1(res, str[(*x)++]);
-}
-
-void	append_ptr2_to_res1(char **res, char **ptr2, char **tmp)
-{
-	if (*ptr2)
-	{
-		*tmp = malloc(ft_strlen(*res) + ft_strlen(*ptr2) + 1);
-		ft_strcpy(*tmp, *res);
-		ft_strcat(*tmp, *ptr2);
-		free(*res);
-		*res = *tmp;
-		free(*ptr2);
-	}
-}
-
-void	append_char_to_res1(char **res, char c)
-{
-	char	*ptr;
-	char	*tmp;
-
-	ptr = (char *)malloc(2 * sizeof(char));
-	ptr[0] = c;
-	ptr[1] = '\0';
-	tmp = malloc(ft_strlen(*res) + ft_strlen(ptr) + 1);
-	ft_strcpy(tmp, *res);
-	ft_strcat(tmp, ptr);
-	free(*res);
-	*res = tmp;
-	free(ptr);
 }
 
 void	process_string1(t_shell *args, char *str, int *x, char **res)

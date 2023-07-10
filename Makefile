@@ -21,6 +21,8 @@ SRC         = src/cleaner/cleaner.c \
               src/commands/pwd.c \
               src/commands/unset_utils.c \
               src/commands/unset.c \
+			  src/handler/expander_utils.c \
+              src/handler/expander.c \
               src/handler/handler.c \
               src/handler/handler_utils.c \
               src/handler/handler_utils2.c \
@@ -28,7 +30,6 @@ SRC         = src/cleaner/cleaner.c \
               src/handler/handler_utils4.c \
               src/handler/handler_utils5.c \
               src/handler/handler_utils6.c \
-              src/handler/expander.c \
               src/handler/pipes_utils.c \
               src/handler/pipes_utils2.c \
 			  src/handler/pipes_utils3.c \
@@ -55,7 +56,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -s -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -fsanitize=address -lreadline -o $(NAME)
 	@echo "${GREEN}Minishell Compilation Complete! ${RESET}"
 
 $(OBJDIR)/%.o: %.c
