@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 11:31:12 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 14:23:50 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	handle_output(t_shell *args, int *i)
 void	handle_append(t_shell *args, int *i)
 {
 	(*i)++;
+ 	if (args->token->out_fd != -1)
+		close(args->token->out_fd);
 	args->token->out_fd = open(args->token->redir[*i],
 			O_APPEND | O_CREAT | O_RDWR, 0777);
 	if (args->token->out_fd == -1)

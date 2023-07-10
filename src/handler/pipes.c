@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/09 16:42:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:01:51 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	pipe(fd);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
+/* 	if (!handle_redir_pipes(args))
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+	} */
 	handle_redir_pipes(args);
 	forknbt(args, token, fd);
 }
@@ -44,22 +49,28 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	if (args->heredoc)
 		wait(0);
-	see_heredoc(args);
-	handle_redir_pipes(args);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	if (args->flag != 1)
+	if (see_heredoc(args))
+	{
+		dup2(args->token->out_fd, STDOUT_FILENO);
+		close(args->token->out_fd);
+	}
+	else if (!handle_redir_pipes(args))
 	{
 		dup2(args->out, STDOUT_FILENO);
 		close(args->out);
 	}
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	handle_redir_pipes(args);
+/* 	if (args->flag != 1)
+	{
+		dup2(args->out, STDOUT_FILENO);
+		close(args->out);
+	} */
 	forknbt(args, token, fd);
 	close_redirection(args);
-	if (args->flag != 1)
-	{
-		dup2(args->in, STDIN_FILENO);
-		close(args->in);
-	}
+	dup2(args->in, STDIN_FILENO);
+	close(args->in);
 }
 
 void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)

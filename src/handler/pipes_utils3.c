@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:44:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 10:51:43 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:02:50 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle_redir_pipes(t_shell *args)
+int	handle_redir_pipes(t_shell *args)
 {
 	int	i;
 
@@ -20,27 +20,45 @@ void	handle_redir_pipes(t_shell *args)
 	while (args->token->redir[i])
 	{
 		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
+		{
 			handle_append(args, &i);
+			return (1);
+		}
 		else if (args->token->redir[i][0] == '>')
+		{
 			handle_output(args, &i);
+			return (1);
+		}
 		else if (args->token->redir[i][0] == '<'
 			&& args->token->redir[i][1] == '\0')
+		{
 			handle_input(args, &i);
+			return (1);
+		}
 		i++;
 	}
+	return (0);
 }
 
-void	see_heredoc(t_shell *args)
+int	see_heredoc(t_shell *args)
 {
 	int	i;
+	int	x;
 
+	x = 0;
 	i = 0;
 	while (args->token->redir[i])
 	{
 		if (args->token->redir[i][0] == '<' && args->token->redir[i][1] == '<')
+		{
 			handle_heredoc(args, &i);
+			x = 1;
+		}
 		i++;
 	}
+	if (x == 1)
+		return (1);
+	return (0);
 }
 
 void	nr_higher(t_shell *args)
