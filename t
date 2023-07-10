@@ -1,0 +1,12 @@
+libft
+Makefile
+minishell
+obj
+src
+t
+libft
+Makefile
+minishell
+obj
+src
+t

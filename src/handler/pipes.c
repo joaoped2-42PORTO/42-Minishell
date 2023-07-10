@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/10 15:01:51 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 15:09:07 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	if (args->heredoc)
 		wait(0);
-	if (see_heredoc(args))
+/* 	if (see_heredoc(args))
 	{
 		dup2(args->token->out_fd, STDOUT_FILENO);
 		close(args->token->out_fd);
 	}
-	else if (!handle_redir_pipes(args))
+	else  */if (!handle_redir_pipes(args))
 	{
 		dup2(args->out, STDOUT_FILENO);
 		close(args->out);
