@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:46 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:23:34 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	checkisalpha(t_shell *args, int *i)
 	else if (args->split[args->index][x] >= 97
 		&& args->split[args->index][x] <= 122)
 		return (1);
-	else if (args->split[args->index][x] >= 97
-		&& args->split[args->index][x] <= 122)
-		return (0);
+	else if (args->split[args->index][x] == 95)
+		return (1);
 	return (0);
 }
 

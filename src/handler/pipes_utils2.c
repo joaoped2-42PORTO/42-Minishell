@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:43:14 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 20:00:07 by user             ###   ########.fr       */
+/*   Updated: 2023/07/10 23:38:22 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,24 @@ int	doexit1(t_shell *args)
 		while (((args->token->argm[1][i] >= 48
 				&& args->token->argm[1][i] <= 57)))
 			i++;
-		if (args->token->argm[1][i])
+		if (args->token->argm[1][i] == '\0')
 		{
-			ft_putendl_fd("numeric argument required", 2);
+			i = 0;
+			if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
+				i++;
+			if (ft_atoi(&args->token->argm[1][i]) > LONG_MAX)
+				nr_higher(args);
+			if (many_args(args))
+				return (1);
+			else
+				exit(ft_atoi(args->token->argm[1]));
+		}
+		else
+		{
+			printf("%s: %s: numeric argument required\n", args->token->cmd, args->token->argm[1]);
+			g_status = 2;
 			return (1);
 		}
-		if (ft_atoi(args->token->argm[1]) > LONG_MAX)
-			nr_higher(args);
-		if (many_args(args))
-			return (1);
-		else
-			exit(ft_atoi(args->token->argm[1]));
 	}
 	return (0);
 }

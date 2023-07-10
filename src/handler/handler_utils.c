@@ -6,79 +6,11 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 20:40:45 by user             ###   ########.fr       */
+/*   Updated: 2023/07/10 23:08:41 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*  char	*print_env_var2(t_shell *args, char *str)
-{
-	size_t	len;
-	char	*result;
-	char	*ptr;
-	int		i;
-	size_t	var_start;
-	size_t	var_len;
-	char	*var_name;
-	char	*env_value;
-
-	len = ft_strlen(str);
-	result = malloc((len + 1) * sizeof(char));
-	ptr = result;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			i++;
-			if (isdigit(str[i]))
-			{
-				var_start = i;
-				i++;
-				var_len = i - var_start;
-				var_name = malloc((var_len + 1) * sizeof(char));
-				ft_strncpy(var_name, &str[var_start], var_len);
-				var_name[var_len] = '\0';
-				env_value = get_env_value(args, var_name);
-				free(var_name);
-				if (env_value != NULL)
-				{
-					while (*env_value)
-						*ptr++ = *env_value++;
-				}
-			}
-			else if (isalpha(str[i]))
-			{
-				var_start = i;
-				while (isalnum(str[i]))
-					i++;
-				var_len = i - var_start;
-				var_name = malloc((var_len + 1) * sizeof(char));
-				ft_strncpy(var_name, &str[var_start], var_len);
-				var_name[var_len] = '\0';
-				env_value = get_env_value(args, var_name);
-				free(var_name);
-				if (env_value != NULL)
-				{
-					while (*env_value)
-						*ptr++ = *env_value++;
-				}
-				else if (str[i] != ' ' && str[i] != '\0')
-				{
-					*ptr++ = ' ';
-					*ptr++ = str[i];
-				}
-			}
-			else
-				*ptr++ = '$';
-		}
-		else
-			*ptr++ = str[i++];
-	}
-	*ptr = '\0';
-	return (result);
-} */
 
 void	open_exec_helper(t_shell *args, char *str)
 {
