@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 16:09:47 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:57:43 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,16 @@ void					do_unset(t_shell *args);
 
 //----------handler----------//
 
+//-----expander-----//
+void					process_dollar_sign1(t_shell *args, char *str, int *x,
+							char **res);
+void					process_dollar_or_char1(t_shell *args, char *str,
+							int *x, char **res);
+void					append_ptr2_to_res1(char **res, char **ptr2,
+							char **tmp);
+void					append_char_to_res1(char **res, char c);
+void					process_string1(t_shell *args, char *str, int *x,
+							char **res);
 char					*print_env_var2(t_shell *args, char *str);
 
 //-----handler_utils-----//

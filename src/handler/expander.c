@@ -3,121 +3,131 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:30:01 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 20:48:19 by user             ###   ########.fr       */
+/*   Updated: 2023/07/10 11:20:06 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *ft_strncpy(char *dest, const char *src, size_t n)
+int	ft_isprintable(char c)
 {
-    char *ptr = dest;
-    size_t i = 0;
-    
-    while (i < n && src[i] != '\0')
-    {
-        dest[i] = src[i];
-        i++;
-    }
-    
-    while (i < n)
-    {
-        dest[i] = '\0';
-        i++;
-    }
-    
-    return ptr;
+	if (c >= 33 && c <= 47)
+		return (1);
+	else if (c >= 58 && c <= 64)
+		return (1);
+	else if (c >= 91 && c <= 96)
+		return (1);
+	else if (c >= 123 && c <= 126)
+		return (1);
+	else
+		return (0);
+	return (1);
 }
 
-char *see_aplha_expander(t_shell *args, char *str, char *ptr, int *i)
+void	checkisnumonfirst(char *str, int *x, char **res)
 {
-    args->var_start = *i;
-    
-    while (ft_isalnum(str[*i]))
-        (*i)++;
-    
-    args->var_len = *i - args->var_start;
-    args->var_name = malloc((args->var_len + 1) * sizeof(char));
-    
-    ft_strncpy(args->var_name, &str[args->var_start], args->var_len);
-    args->var_name[args->var_len] = '\0';
-    
-    args->env_value = get_env_value(args, args->var_name);
-    free(args->var_name);
-    
-    if (args->env_value != NULL)
-    {
-        while (*args->env_value)
-            *ptr++ = *args->env_value++;
-    }
-    else if (str[*i] != ' ' && str[*i] != '\0')
-    {
-        *ptr++ = ' ';
-        *ptr++ = str[*i];
-    }
-    
-    return ptr;
+	(*x)++;
+	while (str[*x] != ' ' && str[*x])
+		append_char_to_res1(res, str[(*x)++]);
 }
 
-char *see_digit_expander(t_shell *args, char *ptr, char *str, int *i)
+void	process_dollar_sign1(t_shell *args, char *str, int *x, char **res)
 {
-    args->var_start = *i;
-    (*i)++;
-    
-    args->var_len = *i - args->var_start;
-    args->var_name = malloc((args->var_len + 1) * sizeof(char));
-    
-    ft_strncpy(args->var_name, &str[args->var_start], args->var_len);
-    args->var_name[args->var_len] = '\0';
-    
-    args->env_value = get_env_value(args, args->var_name);
-    free(args->var_name);
-    
-    if (args->env_value != NULL)
-    {
-        while (*args->env_value)
-            *ptr++ = *args->env_value++;
-    }
-    
-    return ptr;
+	char	*ptr;
+	char	*ptr2;
+	char	*tmp;
+	int		k;
+
+	k = 0;
+	ptr = NULL;
+	ptr2 = NULL;
+	tmp = NULL;
+	if (str[*x] == '$' && str[*x + 1] != '$')
+	{
+		(*x)++;
+		if (str[*x] >= 48 && str[*x] <= 57)
+			checkisnumonfirst(str, x, res);
+		ptr = malloc((ft_strlen(args->input) + 1) * sizeof(char));
+		while (str[*x] != ' ' && str[*x] != '\0' && !ft_isprintable(str[*x]))
+			ptr[(k)++] = str[(*x)++];
+		ptr[k] = '\0';
+		ptr2 = print_env_var(args, ptr);
+		free(ptr);
+		append_ptr2_to_res1(res, &ptr2, &tmp);
+		k = 0;
+	}
+	else
+		append_char_to_res1(res, str[(*x)++]);
 }
 
-char *get_result(char *str)
+void	process_dollar_or_char1(t_shell *args, char *str, int *x, char **res)
 {
-    size_t len = ft_strlen(str);
-    char *rst = ft_calloc(len + 1, sizeof(char));
-    
-    return rst;
+	char	*ptr;
+
+	if (str[*x] == '$')
+	{
+		if (str[*x + 1] == '?')
+		{
+			ptr = ft_itoa(g_status);
+			ft_strcat(*res, ptr);
+			free(ptr);
+			(*x) += 2;
+		}
+		else
+			process_dollar_sign1(args, str, x, res);
+	}
+	else
+		append_char_to_res1(res, str[(*x)++]);
 }
 
-char *print_env_var2(t_shell *args, char *str)
+void	append_ptr2_to_res1(char **res, char **ptr2, char **tmp)
 {
-    char *result = get_result(str);
-    char *ptr = result;
-    int i = 0;
-    
-    while (str[i])
-    {
-        if (str[i] == '$')
-        {
-            i++;
-            
-            if (ft_isdigit(str[i]))
-                ptr = see_digit_expander(args, ptr, str, &i);
-            else if (ft_isalpha(str[i]))
-                ptr = see_aplha_expander(args, str, ptr, &i);
-            else
-                *ptr++ = '$';
-        }
-        else
-        {
-            *ptr++ = str[i++];
-        }
-    }
-    
-    *ptr = '\0';
-    return result;
+	if (*ptr2)
+	{
+		*tmp = malloc(ft_strlen(*res) + ft_strlen(*ptr2) + 1);
+		ft_strcpy(*tmp, *res);
+		ft_strcat(*tmp, *ptr2);
+		free(*res);
+		*res = *tmp;
+		free(*ptr2);
+	}
+}
+
+void	append_char_to_res1(char **res, char c)
+{
+	char	*ptr;
+	char	*tmp;
+
+	ptr = (char *)malloc(2 * sizeof(char));
+	ptr[0] = c;
+	ptr[1] = '\0';
+	tmp = malloc(ft_strlen(*res) + ft_strlen(ptr) + 1);
+	ft_strcpy(tmp, *res);
+	ft_strcat(tmp, ptr);
+	free(*res);
+	*res = tmp;
+	free(ptr);
+}
+
+void	process_string1(t_shell *args, char *str, int *x, char **res)
+{
+	if (str[*x] == '$' && str[*x])
+		process_dollar_or_char1(args, str, x, res);
+	else
+		append_char_to_res1(res, str[(*x)++]);
+}
+
+char	*print_env_var2(t_shell *args, char *str)
+{
+	int		x;
+	char	*res;
+
+	res = ft_calloc(ft_strlen(str), sizeof(char));
+	x = 0;
+	while (str[x])
+		process_string1(args, str, &x, &res);
+	return (res);
 }
