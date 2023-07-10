@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/10 18:04:06 by user             ###   ########.fr       */
+/*   Updated: 2023/07/10 18:14:51 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
-	see_heredoc(args);
+	//see_heredoc(args);
 	if (args->heredoc)
 		wait(0);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
@@ -31,7 +31,7 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
 	if (args->heredoc)
 		wait(0);
-	see_heredoc(args);
+	//see_heredoc(args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	pipe(fd);
