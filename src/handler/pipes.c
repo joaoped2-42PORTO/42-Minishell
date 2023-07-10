@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/10 19:53:57 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:27:24 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	handle_redir132(t_shell *args)
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	//see_heredoc(args);
-	if (args->heredoc)
-		wait(0);
 	handle_redir132(args);
 	if (args->flag != 1)
 	{
@@ -69,8 +67,6 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 {
-	if (args->heredoc)
-		wait(0);
 	//see_heredoc(args);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -95,26 +91,37 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
-	if (args->heredoc)
-		wait(0);
 	handle_redir132(args);
 /*   	if (!handle_redir_pipes(args))
 	{ */
 		//handle_redir132(args);
+	if (args->flag != 2)
+	{
 		dup2(args->out, STDOUT_FILENO);
 		close(args->out);
-	// }
-	dup2(args->out, STDOUT_FILENO);
-	close(args->out);
+	}
+	//dup2(args->out, STDOUT_FILENO);
+	//close(args->out);
 	//handle_redir132(args);
 	//handle_redir_pipes(args);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	//handle_redir(args);
-	forknbt(args, token, fd);
+	if (args->flag != 1)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		forknbt(args, token, fd);
+	}
+	else
+	{
+		forknbt(args, token, fd);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+	}
 	close_redirection(args);
-	dup2(args->in, STDIN_FILENO);
-	close(args->in);
+	//if (args->flag != 1)
+	//{
+		dup2(args->in, STDIN_FILENO);
+		close(args->in);
+	//}
 }
 
 void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)

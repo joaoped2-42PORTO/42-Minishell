@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 18:05:58 by user             ###   ########.fr       */
+/*   Updated: 2023/07/10 22:25:18 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@ void	handle_output(t_shell *args, int *i)
 			O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (args->token->out_fd == -1)
 		perror("open");
-	args->flag = 1;
+	args->flag = 2;
 	dup2(args->token->out_fd, STDOUT_FILENO);
 }
 
 void	handle_append(t_shell *args, int *i)
 {
 	(*i)++;
-	if (args->token->out_fd != -1)
-		close(args->token->out_fd);
+	/* if (args->token->out_fd != -1)
+		close(args->token->out_fd); */
 	args->token->out_fd = open(args->token->redir[*i],
 			O_APPEND | O_CREAT | O_RDWR, 0777);
 	if (args->token->out_fd == -1)
 		perror("open");
-	args->flag = 1;
+	args->flag = 2;
 	dup2(args->token->out_fd, STDOUT_FILENO);
 }
 

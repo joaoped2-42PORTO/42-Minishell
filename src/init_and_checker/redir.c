@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:02:23 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 14:03:53 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:36:25 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	init_helper(t_comand *ag, t_shell *args)
 	ag->redir = ft_calloc(see_split_size(args) + 1, sizeof(char *));
 	ag->out_fd = -1;
 	ag->in_fd = -1;
+	ag->here_flag = 0;
 	ag->next = NULL;
 }

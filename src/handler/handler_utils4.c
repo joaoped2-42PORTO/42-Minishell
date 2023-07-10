@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 15:01:09 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 22:37:52 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 void	handle_heredoc(t_shell *args, int *i)
 {
 	(*i)++;
+	args->token->here_flag++;
+	if (args->token->here_flag > 1)
+		dup2(args->in, STDIN_FILENO);
+	if (args->token->in_fd == -1)
+		close(args->token->in_fd);
 	start_heredoc(args, *i);
 	args->token->in_fd = open("heredoc", O_RDONLY);
 	if (args->token->in_fd == -1)
 		perror("open");
 	dup2(args->token->in_fd, STDIN_FILENO);
+	//close(args->token->in_fd);
 }
 
 void	execthenonbuiltin(t_shell *args, char *path)
