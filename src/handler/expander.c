@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:30:01 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 11:20:06 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/10 11:36:52 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	process_dollar_sign1(t_shell *args, char *str, int *x, char **res)
 	ptr = NULL;
 	ptr2 = NULL;
 	tmp = NULL;
-	if (str[*x] == '$' && str[*x + 1] != '$')
+	if (str[*x] == '$' && str[*x + 1] != '$' && str[*x + 1] != ' ' && str[*x + 1] != '\0')
 	{
 		(*x)++;
 		if (str[*x] >= 48 && str[*x] <= 57)
