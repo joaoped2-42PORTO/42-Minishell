@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:43:14 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 23:38:22 by user             ###   ########.fr       */
+/*   Updated: 2023/07/11 16:16:42 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ int	doexit1(t_shell *args)
 			if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
 				i++;
 			if (ft_atoi(&args->token->argm[1][i]) > LONG_MAX)
-				nr_higher(args);
+				nr_higher_pipes(args);
 			if (many_args(args))
 				return (1);
-			else
-				exit(ft_atoi(args->token->argm[1]));
+			return (1);
 		}
 		else
 		{

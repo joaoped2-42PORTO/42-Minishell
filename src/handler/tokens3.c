@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/11 14:51:38 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/11 15:52:24 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_extractValue(const char *string, const char *variable)
 		value = malloc((len + 1) * sizeof(char));
 		if (value != NULL)
 		{
-			strncpy(value, start + var_len + 1, len);
+			ft_strncpy(value, start + var_len + 1, len);
 			value[len] = '\0';
 			return (value);
 		}
@@ -75,7 +75,8 @@ void	process_dollar_sign(t_shell *args, int *x, int *k, char **res)
 			&& args->split[args->index][*x] != '\0' && checkisalpha(args, x))
 			str[(*k)++] = args->split[args->index][(*x)++];
 		str[*k] = '\0';
-		ptr2 = getValue(args->split[args->index - 1], args->split[args->index]);
+		if (args->index >= 1)
+			ptr2 = getValue(args->split[args->index - 1], args->split[args->index]);
 		if (!ptr2)
 			ptr2 = print_env_var(args, str);
 		append_ptr2_to_res(res, &ptr2, &tmp);

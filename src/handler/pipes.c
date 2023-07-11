@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/11 12:31:35 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/11 15:08:29 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_redir132(t_shell *args)
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	handle_redir132(args);
-	if (args->flag != 1)
+	if (args->flag != 2)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			perror("dup2: ");
@@ -57,6 +57,12 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	if (args->token->cmd[0] == '\0')
 		return ;
 	forknbt(args, token, fd);
+	if (args->flag == 2)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			perror("dup2: ");
+		close(fd[1]);
+	}
 }
 
 void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
@@ -65,12 +71,18 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	close(fd[0]);
 	pipe(fd);
 	handle_redir132(args);
-	if (args->flag != 1)
+	if (args->flag != 2)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
 	forknbt(args, token, fd);
+	if (args->flag == 2)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			perror("dup2: ");
+		close(fd[1]);
+	}
 }
 
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
