@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 23:35:53 by user             ###   ########.fr       */
+/*   Updated: 2023/07/11 23:27:38 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	handle_heredoc(t_shell *args, int *i)
 	args->token->in_fd = open("heredoc", O_RDONLY);
 	if (args->token->in_fd == -1)
 		perror("open");
+	args->flag = 1;
 	dup2(args->token->in_fd, STDIN_FILENO);
 }
 

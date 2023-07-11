@@ -1,0 +1,9 @@
+heredoc
+juanito
+libft
+Makefile
+minishell
+obj
+s
+src
+t
