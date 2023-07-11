@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/11 14:46:43 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/11 14:51:38 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_extractValue(const char *string, const char *variable)
 		value = malloc((len + 1) * sizeof(char));
 		if (value != NULL)
 		{
-			ft_strncpy(value, start + var_len + 1, len);
+			strncpy(value, start + var_len + 1, len);
 			value[len] = '\0';
 			return (value);
 		}
@@ -43,15 +43,15 @@ char	*ft_extractValue(const char *string, const char *variable)
 
 char	*getValue(const char *string1, const char *string2)
 {
-	const char	*delimiter;
-	char		*variable;
+	const char	*delim;
+	char		*var;
 
-	delimiter = "$";
-	variable = strstr(string2, delimiter);
-	if (variable != NULL)
+	delim = "$";
+	var = strstr(string2, delim);
+	if (var != NULL)
 	{
-		variable += ft_strlen(delimiter); // Move past the '$' symbol
-		return (ft_extractValue(string1, variable));
+		var += ft_strlen(delim); // Move past the '$' symbol
+		return (ft_extractValue(string1, var));
 	}
 	return (NULL);
 }

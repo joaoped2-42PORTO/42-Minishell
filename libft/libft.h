@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:30:20 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/11 14:48:35 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/11 14:51:10 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char				*ft_strcat(char *dest, const char *src);
 char				*ft_strtok_r(char *str, const char *delim, char **saveptr);
 char				*ft_strstr(const char *str, const char *tofind);
 char				*ft_strpbrk(const char *str, const char *charset);
-char				*ft_strncpy(char *dest, char *src, unsigned int n);
+char				*ft_strncpy(char *dest, const char *src, unsigned int n);
 
 typedef struct s_list
 {
