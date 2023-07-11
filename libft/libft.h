@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 18:30:20 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 14:00:49 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:48:35 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ char				*ft_strdup(const char *str);
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strcpy(char *s1, const char *s2);
 char				*ft_strcat(char *dest, const char *src);
+char				*ft_strtok_r(char *str, const char *delim, char **saveptr);
+char				*ft_strstr(const char *str, const char *tofind);
+char				*ft_strpbrk(const char *str, const char *charset);
+char				*ft_strncpy(char *dest, char *src, unsigned int n);
+
 typedef struct s_list
 {
 	void			*content;

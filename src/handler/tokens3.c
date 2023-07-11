@@ -3,14 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   tokens3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 17:28:48 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:46:43 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*ft_extractValue(const char *string, const char *variable)
+{
+	size_t		var_len;
+	const char	*start;
+	const char	*end;
+	size_t		len;
+	char		*value;
+
+	var_len = ft_strlen(variable);
+	start = ft_strstr(string, variable);
+	if (start != NULL && *(start + var_len) == '=')
+	{
+		end = ft_strchr(start, ' ');
+		if (end == NULL)
+		{
+			end = start + ft_strlen(start);
+		}
+		len = end - (start + var_len + 1);
+		value = malloc((len + 1) * sizeof(char));
+		if (value != NULL)
+		{
+			ft_strncpy(value, start + var_len + 1, len);
+			value[len] = '\0';
+			return (value);
+		}
+	}
+	return (NULL);
+}
+
+char	*getValue(const char *string1, const char *string2)
+{
+	const char	*delimiter;
+	char		*variable;
+
+	delimiter = "$";
+	variable = strstr(string2, delimiter);
+	if (variable != NULL)
+	{
+		variable += ft_strlen(delimiter); // Move past the '$' symbol
+		return (ft_extractValue(string1, variable));
+	}
+	return (NULL);
+}
 
 void	process_dollar_sign(t_shell *args, int *x, int *k, char **res)
 {
@@ -31,7 +75,9 @@ void	process_dollar_sign(t_shell *args, int *x, int *k, char **res)
 			&& args->split[args->index][*x] != '\0' && checkisalpha(args, x))
 			str[(*k)++] = args->split[args->index][(*x)++];
 		str[*k] = '\0';
-		ptr2 = print_env_var(args, str);
+		ptr2 = getValue(args->split[args->index - 1], args->split[args->index]);
+		if (!ptr2)
+			ptr2 = print_env_var(args, str);
 		append_ptr2_to_res(res, &ptr2, &tmp);
 		free(str);
 		*k = 0;

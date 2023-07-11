@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/10 23:02:20 by user             ###   ########.fr       */
+/*   Updated: 2023/07/11 12:31:35 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,10 @@ void	execpipes(t_comand *token, t_shell *args, int *fd, int *k)
 		handlemidpipes(token, args, fd);
 	}
 	else if (*k == args->list_size - 1)
+	{
+		args->flag = 0;
 		handlelastpipes(token, args, fd);
+	}
 }
 
 void	pipes(t_comand *token, t_shell *args)

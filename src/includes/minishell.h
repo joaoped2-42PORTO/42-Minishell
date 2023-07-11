@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 23:04:43 by user             ###   ########.fr       */
+/*   Updated: 2023/07/11 14:48:59 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,8 +246,6 @@ void					pipesloop(t_comand *token, t_shell *args, int *fd);
 //-----pipe_utils3-----//
 void					nr_higher(t_shell *args);
 int						many_args(t_shell *args);
-
-char					*ft_strncpy(char *dest, const char *src, size_t n);
 
 //-----pipes-----//
 void					handlefirstpipe(t_comand *token, t_shell *args,
