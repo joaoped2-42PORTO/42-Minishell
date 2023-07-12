@@ -48,7 +48,7 @@ int	handle_redir132(t_shell *args)
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {
 	handle_redir132(args);
-	if (args->flag != 2)
+	if (args->token->out_fd == -1)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			perror("dup2: ");
@@ -57,7 +57,7 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	if (args->token->cmd[0] == '\0')
 		return ;
 	forknbt(args, token, fd);
-	if (args->flag == 2)
+	if (args->token->out_fd != -1)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			perror("dup2: ");
@@ -71,13 +71,13 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 	close(fd[0]);
 	pipe(fd);
 	handle_redir132(args);
-	if (args->flag != 2)
+	if (args->token->out_fd == -1)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
 	forknbt(args, token, fd);
-	if (args->flag == 2)
+	if (args->token->out_fd != -1)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			perror("dup2: ");
@@ -88,12 +88,12 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 {
 	handle_redir132(args);
-	if (args->flag != 2)
+	if (args->token->out_fd == -1)
 	{
 		dup2(args->out, STDOUT_FILENO);
 		close(args->out);
 	}
-	if (args->flag != 1)
+	if (args->token->in_fd == -1)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);

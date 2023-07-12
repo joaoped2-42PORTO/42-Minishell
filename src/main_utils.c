@@ -69,9 +69,9 @@ int	ft_countargs(char *str)
 		if (!str[i])
 			break ;
 		++count;
-		if (str[i] == '\'' || str[i] == '"')
+		/* if (str[i] == '\'' || str[i] == '"')
 			i += ft_skipquotes(str + i);
-		else if (ft_checkspecial(str + i))
+		else */ if (ft_checkspecial(str + i))
 			i += ft_checkspecial(str + i);
 		else
 		{
@@ -92,9 +92,9 @@ static char	*ft_word(char *str)
 	char	*res;
 
 	l = 0;
-	if (str[l] == '\'' || str[l] == '"')
+	/* if (str[l] == '\'' || str[l] == '"')
 		l += ft_skipquotes(str + l);
-	else if (ft_checkspecial(str + l))
+	else */ if (ft_checkspecial(str + l))
 		l += ft_checkspecial(str + l);
 	else
 	{
