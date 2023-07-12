@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:18:42 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 23:45:28 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:14:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	var_is_equal(char *str, char *str1)
 	j = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	while (str1[j] && str[j] != '=')
+	while (str1[j] && str1[j] != '=')
 		j++;
 	if (!ft_strncmp(str, str1, variable_size(str)) && i == j)
 		return (1);

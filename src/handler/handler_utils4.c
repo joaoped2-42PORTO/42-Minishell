@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 09:09:29 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:40:43 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ void	handle_heredoc(t_shell *args, int *i)
 
 void	execthenonbuiltin(t_shell *args, char *path)
 {
-	if (access(args->token->cmd, X_OK) == 0)
-		execve(path, args->token->argm, args->env);
-	else
+	if (!path)
 	{
 		printf("command not found: %s\n", args->token->cmd);
 		g_status = 127;
@@ -40,6 +38,18 @@ void	execthenonbuiltin(t_shell *args, char *path)
 		free_split(args);
 		free_list(args);
 		do_small_exit(args);
+	}
+	else
+	{
+		if (execve(path, args->token->argm, args->env) != 0)
+		{
+			printf("command not found: %s\n", args->token->cmd);
+			g_status = 127;
+			free(path);
+			free_split(args);
+			free_list(args);
+			do_small_exit(args);
+		}
 	}
 }
 
