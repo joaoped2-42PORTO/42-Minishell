@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 00:49:13 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/12 09:41:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 {
 	if (doexit1(args) == 1)
 		return (1);
-	suppisbuiltin2(tmp, args);
+	if (suppisbuiltin2(tmp, args) == 1)
+		return (1);
 	if (tmp->cmd[0] == '\0')
 		return (1);
 	if (str_is_equal(args->token->cmd, "pwd"))
