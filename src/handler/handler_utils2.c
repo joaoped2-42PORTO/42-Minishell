@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:27:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 13:39:36 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/12 23:20:55 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ void	print_export(t_shell *args)
 	g_status = 0;
 }
 
-void	open_exec_abs(t_shell *args)
+void	open_exec_abs(t_shell *args, char *path)
 {
 	if (execve(args->split[0], args->split, NULL) != 0)
 	{
 		printf("%s: No such file or directory\n", args->token->cmd);
 		g_status = 126;
+		free(path);
+		free_split(args);
+		free_list(args);
+		do_small_exit(args);
 		exit(g_status);
 	}
 	g_status = 0;

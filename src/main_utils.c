@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:15:07 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:40:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,22 @@ int	ft_skipquotes(char *str)
 	{
 		while (str[i] != '\'')
 			i++;
+		i++;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			while (str[i] && (str[i] != '\'' || str[i] != '"'))
+				i++;
+		}
 	}
 	else if (isdquote)
 	{
 		while (str[i] && str[i] != '"')
-		{
 			i++;
-			if (str[i] == '"' && str[i + 1] == '"')
-				i += 2;
+		i++;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			while (str[i] && (str[i] != '\'' || str[i] != '"'))
+				i++;
 		}
 	}
 	i++;
@@ -69,15 +77,18 @@ int	ft_countargs(char *str)
 		if (!str[i])
 			break ;
 		++count;
-		/* if (str[i] == '\'' || str[i] == '"')
+		if (str[i] == '\'' || str[i] == '"')
 			i += ft_skipquotes(str + i);
-		else */ if (ft_checkspecial(str + i))
+		else if (ft_checkspecial(str + i))
 			i += ft_checkspecial(str + i);
 		else
 		{
-			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i)
-				&& str[i] != '\t')
+			while (str[i] && str[i] != ' '&& str[i] != '\t' && !ft_checkspecial(str + i))
+			{
+				if (str[i] == '\'' || str[i] == '"')
+					i += ft_skipquotes(str + i);
 				i++;
+			}
 			if (!str[i])
 				break ;
 		}
@@ -92,15 +103,18 @@ static char	*ft_word(char *str)
 	char	*res;
 
 	l = 0;
-	/* if (str[l] == '\'' || str[l] == '"')
+	if (str[l] == '\'' || str[l] == '"')
 		l += ft_skipquotes(str + l);
-	else */ if (ft_checkspecial(str + l))
+	else if (ft_checkspecial(str + l))
 		l += ft_checkspecial(str + l);
 	else
 	{
-		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
-			&& str[l] != '\t')
-			l++;
+		while (str[l] && str[l] != ' '&& str[l] != '\t' && !ft_checkspecial(str + l))
+			{
+				if (str[l] == '\'' || str[l] == '"')
+					l += ft_skipquotes(str + l);
+				l++;
+			}
 	}
 	res = (char *)malloc(sizeof(char) * (l + 1));
 	if (!res)

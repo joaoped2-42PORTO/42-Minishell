@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:11:32 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 09:41:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/12 23:21:22 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	isbuiltin(t_comand *tmp, t_shell *args)
 void	do_non_builtinsforpipes(t_shell *args, char *path)
 {
 	if (args->token->argm[0][0] == '.')
-		open_exec(args);
+		open_exec(args, path);
 	else if (args->token->argm[0][0] == '/')
-		open_exec_abs(args);
+		open_exec_abs(args, path);
 	execthenonbuiltin(args, path);
 }

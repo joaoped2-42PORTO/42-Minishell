@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 23:08:41 by user             ###   ########.fr       */
+/*   Updated: 2023/07/12 23:14:48 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	open_exec_helper(t_shell *args, char *str)
+void	open_exec_helper(t_shell *args, char *str, char *str1)
 {
 	(void)str;
 	if (access(args->token->argm[0], X_OK) == 0)
@@ -29,10 +29,15 @@ void	open_exec_helper(t_shell *args, char *str)
 		g_status = 127;
 		exit(g_status);
 	}
+	free(str1);
+	free(str);
+	free_split(args);
+	free_list(args);
+	do_small_exit(args);
 	exit(g_status);
 }
 
-void	open_exec(t_shell *args)
+void	open_exec(t_shell *args, char *str1)
 {
 	char	*str;
 	int		i;
@@ -51,7 +56,7 @@ void	open_exec(t_shell *args)
 	while (args->split[0][i])
 		str[j++] = args->split[0][i++];
 	str[j] = '\0';
-	open_exec_helper(args, str);
+	open_exec_helper(args, str, str1);
 	free(str);
 	g_status = 0;
 	exit(g_status);
