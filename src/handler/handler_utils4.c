@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/11 23:27:38 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/12 08:50:21 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	doexit(t_shell *args)
 		{
 			printf("%s: %s: numeric argument required\n", args->token->cmd, args->token->argm[1]);
 			g_status = 2;
-			return (1);
+			exit(g_status);
 		}
 	}
 	return (0);
