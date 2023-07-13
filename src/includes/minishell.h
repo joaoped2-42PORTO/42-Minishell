@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/11 16:15:58 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/12 23:21:08 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,8 @@ char					*print_env_var2(t_shell *args, char *str);
 
 //-----handler_utils-----//
 char					*print_env_var(t_shell *args, char *str);
-void					open_exec_helper(t_shell *args, char *str);
-void					open_exec(t_shell *args);
+void					open_exec_helper(t_shell *args, char *str, char *str1);
+void					open_exec(t_shell *args, char *str1);
 char					*get_path(t_shell *args);
 char					*get_acess(char **str, t_comand *args);
 char					*print_env_var2(t_shell *args, char *str);
@@ -194,7 +194,7 @@ char					*print_env_var2(t_shell *args, char *str);
 //-----handler_utils2-----//
 void					print_env(t_shell *args);
 void					print_export(t_shell *args);
-void					open_exec_abs(t_shell *args);
+void					open_exec_abs(t_shell *args, char *path);
 void					close_redirection(t_shell *args);
 int						str_is_equal(char *str, char *str1);
 
