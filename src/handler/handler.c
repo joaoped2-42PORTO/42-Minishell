@@ -55,9 +55,12 @@ int	do_non_builtins(t_shell *args)
 
 void	cmdhandler(t_shell *args)
 {
+	args->flag = 0;
 	args->out = dup(STDOUT_FILENO);
 	args->in = dup(STDIN_FILENO);
 	handle_redir(args);
+	if (args->flag == -2)
+		return ;
 	if (args->token->cmd[0] == '\0')
 		return ;
 	if (str_is_equal(args->token->cmd, "pwd"))

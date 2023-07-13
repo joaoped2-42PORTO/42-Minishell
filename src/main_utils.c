@@ -27,7 +27,6 @@ int	ft_skipquotes(char *str)
 	{
 		while (str[i] != '\'')
 			i++;
-		i++;
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			while (str[i] && (str[i] != '\'' || str[i] != '"'))
@@ -38,7 +37,6 @@ int	ft_skipquotes(char *str)
 	{
 		while (str[i] && str[i] != '"')
 			i++;
-		i++;
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			while (str[i] && (str[i] != '\'' || str[i] != '"'))

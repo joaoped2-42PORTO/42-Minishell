@@ -17,9 +17,13 @@ void	handle_input(t_shell *args, int *i)
 	(*i)++;
 	args->token->in_fd = open(args->token->redir[*i], O_RDONLY);
 	if (args->token->in_fd == -1)
-		perror("open");
-	args->flag = 1;
-	dup2(args->token->in_fd, STDIN_FILENO);
+	{
+		args->flag = -2;
+		perror("bash");
+		g_status = 1;
+	}
+	else
+		dup2(args->token->in_fd, STDIN_FILENO);
 }
 
 void	handle_output(t_shell *args, int *i)
@@ -28,9 +32,13 @@ void	handle_output(t_shell *args, int *i)
 	args->token->out_fd = open(args->token->redir[*i],
 			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (args->token->out_fd == -1)
-		perror("open");
-	args->flag = 2;
-	dup2(args->token->out_fd, STDOUT_FILENO);
+	{
+		args->flag = -2;
+		perror("bash");
+		g_status = 1;
+	}
+	else
+		dup2(args->token->out_fd, STDOUT_FILENO);
 }
 
 void	handle_append(t_shell *args, int *i)
@@ -39,9 +47,13 @@ void	handle_append(t_shell *args, int *i)
 	args->token->out_fd = open(args->token->redir[*i],
 			O_APPEND | O_CREAT | O_RDWR, 0644);
 	if (args->token->out_fd == -1)
-		perror("open");
-	args->flag = 2;
-	dup2(args->token->out_fd, STDOUT_FILENO);
+	{
+		args->flag = -2;
+		perror("bash");
+		g_status = 1;
+	}
+	else
+		dup2(args->token->out_fd, STDOUT_FILENO);
 }
 
 void	handle_redir(t_shell *args)

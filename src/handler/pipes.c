@@ -20,26 +20,14 @@ int	handle_redir132(t_shell *args)
 	while (args->token->redir[i])
 	{
 		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
-		{
-			args->flag = 3;
 			handle_append(args, &i);
-		}
 		else if (args->token->redir[i][0] == '<'
 			&& args->token->redir[i][1] == '<')
-		{
-			args->flag = 3;
 			handle_heredoc(args, &i);
-		}
 		else if (args->token->redir[i][0] == '>')
-		{
-			args->flag = 3;
 			handle_output(args, &i);
-		}
 		else if (args->token->redir[i][0] == '<')
-		{
-			args->flag = 3;
 			handle_input(args, &i);
-		}
 		i++;
 	}
 	return (0);
@@ -56,7 +44,8 @@ void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 	}
 	if (args->token->cmd[0] == '\0')
 		return ;
-	forknbt(args, token, fd);
+	if (args->flag != -2)
+		forknbt(args, token, fd);
 	if (args->token->out_fd != -1)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
@@ -76,7 +65,8 @@ void	handlemidpipes(t_comand *token, t_shell *args, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	forknbt(args, token, fd);
+	if (args->flag != -2)
+		forknbt(args, token, fd);
 	if (args->token->out_fd != -1)
 	{
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
@@ -97,11 +87,13 @@ void	handlelastpipes(t_comand *token, t_shell *args, int *fd)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		forknbt(args, token, fd);
+		if (args->flag != -2)
+			forknbt(args, token, fd);
 	}
 	else
 	{
-		forknbt(args, token, fd);
+		if (args->flag != -2)
+			forknbt(args, token, fd);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}
