@@ -14,13 +14,13 @@
 
 int	check_for_first_redir(char **split, int *i)
 {
-	if (split[*i][0] == '>' && split[*i][1] == '>')
+	if (split[*i][0] == '>' && split[*i][1] == '>' && !split[*i][2])
 		return (0);
-	else if (split[*i][0] == '<' && split[*i][1] == '<')
+	else if (split[*i][0] == '<' && split[*i][1] == '<' && !split[*i][2])
 		return (0);
-	else if (split[*i][0] == '>')
+	else if (split[*i][0] == '>' && !split[*i][1])
 		return (0);
-	else if (split[*i][0] == '<')
+	else if (split[*i][0] == '<' && !split[*i][1])
 		return (0);
 	return (1);
 }

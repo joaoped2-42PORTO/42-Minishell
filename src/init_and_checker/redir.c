@@ -14,17 +14,20 @@
 
 void	check_rd2(t_shell *args, t_comand *ag, int *i, int *x)
 {
-	if (args->split[*i][0] == '>')
+	if (args->split[*i][0] == '>' && !args->split[*i][1])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
-	else if (args->split[*i][0] == '<')
+	else if (args->split[*i][0] == '<' && !args->split[*i][1])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		if (args->split[*i][0] == '>')
-			(*i)++;
+		if (*i < see_split_size(args) )
+		{
+			if (args->split[*i][0] == '>')
+				(*i)++;
+		}
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
@@ -32,13 +35,13 @@ void	check_rd2(t_shell *args, t_comand *ag, int *i, int *x)
 
 void	check_rd(t_shell *args, t_comand *ag, int *i, int *x)
 {
-	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
+	if (args->split[*i][0] == '>' && args->split[*i][1] == '>' && !args->split[*i][2])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
-	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<')
+	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<' && !args->split[*i][2])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
