@@ -6,7 +6,7 @@
 /*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/11 15:52:24 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/13 07:43:49 by neddy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*getValue(const char *string1, const char *string2)
 	var = strstr(string2, delim);
 	if (var != NULL)
 	{
-		var += ft_strlen(delim); // Move past the '$' symbol
+		var += ft_strlen(delim);
 		return (ft_extractValue(string1, var));
 	}
 	return (NULL);
@@ -75,6 +75,13 @@ void	process_dollar_sign(t_shell *args, int *x, int *k, char **res)
 			&& args->split[args->index][*x] != '\0' && checkisalpha(args, x))
 			str[(*k)++] = args->split[args->index][(*x)++];
 		str[*k] = '\0';
+		if (args->split[args->index - 1][0] == '<' && args->split[args->index - 1][1] == '<')
+		{
+			(*x) = 0;
+			while (args->split[args->index][*x])
+				append_char_to_res(res, args->split[args->index][(*x)++]);
+			return ;
+		}
 		if (args->index >= 1)
 			ptr2 = getValue(args->split[args->index - 1], args->split[args->index]);
 		if (!ptr2)
