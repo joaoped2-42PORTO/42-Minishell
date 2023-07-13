@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 15:30:18 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:18:48 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int	check_for_first_redir(char **split, int *i)
 {
+	char	*str;
+
+	str = "echo";
+	if (*i != 0)
+		if (str_is_equal(split[*i - 1], str))
+			return (1);
 	if (split[*i][0] == '>' && split[*i][1] == '>')
 		return (0);
 	else if (split[*i][0] == '<' && split[*i][1] == '<')

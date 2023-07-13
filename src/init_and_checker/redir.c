@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:02:23 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 22:36:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:15:29 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	check_rd2(t_shell *args, t_comand *ag, int *i, int *x)
 
 void	check_rd(t_shell *args, t_comand *ag, int *i, int *x)
 {
+	char	*str;
+
+	str = "echo";
+	if (*i != 0)
+		if (str_is_equal(args->split[*i - 1], str))
+			return ;
 	if (args->split[*i][0] == '>' && args->split[*i][1] == '>')
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
