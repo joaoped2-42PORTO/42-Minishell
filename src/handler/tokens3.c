@@ -6,13 +6,13 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:03:45 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 08:31:32 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:11:25 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*ft_extractValue(const char *string, const char *variable)
+char	*ft_extractvalue(const char *string, const char *variable)
 {
 	size_t		var_len;
 	const char	*start;
@@ -41,7 +41,7 @@ char	*ft_extractValue(const char *string, const char *variable)
 	return (NULL);
 }
 
-char	*getValue(const char *string1, const char *string2)
+char	*getvalue(const char *string1, const char *string2)
 {
 	const char	*delim;
 	char		*var;
@@ -51,7 +51,7 @@ char	*getValue(const char *string1, const char *string2)
 	if (var != NULL)
 	{
 		var += ft_strlen(delim);
-		return (ft_extractValue(string1, var));
+		return (ft_extractvalue(string1, var));
 	}
 	return (NULL);
 }
@@ -70,22 +70,10 @@ void	process_dollar_sign(t_shell *args, int *x, int *k, char **res)
 		&& args->split[args->index][*x + 1] != '$')
 	{
 		(*x)++;
-		str = malloc((ft_strlen(args->input) + 1) * sizeof(char));
-		while (args->split[args->index][*x] != ' '
-			&& args->split[args->index][*x] != '\0' && checkisalpha(args, x))
-			str[(*k)++] = args->split[args->index][(*x)++];
-		str[*k] = '\0';
-		if (args->split[args->index - 1][0] == '<' && args->split[args->index - 1][1] == '<')
-		{
-			(*x) = 0;
-			while (args->split[args->index][*x])
-				append_char_to_res(res, args->split[args->index][(*x)++]);
+		str = helpdollarsign(args, x, k, str);
+		if (!help_dollar_sign2(args, x, res, str))
 			return ;
-		}
-		if (args->index >= 1)
-			ptr2 = getValue(args->split[args->index - 1], args->split[args->index]);
-		if (!ptr2)
-			ptr2 = print_env_var(args, str);
+		ptr2 = help_dollar_sign3(args, ptr2, str);
 		append_ptr2_to_res(res, &ptr2, &tmp);
 		free(str);
 		*k = 0;
@@ -102,9 +90,9 @@ void	process_input(t_shell *args, int *x, int *k, char **res)
 	else
 	{
 		while (args->split[args->index][*x] == ' '
-			|| args->split[args->index][*x + 1] == ' ' ||
-			args->split[args->index][*x + 1] == '\t' ||
-			args->split[args->index][*x] == '\t')
+			|| args->split[args->index][*x + 1] == ' '
+			|| args->split[args->index][*x + 1] == '\t'
+			|| args->split[args->index][*x] == '\t')
 			(*x)++;
 		append_char_to_res(res, args->split[args->index][*x]);
 		(*x)++;

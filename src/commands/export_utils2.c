@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:18:42 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 09:14:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:20:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,14 @@ int	check_doubles_exp(t_shell *args, int y)
 	{
 		if (var_is_equal(args->token->argm[y], args->exp[j]))
 		{
-			free(args->exp[j]);
-			args->exp[j] = ft_strdup(args->token->argm[y]);
-			return (0);
+			if (see_if_env(args->token->argm[y]))
+			{
+				free(args->exp[j]);
+				args->exp[j] = ft_strdup(args->token->argm[y]);
+				return (0);
+			}
+			else
+				return (0);
 		}
 		j++;
 	}

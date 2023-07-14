@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 23:20:52 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:12:36 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	do_non_builtins(t_shell *args)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (args->token->argm[0][0] == '.')
 			open_exec(args, path);
@@ -45,7 +46,6 @@ int	do_non_builtins(t_shell *args)
 			open_exec_abs(args, path);
 		execthenonbuiltin(args, path);
 	}
-	signal(SIGINT, new_prompt);
 	waitpid(pid, &g_status, 0);
 	if (WIFEXITED(g_status))
 		g_status = WEXITSTATUS(g_status);
@@ -58,8 +58,7 @@ void	cmdhandler(t_shell *args)
 	args->flag = 0;
 	args->out = dup(STDOUT_FILENO);
 	args->in = dup(STDIN_FILENO);
-	handle_redir(args);
-	if (args->flag == -2)
+	if (!handle_redir(args))
 		return ;
 	if (args->token->cmd[0] == '\0')
 		return ;

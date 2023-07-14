@@ -37,12 +37,14 @@ SRC         = src/cleaner/cleaner.c \
               src/handler/tokens.c \
               src/handler/tokens2.c \
               src/handler/tokens3.c \
+              src/handler/tokens4.c \
               src/init_and_checker/checker.c \
               src/init_and_checker/init_utils.c \
               src/init_and_checker/init.c \
               src/init_and_checker/redir.c \
               src/init_and_checker/utils.c \
               src/signals/signals.c \
+              src/main_utils3.c \
               src/main_utils2.c \
               src/main_utils.c \
               src/main.c

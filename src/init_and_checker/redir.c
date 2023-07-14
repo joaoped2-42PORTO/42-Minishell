@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:02:23 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 22:36:25 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:43:23 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_rd2(t_shell *args, t_comand *ag, int *i, int *x)
 	else if (args->split[*i][0] == '<' && !args->split[*i][1])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
-		if (*i < see_split_size(args) )
+		if (*i < see_split_size(args))
 		{
 			if (args->split[*i][0] == '>')
 				(*i)++;
@@ -35,13 +35,15 @@ void	check_rd2(t_shell *args, t_comand *ag, int *i, int *x)
 
 void	check_rd(t_shell *args, t_comand *ag, int *i, int *x)
 {
-	if (args->split[*i][0] == '>' && args->split[*i][1] == '>' && !args->split[*i][2])
+	if (args->split[*i][0] == '>' && args->split[*i][1] == '>'
+		&& !args->split[*i][2])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->flag = 1;
 	}
-	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<' && !args->split[*i][2])
+	else if (args->split[*i][0] == '<' && args->split[*i][1] == '<'
+		&& !args->split[*i][2])
 	{
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);
 		ag->redir[(*x)++] = ft_strdup(args->split[(*i)++]);

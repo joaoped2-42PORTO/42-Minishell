@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 23:21:08 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:54:57 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,14 +199,14 @@ void					close_redirection(t_shell *args);
 int						str_is_equal(char *str, char *str1);
 
 //-----handler_utils3-----//
-void					handle_input(t_shell *args, int *i);
-void					handle_output(t_shell *args, int *i);
-void					handle_append(t_shell *args, int *i);
-void					handle_redir(t_shell *args);
+int						handle_input(t_shell *args, int *i);
+int						handle_output(t_shell *args, int *i);
+int						handle_append(t_shell *args, int *i);
+int						handle_redir(t_shell *args);
 void					start_heredoc(t_shell *args, int i);
 
 //-----handler_utils4-----//
-void					handle_heredoc(t_shell *args, int *i);
+int						handle_heredoc(t_shell *args, int *i);
 void					execthenonbuiltin(t_shell *args, char *path);
 int						doexit(t_shell *args);
 int						cmdhandler2(t_shell *args);
@@ -215,14 +215,14 @@ int						cmdhandler2(t_shell *args);
 void					here_doc_utils(t_shell *args, int *fd);
 void					heredoc_expander_utils(char *buffer, char *tmp, int fd);
 void					heredoc_nonexpander_utils(char *buffer, int fd);
-/* char					*heredoc_expander_starter(int *flag, char *tmp,
-							t_shell *args, char *buffer); */
 char					*heredoc_expander_starter(char *tmp, t_shell *args,
 							char *buffer);
 
 //-----handler_utils6-----//
 int						check_for_null(char *buffer);
 char					*get_env_value(t_shell *args, const char *name);
+void					exit_helper_123(t_shell *args);
+int						redirs_helper(t_shell *args, int *i);
 
 //-----handler-----//
 char					*nonbuiltinspath(t_shell *args, char *path);
@@ -247,6 +247,7 @@ void					pipesloop(t_comand *token, t_shell *args, int *fd);
 void					nr_higher(t_shell *args);
 void					nr_higher_pipes(t_shell *args);
 int						many_args(t_shell *args);
+int						handle_redir132(t_shell *args);
 
 //-----pipes-----//
 void					handlefirstpipe(t_comand *token, t_shell *args,
@@ -283,6 +284,15 @@ void					process_dollar_sign(t_shell *args, int *x, int *k,
 void					process_input(t_shell *args, int *x, int *k,
 							char **res);
 char					*checkbars(t_shell *args);
+char					*getvalue(const char *string1, const char *string2);
+
+//-----tokens4-----//
+char					*helpdollarsign(t_shell *args, int *x, int *k,
+							char *str);
+int						help_dollar_sign2(t_shell *args, int *x, char **res,
+							char *str);
+char					*help_dollar_sign3(t_shell *args, char *ptr2,
+							char *str);
 
 //----------init_and_checker----------//
 
@@ -326,13 +336,19 @@ int						see_quote_string(char *str, int *i);
 void					handler(int sig);
 void					config_signals(void);
 void					new_prompt(int sig);
+void					new_prompt2(int sig);
 
 //----------main----------//
+
+//-----main_utils3-----//
+void					helpft_word(char *str, int *l);
 
 //-----main_utils2-----//
 int						checkforinput(t_shell *args, size_t *i);
 void					suppcountargs(char *str, int *i);
 int						suppforquotes(char *str, int *i, int *dq, int *sq);
+void					suppforquotes2(char *str, int *i);
+void					helpargs(char *str, int *i);
 
 //-----main_utils-----//
 int						ft_skipquotes(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:05:06 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/10 23:53:50 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:27:56 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,13 @@ void	export_counting(t_shell *args, int *x, int *i)
 {
 	int	y;
 	int	z;
-	//char	*str;
 
 	y = 0;
 	z = 0;
 	while (args->token->argm[++y])
 	{
 		if (suppforexportcounting(args, &y, &z) == 0)
-			break ;
+			continue ;
 		if (check_doubles_exp(args, y))
 			args->exp[(*x)++] = ft_strdup(args->token->argm[y]);
 		if (see_if_env(args->token->argm[y]) && check_doubles_env(args, y))

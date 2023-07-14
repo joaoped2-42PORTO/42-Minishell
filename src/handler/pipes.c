@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/11 23:27:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:45:13 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	handle_redir132(t_shell *args)
-{
-	int	i;
-
-	i = 0;
-	while (args->token->redir[i])
-	{
-		if (args->token->redir[i][0] == '>' && args->token->redir[i][1] == '>')
-			handle_append(args, &i);
-		else if (args->token->redir[i][0] == '<'
-			&& args->token->redir[i][1] == '<')
-			handle_heredoc(args, &i);
-		else if (args->token->redir[i][0] == '>')
-			handle_output(args, &i);
-		else if (args->token->redir[i][0] == '<')
-			handle_input(args, &i);
-		i++;
-	}
-	return (0);
-}
 
 void	handlefirstpipe(t_comand *token, t_shell *args, int *fd)
 {

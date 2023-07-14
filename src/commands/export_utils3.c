@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:47:52 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 00:01:24 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:27:33 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ int	suppforexportcounting(t_shell *args, int *y, int *z)
 		if (args->token->argm[(*y) + 1])
 			(*y)++;
 		else
-			return (0);
-	}
-	if (args->token->argm[*y + 1])
-	{
-		if (args->token->argm[*y + 1][0] == '=' && args->token->argm[*y + 1][1] == '\0')
 			return (0);
 	}
 	return (1);
@@ -45,7 +40,7 @@ int	see_chars(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(str[0]))
+	if (ft_isdigit(str[0]) || str[0] == '=')
 		return (0);
 	while (str[i] && str[i] != '=')
 	{

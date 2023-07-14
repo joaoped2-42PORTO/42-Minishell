@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:23:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 22:27:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:38:50 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,26 @@ int	suppforquotes(char *str, int *i, int *dq, int *sq)
 		*dq = 1;
 	(*i)++;
 	return (1);
+}
+
+void	suppforquotes2(char *str, int *i)
+{
+	while (str[*i] != '\'')
+		(*i)++;
+	if (str[*i] == '\'' || str[*i] == '\"')
+	{
+		while (str[*i] && (str[*i] != '\'' || str[*i] != '"'))
+			(*i)++;
+	}
+}
+
+void	helpargs(char *str, int *i)
+{
+	while (str[*i] && str[*i] != ' ' && str[*i] != '\t' && !ft_checkspecial(str
+			+ *i))
+	{
+		if (str[*i] == '\'' || str[*i] == '"')
+			*i += ft_skipquotes(str + *i);
+		(*i)++;
+	}
 }

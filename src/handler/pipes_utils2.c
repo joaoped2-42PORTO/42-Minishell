@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neddy <neddy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:43:14 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/11 16:16:42 by neddy            ###   ########.fr       */
+/*   Updated: 2023/07/13 18:54:05 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	helpdoexit1(t_shell *args, long *i)
+{
+	if (args->token->argm[1][*i] == '\0')
+	{
+		*i = 0;
+		if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
+			(*i)++;
+		if (ft_atoi(&args->token->argm[1][*i]) > LONG_MAX)
+			nr_higher_pipes(args);
+		if (many_args(args))
+			return (1);
+		return (1);
+	}
+	return (0);
+}
 
 int	doexit1(t_shell *args)
 {
@@ -26,20 +42,12 @@ int	doexit1(t_shell *args)
 		while (((args->token->argm[1][i] >= 48
 				&& args->token->argm[1][i] <= 57)))
 			i++;
-		if (args->token->argm[1][i] == '\0')
-		{
-			i = 0;
-			if (args->token->argm[1][0] == 45 || args->token->argm[1][0] == 43)
-				i++;
-			if (ft_atoi(&args->token->argm[1][i]) > LONG_MAX)
-				nr_higher_pipes(args);
-			if (many_args(args))
-				return (1);
+		if (helpdoexit1(args, &i) == 1)
 			return (1);
-		}
 		else
 		{
-			printf("%s: %s: numeric argument required\n", args->token->cmd, args->token->argm[1]);
+			printf("%s: %s: numeric argument required\n",
+				args->token->cmd, args->token->argm[1]);
 			g_status = 2;
 			return (1);
 		}

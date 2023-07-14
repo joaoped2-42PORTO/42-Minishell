@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:24:54 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/08 23:07:45 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 09:11:31 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int	checkpipered(t_shell *args, int *i)
 {
+	char	*str;
+
+	str = "echo";
+	if (*i != 0)
+		if (str_is_equal(args->split[*i - 1], str))
+			return (0);
 	if (args->split[*i][0] == '|')
 		return (1);
 	return (0);

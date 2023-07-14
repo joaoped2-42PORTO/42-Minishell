@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 22:40:02 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:38:20 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,7 @@ int	ft_skipquotes(char *str)
 	if (suppforquotes(str, &i, &isdquote, &issquote) == 0)
 		return (0);
 	if (issquote)
-	{
-		while (str[i] != '\'')
-			i++;
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			while (str[i] && (str[i] != '\'' || str[i] != '"'))
-				i++;
-		}
-	}
+		suppforquotes2(str, &i);
 	else if (isdquote)
 	{
 		while (str[i] && str[i] != '"')
@@ -81,12 +73,7 @@ int	ft_countargs(char *str)
 			i += ft_checkspecial(str + i);
 		else
 		{
-			while (str[i] && str[i] != ' '&& str[i] != '\t' && !ft_checkspecial(str + i))
-			{
-				if (str[i] == '\'' || str[i] == '"')
-					i += ft_skipquotes(str + i);
-				i++;
-			}
+			helpargs(str, &i);
 			if (!str[i])
 				break ;
 		}
@@ -106,14 +93,7 @@ static char	*ft_word(char *str)
 	else if (ft_checkspecial(str + l))
 		l += ft_checkspecial(str + l);
 	else
-	{
-		while (str[l] && str[l] != ' '&& str[l] != '\t' && !ft_checkspecial(str + l))
-			{
-				if (str[l] == '\'' || str[l] == '"')
-					l += ft_skipquotes(str + l);
-				l++;
-			}
-	}
+		helpft_word(str, &l);
 	res = (char *)malloc(sizeof(char) * (l + 1));
 	if (!res)
 		return (NULL);

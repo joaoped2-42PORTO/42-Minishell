@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:40:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 15:21:54 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:55:18 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,29 @@ char	*get_env_value(t_shell *args, const char *name)
 		i++;
 	}
 	return (value);
+}
+
+void	exit_helper_123(t_shell *args)
+{
+	printf("%s: %s: numeric argument required\n",
+		args->token->cmd, args->token->argm[1]);
+	g_status = 2;
+	free_split(args);
+	free_list(args);
+	do_small_exit(args);
+}
+
+int	redirs_helper(t_shell *args, int *i)
+{
+	if (args->token->redir[*i][0] == '>')
+	{
+		if (!handle_output(args, i))
+			return (0);
+	}
+	else if (args->token->redir[*i][0] == '<')
+	{
+		if (!handle_input(args, i))
+			return (0);
+	}
+	return (1);
 }
