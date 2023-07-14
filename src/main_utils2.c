@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:23:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 18:38:50 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/14 18:16:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void	helpargs(char *str, int *i)
 	{
 		if (str[*i] == '\'' || str[*i] == '"')
 			*i += ft_skipquotes(str + *i);
-		(*i)++;
+		if (*i >= (int)ft_strlen(str))
+			return ;
+		else
+			(*i)++;
 	}
 }
