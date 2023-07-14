@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 20:54:05 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/14 22:20:48 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,27 @@ void	start_heredoc(t_shell *args, int i)
 	char	*buffer;
 	int		fd;
 	char	*tmp;
+	int		pid;
 
-	tmp = NULL;
 	here_doc_utils(args, &fd);
+	tmp = NULL;
+	pid = fork();
+	if (pid == 0)
+	{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	while (1)
 	{
 		buffer = readline("heredoc >");
 		if (!check_for_null(buffer))
-			break ;
+			exit (0) ;
 		if (str_is_equal(buffer, args->token->redir[i]))
-			break ;
+			exit(0) ;
 		tmp = heredoc_expander_starter(tmp, args, buffer);
 		heredoc_expander_utils(buffer, tmp, fd);
 	}
 	free(buffer);
 	close(fd);
+	}
+	wait (0);
 }

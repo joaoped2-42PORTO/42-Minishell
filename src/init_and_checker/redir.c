@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:02:23 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 18:43:23 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/14 21:51:14 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void	init_helper(t_comand *ag, t_shell *args)
 	ag->out_fd = -1;
 	ag->in_fd = -1;
 	ag->here_flag = 0;
+	ag->heredoc_fd = -1;
 	ag->next = NULL;
 }
