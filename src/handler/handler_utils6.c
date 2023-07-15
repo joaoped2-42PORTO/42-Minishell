@@ -16,7 +16,7 @@ int	check_for_null(char *buffer)
 {
 	if (buffer == NULL)
 	{
-		perror("heredoc");
+		printf("bash : heredoc delimited by EOF\n");
 		return (0);
 	}
 	return (1);
