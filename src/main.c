@@ -28,7 +28,7 @@ int	check_valid_input(t_shell *args)
 	}
 	if (!valid_input(args))
 	{
-		ft_putendl_fd("Forgot to close quotes or pipe", 2);
+		ft_putendl_fd("Error on syntax", 2);
 		g_status = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -46,7 +46,7 @@ int	check_input(t_shell *args)
 	if (args->input == NULL)
 	{
 		free(args->input);
-		printf("\n");
+		printf("exit\n");
 		do_small_exit(args);
 		return (0);
 	}

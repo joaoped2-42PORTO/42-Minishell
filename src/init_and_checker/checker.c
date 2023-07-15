@@ -70,7 +70,7 @@ int	loop_input(t_shell *args, int *i)
 
 int	see_red_closed(char *str, int i)
 {
-	if (str[i] == '>' && str[i + 1] == '<')
+	if ((str[i] == '>' && str[i + 1] == '<') || (str[i] == '<' && str[i + 1] == '>' && str[i + 2] == '>'))
 		return (0);
 	if (str[i] == '<' || str[i] == '>')
 	{
