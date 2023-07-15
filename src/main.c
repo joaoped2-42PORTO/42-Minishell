@@ -37,6 +37,7 @@ int	check_valid_input(t_shell *args)
 	}
 	if (checkforinput(args, &i) == 0)
 		return (0);
+	add_history(args->input);
 	return (1);
 }
 
@@ -50,7 +51,6 @@ int	check_input(t_shell *args)
 		do_small_exit(args);
 		return (0);
 	}
-	add_history(args->input);
 	return (1);
 }
 

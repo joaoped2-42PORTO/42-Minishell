@@ -117,20 +117,21 @@ void	start_heredoc(t_shell *args, int i)
 	pid = fork();
 	if (pid == 0)
 	{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	while (1)
-	{
-		buffer = readline("heredoc >");
-		if (!check_for_null(buffer))
-			exit (0) ;
-		if (str_is_equal(buffer, args->token->redir[i]))
-			exit(0) ;
-		tmp = heredoc_expander_starter(tmp, args, buffer);
-		heredoc_expander_utils(buffer, tmp, fd);
-	}
-	free(buffer);
-	close(fd);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		while (1)
+		{
+			buffer = readline("heredoc >");
+			if (!check_for_null(buffer))
+				exit (0) ;
+			if (str_is_equal(buffer, args->token->redir[i]))
+				exit(0) ;
+			tmp = heredoc_expander_starter(tmp, args, buffer);
+			heredoc_expander_utils(buffer, tmp, fd);
+		}
+		free(buffer);
+		close(fd);
 	}
 	waitpid(pid, &g_status, 0);
+	config_signals();
 }

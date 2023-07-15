@@ -26,6 +26,7 @@ void	handler(int sig)
 
 void	new_prompt(int sig)
 {
+	signal(SIGINT, SIG_DFL);
 	if (sig == SIGINT)
 	{
 		printf("\n");
