@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 19:04:13 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 19:11:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/16 19:03:53 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,17 @@ char	*helpdollarsign(t_shell *args, int *x, int *k, char *str)
 
 int	help_dollar_sign2(t_shell *args, int *x, char **res, char *str)
 {
-	if (args->split[args->index - 1][0] == '<' && args->split[args->index
-		- 1][1] == '<')
+	if (args->index != 0)
 	{
-		(*x) = 0;
-		while (args->split[args->index][*x])
-			append_char_to_res(res, args->split[args->index][(*x)++]);
-		free (str);
-		return (0);
+		if (args->split[args->index - 1][0] == '<' && args->split[args->index
+			- 1][1] == '<')
+		{
+			(*x) = 0;
+			while (args->split[args->index][*x])
+				append_char_to_res(res, args->split[args->index][(*x)++]);
+			free (str);
+			return (0);
+		}
 	}
 	return (1);
 }
