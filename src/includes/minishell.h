@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/14 22:10:10 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/17 22:37:35 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_shell
 	int					var_len;
 	char				*var_name;
 	char				*env_value;
+	int					pid;
 }						t_shell;
 
 extern int				g_status;
@@ -337,7 +338,7 @@ int						see_quote_string(char *str, int *i);
 void					handler(int sig);
 void					config_signals(void);
 void					new_prompt(int sig);
-void					new_prompt2(int sig);
+void					config_signals2(void);
 
 //----------main----------//
 

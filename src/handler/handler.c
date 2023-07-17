@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 21:12:36 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/17 22:38:33 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	cmdhandler(t_shell *args)
 	args->in = dup(STDIN_FILENO);
 	if (!handle_redir(args))
 		return ;
+	waitpid(args->pid, &g_status, 0);
 	if (args->token->cmd[0] == '\0')
 		return ;
 	if (str_is_equal(args->token->cmd, "pwd"))
