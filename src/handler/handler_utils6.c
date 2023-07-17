@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_utils6.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:40:17 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 20:55:18 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/17 22:18:31 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_for_null(char *buffer)
 {
 	if (buffer == NULL)
 	{
-		printf("bash : heredoc delimited by EOF\n");
+		printf("bash : heredoc delimited by NULL\n");
 		return (0);
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:06:47 by user              #+#    #+#             */
-/*   Updated: 2023/07/16 19:06:09 by user             ###   ########.fr       */
+/*   Updated: 2023/07/17 22:01:38 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,11 @@ void	pipes(t_comand *token, t_shell *args)
 	int	fd[2];
 
 	args->list_size = checklistsizeforpipes(token);
-	if (args->heredoc)
-		wait(0);
 	pipe(fd);
 	pipesloop(token, args, fd);
-	waitpid(-1, &g_status, 0);
 	while (waitpid(-1, &g_status, 0) > 0)
 		continue ;
 	if (WIFEXITED(g_status))
 		g_status = WEXITSTATUS(g_status);
-	signal(SIGINT, new_prompt);
+	config_signals();
 }

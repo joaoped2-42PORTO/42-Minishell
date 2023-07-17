@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/13 18:30:21 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:39:35 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	check_for_first_redir(char **split, int *i)
 {
-	if (split[*i][0] == '>' && split[*i][1] == '>' && !split[*i][2] && split[*i + 2])
+	if (split[*i][0] == '>' && split[*i][1] == '>'
+		&& !split[*i][2] && split[*i + 2])
 		return (0);
-	else if (split[*i][0] == '<' && split[*i][1] == '<' && !split[*i][2] && split[*i + 2])
+	else if (split[*i][0] == '<' && split[*i][1] == '<'
+		&& !split[*i][2] && split[*i + 2])
 		return (0);
 	else if (split[*i][0] == '>' && !split[*i][1] && split[*i + 2])
 		return (0);

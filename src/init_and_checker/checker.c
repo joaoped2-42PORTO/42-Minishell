@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/09 14:02:51 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:39:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	loop_input(t_shell *args, int *i)
 
 int	see_red_closed(char *str, int i)
 {
-	if ((str[i] == '>' && str[i + 1] == '<') || (str[i] == '<' && str[i + 1] == '>' && str[i + 2] == '>'))
+	if ((str[i] == '>' && str[i + 1] == '<')
+		|| (str[i] == '<' && str[i + 1] == '>' && str[i + 2] == '>'))
 		return (0);
 	if (str[i] == '<' || str[i] == '>')
 	{

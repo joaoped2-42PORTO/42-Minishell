@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/14 18:35:52 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:38:53 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_countargs(char *str)
 				break ;
 		}
 		if (i >= (int)ft_strlen(str))
-			break;
+			break ;
 	}
 	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 23:14:48 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/17 21:37:50 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_path(t_shell *args)
 	i = 0;
 	while (args->env[i])
 	{
-		if (!ft_strncmp(args->env[i], "PATH", 4))
+		if (var_is_equal(args->env[i], "PATH"))
 		{
 			str = ft_strdup(args->env[i]);
 			return (str);
@@ -80,6 +80,25 @@ char	*get_path(t_shell *args)
 	return (NULL);
 }
 
+char	*index_helper(char *tmp, int i, t_comand *args, char **str)
+{
+	char	*join;
+
+	if (i == 0)
+	{
+		tmp = ft_strjoin(&str[i][5], "/");
+		join = ft_strjoin(tmp, args->cmd);
+		free(tmp);
+	}
+	else
+	{
+		tmp = ft_strjoin(str[i], "/");
+		join = ft_strjoin(tmp, args->cmd);
+		free(tmp);
+	}
+	return (join);
+}
+
 char	*get_acess(char **str, t_comand *args)
 {
 	int		i;
@@ -87,11 +106,10 @@ char	*get_acess(char **str, t_comand *args)
 	char	*tmp;
 
 	i = 0;
+	tmp = NULL;
 	while (str[i])
 	{
-		tmp = ft_strjoin(str[i], "/");
-		join = ft_strjoin(tmp, args->cmd);
-		free(tmp);
+		join = index_helper(tmp, i, args, str);
 		if (access(join, F_OK) == 0)
 			break ;
 		if (str[i + 1] == 0)
