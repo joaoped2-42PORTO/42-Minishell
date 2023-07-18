@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/17 22:37:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:52:03 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ int						check_for_null(char *buffer);
 char					*get_env_value(t_shell *args, const char *name);
 void					exit_helper_123(t_shell *args);
 int						redirs_helper(t_shell *args, int *i);
+void					heredoc_signals(t_shell *args);
 
 //-----handler-----//
 char					*nonbuiltinspath(t_shell *args, char *path);

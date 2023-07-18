@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/17 22:17:10 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 10:56:17 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	handle_heredoc(t_shell *args, int *i)
 	args->token->here_flag++;
 	if (args->token->here_flag > 1)
 		dup2(args->in, STDIN_FILENO);
-	if (args->token->in_fd == -1)
+	if (args->token->in_fd != -1)
 		close(args->token->in_fd);
 	start_heredoc(args, *i);
 	args->token->in_fd = open("heredoc", O_RDONLY);

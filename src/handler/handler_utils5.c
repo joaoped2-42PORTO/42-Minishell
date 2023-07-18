@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:20:58 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/14 22:17:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:51:35 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,11 @@ char	*heredoc_expander_starter(char *tmp, t_shell *args, char *buffer)
 {
 	tmp = print_env_var2(args, buffer);
 	return (tmp);
+}
+
+void	heredoc_signals(t_shell *args)
+{
+	signal(SIGINT, new_prompt);
+	waitpid(args->pid, &g_status, 0);
+	config_signals();
 }

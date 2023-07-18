@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:23:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/14 18:16:43 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:43:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	suppforquotes(char *str, int *i, int *dq, int *sq)
 {
 	if (str[*i] != '\'' && str[*i] != '"')
 		return (0);
-	if (str[*i] == '\'')
+	else if (str[*i] == '\'')
 		*sq = 1;
-	if (str[*i] == '"')
+	else if (str[*i] == '"')
 		*dq = 1;
 	(*i)++;
 	return (1);
@@ -47,11 +47,9 @@ void	suppforquotes2(char *str, int *i)
 {
 	while (str[*i] != '\'')
 		(*i)++;
-	if (str[*i] == '\'' || str[*i] == '\"')
-	{
-		while (str[*i] && (str[*i] != '\'' || str[*i] != '"'))
+	(*i)++;
+	while (str[*i] && (str[*i] != ' ' || str[*i] != '\t'))
 			(*i)++;
-	}
 }
 
 void	helpargs(char *str, int *i)

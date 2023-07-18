@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/13 19:47:10 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/18 13:03:11 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,38 @@ int	check_input(t_shell *args)
 void	change_split(t_shell *args)
 {
 	char	*str;
+	t_comand	*tmp;
+	int			i;
 
+	str = NULL;
+	tmp = args->token;
 	args->index = 0;
-	while (args->split[args->index])
+	while (tmp)
 	{
+		if (args->split[args->index][0] == '|')
+			args->index++;
+		i = 0;
 		str = checkbars(args);
-		free(args->split[args->index]);
-		args->split[args->index] = ft_strdup(str);
+		free(tmp->cmd);
+		tmp->cmd = ft_strdup(str);
 		free(str);
-		args->index++;
+		while (tmp->argm[i])
+		{
+			if (check_pipe_rede(args->split[args->index][0], args->split[args->index][1]))
+			{
+				str = checkbars(args);
+				free(tmp->argm[i]);
+				tmp->argm[i] = ft_strdup(str);
+				free(str);
+				i++;
+				args->index++;
+			}
+			else
+				args->index++;
+		}
+		if (args->split[args->index] && (args->split[args->index][0] == '>' || args->split[args->index][0] == '<'))
+			args->index += 2;
+		tmp = tmp->next;
 	}
 }
 
@@ -80,6 +103,7 @@ void	dothingsinsidemain(t_shell *args)
 		else
 		{
 			args->token = init_token(args);
+			change_split(args);
 			executer(args);
 			free_split(args);
 			free_list(args);
@@ -96,7 +120,7 @@ int	main(int ac, char **av, char **env)
 	g_status = 0;
 	(void)av;
 	if (ac > 1)
-		return (printf("Too many arguments\n"));
+		printf("Too many arguments!\n");
 	i = get_env_size(env);
 	args = malloc(sizeof(t_shell));
 	rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/17 22:37:56 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:52:15 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,5 @@ void	start_heredoc(t_shell *args, int i)
 		free(buffer);
 		close(fd);
 	}
+	heredoc_signals(args);
 }

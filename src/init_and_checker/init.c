@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/17 21:39:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 11:44:55 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ t_comand	*init_token(t_shell *args)
 	args->heredoc = 0;
 	sort_exp(args);
 	args->split = split_db_quotes(args->input);
-	change_split(args);
 	args->nr_red = 0;
 	tmp = NULL;
 	i = 0;
@@ -114,6 +113,7 @@ void	init_values(t_shell *args, char **env, int i)
 	g_status = 0;
 	args->stdin_here = -1;
 	args->stdout_here = -1;
+	args->pid = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));

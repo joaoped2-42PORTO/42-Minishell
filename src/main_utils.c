@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:17:03 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/17 21:38:53 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:43:11 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	ft_skipquotes(char *str)
 	i = 0;
 	if (suppforquotes(str, &i, &isdquote, &issquote) == 0)
 		return (0);
-	if (issquote)
+	if (issquote == 1)
 		suppforquotes2(str, &i);
-	else if (isdquote)
+	else if (isdquote == 1)
 	{
 		while (str[i] && str[i] != '"')
 			i++;
@@ -36,8 +36,8 @@ int	ft_skipquotes(char *str)
 				i++;
 		}
 	}
-	if (str[i] != ' ' && str[i] != '\t')
-		i++;
+/* 	if (str[i] != ' ' && str[i] != '\t')
+		i++; */
 	return (i);
 }
 
