@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:46 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/19 14:21:09 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:08:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void	append_char_to_res(char **res, char c)
 	ft_strcpy(tmp, *res);
 	ft_strcat(tmp, ptr);
 	free(*res);
-	*res = tmp;
+	*res = ft_strdup(tmp);
 	free(ptr);
+	free(tmp);
 }
 
 void	process_whitespace(t_shell *args, int *x, char **res)

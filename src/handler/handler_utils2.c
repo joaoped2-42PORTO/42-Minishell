@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:27:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/12 23:20:55 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:20:33 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_export(t_shell *args)
 
 void	open_exec_abs(t_shell *args, char *path)
 {
-	if (execve(args->split[0], args->split, NULL) != 0)
+	if (execve(args->token->cmd, args->token->argm, NULL) != 0)
 	{
 		printf("%s: No such file or directory\n", args->token->cmd);
 		g_status = 126;

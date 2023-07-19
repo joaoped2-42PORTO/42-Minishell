@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/18 15:52:03 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:08:29 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,15 +343,8 @@ void					config_signals2(void);
 
 //----------main----------//
 
-//-----main_utils3-----//
-void					helpft_word(char *str, int *l);
-
 //-----main_utils2-----//
-int						checkforinput(t_shell *args, size_t *i);
-void					suppcountargs(char *str, int *i);
-int						suppforquotes(char *str, int *i, int *dq, int *sq);
-void					suppforquotes2(char *str, int *i);
-void					helpargs(char *str, int *i);
+void					ft_countargsaux(int *i, char *str);
 
 //-----main_utils-----//
 int						ft_skipquotes(char *str);

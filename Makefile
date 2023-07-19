@@ -44,7 +44,6 @@ SRC         = src/cleaner/cleaner.c \
               src/init_and_checker/redir.c \
               src/init_and_checker/utils.c \
               src/signals/signals.c \
-              src/main_utils3.c \
               src/main_utils2.c \
               src/main_utils.c \
               src/main.c

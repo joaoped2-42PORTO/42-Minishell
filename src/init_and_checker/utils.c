@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:24:54 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 09:11:31 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:02:04 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ int	see_closed_pipe(char *str, int *i)
 		return (0);
 	while (str[*i])
 	{
+		if (str[*i] == '"')
+		{
+			(*i)++;
+			if (!see_dbquote_string(str, i))
+				return (0);
+			else
+				return (1);
+		}
+		else if (str[*i] == '\'')
+		{
+			(*i)++;
+			if (!see_quote_string(str, i))
+				return (0);
+			else
+				return (1);
+		}
 		if (ft_isalnum(str[*i]))
 			return (1);
 		(*i)++;

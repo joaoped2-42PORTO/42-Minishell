@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/18 13:03:11 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:02:27 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int		g_status;
 
 int	check_valid_input(t_shell *args)
 {
-	size_t	i;
-
-	i = 0;
 	if (args->input[0] == '\0')
 	{
 		rl_replace_line("", 0);
@@ -35,8 +32,6 @@ int	check_valid_input(t_shell *args)
 		free(args->input);
 		return (0);
 	}
-	if (checkforinput(args, &i) == 0)
-		return (0);
 	add_history(args->input);
 	return (1);
 }
@@ -56,9 +51,10 @@ int	check_input(t_shell *args)
 
 void	change_split(t_shell *args)
 {
-	char	*str;
+	char		*str;
 	t_comand	*tmp;
 	int			i;
+	int			j;
 
 	str = NULL;
 	tmp = args->token;
@@ -68,11 +64,12 @@ void	change_split(t_shell *args)
 		if (args->split[args->index][0] == '|')
 			args->index++;
 		i = 0;
+		j = 0;
 		str = checkbars(args);
 		free(tmp->cmd);
 		tmp->cmd = ft_strdup(str);
 		free(str);
-		while (tmp->argm[i])
+		while (args->split[args->index] && args->split[args->index][0] != '|')
 		{
 			if (check_pipe_rede(args->split[args->index][0], args->split[args->index][1]))
 			{
@@ -83,11 +80,24 @@ void	change_split(t_shell *args)
 				i++;
 				args->index++;
 			}
+			else if (args->split[args->index][0] == '<' || args->split[args->index][0] == '>')
+			{
+				str = checkbars(args);
+				free (tmp->redir[j]);
+				tmp->redir[j] = ft_strdup(str);
+				j++;
+				args->index++;
+				str = checkbars(args);
+				free (tmp->redir[j]);
+				tmp->redir[j] = ft_strdup(str);
+				j++;
+				args->index++;
+			}
 			else
 				args->index++;
 		}
-		if (args->split[args->index] && (args->split[args->index][0] == '>' || args->split[args->index][0] == '<'))
-			args->index += 2;
+		if (args->split[args->index])
+			args->index ++;
 		tmp = tmp->next;
 	}
 }
