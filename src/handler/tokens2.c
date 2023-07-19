@@ -38,7 +38,7 @@ void	append_char_to_res(char **res, char c)
 	ptr = (char *)malloc(2 * sizeof(char));
 	ptr[0] = c;
 	ptr[1] = '\0';
-	tmp = ft_calloc(10, 1);
+	tmp = ft_calloc(ft_strlen(*res) + ft_strlen(ptr) + 1, sizeof(char));
 	ft_strcpy(tmp, *res);
 	ft_strcat(tmp, ptr);
 	free(*res);
