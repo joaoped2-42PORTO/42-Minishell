@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:46 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/10 23:23:34 by user             ###   ########.fr       */
+/*   Updated: 2023/07/19 14:21:09 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	append_char_to_res(char **res, char c)
 	ptr = (char *)malloc(2 * sizeof(char));
 	ptr[0] = c;
 	ptr[1] = '\0';
-	tmp = malloc(ft_strlen(*res) + ft_strlen(ptr) + 1);
+	tmp = ft_calloc(10, 1);
 	ft_strcpy(tmp, *res);
 	ft_strcat(tmp, ptr);
 	free(*res);
