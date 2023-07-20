@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 10:41:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:24:11 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_valid_input(t_shell *args)
 	if (!valid_input(args))
 	{
 		ft_putendl_fd("Error on syntax", 2);
-		g_status = 1;
+		g_status = 2;
 		rl_replace_line("", 0);
 		rl_redisplay();
 		free(args->input);
@@ -60,7 +60,6 @@ void	change_split(t_shell *args)
 	{
 		args->index_arg = 0;
 		args->index_redir = 0;
-		init_lexer(str, args, tmp);
 		while (args->split[args->index] && args->split[args->index][0] != '|')
 		{
 			if (check_pipe_rede(args->split[args->index][0]

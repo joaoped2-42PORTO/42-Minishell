@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 10:42:10 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:21:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ int	check_for_first_redir(char **split, int *i)
 	else if (split[*i][0] == '>' && !split[*i][1] && split[*i + 2])
 		return (0);
 	else if (split[*i][0] == '<' && !split[*i][1] && split[*i + 2])
+		return (0);
+	else if (split[*i][0] == '>')
+		return (0);
+	else if (split[*i][0] == '<')
 		return (0);
 	return (1);
 }

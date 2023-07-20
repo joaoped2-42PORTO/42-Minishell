@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:43 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/18 10:56:17 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:39:01 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	execthenonbuiltin(t_shell *args, char *path)
 {
 	if (!path)
 	{
+		dup2(args->in, STDIN_FILENO);
+		dup2(args->out, STDOUT_FILENO);
 		printf("command not found: %s\n", args->token->cmd);
 		g_status = 127;
 		free(path);
@@ -50,6 +52,8 @@ void	execthenonbuiltin(t_shell *args, char *path)
 	{
 		if (execve(path, args->token->argm, args->env) != 0)
 		{
+			dup2(args->in, STDIN_FILENO);
+			dup2(args->out, STDOUT_FILENO);
 			printf("command not found: %s\n", args->token->cmd);
 			g_status = 127;
 			free(path);

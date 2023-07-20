@@ -6,16 +6,16 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:38:33 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 10:44:13 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:22:53 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	child_exit(t_shell *args)
+void	first_redir(t_shell *args, char *str, t_comand *tmp)
 {
-	g_status = 0;
-	free_split(args);
-	free_list(args);
-	do_small_exit(args);
+	if (args->split[args->index][0] == '<'
+		|| args->split[args->index][0] == '>')
+		lexer_redir(str, args, tmp);
+	init_lexer(str, args, tmp);
 }

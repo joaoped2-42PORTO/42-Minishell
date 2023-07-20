@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/08 22:35:59 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:18:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	change_pwd(char **str1)
 	return (0);
 }
 
-void	first_old_pwd(char **str1)
+void	first_old_pwd(char **str1, t_shell *args)
 {
 	int		i;
 	char	path[1000];
@@ -48,7 +48,7 @@ void	first_old_pwd(char **str1)
 	{
 		if (var_is_equal(str1[i], "PWD"))
 		{
-			str = ft_strjoin(str, path);
+			str = ft_strjoin(str, &args->path[4]);
 			free(str1[i]);
 			str1[i] = ft_strdup(str);
 			free(str);
@@ -61,6 +61,14 @@ void	change_env_oldpwd(t_shell *args)
 {
 	if (change_pwd(args->env) && change_pwd(args->exp))
 		return ;
-	first_old_pwd(args->env);
-	first_old_pwd(args->exp);
+	first_old_pwd(args->env, args);
+	first_old_pwd(args->exp, args);
+}
+
+void	terminate_cd_sucess(t_shell *args)
+{
+	change_env_oldpwd(args);
+	change_env_pwd(args);
+	change_exp_pwd(args);
+	g_status = 0;
 }

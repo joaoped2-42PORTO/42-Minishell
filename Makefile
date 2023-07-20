@@ -44,6 +44,7 @@ SRC         = src/cleaner/cleaner.c \
               src/init_and_checker/redir.c \
               src/init_and_checker/utils.c \
               src/signals/signals.c \
+              src/main_utils3.c \
               src/main_utils2.c \
               src/main_utils.c \
               src/main.c
@@ -57,7 +58,7 @@ all: $(NAME)
 #-fsanitize=address
 $(NAME): $(OBJ)
 	@make -s -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -fsanitize=address -lreadline -o $(NAME)
 	@echo "${GREEN}Minishell Compilation Complete! ${RESET}"
 
 $(OBJDIR)/%.o: %.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:47:52 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/13 19:27:33 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:31:43 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	see_chars(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(str[0]) || str[0] == '=')
+	if (ft_isdigit(str[0]) || str[0] == '=' || !str[0])
 		return (0);
 	while (str[i] && str[i] != '=')
 	{

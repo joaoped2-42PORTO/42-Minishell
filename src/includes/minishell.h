@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 10:44:26 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:24:44 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_shell
 	int					heredoc;
 	int					env_size;
 	int					exit_status;
+	char				*pwd;
 	char				*path;
 	t_comand			*token;
 	char				**exp;
@@ -99,8 +100,9 @@ void					cleaneverything(t_shell *args);
 
 //-----cd_utils-----//
 int						change_pwd(char **str1);
-void					first_old_pwd(char **str1);
+void					first_old_pwd(char **str1, t_shell *args);
 void					change_env_oldpwd(t_shell *args);
+void					terminate_cd_sucess(t_shell *args);
 
 //-----cd-----//
 void					ft_homedk(t_shell *args);
@@ -346,6 +348,9 @@ void					config_signals2(void);
 //----------main----------//
 
 void					child_exit(t_shell *args);
+
+//-----main_utils3-----//
+void					first_redir(t_shell *args, char *str, t_comand *tmp);
 
 //-----main_utils2-----//
 void					ft_countargsaux(int *i, char *str);

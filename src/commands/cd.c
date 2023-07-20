@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 14:02:42 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/07/20 16:18:02 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	change_exp_pwd(t_shell *args)
 	args->exp[i] = ft_strjoin(str, path);
 }
 
-int	see_pwd_status(char **str)
+int	see_pwd_status(char **str, t_shell *args)
 {
 	int	i;
 
@@ -87,7 +87,11 @@ int	see_pwd_status(char **str)
 	while (str[i])
 	{
 		if (var_is_equal(str[i], "PWD"))
+		{
+			free (args->path);
+			args->path = ft_strdup(str[i]);
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -98,9 +102,9 @@ void	do_cd(t_shell *args)
 	int	error;
 
 	error = 0;
-	if (!see_pwd_status(args->exp))
+	if (!see_pwd_status(args->exp, args))
 		return ;
-	if (!args->split[1] || args->split[1][0] == '~')
+	if (!args->split[1] || args->token->argm[1][0] == '~')
 	{
 		change_env_oldpwd(args);
 		ft_homedk(args);
@@ -108,15 +112,14 @@ void	do_cd(t_shell *args)
 		change_exp_pwd(args);
 		return ;
 	}
-	change_env_oldpwd(args);
-	error = chdir(args->split[1]);
+	error = chdir(args->token->argm[1]);
 	if (error != 0)
 	{
 		perror("Error");
+		change_env_pwd(args);
+		change_exp_pwd(args);
 		g_status = 1;
 		return ;
 	}
-	change_env_pwd(args);
-	change_exp_pwd(args);
-	g_status = 0;
+	terminate_cd_sucess(args);
 }

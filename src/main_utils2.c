@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:23:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 10:35:26 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:19:20 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,12 @@ void	lexer_redir(char *str, t_shell *args, t_comand *tmp)
 	free(str);
 	args->index_redir++;
 	args->index++;
+}
+
+void	child_exit(t_shell *args)
+{
+	g_status = 0;
+	free_split(args);
+	free_list(args);
+	do_small_exit(args);
 }

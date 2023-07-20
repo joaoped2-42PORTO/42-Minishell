@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/17 21:37:50 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:40:45 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ void	open_exec_helper(t_shell *args, char *str, char *str1)
 		execve(args->token->argm[0], args->token->argm, NULL);
 	else if (access(str, F_OK) == 0)
 	{
+		dup2(args->in, STDIN_FILENO);
+		dup2(args->out, STDOUT_FILENO);
 		printf("%s: Permission denied\n", args->token->cmd);
 		g_status = 126;
 	}
-	else if (execve(str, args->split, NULL) != 0)
+	else if (execve(str, args->token->argm, NULL) != 0)
 	{
+		dup2(args->in, STDIN_FILENO);
+		dup2(args->out, STDOUT_FILENO);
 		printf("%s: No such file or directory\n", args->token->cmd);
 		free(str);
 		g_status = 127;

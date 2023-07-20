@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/17 22:27:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:56:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,15 @@ int	loop_input(t_shell *args, int *i)
 int	see_red_closed(char *str, int i)
 {
 	if ((str[i] == '>' && str[i + 1] == '<')
-		|| (str[i] == '<' && str[i + 1] == '>' && str[i + 2] == '>'))
-	{
-		g_status = 2;
+		|| (str[i] == '<' && str[i + 1] == '>' && str[i + 2] == '>')
+		|| (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '>')
+		|| (str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '<'))
 		return (0);
-	}
 	if (str[i] == '<' || str[i] == '>')
 	{
+		if ((str[i + 1] == ' ' && str[i + 2] == '>')
+			|| (str[i + 1] == ' ' && str[i + 2] == '<'))
+			return (0);
 		while (str[i])
 		{
 			if (ft_isalnum(str[i]))
