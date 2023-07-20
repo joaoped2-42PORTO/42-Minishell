@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:45:54 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 16:17:44 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:52:54 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	do_small_exit(t_shell *args)
 	free_matrix(args->exp);
 	free(args->input);
 	free(args->path);
+	free(args->pwd);
 	free(args);
 	rl_clear_history();
 	exit(g_status);

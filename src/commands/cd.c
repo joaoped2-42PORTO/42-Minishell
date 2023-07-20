@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 16:18:02 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:51:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,18 @@ void	change_env_pwd(t_shell *args)
 	{
 		if (var_is_equal(args->env[i], "PWD"))
 		{
-			if (args->path != NULL)
-				free(args->path);
+			if (args->pwd[0] != '\0')
+				free(args->pwd);
 			str = ft_strjoin(str, path);
 			free(args->env[i]);
 			args->env[i] = ft_strdup(str);
-			args->path = ft_strdup(str);
+			args->pwd = ft_strdup(str);
 			free(str);
 			return ;
 		}
 	}
-	args->env[i] = ft_strjoin(str, path);
+	args->env[i++] = ft_strjoin(str, path);
+	args->env[i] = 0;
 }
 
 void	change_exp_pwd(t_shell *args)
@@ -69,6 +70,8 @@ void	change_exp_pwd(t_shell *args)
 	{
 		if (var_is_equal(args->exp[i], "PWD"))
 		{
+			/* if (args->path != NULL)
+				free(args->path); */
 			str = ft_strjoin(str, path);
 			free(args->exp[i]);
 			args->exp[i] = ft_strdup(str);
@@ -76,7 +79,8 @@ void	change_exp_pwd(t_shell *args)
 			return ;
 		}
 	}
-	args->exp[i] = ft_strjoin(str, path);
+	args->exp[i++] = ft_strjoin(str, path);
+	args->exp[i] = 0;
 }
 
 int	see_pwd_status(char **str, t_shell *args)

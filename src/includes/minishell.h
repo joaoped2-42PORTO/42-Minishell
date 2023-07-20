@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 16:24:44 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:33:11 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void					cleaneverything(t_shell *args);
 //----------Commands----------//
 
 //-----cd_utils-----//
-int						change_pwd(char **str1);
+int						change_pwd(char **str1, t_shell *args);
 void					first_old_pwd(char **str1, t_shell *args);
 void					change_env_oldpwd(t_shell *args);
 void					terminate_cd_sucess(t_shell *args);

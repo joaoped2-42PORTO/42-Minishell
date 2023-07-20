@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/18 10:38:46 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:12:52 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ int	do_non_builtins(t_shell *args)
 			open_exec_abs(args, path);
 		execthenonbuiltin(args, path);
 	}
+	signal(SIGINT, new_prompt);
 	waitpid(pid, &g_status, 0);
 	if (WIFEXITED(g_status))
 		g_status = WEXITSTATUS(g_status);
+	config_signals();
 	free(path);
 	return (1);
 }

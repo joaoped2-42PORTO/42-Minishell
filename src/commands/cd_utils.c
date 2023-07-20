@@ -6,13 +6,13 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 12:53:47 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 16:18:40 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:32:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	change_pwd(char **str1)
+int	change_pwd(char **str1, t_shell *args)
 {
 	int		i;
 	char	path[1000];
@@ -25,7 +25,7 @@ int	change_pwd(char **str1)
 	{
 		if (var_is_equal(str1[i], "OLDPWD"))
 		{
-			str = ft_strjoin(str, path);
+			str = ft_strjoin(str, &args->path[4]);
 			free(str1[i]);
 			str1[i] = ft_strdup(str);
 			free(str);
@@ -59,7 +59,7 @@ void	first_old_pwd(char **str1, t_shell *args)
 
 void	change_env_oldpwd(t_shell *args)
 {
-	if (change_pwd(args->env) && change_pwd(args->exp))
+	if (change_pwd(args->env, args) && change_pwd(args->exp, args))
 		return ;
 	first_old_pwd(args->env, args);
 	first_old_pwd(args->exp, args);

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:25:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 14:40:45 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:52:06 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	open_exec(t_shell *args, char *str1)
 	int		j;
 
 	j = 0;
-	total = (ft_strlen(args->path) + ft_strlen(args->split[0]));
+	total = (ft_strlen(args->pwd) + ft_strlen(args->split[0]));
 	i = 4;
 	str = malloc(total * sizeof(char));
 	if (!str)
 		return ;
-	while (args->path[i])
-		str[j++] = args->path[i++];
+	while (args->pwd[i])
+		str[j++] = args->pwd[i++];
 	i = 1;
 	while (args->split[0][i])
 		str[j++] = args->split[0][i++];
