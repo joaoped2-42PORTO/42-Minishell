@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 00:08:29 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:44:26 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct s_shell
 	char				*var_name;
 	char				*env_value;
 	int					pid;
+	int					index_arg;
+	int					index_redir;
 }						t_shell;
 
 extern int				g_status;
@@ -343,8 +345,13 @@ void					config_signals2(void);
 
 //----------main----------//
 
+void					child_exit(t_shell *args);
+
 //-----main_utils2-----//
 void					ft_countargsaux(int *i, char *str);
+void					init_lexer(char *str, t_shell *args, t_comand *tmp);
+void					lexer_argm(char	*str, t_shell *args, t_comand *tmp);
+void					lexer_redir(char *str, t_shell *args, t_comand *tmp);
 
 //-----main_utils-----//
 int						ft_skipquotes(char *str);

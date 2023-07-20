@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/18 11:44:55 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:42:10 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_comand	*init_token(t_shell *args)
 	int			i;
 	t_comand	*tmp;
 
+	args->index = 0;
 	args->heredoc = 0;
 	sort_exp(args);
 	args->split = split_db_quotes(args->input);

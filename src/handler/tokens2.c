@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:46 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 00:08:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:03:37 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	process_whitespace(t_shell *args, int *x, char **res)
 	while (args->split[args->index][*x] == ' ' && args->split[args->index][*x
 		+ 1] == ' ')
 		(*x)++;
-	append_char_to_res(res, args->split[args->index][(*x)++]);
+	**res = args->split[args->index][(*x)++];
 }
 
 void	append_ptr2_to_res(char **res, char **ptr2, char **tmp)
@@ -76,5 +76,5 @@ void	process_single_quotes(t_shell *args, int *x, int *t, char **res)
 		(*t)++;
 	}
 	else
-		append_char_to_res(res, args->split[args->index][(*x)++]);
+		**res = args->split[args->index][(*x)++];
 }

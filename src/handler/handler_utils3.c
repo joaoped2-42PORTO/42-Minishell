@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/19 23:46:41 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:44:50 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,19 +121,9 @@ void	start_heredoc(t_shell *args, int i)
 		{
 			buffer = readline("heredoc >");
 			if (!check_for_null(buffer))
-			{
-				g_status = 0;
-				free_split(args);
-				free_list(args);
-				do_small_exit(args);
-			}
+				child_exit(args);
 			if (str_is_equal(buffer, args->token->redir[i]))
-			{
-				g_status = 0;
-				free_split(args);
-				free_list(args);
-				do_small_exit(args);
-			}
+				child_exit(args);
 			tmp = heredoc_expander_starter(tmp, args, buffer);
 			heredoc_expander_utils(buffer, tmp, fd);
 		}

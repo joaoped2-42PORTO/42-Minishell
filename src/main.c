@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 00:02:27 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:41:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,46 +53,22 @@ void	change_split(t_shell *args)
 {
 	char		*str;
 	t_comand	*tmp;
-	int			i;
-	int			j;
 
 	str = NULL;
 	tmp = args->token;
-	args->index = 0;
 	while (tmp)
 	{
-		if (args->split[args->index][0] == '|')
-			args->index++;
-		i = 0;
-		j = 0;
-		str = checkbars(args);
-		free(tmp->cmd);
-		tmp->cmd = ft_strdup(str);
-		free(str);
+		args->index_arg = 0;
+		args->index_redir = 0;
+		init_lexer(str, args, tmp);
 		while (args->split[args->index] && args->split[args->index][0] != '|')
 		{
-			if (check_pipe_rede(args->split[args->index][0], args->split[args->index][1]))
-			{
-				str = checkbars(args);
-				free(tmp->argm[i]);
-				tmp->argm[i] = ft_strdup(str);
-				free(str);
-				i++;
-				args->index++;
-			}
-			else if (args->split[args->index][0] == '<' || args->split[args->index][0] == '>')
-			{
-				str = checkbars(args);
-				free (tmp->redir[j]);
-				tmp->redir[j] = ft_strdup(str);
-				j++;
-				args->index++;
-				str = checkbars(args);
-				free (tmp->redir[j]);
-				tmp->redir[j] = ft_strdup(str);
-				j++;
-				args->index++;
-			}
+			if (check_pipe_rede(args->split[args->index][0]
+				, args->split[args->index][1]))
+				lexer_argm(str, args, tmp);
+			else if (args->split[args->index][0] == '<'
+					|| args->split[args->index][0] == '>')
+				lexer_redir(str, args, tmp);
 			else
 				args->index++;
 		}

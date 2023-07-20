@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:46:36 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/18 15:49:22 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:42:52 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	new_prompt(int sig)
 	}
 }
 
-void config_signals2(void)
+void	config_signals2(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

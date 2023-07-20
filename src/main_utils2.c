@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:23:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/19 23:39:23 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:35:26 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,40 @@ void	ft_countargsaux(int *i, char *str)
 		else
 			(*i)++;
 	}
+}
+
+void	init_lexer(char *str, t_shell *args, t_comand *tmp)
+{
+	if (args->split[args->index][0] == '|')
+			args->index++;
+	str = checkbars(args);
+	free(tmp->cmd);
+	tmp->cmd = ft_strdup(str);
+	free(str);
+}
+
+void	lexer_argm(char	*str, t_shell *args, t_comand *tmp)
+{
+	str = checkbars(args);
+	free(tmp->argm[args->index_arg]);
+	tmp->argm[args->index_arg] = ft_strdup(str);
+	free(str);
+	args->index_arg++;
+	args->index++;
+}
+
+void	lexer_redir(char *str, t_shell *args, t_comand *tmp)
+{
+	str = checkbars(args);
+	free (tmp->redir[args->index_redir]);
+	tmp->redir[args->index_redir] = ft_strdup(str);
+	free(str);
+	args->index_redir++;
+	args->index++;
+	str = checkbars(args);
+	free (tmp->redir[args->index_redir]);
+	tmp->redir[args->index_redir] = ft_strdup(str);
+	free(str);
+	args->index_redir++;
+	args->index++;
 }
