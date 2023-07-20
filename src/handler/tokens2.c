@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:46 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 10:03:37 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 22:10:07 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void	process_single_quotes(t_shell *args, int *x, int *t, char **res)
 		(*t)++;
 	}
 	else
-		**res = args->split[args->index][(*x)++];
+		append_char_to_res(res, args->split[args->index][(*x)++]);
 }
