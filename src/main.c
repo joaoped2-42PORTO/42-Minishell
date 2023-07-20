@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 16:24:11 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 21:58:05 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	change_split(t_shell *args)
 	{
 		args->index_arg = 0;
 		args->index_redir = 0;
+		first_redir(args, str, tmp);
 		while (args->split[args->index] && args->split[args->index][0] != '|')
 		{
 			if (check_pipe_rede(args->split[args->index][0]
