@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 14:56:21 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:12:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	valid_input(t_shell *args)
 	int	i;
 
 	i = 0;
+	if (args->input[i] == '|')
+		return (0);
 	while (args->input[i] == ' ')
 		i++;
 	while (args->input[i])

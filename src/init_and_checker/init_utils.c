@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:26:22 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 23:05:14 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:15:12 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ void	get_path_struct(t_shell *args)
 	while (args->env[i])
 	{
 		if (!ft_strncmp(args->env[i], "PWD=", 4))
-		{
-			free(args->pwd);
 			args->pwd = ft_strdup(args->env[i]);
-		}
 		i++;
 	}
 	args->env[i] = 0;
