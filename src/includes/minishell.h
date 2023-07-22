@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:45:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 22:33:11 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:11:14 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -351,6 +351,7 @@ void					child_exit(t_shell *args);
 
 //-----main_utils3-----//
 void					first_redir(t_shell *args, char *str, t_comand *tmp);
+int						check_spaces(char *str);
 
 //-----main_utils2-----//
 void					ft_countargsaux(int *i, char *str);

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:38:33 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 23:12:04 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:12:47 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,18 @@ void	first_redir(t_shell *args, char *str, t_comand *tmp)
 			lexer_redir(str, args, tmp);
 		init_lexer(str, args, tmp);
 	}
+}
+
+int	check_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 22:11:07 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 21:58:05 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:13:34 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		g_status;
 
 int	check_valid_input(t_shell *args)
 {
-	if (args->input[0] == '\0')
+	if (args->input[0] == '\0' || !check_spaces(args->input))
 	{
 		rl_replace_line("", 0);
 		rl_redisplay();
