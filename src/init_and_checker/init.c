@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 23:15:00 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:47:27 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	init_values(t_shell *args, char **env, int i)
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);
 	args->path = ft_calloc(1, sizeof(char));
+	args->pwd = ft_calloc(1, 1);
 	alloc_env_mem(env, args->env, args->exp);
 	get_path_struct(args);
 	config_signals();
