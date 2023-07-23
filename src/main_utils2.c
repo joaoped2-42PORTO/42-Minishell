@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 14:23:47 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 14:19:20 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:06:59 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_countargsaux(int *i, char *str)
 
 void	init_lexer(char *str, t_shell *args, t_comand *tmp)
 {
+	if (!args->split[args->index])
+		return ;
 	if (args->split[args->index][0] == '|')
 			args->index++;
 	str = checkbars(args);

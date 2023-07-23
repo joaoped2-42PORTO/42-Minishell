@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:22:48 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/22 18:39:51 by user             ###   ########.fr       */
+/*   Updated: 2023/07/23 15:25:30 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	process_quote(t_shell *args, int *x, int *p)
 
 void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 {
-	char		*str;
-	size_t		i;
+	char	*str;
+	size_t	i;
 
 	i = 0;
 	if (args->split[args->index][*x] == '$')
@@ -36,7 +36,7 @@ void	process_dollar_or_char(t_shell *args, int *x, int *k, char **res)
 		{
 			(*x) += 2;
 			str = ft_itoa(g_status);
- 			while (i < ft_strlen(str))
+			while (i < ft_strlen(str))
 				append_char_to_res(res, str[(i)++]);
 			free(str);
 		}

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:38:33 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/22 16:12:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:24:04 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,31 @@ int	check_spaces(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] != ' ' && str[i] != '\t')
 			return (1);
 		i++;
 	}
 	return (0);
+}
+
+void	replace_stds(t_shell *args)
+{
+	dup2(args->in, STDIN_FILENO);
+	dup2(args->out, STDOUT_FILENO);
+}
+
+void	args_in_exp(void)
+{
+	printf("No arguments allowed\n");
+	g_status = 2;
+	return ;
+}
+
+void	handler_init(t_shell *args)
+{
+	args->flag = 0;
+	args->out = dup(STDOUT_FILENO);
+	args->in = dup(STDIN_FILENO);
 }

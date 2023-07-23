@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:27:20 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/19 22:20:33 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:00:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,22 @@ void	print_export(t_shell *args)
 
 void	open_exec_abs(t_shell *args, char *path)
 {
-	if (execve(args->token->cmd, args->token->argm, NULL) != 0)
+	if (access(args->token->cmd, F_OK) == 0)
 	{
-		printf("%s: No such file or directory\n", args->token->cmd);
+		replace_stds(args);
+		printf("%s: Permission denied\n", args->token->cmd);
 		g_status = 126;
+		free(path);
+		free_split(args);
+		free_list(args);
+		do_small_exit(args);
+		exit(g_status);
+	}
+	else if (execve(args->token->cmd, args->token->argm, NULL) != 0)
+	{
+		replace_stds(args);
+		printf("%s: No files\n", args->token->cmd);
+		g_status = 127;
 		free(path);
 		free_split(args);
 		free_list(args);

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:27:59 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 23:19:00 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:20:49 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	change_env_pwd(t_shell *args)
 			return ;
 		}
 	}
-	/* args->env[i++] = ft_strjoin(str, path);
-	args->env[i] = 0; */
 }
 
 void	change_exp_pwd(t_shell *args)
@@ -76,8 +74,6 @@ void	change_exp_pwd(t_shell *args)
 			return ;
 		}
 	}
-	/* args->exp[i++] = ft_strjoin(str, path);
-	args->exp[i] = 0; */
 }
 
 int	see_pwd_status(char **str, t_shell *args)

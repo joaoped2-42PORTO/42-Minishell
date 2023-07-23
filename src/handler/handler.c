@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 22:12:52 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:23:44 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ int	do_non_builtins(t_shell *args)
 
 void	cmdhandler(t_shell *args)
 {
-	args->flag = 0;
-	args->out = dup(STDOUT_FILENO);
-	args->in = dup(STDIN_FILENO);
+	handler_init(args);
 	if (!handle_redir(args))
 		return ;
 	if (args->token->cmd[0] == '\0')
+	{
+		close_redirection(args);
 		return ;
+	}
 	if (str_is_equal(args->token->cmd, "pwd"))
 		check_pwd(args);
 	else if (str_is_equal(args->token->cmd, "cd"))
@@ -72,8 +73,7 @@ void	cmdhandler(t_shell *args)
 	{
 		if (args->token->argm[1])
 		{
-			printf("No arguments allowed\n");
-			g_status = 2;
+			args_in_exp();
 			return ;
 		}
 		print_env(args);
