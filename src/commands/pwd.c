@@ -30,16 +30,17 @@ int	see_pwd(char **str)
 void	check_pwd(t_shell *args)
 {
 	int	i;
-	int	j;
+	/* int	j;
 
-	j = 5;
+	j = 5 */;
 	i = see_pwd(args->env);
 	if (i > see_env_size(args))
 	{
 		ft_putendl_fd("No PWD recognized", 2);
 		return ;
 	}
-	while (args->env[i][j])
-		printf("%c", args->env[i][j++]);
-	printf("\n");
+	printf("%s\n", &args->pwd[5]);
+	/* while (args->env[i][j])
+		printf("%c", args->env[i][j++]); */
+	//printf("\n");
 }
