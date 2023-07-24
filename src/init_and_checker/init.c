@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:24:57 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/22 16:47:27 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/25 00:02:01 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ void	init_values(t_shell *args, char **env, int i)
 {
 	args->index = 0;
 	g_status = 0;
-	args->stdin_here = -1;
-	args->stdout_here = -1;
+	args->stdin_here = dup2(args->stdin_here, STDIN_FILENO);
+	args->stdout_here = dup2(args->stdout_here, STDOUT_FILENO);
 	args->pid = 0;
 	args->env = ft_calloc(sizeof(char *), i + 1);
 	args->exp = ft_calloc(sizeof(char *), i + 1);

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:34:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/23 15:23:44 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:59:51 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	do_non_builtins(t_shell *args)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (args->token->argm[0][0] == '.')
+		if (args->token->argm[0][0] == '.' || args->token->argm[0][0] == '/')
 			open_exec(args, path);
-		else if (args->token->argm[0][0] == '/')
-			open_exec_abs(args, path);
 		execthenonbuiltin(args, path);
 	}
 	signal(SIGINT, new_prompt);

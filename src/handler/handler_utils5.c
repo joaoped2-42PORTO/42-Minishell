@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 10:20:58 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/18 15:51:35 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/25 00:11:40 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ void	here_doc_utils(t_shell *args, int *fd)
 {
 	int	fd1;
 
-	dup2(args->stdout_here, STDOUT_FILENO);
-	dup2(args->stdin_here, STDIN_FILENO);
+	if (args->token->in_fd != -1)
+		close (args->token->in_fd);
+	if (args->token->out_fd != -1)
+		close (args->token->out_fd);
+	dup2(args->out, STDOUT_FILENO);
+	dup2(args->in, STDIN_FILENO);
 	fd1 = open("heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd1 < 0)
 		perror("open");

@@ -6,7 +6,7 @@
 /*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:56:24 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 10:44:50 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/25 00:14:13 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,11 @@ void	start_heredoc(t_shell *args, int i)
 	int		fd;
 	char	*tmp;
 
-	here_doc_utils(args, &fd);
 	tmp = NULL;
 	args->pid = fork();
 	if (args->pid == 0)
 	{
+		here_doc_utils(args, &fd);
 		config_signals2();
 		while (1)
 		{
