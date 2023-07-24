@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:24:54 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/20 15:06:03 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:49:21 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	see_closed_pipe(char *str, int *i)
 			else
 				return (1);
 		}
-		if (ft_isalnum(str[*i]))
+		if (str[*i] != ' ' && str[*i] != '\t')
 			return (1);
 		(*i)++;
 	}

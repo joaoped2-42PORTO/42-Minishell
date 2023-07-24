@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: huolivei <huolivei <marvin@42.fr>>         +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:49:37 by huolivei          #+#    #+#             */
-/*   Updated: 2023/07/20 23:12:47 by huolivei         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:52:57 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	see_red_closed(char *str, int i)
 			return (0);
 		while (str[i])
 		{
-			if (ft_isalnum(str[i]))
+			if (str[i] != ' ' && str[i] != '\t')
 				return (1);
 			i++;
 		}
@@ -107,8 +107,6 @@ int	valid_input(t_shell *args)
 		while (args->input[i] == ' ')
 			i++;
 		if (args->input[i] == ';')
-			return (0);
-		if (args->input[i] == '*')
 			return (0);
 		if (!see_red_closed(args->input, i))
 			return (0);
