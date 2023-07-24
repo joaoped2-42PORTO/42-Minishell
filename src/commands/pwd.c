@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: huolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:28:28 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/07/09 20:40:16 by user             ###   ########.fr       */
+/*   Updated: 2023/07/24 15:41:32 by huolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	see_pwd(char **str)
 void	check_pwd(t_shell *args)
 {
 	int	i;
-	/* int	j;
 
-	j = 5 */;
 	i = see_pwd(args->env);
 	if (i > see_env_size(args))
 	{
@@ -40,7 +38,4 @@ void	check_pwd(t_shell *args)
 		return ;
 	}
 	printf("%s\n", &args->pwd[5]);
-	/* while (args->env[i][j])
-		printf("%c", args->env[i][j++]); */
-	//printf("\n");
 }
