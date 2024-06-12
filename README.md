@@ -193,6 +193,10 @@ Contributions are welcome! If you have any suggestions or improvements, feel fre
 - The C programming community for their excellent documentation and support.
 - All contributors who have helped improve this project.
 
+## Grade
+- Norminette: Ok!
+- Grade: 101/100
+
 ---
 
 Happy coding!
